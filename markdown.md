@@ -46,7 +46,7 @@ typora의 가장 큰장점ㅎ(이미지를 그냥 올리면 ㅇㅋ)
 
 
 
-![뽀로리](images/뽀로리.jpg)![뽀로리](C:\Users\student\Desktop\뽀로리.jpg)
+![뽀로리](images/뽀로리-1575532906572.jpg)
 
 
 
