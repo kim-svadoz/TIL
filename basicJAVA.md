@@ -124,7 +124,7 @@
   ex) this.cardNo.equals(cardNo)
   ```
 
-* 
+* 하나의 클래스에서 하나의 역할 , 하나의 메소드에선 하나의 기능
 
 ### 2. 변수
 
@@ -465,6 +465,7 @@ public Person(String name, String addr, int age){
   * 따라서, 추상클래스를 정의하는 경우 클래스 선언부에도 abstract을 추가해야 한다.
 * 추상 클래스의 특징
   * 일반메소드와 추상메소드 모두 정의할 수 있다.
+  * 내가 기능을 작성하는게 아니라 하위클래스에서 기능을 한다.
   * 추상메소드가 한 개라도 정의되어 있는 클래스는 반드시 abstract을 추가해야 한다.
   * 추상클래스는 인스턴스화 할수 없다.(객체 생성 불가능)
   * 추상클래스(abstract클래스)를 상속하면 에러가 발생한다?
@@ -515,9 +516,153 @@ public Person(String name, String addr, int age){
 
 * **조상클래스 타입의 참조변수로 자손클래스의 인스턴스를 참조할 수 있도록 하기위해**
 
+#### 4. 인터페이스
+
+> 추상메소드(상수도 포함)만 정의하는 특별한 클래스
+
+* 인터페이스는 interface키워드를 이용해서 정의
+
+* 인터페이스는 추상메소드만 정의하는 특별한 클래스
+
+  * public abstract이 생략 가능
+  * 상속을 받으면 자동으로 추가된다.
+
+* 인터페이스가 인터페이스를 상속할 수 있다.(extends 이용)
+
+  * 하위 인터페이스가 상위인터페이스의 추상메소드를 상속받는다.
+
+* 클래스가 인터페이스를 상속할 수 있다.(implements 이용)
+
+  * 인터페이스를 상속받는 클래스가 이미 다른클래스를 상속하는 경우에 extends를 먼저 정의하고 implements를 정의해야 한다.
+
+* 인터페이스는 여러개를 상속할 수 있다. 즉, 다중 상속이 가능하다.
+
+  * implements 뒤에서 인터페이스를 정의할 때, " , " 로 구분해서 나열
+
+* 클래스와 인터페이스들을 상속받는 하위클래스는 모든 클래스와 인터페이스의 하위로 인식된다.
+
+  (상속받는 모든 클래스, 인터페이스의 하위 타입이 된다.) - 하위 메소드들에게 스펙을 제시.
+
+* 원래 자바는 단일상속만 가능하지만, 인터페이스를 이용해 다중상속을 구현한다.
+
+##### 1. 사용목적
+
+1. 다중 상속을 허용하고 다형성을 적용할 수 있도록 하는 것.
+2. 기본적으로 구현해야 하는 기능이 무엇인지 정의하기 위한 목적
 
 
 
+#### 5. 예외
+
+```java
+try{
+    예외가 발생할 수 있는 문장
+}
+catch(Exception e){
+    예외 발생시 처리할 문장
+}
+finally{
+    반드시 실행할 명령문; => 무조건 실행
+}
+```
+
+* 사용자가 입력하는 값에 따라 예외가 다르게 발생한다.
+
+1. 사용자가 제대로 값을 입력
+
+   => 예외가 발생되지 않으므로 catch블럭은 실행되지 않는다.
+
+2. 사용자가 나눌 숫자에 0을 입력
+
+   => ArithmeticException이 발생
+
+   => Exception e(상위 타입) = new ArithmeticException(....)(하위  객체)
+
+   => Exception이 상위타입이기 때문에 가능하다.(다형성이 적용되있음)
+
+3. 사용자가 숫자가 아니라 문자를 입력
+
+   => InputMismatchException이 발생
+
+   => Exception e = new InputMismatchException();
+
+
+
+- 다양한 Exception 처리를 위해서 catch블럭을 여러 개 정의하고 사용할 수 있다.
+- 상위타입에 속하는 Exception은 가장 나중에 정의해야 한다.
+- throws는 호출한 곳으로 예외를 던질 때
+- throw는 예외를 임의적으로 발생시킬 때
+
+```java
+public class MyException extends Exception{
+    public MyException(String msg){
+        super(msg);      
+    }       
+}
+public class MyExceptionTest{
+	public static void main(String[] args){
+		Scanner key = new Scanner(System.in);
+        System.out.print("숫자입력:");
+        int num = key.nextInt();
+        try{
+            if(num%2 == 1){
+                //예외상황발생
+                //JVM이 인식하는 오류가 아니라 사용자가 정의한 오류이므로 예외를 발생시킬수 있도록 정의
+                throw new MyException();
+            }
+        }catch(MyException e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+
+```java
+public class Prob1 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("숫자로 변환할 문자열을 입력바랍니다.");
+		String str = scan.nextLine();
+		int result = 0;
+		try {
+			result = convert(str);
+			System.out.println("변환된 숫자는 " + result + "입니다.");
+		} catch (IllegalArgumentException e) {
+			System.out.println("예외가 발생되었습니다. 문자열을 입력않고 Enter를 누르셨습니다.");
+		}
+	}
+
+	private static int convert(String str) throws IllegalArgumentException {
+		int num = Integer.parseInt(str);
+			if (str == null | str.length() == 0) {
+				throw new IllegalArgumentException();
+			}
+		return num;
+
+	}
+}
+```
+
+* static에서 non-static을 호출할 때는 자신의 클래스에서의 메소드를 호출한다 해도 반드시 클래스로 객체를 불러서 호출해야 한다.
+* 예외가 발생된 곳에서 예외를 처리하면 호출하는 곳에서는 어떤 예외가 발생했는지 알 수 없고 예외가 발생할 때 경우에 따라서 다르게 처리하고 싶어도 할 수 없다.
+
+### 3. API
+
+#### 1. String 클래스
+
+* 문자열 처리 메소드를 자주호출하거나 +연산자로 문자를 연결하는 작업이 많은 경우 String을 사용하지 않고, StringBuffer or StringBuilder를 이용한다.
+  * StringBuffer는 동시접속에 대한 고려 O
+  * StringBuilder는 동시접속에 대한 고려 X
+  * WEB에서는 고려 필요없지만, 안드로이드에서는 직접 쓰레드 처리를 해야하기때문에 고려해야 한다.
+* String클래스는 원본을 변경하는게 아니라, 원본을 읽어서 또다른 string객체를 생성하는 것.
+
+
+
+
+
+# 1. DBMS
+
+## 1.SQL
 
 
 
