@@ -166,6 +166,8 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
 
 2. PreparedStatement 이용
 
+   * 동적 SQL문을 사용해야 하기 때문에
+
 #### 5. 결과값 처리
 
 1. insert, delete, update 모두 동일
@@ -219,4 +221,10 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
    }
    ```
 
-   
+#### 6. 자원반납
+
+* 자원을 반납하지 않으면 계속 메모리에 할당되어 있는 상태
+* ResultSet, Statement, Connection모두 반납해야 한다.
+* close메소드를 이용해서 자원해제
+* 가장 마지막에 만들어진 객체부터 해제
+
