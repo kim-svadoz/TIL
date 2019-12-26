@@ -129,7 +129,7 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
 * CallableStatement : 각 DBMS에 특화된 SQL을 실행
   * ex ) 오라클 : PL-SQL
 
-1. Statement 객체를 이용
+1. **Statement 객체를 이용**
 
    * Connection객체에 있는 createStatement메소드를 통해 생성
    * Connection정보를 유지해야 한다.
@@ -140,11 +140,60 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
 
    - java.sql.Statement타입이지만 드라이버 파일에 포함된 Statement객체가 리턴
 
-2. PreparedStatment 객체를 이용
+2. **PreparedStatment 객체를 이용**
+
+* 동적 SQL문을 사용해야 하기 때문에
+
+* [ sql이 실행되는 과정은 ]
+
+  => 쿼리문을 읽고 분석 - 컴파일 - 실행
+
+* Statement는 위의 단계를 모두 반복해서 실행하고 작업하지만 PreparedStatement는 한 번 실행하고 캐쉬메모리에 저장하고 캐쉬에서 읽어서 작업
+
+* PreparedStatement는 sql문을 실행하는 방식이 sql문을 미리 파싱한 후 동적으로 바인딩해서 작업해야 하는 값들만 나중에 연결해서 인식시키고 실행한다.
+
+  1. sql문을 작성할 때 외부에서 입력받아서 처리해야 하는 부분을 ? 로 정의한다.
+  2. sql문을미리 파싱해야 하므로 실행할 때 sql을 전달하지 않고 PreparedStatement 객체를 생성할 때 sql문을 전달한다.
+
+  ```java
+  PreparedStatement ptmt = con.prepareStatement("sql문")
+  ```
+
+3. ? 에 값을 셋팅
+   * PreparedStatement 객체에 정의되어 있는 setXXXXX메소드를 이용
+   * ResultSet과 동일한 방식으로 메소드를 구성
+   * 오라클 타입과 매칭되는 setXXXX메소드
+     * char, varchar2 => setString(1, "XXXX")
+     * number, integer => setInt(1, 0000)
+     * 소숫점이 있는 number => setDouble(1, 0.0)
+     * date => setDate(1, java.sql.Date객체)
+
+```java
+setXXXXX(index, 값)
+------  ------- ---
+컬럼타입 ?순서  컬럼에 설정할 값
+      1부터 시작
+```
+
+4. 실행메소드 호출
+
+   * insert, delete, update
+
+   ```java
+   int result = ptmt.executeUpdate()
+   ```
+
+   * select
+
+   ```java
+   ResultSet rs = ptmt.executeQuery()
+   ```
+
+   
 
 #### 4. SQL 실행
 
-1. Statement 이용
+1. Statement 이용 // 정적 sql - 값을 일일이 다 넣어주는 것
 
    1. executeUpdate : insert, update, delete문을 실행
 
@@ -164,9 +213,11 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
 
    
 
-2. PreparedStatement 이용
+2. PreparedStatement 이용 // 동적 sql - 외부에서 값을 입력받는다
 
-   * 동적 SQL문을 사용해야 하기 때문에
+   => 3번 참조
+
+   
 
 #### 5. 결과값 처리
 
@@ -227,4 +278,3 @@ Class.forName("DBMS드라이버의 핵심 클래스명")
 * ResultSet, Statement, Connection모두 반납해야 한다.
 * close메소드를 이용해서 자원해제
 * 가장 마지막에 만들어진 객체부터 해제
-
