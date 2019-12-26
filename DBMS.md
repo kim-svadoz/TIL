@@ -243,9 +243,42 @@ MVD는 trivial MVD와 nontrivial MVD로 구분된다. 각각의 정의는 아래
 ##### 1. DDL(데이터 정의 언어)
 
 1. CREATE : 데이터베이스나 테이블 등을 작성한다.
+<<<<<<< HEAD
 2. DROP : 데이터베이스나 테이블 등을 삭제한다.
 3. ALTER : 데이터베이스나 테이블 등의 구성을 변경한다.
 
+=======
+
+2. DROP : 데이터베이스나 테이블 등을 삭제한다.
+
+3. ALTER : 데이터베이스나 테이블 등의 구성을 변경한다.
+
+4. 제약조건 
+
+   1. NOT NULL
+   2. UNIQUE : 중복 되지 않는 키
+   3. PRIMARY KEY : NOT NULL + UNIQUE
+      * 구분해주는 키이기때문에 중복 불가능
+   4. FOREIGN KEY : PRIMARY KEY 이외의 값은 사용할 수 없다.
+      * 참조하는 키
+   5. CHECK : 컬럼에 입력되는 값에 제한을 두는 것
+
+   
+
+   * 테이블정규화에 의해 중복되어 들어가는 값들을 따로 데이터로 
+   * 중복되지않는 유일한 값들을 갖고는 테이블의 기본키
+
+    참조하는 키가 foreign key 
+
+   기본키가 설정된 테이블을 parent table 
+
+   참조하는게 child table
+
+   제약조건을 제거하는게 가장 좋은 방법이다.
+
+   
+
+>>>>>>> d7b64bb14e6cf0a250fc1284aec1675b9cd4777a
 ##### 2. DML(데이터 조작 언어)
 
 > 직접 데이터를 조작해서 원본을 변경
@@ -337,14 +370,22 @@ MVD는 trivial MVD와 nontrivial MVD로 구분된다. 각각의 정의는 아래
 
    * < all : 서브쿼리 결과의 최솟값보다 작은 값을 구하는 경우
 * ) all : 서크붜리 결과의 최대값보다 큰 값을 구하는 경우
+<<<<<<< HEAD
    
+=======
+  
+>>>>>>> d7b64bb14e6cf0a250fc1284aec1675b9cd4777a
 ```bash
    select ename, sal
    from emp
    where sal > any(select sal
    			from emp
    			where deptno =10);
+<<<<<<< HEAD
    ```
+=======
+```
+>>>>>>> d7b64bb14e6cf0a250fc1284aec1675b9cd4777a
 
 3. 다중컬럼 서브쿼리 - 두개 이상의 컬럼과 다중행을 반환하는 서브쿼리
 
@@ -811,8 +852,65 @@ WHERE 테이블alias.컬렴명(+) = 테이블alias.컬렴명
 * 두 개 이상의 테이블에서 조인하지 않고 같은 테이블의 컬럼을 이용해서 조인.
 
   (하나의 가상 테이블 생성)
+<<<<<<< HEAD
 
 
+=======
+  
+  
+
+### 7. 시퀀스(SEQUENCE)
+
+#### 1. 시퀀스 개념 이해와 시퀀스 생성
+
+\- 오라클에서는 행을 구분하기 위해서 기본 키를 두고 있습니다. 기본 키는 중복된 값을 가질 수 있으므로 항상 유일한 값을 가져야 합니다. 
+
+\- 기본 키가 유일한 값을 갖도록 사용가가 직접 값을 생성해내려면 부담이 클 것입니다. 
+
+\- 시퀀스는 테이블 내의 유일한 숫자를 자동으로 생성하는 자동 번호 발생기이므로 시퀀스를 기본 키로 사용하게 되면 사용자의 부담을 줄일 수 있습니다.
+
+#### 2. 뷰의 기본 테이블
+
+다음은 시퀀스를 생성하기 위한 기본 형식입니다. 
+
+CREATE SEQUENCE sequence_name 
+
+​        [START WITH n]               ① 
+
+​        [INCREMENT BY n]             ② 
+
+​        [{MAXVALUE n | NOMAXVALUE}]   ③
+
+​        [{MINVALUE n | NOMINVALUE}]    ④
+
+​        [{CYCLE | NOCYCLE}]           ⑤
+
+​        [{CACHE n | NOCACHE}]         ⑥ 
+
+① START WITH 
+
+시퀀스 번호의 시작값을 지정할 때 사용됩니다. 만일 1부터 시작되는 시퀀스를 생성하려면 START WITH 1이라고 기술하면 됩니다. 
+
+② INCREMENT BY 
+
+연속적인 시퀀스 번호의 증가치를 지정할 때 사용됩니다. 만일 1씩 증가하는 시퀀스를 생성하려면 INCREMENT BY 1이라고 기술하면 됩니다. 
+
+③ MAXVALUE n | NOMAXVALUE 
+
+MAXVALUE 은 시퀀스가 가질 수 있는 최대값을 지정합니다. 만일 NOMAXVALUE를 지정하게 되면 ASCENDING 순서일 경우에는 1027승이고 DESCENDING 순서일 경우에는 -1로 설정됩니다.
+
+④ MINVALUE n | NOMINVALUE
+
+MINVALUE 은 시퀀스가 가질수 있는 최소값을 지정합니다. 만일 NOMINVALUE을 지정하게 되면 ASCENDING 순서일 경우에는 1이고 DESCENDING 순서일 경우에는 1026승으로 설정됩니다.
+
+⑤ CYCLE | NOCYCLE
+
+CYCLE 은 지정된 시퀀스 값이 최대값까지 증가가 완료되게 되면 다시 START WITH 옵션에 지정한 시작 값에서 다시 시퀀스를 시작하도록 합니다. NOCYCLE은 증가가 완료되게 되면 에러를 유발시킵니다. 
+
+⑥ CACHE n | NOCACHE 
+
+CACHE 은 메모리상의 시퀀스 값을 관리하도록 하는 것인데 기본 값은 20입니다. NOCACHE는 원칙적으로 메모리 상에서 시퀀스를 관리하지 않습니다.
+>>>>>>> d7b64bb14e6cf0a250fc1284aec1675b9cd4777a
 
 
 
