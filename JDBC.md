@@ -278,3 +278,61 @@ setXXXXX(index, 값)
 * ResultSet, Statement, Connection모두 반납해야 한다.
 * close메소드를 이용해서 자원해제
 * 가장 마지막에 만들어진 객체부터 해제
+
+## 19-12-27 금
+
+### api.util
+
+```java
+**** 배열 ****
+int[] myrarr = new int[size];
+
+myarr[0] = 100; - 요소 저장
+myarr.length - 요소의 갯수
+s.o.p(myarr[0])
+```
+
+* ArrayList 
+
+  * 동시접속 고려X => 웹에 적합 (StringBuilder와 비슷)
+
+  ```java
+  **** ArrayList ****
+  ArrayList<Integer> list = new ArrayList<Integer>();
+  list.add(10); - O
+  list.add("java") - X
+  => ArrayList Int데이터만 담겠다.
+      
+  list.add(100); - 요소 저장
+  list.size(); - 요소의 갯수
+  s.o.p(v.get(0))
+  ```
+
+  * collection에 저장할 요소의 타입을 generic형태로 정의한다.
+
+  ```java
+  collection클래스<데이터타입>;
+  ```
+
+* Vector
+
+  * Vector는 API다 => method로 call로 접근해야 한다!!
+  * 동시접속 고려O => 어플리케이션에 적합 (StringBuffer와 비슷)
+
+  ```java
+  **** Vector ****
+  Vector<Integer> v = new Vector<Integer>();
+  v.add(10); - O
+  v.add("java") - X
+  => Vector에 Int데이터만 담겠다.
+      
+  v.add(100); - 요소 저장
+  v.size(); - 요소의 갯수
+  s.o.p(v.get(0))
+  ```
+
+  * <> : generic 표현방식
+  * 
+
+
+
