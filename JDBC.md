@@ -301,7 +301,7 @@ s.o.p(myarr[0])
   ArrayList<Integer> list = new ArrayList<Integer>();
   list.add(10); - O
   list.add("java") - X
-  => ArrayList Int데이터만 담겠다.
+  => ArrayList에 Int데이터만 담겠다.
       
   list.add(100); - 요소 저장
   list.size(); - 요소의 갯수
@@ -334,5 +334,12 @@ s.o.p(myarr[0])
   * <> : generic 표현방식
   * 
 
+## 19-12-30 월
 
+* 실질적으로 DBMS와 연동하는 클래스는 DAO 하나 ( Data Access Object)
+* ResultSet에서 사용하기 위해 데이터를 가공하고 변환하는 작업이 반드시 필요하다!
+  * 배열 : 사이즈를 고정하고 들어가야 하기 때문에 부적합
+  * 자료구조 : ArrayList
+  * DTO : 타입이 다른 레코드 하나하나를 DTO에 담는다. ( Data Transfer Object )
+* 사용자가 보는 화면 = view
 
