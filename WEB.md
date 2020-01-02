@@ -90,7 +90,7 @@
 
   * Context 
 
-    *  jsp, html, js, image
+    *  jsp, html, js, image(jpg, gif, png) ,css, 
 
        * WEB-INF
 
@@ -265,4 +265,294 @@ BYOWS (Bring Your Own Web Server).</p>
 	</body>
 </html>
 ```
+
+## 20-01-02 목
+
+
+
+![image-20200102093041773](images/image-20200102093041773.png)
+
+* 집에서 할 때 반드시 등록해줘야함(서버 더블클릭)
+
+* C:\iot\setup\java\work\webwork\clientweb 여기 있는 것들이 표준화된 폴더 구조인C:\iot\setup\java\work\webwork\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\clientweb(서버가 인식하는 위치)로 복사되어 들어가는 것이다.
+
+
+
+### HTML
+
+#### table.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>테이블연습</h1>
+	<table border="1" width="561">
+		<tr bgcolor="green">
+			<th>번호</th>
+			<th>제목</th>
+			<th>저자</th>
+		</tr>
+		<tr align="center">
+			<td>1</td>
+			<td>이클립스</td>
+			<td rowspan="2">스테파니메이어</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>트와일라잇</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>감자</td>
+			<td>강원도</td>
+		</tr>
+		<tr>
+			<td colspan = "3">비고:<br/>
+			지금은 table을 작성하기 위해 필요한 태그의 연습 중입니다.</td>
+		</tr>
+	
+	</table>
+</body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1" width="500" height="500" style="text-align: center;" mathlength="20">
+	<tr>
+		<td>1</td>
+		<td colspan="2">2</td>
+		<td colspan="2" rowspan="2">3</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td rowspan="2">5</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td colspan="3">8</td>
+	</tr>
+	<tr>
+		<td colspan="3">9</td>
+		<td colspan="2">10</td>
+	</tr>
+</table>
+</body>
+</html>
+```
+
+
+
+#### formTest.html
+
+* 양식태그 : action과 mehod는 서버로 데이터를 보낼 때 굉장히 중요한 속성이다! 
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <meta charset="EUC-KR">
+  <title>Insert title here</title>
+  </head>
+  <body>
+  	<h1>양식태그 테스트하기</h1>
+  	<form action="/clientweb/member/login.jsp" method="get">
+  		<h2>fieldset이용하기</h2>
+  		<fieldset>
+  		<h3>좋아하는 과목</h3>
+  			<input type="checkbox" name="subject1" value="자바">자바
+  			<input type="checkbox" name="subject1" value="JDBC">JDBC
+  			<input type="checkbox" name="subject1" value="HTML5">HTML5
+  			<input type="checkbox" name="subject1" value="Servlet" checked="checked">Servlet
+  			<br/><br/>	
+  		</fieldset>
+  	
+  		<h2>1. 텍스트 관련 태그</h2>
+  		아이디 : <input type="text" name="id" size="100" maxlength="20"/><br/>
+  		패스워드 : <input type="password" name="pass"><br/>
+  		닉네임 : <input type="text" name="nickname" value="별칭을  입력하세요" disabled="disabled"><br/>
+  		비고:<br/>
+  		<textarea rows="30" cols="30" name="info">자기소개:</textarea>
+  		
+  		<h2>2. 버튼 관련 태그</h2>
+  		<input type="submit" value="서버로 전송하기">
+  		<input type="reset" value="입력 취소하기">
+  		<input type="button" value="자바스크립트 연결하는 버튼"
+  				onclick="alert('환영합니다.')"/>
+  				
+  				
+  		<h2>3. 선택관련태그</h2>
+  		<h3>좋아하는 과목</h3>
+  		<input type="checkbox" name="subject1" value="자바">자바
+  		<input type="checkbox" name="subject1" value="JDBC">JDBC
+  		<input type="checkbox" name="subject1" value="HTML5">HTML5
+  		<input type="checkbox" name="subject1" value="Servlet" checked="checked">Servlet
+  		<br/><br/>		
+  		
+  		<h3>좋아하는 과목</h3>
+  		<input type="radio" name="subject2" value="자바">자바
+  		<input type="radio" name="subject2" value="JDBC" checked="checked">JDBC
+  		<input type="radio" name="subject2" value="HTML5">HTML5
+  		<input type="radio" name="subject2" value="Servlet">Servlet
+  		<br/><br/>
+  		
+  		<h3>좋아하는 과목</h3>
+  		<select name="subject3">
+  			<option value="hadoop">hadoop</option>
+  			<option value="hive">hive</option>
+  			<option value="mongodb">mongodb</option>
+  			<option value="sqoop">sqoop</option>
+  		</select>
+  		<br/><br/>
+  		
+  		<h3>좋아하는 과목</h3>
+  		<select name="subject4" size="10" multiple="multiple">
+  			<option value="hadoop">hadoop</option>
+  			<option value="hive">hive</option>
+  			<option value="mongodb">mongodb</option>
+  			<option value="sqoop">sqoop</option>
+  		</select>
+  		<br/><br/>
+  		
+  		<h2>4. 기타 태그</h2>
+  		<input type="file" name="photo" value="파일선택">
+  		<input type="date" name="regdate">
+  		<input type="number" name="count">
+  		<input type="email" name="mymail">
+  	</form>
+  </body>
+  </html>
+  ```
+
+  => 양식관련 태그는 반드시 <form> 을 이용해라!!
+
+  * get은 요청메시지 헤더에 우리가 입력한 데이터들이 넘어가는 것. => 그대로 노출 된다
+  * post는 요청메시지 바디에 숨겨져서 내보냄 => 노출되지 않음
+  * action에 들어가는 건 절대경로로 주는 것이 일반적
+  * submit의 역할 : 액션에 명시되어있는 애플리케이션을 새롭게 요청하면서 실행과 동시에 form과 /form 사이에 있는 모든 로그인정보를 호출한다. => 데이터를 서버로 전송하고 싶으면 form과 /form 사이에 입력해라
+  * reset의 역할 : 다시 지우는 버튼
+  * onclick : 내가 이버튼을 클릭했을 때
+
+#### customer.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1" width="400" height="400" style="text-align: left;">
+		<tr>
+			<td colspan="2" align="center"><b>회원가입</b></td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td><input type="text" name="name" maxlength="10"/></td>
+		</tr>
+		<tr>
+			<td>사용자 ID</td>
+			<td><input type="text" name="id" maxlength="20"/></td>
+		</tr>
+		<tr>
+			<td>암호</td>
+			<td><input type="password" name="pass" maxlength="20"></td>
+		</tr>
+		<tr>
+			<td>암호확인</td>
+			<td><input type="password" name="passcheck" maxlength="60"></td>
+		</tr>
+		<tr>
+			<td>주민등록번호</td>
+			<td><input type="text" name="regnum1" size="13" maxlength="6"/>-
+			<input type="text" name="regnum2" size="13" maxlength="7"/></td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td><input type="number" name="phone1" maxlength="3" size="8"/>-
+			<input type="number" name="phone2" maxlength="4" size="8"/>-
+			<input type="number" name="phone3" maxlength="4" size="8"/></td>
+		</tr>
+		<tr>
+			<td>성별</td>
+			<td><input type="radio" name="sex" value="남자">남자
+		<input type="radio" name="sex" value="여자">여자</td>
+		</tr>
+		<tr>
+			<td>직업</td>
+			<td>
+			<select name="job" size="1">
+			<option value="웹디자이너">웹디자이너</option>
+			<option value="개발자">개발자</option>
+			<option value="빅데이터개발자">빅데이터개발자</option>
+			<option value="DBA">DBA</option>
+			<option value="임베디드개발자">임베디드개발자</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>email주소</td>
+			<td><input type="email" name="mymail"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><input type="submit" value="가입신청">
+		<input type="reset" value="취소"></td>
+		</tr>
+	</table>
+</body>
+</html>
+```
+
+
+
+* http://www.html5test.com
+* www.data.go.kr
+
+### CSS
+
+* html에서는 못하는 화면 구성이나 레이아웃을 배치할 수 있음.
+  * 그룹으로 묶을 수 있어야함
+    * div : 줄바꿈이 필요할 떄
+    * span : 줄바꿈이 필요없을 때
+
+#### block_tag.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+	</div>
+		div와 <span>span태그는</span> 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		<p>
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		div와 span태그는 논리적인 그룹을 분리할 때 사용하는 태그이다.
+		</p>
+		div와 <span>span태그는</span> 논리적인 그룹을 분리할 때 사용하는 태그이다.
+</body>
+</html>
+```
+
+
 
