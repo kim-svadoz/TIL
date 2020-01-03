@@ -556,3 +556,387 @@ BYOWS (Bring Your Own Web Server).</p>
 
 
 
+## 20-01-03 금
+
+### CSS
+
+* 외부 CSS를 자기의 스타일에 맞게 적용할 수 있는 방법
+* 텍스트 관련 , 테이블 관련 => 기본 사용방법
+* box 모델
+* 포지셔닝
+* floating => layout 잡기 ! 
+
+#### 1. 선택자
+
+> css를 어디다 적용하겠느냐!
+
+* 타입선택자 : html요소를 선택하겠다.
+
+```html
+P{ color: blue; }
+```
+
+* 아이디선택자 : 특정한 요소(ex. id / name / pass)를 선택 ( javascrip나 jQuery에서 많이 사용 )
+
+```html
+#special{ color: yellow; }
+```
+
+* 클래스선택자 : 클래스로 묶어서 선택 ( css에서 많이 사용 )
+
+```html
+.myclass{ color: red; }
+```
+
+##### 1) css의 기본 사용방법과 선택자의 종류 및 사용방법
+
+```html
+<!DOCTYPE html>
+<!-- 1) css의 기본 사용방법과 선택자의 종류 및 사용방법 -->
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+    <link type="text/css" rel="stylesheet" href="../common/css/mystyle.css">
+	<style type="text/css">
+		p{			/*	1. html을 선택자로 사용할 수 있다. 	*/
+			color: #f7d572;
+			background-color: #ff0000
+		}
+		body{
+			color : green;
+			font-size; 9pt;
+			font-family: 굴림체;			
+		}
+		.myclass{	/*	2. 태그 내부에 class속성을 정의하고 선택자로 사용할 수 있다.
+						=> 중복해서 정의하는 것이 가능 	*/
+			color: blue;
+		}
+		#mydiv{	/* 3. 태그 내부에 id속성을 정의하고 선택자로 사용할 수 있다.
+					=> id속성은 식별하기 위해서 사용하는 것이므로 한 문서에서 동일한 이름의 id는 하나만 정의할 수 있다.*/
+			border:solid blue 1px;
+		}
+	</style>
+</head>
+<body>
+	<div class="myclass">
+		HTML 5는 별도 프로그램을 깔지 않아도 인터넷 브라우저상에서 화려한 그래픽 효과를 구현하며,
+		음악ㆍ동영상을 자유롭게 감상할 수 있는 마크업 언어(markup language)이다.
+	</div>
+	<p>
+		2004년부터  HTML 5 표준화 그룹인 WHATWG(Web Hypertext Application Technology Working Group)는
+		HTML 5를 HTML의 차기 핵심 표준으로 만들기 위한 세부 작업을 시작하였고, 2014년 10월 웹표준화기구 월드와이드컨소시엄(W3C)은
+		HTML 5을 웹표준으로 선정했다.
+	</p>
+	<div class="myclass"> 
+		이에 따라 애플ㆍ마이크로소프트(MS), 구글, 페이스북 등 글로벌 IT 기업들은 HTML 5 시대 주도권을
+		잡기 위해 치열한 경쟁에 돌입하기도 했다.
+	</div>
+	<br/>
+	
+	<div>
+		HTML 5는 별도 프로그램을 깔지 않아도 인터넷 브라우저상에서 화려한 그래픽 효과를 구현하며,
+		음악ㆍ동영상을 자유롭게 감상할 수 있는 마크업 언어(markup language)이다.
+	</div>
+	<p class="myclass">
+		2004년부터  HTML 5 표준화 그룹인 WHATWG(Web Hypertext Application Technology Working Group)는
+		HTML 5를 HTML의 차기 핵심 표준으로 만들기 위한 세부 작업을 시작하였고, 2014년 10월 웹표준화기구 월드와이드컨소시엄(W3C)은
+		HTML 5을 웹표준으로 선정했다.
+	</p>
+	<div id="mydiv">
+		이에 따라 애플ㆍ마이크로소프트(MS), 구글, 페이스북 등 글로벌 IT 기업들은 HTML 5 시대 주도권을
+		잡기 위해 치열한 경쟁에 돌입하기도 했다.
+	</div>
+</body>
+</html>
+```
+
+##### 2) css와 선택자를 활용하는 방법
+
+```html
+<!DOCTYPE html>
+<!-- 2) css를 사용하는 방법과 선택자를 활용하는 방법 -->
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+    <link type="text/css" rel="stylesheet" href="../common/css/mystyle.css">
+	<style type="text/css">
+		div a{			/* 4. 태그 안에 정의된 하위 태그를 선택자로 사용할 수 있다. */
+			color: red;
+			text-decoration: none;	
+		}
+		h1,h2{			/* 5. 여러 선택자를 복수개 선택해서 사용할 수 있다.  */
+			color: blue;
+		}
+		/* div중에서 myclass인 것만 바꾸고 싶을때  */
+		div.myclass{	/* 6. class속성이나 id속성이 정의된 태그만 선택자로 사용할 수 있다. */
+			color: aqua;
+		}
+	</style>
+</head>
+<body>
+	<h1>지금은 CSS선택자 연습 중</h1>
+	<h2><a href="#">1. 태그명</a></h2>
+	<h2>2. class속성</h2>
+	<h2>3. id속성</h2>
+	<div class="myclass">
+		<a href="#">HTML 5</a>는 별도 프로그램을 깔지 않아도 인터넷 브라우저상에서 화려한 그래픽 효과를 구현하며,
+		음악ㆍ동영상을 자유롭게 감상할 수 있는 마크업 언어(markup language)이다.
+	</div>
+	<p>
+		2004년부터  HTML 5 표준화 그룹인 WHATWG(Web Hypertext Application Technology Working Group)는
+		HTML 5를 HTML의 차기 핵심 표준으로 만들기 위한 세부 작업을 시작하였고, 2014년 10월 웹표준화기구 월드와이드컨소시엄(W3C)은
+		HTML 5을 웹표준으로 선정했다.
+	</p>
+	<div class="myclass"> 
+		이에 따라 애플ㆍ마이크로소프트(MS), 구글, 페이스북 등 글로벌 IT 기업들은 HTML 5 시대 주도권을
+		잡기 위해 치열한 경쟁에 돌입하기도 했다.
+	</div>
+	<br/>
+	
+	<div>
+		HTML 5는 별도 프로그램을 깔지 않아도 인터넷 브라우저상에서 화려한 그래픽 효과를 구현하며,
+		음악ㆍ동영상을 자유롭게 감상할 수 있는 마크업 언어(markup language)이다.
+	</div>
+	<p class="myclass">
+		2004년부터  HTML 5 표준화 그룹인 WHATWG(Web Hypertext Application Technology Working Group)는
+		HTML 5를 HTML의 차기 핵심 표준으로 만들기 위한 세부 작업을 시작하였고, 2014년 10월 웹표준화기구 월드와이드컨소시엄(W3C)은
+		HTML 5을 웹표준으로 선정했다.
+	</p>
+	<div id="mydiv">
+		이에 따라 애플ㆍ마이크로소프트(MS), 구글, 페이스북 등 글로벌 IT 기업들은 HTML 5 시대 주도권을
+		잡기 위해 치열한 경쟁에 돌입하기도 했다.
+	</div>
+</body>
+</html>
+```
+
+#### 2. 스타일 시트
+
+* 스타일 시트는 외부/내부/인라인 스타일 시트를 지정할 수 있고 인라인의 우선순위가 가장 높다.
+
+##### 2) 내부 스타일시트 사용방법
+
+>  *선택자 참조*
+
+##### 1) 외부 스타일시트 사용방법
+
+```css
+"mystyle.css"
+@charset "EUC-KR";
+body{
+	background-color: pink	
+}
+```
+
+#### 3. 폰트 스타일
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	body{
+		/* css내부에서 이미지나 파일이나 여러 경로를 정의해야 하는 경우 상대경로, 절대경로 속성을 동일하게 적용한다. */
+		background-image: url("../images/background.gif");
+		background-repeat: no-repeat;
+	}
+	.shadow{
+		text-shadow:5px 5px 5px gray;
+		font-size: 40pt;
+		font-family: HY견고딕;
+	}
+	.op10{
+		opacity: 1
+	}
+	.op06{
+		opacity: 0.6
+	}
+	.op02{
+		opacity: 0.2
+	}
+</style>
+</head>
+<body>
+	<!-- 배경지정하기 -->
+	<p class="shadow">그림자 효과주기 정말 멋져....</p>
+	<h1 class="op10">투명도 1</h1>
+	<h1 class="op06">투명도 0.6</h1>
+	<h1 class="op02">투명도 0.2</h1>
+
+<p><img src="../images/jang1.jpg" class="op10"></img></p>
+<p><img src="../images/jang1.jpg" class="op06"></img></p>
+<p><img src="../images/jang1.jpg" class="op02"></img></p>
+
+	<p style="font-size: xx-small;">font-size xx-small</p>
+	<p style="font-size: x-small;">font-size x-small</p>
+	<p style="font-size: small;">font-size small</p>
+	<p style="font-size: medium;">font-size medium</p>
+	<p style="font-size: large;">font-size large</p>
+	<p style="font-size: x-large;">font-size x-large</p>
+	<p style="font-size: xx-large;">font-size xx-large</p>
+	<p style="font-size: larger;">font-size larger</p>
+	<p style="font-size: samller;">font-size smaller</p>
+	<p style="font-size: 12px;">font-size 12px</p>
+	<p style="font-size: 150%;">font-size 150%</p>
+	<p style="font-style: normal;">Font style - normal</p>
+	<p style="font-style: italic;">Font style - italic</p>
+	<p style="font-style: oblique;">Font style - oblique</p>
+
+	<p style="font-weight: normal;">font-weight normal</p>
+	<p style="font-weight: bold;">font-weight bold</p>
+	<p style="font-weight: bolder;">font-weight bolder</p>
+	<p style="font-weight: lighter;">font-weight lighter</p>
+	<p style="font-weight: 100;">font-weight 100</p>
+	<p style="font-weight: 200;">font-weight 200</p>
+	<p style="font-weight: 300;">font-weight 300</p>
+	<p style="font-weight: 400;">font-weight 400</p>
+	<p style="font-weight: 500;">font-weight 500</p>
+	<p style="font-weight: 600;">font-weight 600</p>
+	<p style="font-weight: 700;">font-weight 700</p>
+	<p style="font-weight: 800;">font-weight 800</p>
+	<p style="font-weight: 900;">font-weight 900</p>
+
+	<p>기존의 HTML은 웹 문서를 다양하게 설계하고 수시로 변경하는데 많은 제약이 따르는데, 이를 보완하기 위해 만들어진
+		것이 스타일 시트이고 스타일 시트의 표준안이 바로 CSS 이다. 간단히 스타일시트라고도 한다.</p>
+	<p>기존의 HTML은 웹 문서를
+		다양하게 설계하고 수시로 변경하는데 많은 제약이 따르는데, 이를 보완하기 위해 만들어진 것이 스타일 시트이고 스타일 시트의
+		표준안이 바로 CSS 이다. 간단히 스타일시트라고도 한다.</p>
+	<p>기존의 HTML은 웹 문서를
+		다양하게 설계하고 수시로 변경하는데 많은 제약이 따르는데, 이를 보완하기 위해 만들어진 것이 스타일 시트이고 스타일 시트의
+		표준안이 바로 CSS 이다. 간단히 스타일시트라고도 한다.</p>
+
+
+</body>
+</html>
+```
+
+#### 4. 커서 스타일
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+<p style="cursor: auto">auto</p>
+	<p style="cursor: crosshair">crosshair</p>
+	<p style="cursor: default">default</p>
+	<p style="cursor: e-resize">e-resize</p>
+	<p style="cursor: help">help</p>
+	<p style="cursor: move">move</p>
+	<p style="cursor: n-resize">n-resize</p>
+	<p style="cursor: ne-resize">ne-resize</p>
+	<p style="cursor: nw-resize">nw-resize</p>
+	<p style="cursor: pointer">pointer</p>
+	<p style="cursor: progress">progress</p>
+	<p style="cursor: s-resize">s-resize</p>
+	<p style="cursor: se-resize">se-resize</p>
+	<p style="cursor: sw-resize">sw-resize</p>
+	<p style="cursor: text">text</p>
+	<p style="cursor: w-resize">w-resize</p>
+	<p style="cursor: wait">wait</p>
+
+</body>
+</html>
+```
+
+#### 5. 링크 스타일
+
+1. a:link :방문되지 않은 링크의 스타일
+
+2. a:visited : 방문된 링크의 스타일
+
+3. a:hover : 마우스가 위에 있을 때의 스타일
+
+4. a;active : 마우스로 클릭되는 때의 스타일
+
+* " **:(콜론)** " 은 실체가 없고 상황이 주어졌을 때 실행되는 것.
+* hover는 link와 visted다음에 위치해야 하고 active는 hover 다음에 위치해야한다.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style type="text/css">
+		a:link {/* 방문전  */
+			color: black;
+			text-decoration: none;		
+		}
+		a:visted{/* 방문후  */
+			color: yellow;
+		}
+		a:hover {/* 마우스 포인터를 올려 놓았을 때(a태그가 아니어도 모두 적용 가능)  */
+			color: blue;
+			text-decoration: underline;
+		}
+		a:active {/* 마우스를 클릭하는 시점 */
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<h1>하이펑크에서 사용할 수 있는 pseudo선택자</h1>
+	<a href="http://www.google.com">구글</a>
+	<a href="http://www.kitri.re.kr">kitri</a>
+	<a href="http://data.seoul.go.kr">서울시 데이터센터</a>
+	<a href="http://www.data.go.kr">정부 데이터센터</a>
+</body>
+</html>
+```
+
+#### 6. 리스트 스타일
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style type="text/css">
+		ul{
+			list-style: none;
+			text-align: center;
+			font-size: 18pt;
+			font-weight: bolder;
+			border-bottom: solid 2px red;
+			border-top: solid 2px red;
+			padding: 10px;
+			width: 80%;
+		}
+		ul li{
+			display: inline; /* 모든 항목이 한 줄에 보여지도록 설정 */
+			text-transform: uppercase;
+			padding: 10px; /* 간격 */
+			letter-spacing: 10px; /* 자간 간격 */
+		}
+		ul li:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>Home</li>
+		<li>Product</li>
+		<li>About</li>
+		<li>Board</li>
+	</ul>
+</body>
+</html>
+```
+
+#### 7. 박스모델(box model)
+
+#### 8.포지셔닝(positioning)
+
+
+
