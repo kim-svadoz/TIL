@@ -934,9 +934,303 @@ body{
 </html>
 ```
 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style type="text/css">
+		ul{
+			list-style: none;
+			text-align: center;
+			font-size: 18pt;
+			font-weight: bolder;
+			border-bottom: solid 2px red;
+			border-top: solid 2px red;
+			padding: 10px;
+			width: 80%;
+		}
+		ul li{
+			display: inline; /* 모든 항목이 한 줄에 보여지도록 설정 */
+			text-transform: uppercase;
+			padding: 10px; /* 간격 */
+			letter-spacing: 10px; /* 자간 간격 */
+		}
+		ul li:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>Home</li>
+		<li>Product</li>
+		<li>About</li>
+		<li>Board</li>
+	</ul>
+</body>
+</html>
+```
+
 #### 7. 박스모델(box model)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR"/>
+<title>Insert title here</title>
+<style type="text/css">
+	 p.none {border-style:none;}
+    p.dotted {border-style:dotted;}
+    p.dashed {border-style:dashed;}
+    p.solid {border-style:solid;}
+    p.double {border-style:double;}
+    p.groove {border-style:groove;}
+    p.ridge {border-style:ridge;}
+    p.inset {border-style:inset;}
+    p.outset {border-style:outset;}
+    p.hidden {border-style:hidden;}
+</style>
+</head>
+<body>
+	<div class="rect">
+		지금은 CSS연습 중입니다.
+	</div>
+	<div class="rect2">
+		지금은 CSS연습 중입니다.
+	</div>
+	
+	<p class="none">No border.</p>
+	<p class="dotted">A dotted border.</p>
+	<p class="dashed">A dashed border.</p>
+	<p class="solid">A solid border.</p>
+	<p class="double">A double border.</p>
+	<p class="groove">A groove border.</p>
+	<p class="ridge">A ridge border.</p>
+	<p class="inset">An inset border.</p>
+	<p class="outset">An outset border.</p>
+	<p class="hidden">A hidden border.</p>
+</body>
+</html>
+
+```
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="EUC-KR">
+		<title>Insert title here</title>
+		<style type="text/css">
+			#mydiv1{
+				position:absolute; 	/* absoulte : 절대위치 */
+				top:100px;
+				left:100px;
+				width: 400px;
+				height: 300px;
+				background-color: blue;
+				border-color: aqua;
+				border-style: solid;
+				border-width: 5px;
+				z-index:2			/* 그려지는 순서 : 1부터 시작 */
+			}
+			#mydiv2{
+				position:absolute; 	/* absoulte : 절대위치 */
+				top:150px;
+				left:150px;
+				width: 400px;
+				height: 300px;
+				background-color: aqua;
+				border-color: blue;
+				border-style: solid;
+				border-width: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mydiv1"></div>
+		<div id="mydiv2"></div>
+	</body>
+</html>
+```
 
 #### 8.포지셔닝(positioning)
 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style type="text/css">
+#outer {
+	background-color: yellow;
+	position: absolute;
+	width: 500px;
+	left: 100px;
+	top: 100px;
+	height: 500px;
+}
+
+#jang {
+	background-color: #eaf2d3;
+	width: 100px;
+	position: static; /* 원래 기본 흐름대로 보여진다. - 위에서 아래로, 왼쪽에서 오른쪽으로
+											- 부모의 위치에 영향을 받는다. */
+	left: 70px;
+	top: 10px;
+}
+
+#kim {
+	background-color: #a7cece;
+	width: 100px;
+	position: relative; /* 원래 있어야 하는 위치로부터 상대이동 */ left : 70px;
+	top: 10px;
+	left: 70px;
+}
+
+#lee {
+	background-color: #f0bc2e;
+	width: 100px;
+	position: absolute; /* 기준위치에서 지정된 위치로 이동, 부모위치(#outer)를 기준으로 설정 */
+	left: 70px;
+	top: 10px;
+}
+
+#hong {
+	background-color: #a0f090;
+	width: 100px;
+	position: fixed; /* 기준위치에서 지정된 위치로 이동 - 부모의 영향을 받지 않고 고정된 위치로 이동
+													- 윈도우 기준으로 무조건 지정된 위치에서 보여진다. */
+	left: 70px;
+	top: 10px;
+}
+
+#jung {
+	background-color: #a0f090;
+	width: 100px;
+	position: absolute;	/* 기준위치에서 지정한 위치로 이동 - 도큐먼트 기준이므로 해상도와 상관없이 무조건 보임 */
+	left: 1000px;
+	top: 1800px;
+}
+
+#park {
+	background-color: #f0bc2e;
+	width: 100px;
+	position: fixed; /* 기준위치에서 지정한 위치로 이동 - 윈도우 기준이므로 윈도우 해상도를 벗어나면 화면에서 안보인다.
+											- 윈도우 해상도를 벗어나지 않으면 스크롤해도 화면에서 지정한 위치에서 고정 */
+	left: 1000px;
+	top: 1800px;
+	
+}
+</style>
+</head>
+<body>
+	<div id="outer">
+		<div id="jang">장동건</div>
+		<div id="kim">김성현</div>
+		<div id="lee">이민호</div>
+		<div id="hong">홍길동</div>
+		<div id="jung">정우성</div>
+		<div id="park">박나래</div>
+	</div>
+</body>
+</html>
+```
+
+## 20-01-06 월
+
+### CSS
+
+#### 9. 플로팅(floating)
+
+> layout을 잡겠다 !!
+
+```html
+
+```
+
+* bootstrap(부트스트랩)
+
+  => html + css + javascript 
+
+  => 버전충돌을 조심하자~!
+
+* Bootstrap CDN
+
+  * https://www.w3schools.com/
+
+    => 
+
+  * CDN에서 링크를 주는데 뭐가 장점? 내가 사용하는 js나 css, jQuery파일들을 특정 서버에서 다운 받아서 사용
+
+  * 내부에서 라이브러리 파일들을 사용할 수 있도록 범용 링크 경로 제공
+
+  * 내가 customizing 하지않을거면 CDN으로 쓰는게 일반적
+
+  * 서버 경로로 카피해도 다운이 될것이다!!
+
+- 다운받는 폴더 => temp 폴더에 저장
+- 이사이트에서 쓰는 파일이 뭐지? => F12 클릭 => 확인가능
+- 인터넷옵션-검색기록 설정 - "파일보기"
+
+* Grid System?!
+  * 그리드를 12개로 나누어서 관리한다. 화면에 12개가 채워지도록 만들기만 하면 됌
 
 
+
+* bootstrap_exam 폴더 생성
+* 주제를 정하고 주제에 대한 소개 페이지를 두 장 작성
+* boostrap을 적용한 페이지
+
+## 20-01-07 화
+
+### JavaScript
+
+* 디버깅이 어렵다.
+
+* 자동완성 플러그인을 설치하지 않은이상 자동완성이 없다.
+
+  
+
+* 이벤트에 반응하는 동작을 구현할 수 있다. ( 가장 큰 용도 ! )
+
+* 비동기 통신( Ajax를 통해 전체 페이지를 다시로드하지 않고도 서버로부터 새로운 페이지 콘텐츠를 받거나 데이터를 제출할 때 사용한다.)
+
+#### <초급>
+
+1. 문법
+   1. 사용방법
+   2. 변수
+   3. 제어구문
+2. 함수
+3. 내장객체
+   1. 내장객체
+   2. String, Array, Date, Math
+4. 이벤트핸들러
+5. 브라우저객체모델(BOM)
+
+#### <중급>
+
+1. DOM
+2. JSON
+3. Ajax
+4. 자바스크립트 프로토타입
+   1. 사용자 정의 객체 정의
+   2. 클로저
+
+#### <고급>
+
+* 자바스크립트의 프레임워크 사용
+
+1. bootstrap - css와 javascript의 프레임워크
+2. MEAN stack
+   1. MongoDB
+   2. ExpressJs(express.js)
+   3. AngularJs
+   4. NodeJs
+3. ReactJs - 웹 UI개발에 사용(facebook이 공개한 오픈소스 라이브러리)
+4. Vue.js
+5. D3
