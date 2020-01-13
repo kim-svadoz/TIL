@@ -65,7 +65,7 @@
 
 * 서버에 대한 정의 : **Tomcat 9.0 - conf - server.xml**
 
-  * 한글 인코딩 방식 : "UTF-8"  "EUC-"
+  * 한글 인코딩 방식 : "UTF-8"  "EUC-KR"
   * <> : tag 혹은 엘리먼트 : 이런 것들을 markup 언어라고 한다
 
 * 웹에 대한 정의 : **Tomcat 9.0 - conf - web.xml**
@@ -1237,3 +1237,165 @@ body{
 4. Vue.js
 5. D3
 
+## 20-01-08 수
+
+#### <1> DOM
+
+> 문서 객체 모델
+>
+> HTML문서를 객체로 표현한 것
+
+* 결국엔 jQuery로 개발하겠지만 실제 문법은 자바스크립트 문법!
+
+#### <2> BOM
+
+> 브라우저 객체 모델
+>
+> 웹 브라우저를 객체로 표현한 것
+
+> 브라우저에 출력되는 모든 구성요소를 객체로 정의하고 접근하는 방법
+
+### JavaScipt - BOM
+
+* help- marketplace - tern을 검색하여 1.2.0 installed - clientweb - configure
+* 내장객체는 브라우저 안의 기능= > 엔진
+* date = new Date();
+
+1. window
+2. location
+3. document
+4. form(양식 태그)
+5. image
+
+#### 1. 접근방법
+
+* 모든 객체는 계층구조를 갖고 있다.
+
+  * window.document.....
+
+* form태그와 form태그 하위 태그를 객체로 접근하기 위해서 name속성을 정의하고 접근
+
+  ```javascript
+  <form name = "myform">
+      아이디 :<input type="text" name="id">
+      패스워드 :<input type="password" name="pass">
+  </form>
+  ```
+
+  * window. document. 폼객체. 텍스트객체
+  * window.document.myform.id.속성(메소드)
+  * 주로 window.document는 생략 ( 내페이지에서 갖고 올때는 생략가능하지만 다른 페이지에서 사용할 거면 X )
+
+* id를 정의하는 경우
+
+  * 사실은 DOM의 방식인데 섞어서 쓰기도 한다.
+
+  ```javascript
+  <div id="mydiv">
+  </div>
+  객체 = document.getElementById("mydiv")
+  ```
+
+* setTimeout(code, ms) : 지정한 시간이 지나면 딱 한번 실행
+* setInterval(code, ms) : 지정한 시간 마다 계속 호출
+
+* div는 텍스트이기때문에 DOM으로 접근해야 한다.
+
+* 우리가 사용하는 방식? - 동기통신? - 누르면 반짝? - 서버들어갔다 나오는거 - 정상 - 그런갑다
+
+​	
+
+## 20-01-09 목
+
+### JavaScript - BOM
+
+####  2. window
+
+##### 1) 대화상자
+
+- alert
+- prompt
+- confirm
+
+##### 2) popup
+
+* open
+* close
+
+##### 3) 자동실행
+
+* setTimeout
+* setInterval
+* clearInterval
+
+##### 4) 데이터처리
+
+* parseInt : 숫자 모양을 한 문자열을 숫자로 변환
+* inNaN : 입력받은 값이 숫자인지 문자인지 확인(타입을 비교하지 않고 실제 값을 비교 - 문자가 입력되면 true)
+* eval : 매개변수로 전달된 데이터(식,연산)를 실제로 실행( 악성코드 등 보안에 취약 )
+* trim : 공백을 제거
+
+---
+
+* 유일한건 id 중복되는건 class 속성으로 정의	
+
+  < js_check_exam.html>
+
+* 뭘 제어해야 하는지 먼저 파악하기.
+
+1. 전체 체크를 선택하면 모든 항목이 체크/해제
+2. 전체 체크가 되면 수량과 판매가를 계산해서 구매 예정가에 출력
+3. 각각의 체크를 선택/해제 했을때 구매예정가가 변경되도록
+4. totalPrice출력하기
+
+#### 3. event
+
+* submit은 하나의 form안에 하나밖에 못쓴다. => 서버로 전송하는 것!
+  * onclick = "formexe(this.from)" 을 사용 
+
+* onclick
+* onkeyup : 키보드로 내용 입력
+* onmouseover , onmouseout : 마우스가 위에 올릴 때, 내릴때
+* onchange : 데이터 입력 직후
+* onload : 로딩할 때
+
+* 카카오지도는 우리 ip말고 대표ip를 써야해용
+
+### JavaScript - DOM
+
+* Ajax..? 전체 페이지를 바꾸는게 아니라 일부만 바꾸겠다?
+* 함수의 호이스팅
+  1. 변수로 익명의 함수를 정의
+  2. callback
+
+## 20-01-10 금
+
+### JavaScrip - DOM
+
+* 함수의 호이스팅
+  * 윈도우가 실행되면 onload가 실행될거고 function()이 실행될거다.
+* 문서의 모든 구성요소를 객체로 변환하는 게 DOM이다.
+* 노드리스트는 배열이라고 생각.
+* 자바스크립트의 문자열 비교는 ' == ' // 자바는 .equals()
+
+* div
+  * p
+  * #text
+  * p
+  * #text
+  * ...
+
+* lastChild는 공백 포함하고 / lastElementChild는 공백 포함 X
+
+### jQuery
+
+* www.jquery.com
+* $( 선택자 ).( _____ ) : jQuery의 시작이다!
+* 지금단계 목적: DOM 제어를 하기 위해서 + @ 로직이 들어가는 것을 편하게 하기 위해서
+* Ajax를 위해서.(백엔드 다음에 배울것)
+
+#### - JavaScript 라이브러리
+
+1. DOM
+2. Ajax
+3. effect
