@@ -1140,6 +1140,8 @@ body{
 </html>
 ```
 
+---
+
 ## 20-01-06 월
 
 ### CSS
@@ -1184,6 +1186,8 @@ body{
 * bootstrap_exam 폴더 생성
 * 주제를 정하고 주제에 대한 소개 페이지를 두 장 작성
 * boostrap을 적용한 페이지
+
+---
 
 ## 20-01-07 화
 
@@ -1236,6 +1240,8 @@ body{
 3. ReactJs - 웹 UI개발에 사용(facebook이 공개한 오픈소스 라이브러리)
 4. Vue.js
 5. D3
+
+---
 
 ## 20-01-08 수
 
@@ -1303,7 +1309,7 @@ body{
 
 * 우리가 사용하는 방식? - 동기통신? - 누르면 반짝? - 서버들어갔다 나오는거 - 정상 - 그런갑다
 
-​	
+---
 
 ## 20-01-09 목
 
@@ -1368,6 +1374,8 @@ body{
   1. 변수로 익명의 함수를 정의
   2. callback
 
+---
+
 ## 20-01-10 금
 
 ### JavaScrip - DOM
@@ -1399,3 +1407,252 @@ body{
 1. DOM
 2. Ajax
 3. effect
+
+---
+
+## 20-01-13 월
+
+### jQuery
+
+min.js ? -> min이 붙으면 압축 파일
+
+script 링크가 없으면 jQuery 실행 안된다.
+
+#### 1. DOM
+
+* 선택자
+* DOM 관련 메소드
+
+#### 2. Ajax
+
+#### 3. Effect
+
+#### 4. jQuery UI
+
+* jquery.com - jquery UI
+
+### 백엔드 - Servlet&JSP
+
+* 서블릿을 가지고 직접 개발하는 회사는 거의 없지만 이걸 모르면 웹의 아키텍쳐가 어떻게 구성되는지 모른다.
+* 웹의 아키텍쳐를 이해할 수 있도록 Servlet&JSP를 배울것!
+* new - dynamic web project- 
+* html 태그에는 자바 명령어를 사용 할 수없다.. 그럼 어떻게 submit버튼으로 자바 코드를 호출할 것인가?
+  * 서블릿이란? => 웹에서 자바코드를 부를 때 사용하는 기술
+  * 내가 로그인 버튼 누를때 servlet 호출?
+
+### 백엔드 - Spring Framework
+
+---
+
+## 20-01-14 화
+
+* 스프링이 나오기 전 원래 백엔드는 Servlet&Jsp. -> 서블릿의 구조가 스프링에 사용이 된다.
+
+### 백엔드 - Servlet&JSP
+
+* 웹서버의 요청을 당겨서 파악한뒤 웹서버(WAS)에서 찾아서 서비스. 
+  * 서블릿이 요청이 됐다? 웹 서버는 자바를 실행 못하기 때문에 다른 라이브러리로 토스
+    * 서블릿 컨테이너가 넘겨받은 서블릿을 찾아서
+* 정적웹페이지
+  * 누가 실행해도 바뀌지 않는 페이지
+
+> *결국에 우리가 서블릿을 신청하는 것은 웹페이지를 만드거나 하이퍼링크를 만들거나 이미지를 클릭하거나, 이렇게 만든 구성요소는 태그로 만드는 것. => 태그에서 자바코드를 실행해야 하는데, 우리가 지금까지 자바코드를 실행하는 방법은 new 로 메소드를 호출하는게 아니라 => 태그, css, html에서 자바코드를 쓸 수 없다 => 하지만 요청을 하긴 해야 한다. 모든 사람들이 같은 규칙으로 서블릿 요청*
+
+#### 1. 서블릿이란?
+
+* 서블릿은 클라이언트 페이지에서 발생하는  클라이언트에 요청을 처리하기 위한 기술
+* 클라이언트로부터 요청이 전달되면 서버에서 실행되며 DB연동이나 서버의 자원을 액세스하여 만들어진 결과를 클라이언트로 응답한다.
+* 클라이언트의 요청을 인식하고 실행되도록 하기 위해서는 서블릿은 정해진 규칙대로 작성이 되어야 하고, 서버가 서블릿을 찾아서 실행할 수 있도록 정해진 위치에 작성되어야 한다.
+  * 정해진 위치? : 표준화된 폴더 구조안에 있는 classes 폴더(서블릿 디렉토리)
+    * C:\iot\setup\java\work\webwork\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps에서 찾는다.
+
+![image-20200114093838703](images/image-20200114093838703.png)
+
+#### 2. 서블릿 작성규칙
+
+1. 표준화된 폴더 구조 안에서 서블릿 디렉토리에 저장되어야 된다. - classes 폴더
+
+   * **C:\iot\setup\java\work\webwork\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\serverweb\WEB-INF\classes**에 작성되어야 한다. => 이 위치에 서블릿 클래스가 없으면 못 찾는다.
+
+2. public 클래스로 작성해야 한다.
+
+   * 서버가 찾아서 실행해야 하므로
+
+3. 서블릿클래스를 상속해야 한다.
+
+   * 서버가 우리가 작성한 서블릿 클래스를 찾아서 생성하고 호출하기 위해서는 서버가 인식할 수 있는(서버가 사용할 수 있는) 타입이어야 하므로 서버가 서버에 등록된 타입으로 서블릿 클래스를 작성한다.
+   * Servlet(인터페이스)이 => **아래 클래스서블릿들을 상속해야 한다.**
+     * GenericServlet(클래스) - 일반적인 내용을 담고 있는 서블릿
+     * HttpServlet(클래스) - http프로토콜에 특화된 내요을 담고 있는 서블릿
+     * MyServlet - 내가 하고 싶은 일을 담고 있는 서블릿(개발자가 만드는 서블릿)
+   * serverweb 오른쪽 클릭 - properties - build path - add library - tomcat9.0 ㄱㄱ
+
+4. 서버가 호출하는 메소드가 오버라이딩 해야 한다.
+
+   * 서블릿 클래스는 일반 클래스를 사용하는 방법처럼 객체생성해서 사용하는 클래스가  아니다.
+   * 서블릿이 호출되면 서버가 서블릿 객체를 생성하고 적절한 시점에 따라 정해진 메소드를 자동으로 호출한다.
+   * 즉, 서블릿의 *LifeCycle*을 서버가 관리한다.
+   * *LifeCycle* ? : 객체를 생성하고 소멸하는 것
+   * 서버가 적절한 시점에 따라 자동으로 메소드를 호출할 때 원하는 작업을 처리하기 위해서는 서버가 호출하는 메소드를 오버라이딩해서 내가 원하는 내용을 기술해야 한다.
+
+   **[오버라이딩할 메소드]**
+
+   *- init* : 서블릿이 초기화될 때 호출
+
+   *- service* : 클라이언트가 요청을 하면 호출되는 메소드
+
+   ​	=> 클라이언트의 요청을 처리할 수 있는 내용을 기술
+
+   ​	=> 요청방식의 구분없이 모두 호출
+
+   ​	ex) 로그인, 게시판 목록보기, 회원가입....
+
+   *- doGet* : service와 동일하게 동작하며 클라이언트가 get방식으로 요청하는 경우에만 호출
+
+   *- doPost* : service와 동일하게 동작하며 클라이언트가 post방식으로 요청하는 경우에만 호출
+
+   *- destroy* : 서블릿 객체가 소멸될 때 (메모리에서 해제될 때) 호출
+
+5. 서블릿을 등록
+
+   * 서버가 서블릿을 찾아서 실행할 수 있도록 서블릿을 web.xml에 등록
+   * *web.xml*? : 서블릿에 대한 내용을 서버에 등록하는 설정파일
+
+   1) 서블릿 등록
+
+   * 사용할 서블릿이 어떤 클래스인지 정의
+
+   ```xml
+   <servlet>
+     	<servlet-name>서블릿의 이름(별칭)</servlet-name>
+     	<servlet-class>실제 사용할 서블릿클래스(패키지 포함)</servlet-class>
+   </servlet>
+   ```
+
+   ex) basic패키지에 작성한 FirstServlet을 first라는 이름으로 등록
+
+   ```xml
+   <servlet>
+     	<servlet-name>First</servlet-name>
+     	<servlet-class>basic.FirstServlet</servlet-class>
+   </servlet>
+   ```
+
+   2) 서블릿 매핑
+
+   * 서블릿을 어떤 url로 요청할지 등록
+
+   ```xml
+   <servlet-mapping>
+     	<servlet-name>미리등록한 서블릿의 이름</servlet-name>
+     	<url-pattern>요청url(반드시 /나 .으로 시작)</url-pattern> 
+   </servlet-mapping>
+   ```
+
+   ex) 위에서 등록한 first서블릿을 /first.multi로 요청
+
+   ```xml
+   <servlet-mapping>
+     	<servlet-name>first</servlet-name>
+     	<url-pattern>/first.html</url-pattern> //path이름은 내맘대로
+   </servlet-mapping>
+   ```
+
+    =>  이렇게 요청하면 first라는 서블릿을 호출할건데 그 first는 basic.FirstServlet에서 만들어진 것이고 그건 basic에 있다.
+
+> xml파일은 다른 플랫폼(파이썬, 닷넷 등등등) 에서 사용하기 위해서 만들어진 문서이고 다소 무거운 단점이 있음. => 그래서 나온게 *JSON* 
+
+#### 3. 서블릿 요청 방법
+
+1. get방식으로 요청
+
+   1) 주소표시줄에 입력하고 요청
+
+   * 거의대부분 테스트용으로 사용
+   * http://70.12.115.65:8088/serverweb/first.multi
+   * *serverweb* ? : server.xml에 등록한 path (보통은 context명)
+   * *first.multi* ? : web.xml에 등록한 요청 path ( <url-pattern>에 등록 )
+
+   ```java
+   ex) GuGuServlet 작성하기
+      => 콘솔에 7단출력하기
+      서블릿명 : gugu
+      요청url : /gugu.html
+      FistServlet과 동일한 방법으로 요청하고 .java와 실행화면 캡쳐 제출
+   ```
+
+   ```html
+   <a href="http://localhost:8088/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
+   <a href="http://70.12.115.65:8088/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
+   <a href="/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
+   ```
+
+   2) 하이퍼링크 클릭
+
+   ```html
+   <a href="http://서버ip:port:contextpath/서블릿요청url">하이퍼링크</a>
+   <a href="/contextpath/서블릿요청url">하이퍼링크</a>
+   ```
+
+   3) <form>태그에서 method속성을 "get"으로 설정하고 submit버튼 선택
+
+   * action속성에서 설정한다
+   * form태그를 정의하면서 method속성을 생략하면 get방식으로 요청
+   * submit버튼을 눌러서 요청하면 <form>태그의 action속성에 정의한 서블릿이 요청되며 <form></form> 내부에 정의한 모든 양식태그들의 name과 value가 서블릿으로 전달된다.
+
+   ```html
+   <form method="get" action="/contextpath/서블릿요청url">
+       <input type="submit" value="전송/">
+   </form>
+   ```
+
+2. post방식으로 요청
+
+   1) <form>태그에서 method속성을 "post"으로 설정하고 submit버튼 선택
+
+   * action속성에서 설정한다
+   * form태그를 정의하면서 method속성을 생략하면 get방식으로 요청
+   * submit버튼을 눌러서 요청하면 <form>태그의 action속성에 정의한 서블릿이 요청되며 <form></form> 내부에 정의한 모든 양식태그들의 name과 value가 서블릿으로 전달된다.
+
+   ```html
+   <form method="post" action="/contextpath/서블릿요청url">
+       <input type="submit" value="전송/">
+   </form>
+   ```
+
+3. 요청방식
+
+   1. get : 요청할 때 입력하는 내용이 url 뒤에 추가되어 전송되는 방식(요청메세지 헤더에 추가)
+
+      => 클라이언트가 입력하는 내용이 그대로 노출된다.
+
+      => 전송할 수 있는 데이터의 크기에 제한이 있다.
+
+      => *서버의 데이터를 가져오기*
+
+      ex) 게시판 목록 확인하기, 상품정보 가져오기, 검색하기..........
+
+   2. post : 요청메시지 body에 추가되어 전송되므로 클라이언트에 노출되지 않지만 툴을 이용해서 확인하면 확인할 수 있으므로 암호화해서 전송해야 한다.
+
+      => 보낼 수 있는 데이터 크기에 제한이 없다.
+
+      => *서버의 값을 클라이언트가 원하는 값으로 update하는 경우*
+
+      ex) 회원등록(insert문 실행), 회원정보 수정하기(update문 실행), 파일업로드, 메일쓰기
+
+> 서블릿 객체의 소멸
+>
+> 1. WAS의 리로딩
+> 2. Context의 리로딩
+> 3. 서블릿 컴파일
+
+
+
+* web에서 사용하는 내부 저장소 대부분이 Map이고 Set도 추가로 알아야 한다. 
+  * Set은 순서없이 가지고 있는 데이터의 집합
+  * Map은 키와 밸류를 같이 저장하고 있는 구조
+* Iterator ?!
+
+#### 4. 클라이언트가 전달하는 요청 메시지에서 클라이언트의 입력 정보를 추출하기
+
+#### 5. DB연동
