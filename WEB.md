@@ -1971,3 +1971,48 @@ script 링크가 없으면 jQuery 실행 안된다.
 
 #### 5. EL & JSTL
 
+---
+
+## 20-01-20 월
+
+### < MVC 패턴 >
+
+* Model - View - Controller 의 모델2 아키텍쳐 패턴.
+* (client - servelt - dao)
+* 우리가 코드의 양을 줄이기 위해선 서블릿에서 컨트롤러의 부분을 강화해서 작업하자!
+* 스프링 아키텍쳐에는 MVC패턴이 녹아져있다.
+* 우리가 웹을 개발할 때는 M V C를 따로 나누어서 개발한다.
+* 모델단과 뷰단을 따로 분리해서 개발.
+
+### spring.io
+
+- dynamic web project ㅡ> maven project로 변환
+
+- 이클립스 : STS 플러그인 추가
+
+  - STS를 직접 다운받아 사용
+
+  => 가급적 이클립스 버젼과 맞추는 것이 플러그인 사용 등등 좋음.
+
+  => spring.io 사이트 - 페이지 하단 TOOLS- spring tool suite 3 - see all versions - previous 3 version - STS3.9.4.RELEASE
+
+* 서블릿을 거치지않고 LIST.JSP를 실행하면 안되영. 서블릿에서 공유해준 데이터가 없기 때문에 list.jsp에서 널포인트익셉션 뜨기 때문에 먼저 요청되지 않게 해야 한다.
+
+* _Service() 오류 났을때 => 서버 설치 폴더로 ㄱㄱ
+
+  C:\iot\setup\java\work\webwork\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\serverweb\org\apache\jsp\dept
+
+* deptlist가 널이라는 뜻~ 오류 찾아가서
+
+  1. list.jsp와 서블릿에 있는 deptlist 체크
+  2. DAO가서 try안에서 sysout 찍어보고 출력이 되는지
+  3. sql문 맞는지
+  4. dao - select 메소드 가서 sysout으로 파라미터 점검
+  5. 서블릿에서 doGet(doPost) 메소드안에서 점검
+  6. DBUtil에서 아이디와 패스워드가 제대로 넘어가는지
+     * 공유명 확인. DB점검 . sql점검. 파라미터 출력
+
+###  Spring Framework
+
+* 정부에서 표준으로 지원한 프레임 워크
+* 3대 SI 업체에서 사용하는 자체 프레임워크의 내부도 spring framwork
