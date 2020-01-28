@@ -105,3 +105,131 @@
 
   ​															------------------- => 등록한 빈의 이름은 lookup하거나 의존성주입할때 사용한다.
 
+---
+
+# 20-01-28 화
+
+* Model 1 ? => Model 2 ( Controller가 중요 )
+
+* 개발자들이 컨트롤러 부분을 좀 더 편하게 작업하기 위해 .
+
+* 웹사이트는 굉장히 다양하게 치고 들어온다.?(접속) => 사이트 관리가 안돼~(보안, 로그인 등등) 
+
+  => 모든요청이 하나의 통로로 들어오게 만들어 주자!!
+
+  => *Front Controller* 패턴
+
+  => 결국에는 전부 스프링 기반이다~
+
+  < Front Controller >
+
+  * 요청 분석 기능
+  * 요청에 따라 실행할 결과를 찾아서 호출
+  * forward 전담
+  * 한글처리
+  * DB처리
+  * view
+  * .... 등등
+
+* 모든 작업을 클래스 하나로 만들 수 없고 분리시켜야 하기 때문에 RequestMapping이라는 클래스를 하나 만들어서 mycommand.properties를 보고 요청. 
+
+* 실행할 객체를 만들어서 넘겨줘야한다. (다양한 이름과 다양한 패키지) => 타입을 통일시켜줘야 함.
+
+  * Action이라는 걸 상속.(다형성 적용)
+  * 그럼 Action만 하나 넘겨주면 된다
+
+
+
+* STS에서 JSP라이브러리 등록하기 : https://blog.naver.com/heaves1/221592072984 
+* internal, external server 익스터널이 캐시를 덜 받는다.
+* web프로젝트는 라이브러리가 lib에 있어야 한다.
+
+## Spring-STS
+
+### 1. Spring MVC 프로젝트 구성 - maven을 이용하지 않는 경우 
+
+1. Dynamic Web Project 생성
+
+2. 라이브러리를 lib폴더에 복사하기
+
+   ![image-20200128133115312](images/image-20200128133115312.png)
+
+3. DispatcherServlet을 web.xml에 등록
+
+   => 모든 요청이 DispatcherServlet을 통해 진입하도록 설정해야 스프링이 제공하는 여러가지 기능을 적용할 수 있다.
+
+   ( forntController패턴이 적용되어 있다.)
+
+4. spring에서 사용할 설정파일을 작성한다.
+
+   => 따로 등록하지 않으면 web프로젝트에서 사용할 스프링설정 파일은 파일명을 작성할 때 규칙이 있다.
+
+   [DispatcherServlet을 등록한 서블릿명] - servlet.xml
+
+   ex) 서블릿명 : springapp
+
+   ​	/ WEB-INF /
+
+   ​			+
+
+   ​			 l_ springapp-servlet.xml
+
+5. Controller 작성하기
+
+   * 기본 web에서 서블릿과 같은 역할을 하는 클래스
+   * 실제 처리를 담당하는 클래스
+
+6. 스프링설정파일에 컨트롤러 등록하기
+
+   * <bean> 태그를 이용해서 5번에서 생성한 컨트롤러 등록하기
+   * 요청path를 기준으로 컨트롤러를 등록할 것이므로 id속성을 쓰지 않고 name속성을 사용한다.
+   * DispatcherServlet내부에서 요청path에 맞는 컨트롤러를 getBean할 수 있도록 등록
+
+   ```xml
+   [형식]
+   <bean name="요청path" class="컨트롤러 클래스"/>
+   
+   [예제] - test.do로 TestController를 요청
+   <bean name="/test.do" class="test.TestController"/>
+   ```
+
+   * 1,2,3,4번은 한번만 등록하고 5,6번은 계속 해줘야 한다. 6번은 mypropertis에 등록했던 것을 xml에등록하는 것.
+
+### 2. Spring MVC 구성요소
+
+> 스프링 MVC를 구축하고 웹을 실행
+>
+> 스프링이 제공하는 모든 기능을 잘 활용하기 위해서 스프링이 내가 작성한 자바빈을 관리할 수 있도록 작업해야 한다. => *스프링 내부의 컨테이너가 내가 작성한 빈을 생성하고 관리할 수 있도록 작업)*
+>
+> * 이를 위해 모든 요청을 DispatcherServlet이라는 서블릿을 통해 들어올 수 있도록 처리
+
+#### 1.DispatcherServlet 
+
+* 클라이언트의 모든 요청을 처리하기 위해 첫 번재로 실행되는 서블릿
+
+#### 2. HandlerMapping
+
+* 클라이언트가 요청한 path를 분석해서 어떤 컨트롤러를 실행해야 하는지 찾아서 DispatcherServlet으로 넘겨주는 객체
+
+#### 3. Controller
+
+* 클라이언트의 요청을 처리하는 객체
+* DAO의 메소드를 호출하는 기능을 정의
+
+#### 4. ModelAndView
+
+* Controller에서 DAO의 메소드를 실행결과로 만들어진 데이터에 대한 정보나 응답할 view에 대한 정보를 갖고 있는 객체
+
+#### 5. ViewResolver
+
+* ModelAndView에서 저장된 view의 정보를 이용해서 실제 어떤 view를 실행해야 하는지 정보를 넘겨주는 객체
+
+=> 컨트롤러를 기능별로 세분화 시켜놓은 것.( 중앙 집중식 관리! )
+
+=> *스프링MVC를 구축하면 위의 클래스들이 자동으로 실행되며 일처리를 한다. 따라서 필요에 따라 ViewResolver나 handlerMapping객체를 다양하게 등록하고 사용할 수 있다.*
+
+=> 기본 설정을 이용하는 경우 개발자는 Controller만 작성하고 설정파일이나 Annotation으로 등록하면 된다.
+
+
+
+* WEB-INF는 외부에서 절대로 요청될 수 없는 폴더이다. 그 안에 jsp가 있으면 XX
