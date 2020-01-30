@@ -84,7 +84,7 @@
 
 ### <어노테이션을 활용하기>
 
-- 설정파일에 빈을 등록하지 않고 사용ㅎ나다.
+- 설정파일에 빈을 등록하지 않고 사용한다.
 
 - 설정파일에 <context:compent-scan>앨립먼트를 이용해서 컨테이너가 빈을 찾을 수 있도록 패키지를 등록
 
@@ -98,6 +98,8 @@
     - Dice=>dice , Player=>player
     - 이름을 별도로 정의하고 싶으면  괄호를 이용해서 사용가능
   - *Repository* : DAO를 등록하는 경우 사용
+  - *Autowired* : 해당 타입의 bean이 생성된게 있으면 자동으로 맵핑
+    - *Qualifier* ("객체 아이디/이름") : 의존성 주입할 객체 지정
 
 - 빈의 이름을 특별한 이름으로 명시하고 싶으면 ( )안에 " " 로 정의
 
@@ -240,13 +242,14 @@
 
 ## Maven
 
-* <beans> 로 되있는 거는 스프링설정 파일
+* STS에 있는 Build Tool
+* <beans> 로 되있는 거는 스프링설정 파일이다.
 * STS에서 UTF-8 설정하기
   * windows-preferences-General-Workspace-Text file Encoding - UTF8
   * windows-preferences-Web-CSS,HTML,JSP Files - UTF-8
   * windows-preferences-General-Content types- text- Default encoding에 UTF-8
 * 최종프로젝트 - 책 20p
-* 라이브러리를 form.xml에 등록하고 사용할 것임.
+* 라이브러리를 form.xml에 등록하고 사용할 것임 - <dependency>
 
 ## Tiles Framework
 
@@ -274,3 +277,63 @@
    * 만들어야 하는 view가 tiles뷰임을 등록
 
 6. 템플릿을 활용해서 만들어질 뷰의 정보를 tiles설정 파일에 등록
+
+# 20-01-30 목
+
+* 반드시 "config" - "spring-config.xml"에서 DistpatcherServlet 설정을 해줘야 한다 !!
+
+```java
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+			/WEB-INF/config/spring-config.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+```
+
+- tiles를 사용할 때 bootstrap 라이브러리는 layout페이지에만 있으면 된다.( 안그러면 충돌 일어남 )
+- 무슨 작업을 하든 라이브러리 추가하는 작업부터~
+
+
+
+## Spring-JDBC
+
+> jdbc에서 발전된 것이 spring-jdbc
+
+* Connection 관리
+
+  * DriverManager
+  * Data Source : Connection pool 을 활용 - DBCP
+    * 현업에서는 요청이 들어올 때마다 커넥션을 만들어주면 느려지기 때문에, 평균을 내서 미리 확보해 놓는다
+    * 현재는 WAS에서 별도로 Connection pool을 제공해준다.
+
+  
+
+* sql 처리
+
+  * JDBC Template : JDBC의 반복적인 코드를 제거하기 위해 사용되는 클래스
+
+    => JDBC에서 하던 수많은 코드들을 대신 다 해준다
+
+  ```java
+  JdbcTemplate mytemplate;
+  return mytemplate.queryForObject("sql", Type)
+  ```
+
+
+- rowMapper ?!
+
+  ```java
+  While(rs.next()){
+  DTO row = new DTO(rs.getString(1),.....); ----- 이 부분만 rowMapper 객체로 넘겨주는 것이다.
+      								=> 유일하게 달라지는 부분(mapRow에 구현)
+  list.add.....
+  }
+  ```
+
+- 근데 실제로 이것보다 mybatis를 더 많이 쓴다.
