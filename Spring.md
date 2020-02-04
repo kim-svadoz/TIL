@@ -473,4 +473,45 @@
 
   ​		|
 
-  Board
+  BoardContoller
+
+  
+
+# 20-02-03 월
+
+service단? dao단?
+
+ mybatis설정 - dao 작성 - service 작성 - Controller에서 requestmapping 작성 - login.jsp가서 html 확인.
+
+
+
+EmpServiceImpl, EmpDAOImpl, emp.xml(namespace=multi.erp.emp)
+
+request view -> Controller -> service -> dao -> mapper.xml
+
+
+
+
+
+
+
+
+
+​	(login.jsp)			|
+
+​								|
+
+​					response view( board/list 가 실행되도록)
+
+​					로그인이 끝나면 top.jsp의 이미지가 로그인 한 사용자 이미지로 변경
+
+
+
+* resulttype은 db조회 결과 , parametertype은 내가 찍어논거
+* 항상 컨트롤러는 서비스를 autowired, 서비스는 dao를 autowired 
+
+
+
+* Session과 Request ?!
+* 세션을 끌려면 지금은 톰캣늘 내렸다 올려야 함. x 누르고 없어지게 할려면 기타 코딩스킬이 필요
+* 기존에는 mav.addObject로 하지만 이렇게 하면 기본 리퀘스트로 저장. / 우리는 세션으로 할거임
