@@ -528,3 +528,5 @@ request view -> Controller -> service -> dao -> mapper.xml
 
 ## JSON
 
+# ajax, json 반드시 꼭 공부해서 정리하기!!!
+
