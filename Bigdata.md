@@ -112,7 +112,7 @@
 * host에 hadoop 저장
 
   ```bash
-  "다른위치-컴퓨터-etc-hosts파일"
+  '다른위치-컴퓨터-etc-hosts파일'
   192.168.111.128 hadoop01
   192.168.111.129 hadoop02
   192.168.111.131 hadoop03
@@ -133,13 +133,13 @@
   ```bash
   scp 	copy할파일(위치까지 명시) 	copy받을서버의 위치
   scp		/etc/hosts 		root@hadoop02:/etc/hosts
-  "명령어	copy할파일		target서버의 위치와 파일명"
+  '명령어	copy할파일		target서버의 위치와 파일명'
   ```
 
 * 원격 서버에 실행명령
 
   ```bash
-  ssh		서버		"실행할 명령문"
+  ssh		서버		'실행할 명령문'
   ```
 
 * 암호화된 통신을 위해서 공개키 생성 후 배포
@@ -152,6 +152,105 @@
   cd. ssh
   ls
   ssh-copy-id -i id_rsa.pub hadoop@hadoop02
+  ```
+
+  
+
+## 20-02-13 수
+
+> 리눅스는 소유권한이라는게 있다. 따라서 권한을 신경써주자.
+
+* jdk(RPM) 다운 후 설치하기
+
+  ```bash
+  rpm -Uvh jdk-8u231-linux-x64.rpm
+  'U' - 'update'
+  'V' - 'view'
+  'H' - '설치하겠다.'
+  ```
+
+* Hadoop 다운 후 설치하기
+
+  ```bash
+  1. tar-zxvf hadoop-1.2.1.tar.gz 
+  'Z' - 'gzip사용'
+  'X' - '기존의 tar파일의 압축을 풀어주겠다'
+  'V' - '명령어 실행시 화면에 출력'
+  'F' - '파일의 이름을 지정'
+  
+  2. scp /home/hadoop/hadoop-1.2.1.tar.gz hadoop@hadoop02:/home/hadoop/ - '복사하기'
+  3. ssh hadoop03 "tar zxvf hadoop-1.2.1.tar.gz" - '압축풀기'
+  
+  ```
+
+* 각종 설정하기
+
+  ```bash
+  <<< home - hadoop - hadopo.1.2.1. - conf >>>
+  "<hadoop-env.sh>"
+  # The java implementation to use.  Required.
+  export JAVA_HOME=/usr/java/jdk1.8.0_231-amd64
+  
+  "<master>"
+  hadoop02
+  
+  "<slaves>"
+  hadoop02
+  hadoop03
+  hadoop04
+  
+  "<core-site.xml>"
+  	<configuration>
+  		<property>
+  			<name>fs.default.name</name>
+  			<value>hdfs://hadoop01:9000</value>
+  		</property>
+  		<property>
+  			<name>hadoop.tmp.dir</name>
+  			<value>/home/hadoop/hadoop-data</value>
+  		</property>
+  	</configuration>
+  	
+  "<hdfs-site.xml>"	
+  	<configuration>
+  	<property>
+  		<name>dfs.replication</name>
+  		<value>3</value>
+  	</property>
+  	<property>
+  		<name>dfs.http.address</name>
+  		<value>hadoop01:50070</value>
+  	</property>
+  	<property>
+  		<name>dfs.secondary.http.address</name>
+  		<value>hadoop02:50090</value>
+  	</property>
+  	</configuration>
+  	
+  "<mapred-site.xml"
+  	<configuration>
+  	<property>
+  		<name>mapred.job.tracker</name>
+  		<value>hadoop01:9001</value>
+  	</property>
+  	</configuration>
+  	
+  "02,03,04에 설정 복사"
+  scp /home/hadoop/hadoop-1.2.1/conf/* hadoop@hadoop02:/home/hadoop/hadoop-1.2.1/conf
+  scp /home/hadoop/hadoop-1.2.1/conf/* hadoop@hadoop03:/home/hadoop/hadoop-1.2.1/conf
+  scp /home/hadoop/hadoop-1.2.1/conf/* hadoop@hadoop04:/home/hadoop/hadoop-1.2.1/conf
+  	
+  "format하기"	
+  /home/hadoop/hadoop-1.2.1/bin/hadoop namenode -format
+  
+  "Hadoop 시작하기"
+  /home/hadoop/hadoop-1.2.1/bin/start-all.sh
+  
+  "02,03,04에 밀어넣기"
+  jps
+  ssh hadoop02 "jps"
+  ssh hadoop03 "jps"
+  ssh hadoop04 "jps"
   ```
 
   
