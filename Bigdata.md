@@ -156,7 +156,7 @@
 
   
 
-## 20-02-13 수
+## 20-02-13 목
 
 > 리눅스는 소유권한이라는게 있다. 따라서 권한을 신경써주자.
 
@@ -253,4 +253,63 @@
   ssh hadoop04 "jps"
   ```
 
-  
+
+## 02-20-14 금
+
+1. jps 로 hadoop 머신들 역할 확인
+
+2. hadoop 실행
+
+   ```bash
+   /home/hadoop/hadoop-1.2.1/bin/start-all.sh
+   ```
+
+3. input 추가
+
+   ```bsh
+   /home/hadoop/hadoop-1.2.1/bin/hadoop fs -ls /input
+   ```
+
+4. input 삭제
+
+   ```bsh
+   /home/hadoop/hadoop-1.2.1/bin/hadoop fs -rmr /input
+   ```
+
+5. 폴더 생성
+
+   ```bash
+   /home/hadoop/hadoop-1.2.1/bin/hadoop fs -mkdir /input
+   ```
+
+6. 파일 복사하기
+
+   ```bash
+   /home/hadoop/hadoop-1.2.1/bin/hadoop fs -copyFromLocal README.txt /input
+   ```
+
+7. wordcount 적용하기
+
+   ```bash
+   ./bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/README.txt /output
+   ```
+
+
+
+![image-20200214104343107](images/image-20200214104343107.png)
+
+
+
+* 여기서 쓰고 파폭에서 http://hadoop04:50075로 확인가능
+
+![image-20200214104741331](images/image-20200214104741331.png)
+
+
+
+예제) hadoop-examples-1.2.1.jar의 wordcount를 이용해서 작업하기
+
+* HDFS에 myinput폴더를 작성한다
+* LICENSE.txt를 복사한다
+* wordcount를 적용
+* 출력결과는 myoutput으로 작성
+
