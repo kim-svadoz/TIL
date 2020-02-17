@@ -40,7 +40,7 @@
 * 컴퓨터 - usr => 윈도우로 치면 programfiles
 * 컴퓨터 - dev => 장치에 대한 정보
 
-## 02-20-12 수
+## 02-02-12 수
 
 ## << 빅데이터 플랫폼 구축>>
 
@@ -254,7 +254,7 @@
   ```
 
 
-## 02-20-14 금
+## 20-02-14 금
 
 1. jps 로 hadoop 머신들 역할 확인
 
@@ -294,7 +294,7 @@
    ./bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/README.txt /output
    ```
 
-
+   
 
 ![image-20200214104343107](images/image-20200214104343107.png)
 
@@ -313,3 +313,58 @@
 * wordcount를 적용
 * 출력결과는 myoutput으로 작성
 
+---
+
+## 20-02-17 월
+
+### 빅데이터는 무엇인가?
+
+- volume + velocity + variety + veracity + value = **"5V"**
+- 심야버스노선도
+- 데이터수집 - 데이터저장 - 데이터처리 - 데이터분석 - 분석결과활용
+- flume, sqoop, R, MongoDB
+- namenode(hadoop01)와 secondarynamenode(hadoop02)는 달라야한다.
+- hadoop01(keygen 수행) 비공개키, 나머지 02,03,04는 공개키
+  - 따라서 01머신에서만 나머지 머신으로 접속 가능하다.
+
+- 인코딩 버전확인하기
+
+  ```bash
+  su -
+  echo $LANG
+  ```
+
+- input폴더에 NOTICE.txt 복사 ( hadoop/hadoop01 로 실행 )
+
+  ```bash
+  /home/hadoop/hadoop-1.2.1/bin/hadoop fs - copyFromLocal NOTICE.txt /input
+  ```
+
+- input폴더에 있는 NOTICE.txt에 wordcount적용
+
+  ```bash
+  /bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/NOTICE.txt /wordcount_output
+  ```
+
+### HDFS
+
+- STS에서 hdfsTest 설정
+
+- output.txt에 write하기
+
+  ```bash
+  [haddop@hadoop01 hadoop-1.2.1]$ cd..
+  [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam01 output.txt hellohadoop 
+  
+  => 이 파일에다가 이(hellohadoop) 내용을 써주겠다.
+  
+  "jar파일 실행시키는 명령어 + jar파일명 + 클래스 + txt파일이름 + 내용"
+  ```
+
+- output.txt read하기
+
+  ```bash
+  [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam02 output.txt
+  ```
+
+  
