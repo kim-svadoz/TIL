@@ -325,8 +325,9 @@
 - flume, sqoop, R, MongoDB
 - namenode(hadoop01)와 secondarynamenode(hadoop02)는 달라야한다.
 - hadoop01(keygen 수행) 비공개키, 나머지 02,03,04는 공개키
-  - 따라서 01머신에서만 나머지 머신으로 접속 가능하다.
-
+  
+- 따라서 01머신에서만 나머지 머신으로 접속 가능하다.
+  
 - 인코딩 버전확인하기
 
   ```bash
@@ -367,4 +368,124 @@
   [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam02 output.txt
   ```
 
-  
+
+---
+
+## 20-02-19 수
+
+> hadoop의 역할은 빅데이터를 저장하고 처리하는 목적이다.
+>
+> 처리방법 : MapReduce
+>
+> 저장방법 : HDFS( hadoop이 갖고 있는 파일시스템 ) - 분산형파일시스템
+
+* namenode가 마스터PC. 데이터를 요청받으면 데이터노드에 블럭단위로 쪼개서 저장. 어떤블럭이 어떤머신인지 알아야 하기때문에 namenode에서 그 정보들을 가지고 있음.
+* namenode는 datanode에서 주기적으로(default : 1시간) 오는 heartbeat를 전송받으며 관리.
+* 블럭하나에 복제본 3개?!
+* namenode가 문제가 생길 경우를 대비해서 SecondaryNamenode를만들어놓는거다!.
+  * checkpoint를 보내서 네임노드가 백업본을 주기적으로 세컨더리노드에 전송
+* cd ~ : home디렉토리(로그인시 첫 실행화면)
+* cd / : root디렉토리로 이동 !
+* cd . : 현재디렉토리
+* cd.. : 상위디렉토리
+* pwd : 현재작업위치가 어딘지 볼 때 확인. Print Woring Directory
+
+* path를 걸어주기 전까진 shell script를 모두 명시해야한다.
+
+  ```bash
+  /home/hadoop/hadopo-1.2.1/bin/hadoop
+  ```
+
+* path를 설정해주자~
+
+  ```bash
+  cd hadoop-1.2.1/ "path 설정 - [hadoop@hadoop01 hadop-1.2.1]"
+  pwd "현재 디렉토리를 확인"
+  ```
+
+* bin 폴더를 사용하여 wordcount를 사용해서 input파일과 output파일
+
+  ```bash
+  [hadoop@hadoop01 hadop-1.2.1]$ ./bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/README.txt /out
+  ```
+
+  => *wordcount + input경로 + output경로*
+
+  => HDFS상에 있는 input폴더안에 있는 README 파일을 /out으로 실행시킨다.
+
+* 파이어폭스 - **hadoop01:50070** : 내 HDFS에 있는 폴더리스트 
+
+* **!! troubleshooting 하는 방법 !!**
+
+  * hadoop-data가 실제 HDFS에 저장되고 처리되는 폴더 위치
+  * *1번머신* : home => hadoop => hadoop-data => dfs => name => image : HDFS에 저장하고 있는 이미지파일 ( 권한 확인하기 )
+  * *2번머신* : home => hadoop => hadoop-data => dfs => namesecondary => image 
+    * dfs => data => current => .metadata, 
+    * hadoop-data => mapred => 
+  * ex ) api쓰다가 뭐가 안된다? 그러면 01,02,03,04 머신 가서 hadoop => hadoop-data를 모두 지운다 => namenode 초기화(-format)
+
+* 폴더 지우기
+
+  ```bash
+  ./bin/hadoop fs -rmr /경로
+  ```
+
+* editslog :  변경이력
+
+* fsimage : 메모리에 저장된 메타데이터의 파일 시스템 이미지를 저장한 파일
+
+* ^^^ 이 두가지를 보조네임노드가 작업한다.
+
+#### < LINUX 기본 명령어 >
+
+* ls : 현재 디렉터리의 파일 목록
+  * ls /etc/sysconfig : 특정 경로의 파일 목록
+  * ls -a : 현재 디렉터리의 (숨김파일포함) 모든 파일 목록
+  * ls -l : 현재 디렉토리 목록을 자세히 보여줌
+  * ls -al : 숨긴폴더 + 자세히
+  * ls *.cfg : 확장자가 cfg인 목록을 보여줌
+  * ls -l /etc/sysconfig/a* : 해당 경로의 디렉터리에 있는 목록 중 앞 그자가 'a'인 것의 목록을 자세히 보여줌
+* cd : [Change Directory] 현재 사용자의 홈 디렉터리로 이동
+* rm : [Remove] 파일이나 디렉터리를 삭제. 삭제권한이 있어야 하고 root 사용자는 모든권한이 있으므로 OK. (디폴트는 파일을 삭제하는 기능)
+  * -f 라는 옵션을 주면 지울건지 안지울건지 물어보지 않는다.
+* cp : [Copy] 파일이나 디렉터리를 복사 (로컬에서)
+  * *scp : 원격으로 파일을 복사*
+  * -r 옵션을 주면 디렉터리를 복사한다.
+* touch : 크기가 0인 새 파일을 생성하거나, 이미 파일이 존재한다면 파일의 최종 수정 시간을 변경
+* mv : [Move] 파일이나 디렉터리의 이름을 변경하거나 다른 디렉터리로 옮길 때 사용
+* mkdir : [Make Directory] 새로운 디렉터리를 생성한다
+  * -p 옵션을 주면 계층형의 디렉터리를 생성할 수 있음.
+* rmdir : [Remove Directory] 디렉토리를 삭제한다. 해당 디렉터리의 삭제 권한이 있어야 하며 디렉터리는 비어있어야 한다.
+* head / tail : 작성된 파일의 앞 10행 또는 마지막 10행만 화면에 출력
+  * -5라는 옵션을 주면 5행만 출력
+* more : 페이지 단위로 화면에 출력..
+
+### < 맵리듀스 >
+
+> HDFS에 저장된 파일을 분산 배치 분석을 할 수 있게 도와주는 프레임워크. MongoDB에서도 가능하지만 Hadoop이 성능면에서 우수.
+
+* datanode에 있는 매퍼와 리듀스를 관리하고 작업을 시키는 게 namenode에 있는 job tracker이다.
+
+* 주목적이 맵리듀스를 만드는 것이고, 어떻게 방대한 데이터를 처리할까나~
+
+* mapper와 reducer만 적절하게 만들면 된다~!
+
+* mapper와 reducer를 동작시킬 수 있는 실행파일(Driver)(Application)을 하나 만들어주어야 한다.
+
+  => 세개를 모두 합친 후 , 어떻게 내식대로 커스터마이징 할 것인가
+
+#### 1. 맵
+
+* 어떻게 분류할 것인가
+* 입력파일을 한 줄씩 읽어서 데이터를 변형(transformation)
+
+#### 2. 리듀스
+
+* 어떻게 취합할 것인가
+* 맵의 결과 데이터를 집계(aggregation)
+
+
+
+* 맵메소드의 출력데이터를 기록하고 프레임워크 내부처리에서 sort하고 merge하는 작업 (shuffle) 이후 출력 데이터를 리듀스로 내보내는 작업. => *Context 객체*
+* 라인 하나에 대한 처리이다~
+
