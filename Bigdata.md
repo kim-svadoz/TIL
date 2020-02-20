@@ -368,7 +368,6 @@
   [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam02 output.txt
   ```
 
-
 ---
 
 ## 20-02-19 수
@@ -383,6 +382,7 @@
 * namenode는 datanode에서 주기적으로(default : 1시간) 오는 heartbeat를 전송받으며 관리.
 * 블럭하나에 복제본 3개?!
 * namenode가 문제가 생길 경우를 대비해서 SecondaryNamenode를만들어놓는거다!.
+  
   * checkpoint를 보내서 네임노드가 백업본을 주기적으로 세컨더리노드에 전송
 * cd ~ : home디렉토리(로그인시 첫 실행화면)
 * cd / : root디렉토리로 이동 !
@@ -488,4 +488,21 @@
 
 * 맵메소드의 출력데이터를 기록하고 프레임워크 내부처리에서 sort하고 merge하는 작업 (shuffle) 이후 출력 데이터를 리듀스로 내보내는 작업. => *Context 객체*
 * 라인 하나에 대한 처리이다~
+
+---
+
+## 20-02-20 목
+
+* STS에서 설정한 mapreduce Driver 실행시키기
+
+  ```bash
+  [hadoop@hadoop01 hadoop-1.2.1]
+  
+  ./bin/hadoop jar /home/hadoop/hadoop-mapred-examples.jar mapred.basic.WordCountDriver /input/README.txt /mywork/mywordcount
+  
+  ```
+
+* line하나에 map메소드 한번씩 실행된다!
+
+* && 는 하나만 검사하고 &는 두개다 검사한다.
 
