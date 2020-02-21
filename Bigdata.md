@@ -506,3 +506,25 @@
 
 * && 는 하나만 검사하고 &는 두개다 검사한다.
 
+---
+
+## 20-02-21 금
+
+* HDFS는 눈에 보이는 파일경로가 없다~
+* HDFS는 블록 단위로 쪼개져서 저장이 되기때문에 파일의 형태로 확인을 할 수 가 없음.
+
+### - GenericOptionParser
+
+* PIltering으로 넘긴다.
+
+### - MultipleOutputs
+
+> 한 개의 입력데이터를 이용해서 여러 개의 output을 만들고 싶은 경우 사용
+
+- Mapper : GenericOptionParser잡업할 때와 동일하게 map메소드를 구성하며 보통 구분할 수 있도록 key에 각 상황별로 문자열만 추가해준다.
+- Reducer : Mapper에서 넘겨준 데이터에서 구분자를 기준으로 분리해서 합산.
+  - 필터링하지 않고 다 넘기기 때문에 키 값을 구분하기 위해서 Reducer단에서 up, down, equal식으로 표현
+  - setup 메소드 : Reducer객체가 처음 실행될 때 한 번 호출되는 메소드. MultipleOutputs객체를 생성
+  - reduce 메소드 : 각각의 상황별로 write가 호출될 수 있도록 처리(up, equal, down)
+  - cleanup 메소드 : Reducer작업이 종료될 때 한번 호출되는 메소드. MultipleOutputs객체를 해제(반드시 처리)
+- Driver : MultipleOutputs으로 출력될 결로를 Path에 설정. prefix로 구분문자열을 정의
