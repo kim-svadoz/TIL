@@ -528,3 +528,163 @@
   - reduce 메소드 : 각각의 상황별로 write가 호출될 수 있도록 처리(up, equal, down)
   - cleanup 메소드 : Reducer작업이 종료될 때 한번 호출되는 메소드. MultipleOutputs객체를 해제(반드시 처리)
 - Driver : MultipleOutputs으로 출력될 결로를 Path에 설정. prefix로 구분문자열을 정의
+
+---
+
+## 20-02-24 월
+
+- eclipse에서 hadoop 해보기
+- hadoop의 hdfs는 외부에서 읽기 권한만 있고, 쓰기 권한은 없다.!
+- hdfs는 hadoop계정에서 하고 mapreduce는 다른계정에서 할 수 있도록 설정하기
+
+![image-20200224111256738](images/image-20200224111256738.png)
+
+![image-20200224111316090](images/image-20200224111316090.png)
+
+![image-20200224111330628](images/image-20200224111330628.png)
+
+
+
+### 기타 에코시스템을 다른 프로그램을 이용해 하둡과 연동하기
+
+> MapReduce, HDFS(hadoop) 에 저장
+
+* SNS : R
+* log : flume
+  * 정형화된 데이터가 아니기 때문에 **패턴**을 써야 한다!!!
+* 크롤링 : R / Spring
+* iot : sqoop
+* DBMS : sqoop
+* MongoDB
+
+### < 정규 표현식 >
+
+> 1. 자바에만 적용되는게 아니라, 자바스크립트, 파이썬 등 다른 프로그램에서도 같이 적용되는 프레임.
+> 2. 텍스트안에서 특정 형식의 문자열을 추출하거나 검색할 때 사용하는 특수문자로 만들어진 패턴
+
+#### 1. 자바 API
+
+1. String클래스의 matches메소드 : 매개변수로 전달한 정규표현식에 일치하는 문자열이 있는지를 boolean으로 리턴
+2. java.util.reges패키지의 클래스들을 활용
+   - Pattern클래스 : 패턴을 정의할 때 사용
+     - CASE_INSENSITIVE : 대소문자 적용하지 않는다는 의미
+   - Matcher클래스 : 패턴과 일치하는 문자열을 관리하는 클래스
+     1. find() : 패턴에 만족하는 문자열이 있는지 찾기(true / false 리턴)
+     2. start() : 매칭되는 패턴과 일치하는 문자열의 start index
+     3. end() : 패턴과 일치하는 문자열의 end index + 1
+     4. group() : 패턴과 일치하는 문자열을 리턴(일치하는 문자 추출) 
+
+#### 2. Pattern 기호
+
+1. 기본 기호
+
+   - ^
+   - $
+   - .
+   - |
+   - [ ]
+   - ( ) : 그룹으로 묶을 경우 사용
+
+   ```java
+   String patternStr = "java";	   		 // 1. 정확하게 일치하는 것
+   String patternStr = "^java"; 		// 2. ^뒤의 문자열로 시작
+   String patternStr = "java$"; 		// 3. $앞의 문자열로 종료
+   String patternStr = "^\\$";	  	   // 4. 패턴에서 사용하는 기호는 일반문자열로 인식하지 않는다.
+   						   	 	// - 패턴에서 사용되는 기호를 문자열로 인식시키려면\\와 함께 사용
+   String patternStr = "\\$$"; 		// 5. $로 끝나는 문자열인지 검색
+   String patternStr = ".";			// 6. . 은글자 하나를 의미
+   String patternStr = "....";			// 7. 문자길이가 4
+   String patternStr = "\\.";			// 8. .이 포함된 문자열
+   String patternStr = "\\..\\.";		// 9. .과 . 사이에 한 글자만 있는 문자열
+   
+   String patternStr = "a|m|g";		// 10. |는 or을 의미 => a이거나 m이거나 g인 문자
+   String patternStr = "[amg]";		// 11. 10번과 동일
+   String patternStr = "[amg][ma]";	// 12. 두 글자에 대해서 11번의 조건이 적용 
+   	=> 첫글자가 a,m,g거나 두번째 글자가 m,a인 문자
+   String patternStr = "[c-j]";		// 13. 알파벳 c-j사이에 해당하는 문자
+   String patternStr = "[C-J]";		// 14. 대문자
+   String patternStr = "[C-Jc-j]";		// 15. 대문자 C,J 소문자c에서 j까지 문자
+   String patternStr = "[4-8]";		// 16. 숫자 4-8사이에 해당하는 문자
+   String patternStr = "[^4-8]";		// 17. ^가 []안에 있으면 부정의 의미.=>숫자 4,5,6,7,8이 아닌 문자
+   		
+   ex1) c~j사이의 영문자가 아닌 것
+   String patternStr = "[^c-j]";
+   ex2) 영문자와 숫자만 추출
+   String patternStr ="[A-Za-z0-9]"; 
+   ex3) 영문자와 숫자를 뺀 나머지 문자만 추출
+   String patternStr = "[^A-Za-z0-9]";
+   ex4) 한글만 추출
+   String patternStr = "[가-힣]";
+   
+   String str = "tomato jaava tomato prog potato";
+   String patternStr ="(tom|pot)ato"; //그룹으로 묶는다.
+   
+   String str = "aaaaa aaabc iiiii iiibc aiabc "; 
+   String patternStr = "(a|i){3}bc"; //그룹으로 묶는다.
+   
+   String str = "adsf111 a1 b5 b555 aaa5 qa5";
+   String patternStr = "([a-z][0-9])"; //그룹으로 묶는다.
+   
+   equalsPattern(str, patternStr);
+   
+   public static void equalsPattern(String str, String patternStr) {
+       //1. 패턴을 인식
+       Pattern pattern = Pattern.compile(patternStr);
+       //2. 패턴 적용하며 문자열을 관리
+       Matcher m = pattern.matcher(str);
+       /*System.out.println(m.find());
+   		System.out.println(m.start());
+   		System.out.println(m.end());
+   		System.out.println(m.group());*/
+   
+       while(m.find()) { // find가 boolean을 리턴하기 때문에 반복작업이 가능
+           System.out.println(m.group());
+           System.out.println(m.start()+":"+(m.end()-1));
+       }
+   }
+   ```
+
+   
+
+2. 수량 관련 기호
+
+   * \* : * 앞의 패턴문자가 0이거나 1이거나 여러 개 있거나
+   * \+ : + 앞의 패턴문자가 1이거나 여러개 있거나
+   * ? : ? 앞의 패턴문자가 없거나 1이거나 
+   * .{n} : .은 임의의 한 문자를 의미, n은 글자수를 의미 => 어떤 문자이거나 n개의 문자
+   * xxxx{1,3} : 1이상 3이하(x는 패턴을 의미)
+   * xxxx{3, } : 3이상
+
+   ```java
+   String str = "jaava programmaingm";
+   String str ="-@-ja1- -111aCva--@@-@@@@- 한글 --@@@@-- progra44568EmgFmiJng";
+   String str = "a 4 m 7 v 9  amJAVA _java aaaxl  programming and spring , hadoop";
+   String patternStr = ".*";		// 모든 것
+   String patternStr = "-@+-";		// -- 사이에 @이 1개 있거낭 여러개 있거나
+   String patternStr = "-@?-";		// -- 사이에 @이 없거나 1개 있거나
+   String patternStr = "[^ ]";		// 공백이 아닌 문지
+   String patternStr = ".{5}";		// 다섯 글자식 끊어서 출력
+   String patternStr = "[amv]{1,3}"; // a,m,v가 1회,2회,3회인 문자, a, m, v, aa, am, av, mv,....
+   String patternStr = "[a-z]{3,}"; // a-z까지 3글자 이상의 문자
+   String patternStr = "\\W";		 // 대문자, 소문자, 숫자 뺀 모두
+   String patternStr = "\\w"; 		// 대문자, 소문자, 숫자 모두
+   String patternStr = "\\d"; 		// 숫자만
+   String patternStr = "\\D"; 		// 숫자를 뺀 나머지
+   ```
+
+   ```java
+   System.out.println(Pattern.matches("[0-9]+", "1234java"));  //f
+   System.out.println(Pattern.matches("[0-9]+", "java"));		//f
+   System.out.println(Pattern.matches("[0-9]+", "1234"));		//t
+   System.out.println(Pattern.matches("[0-9]+", "1"));			//t
+   System.out.println(Pattern.matches("[0-9]+", " "));			//f
+   
+   System.out.println(Pattern.matches("[0-9]?", "1234java"));  //f
+   System.out.println(Pattern.matches("[0-9]?", "java"));		//f
+   System.out.println(Pattern.matches("[0-9]?", "1234"));		//f
+   System.out.println(Pattern.matches("[0-9]?", "1"));			//t
+   System.out.println(Pattern.matches("[0-9]?", " "));			//f
+   ```
+
+   
+
