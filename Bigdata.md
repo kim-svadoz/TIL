@@ -1,3 +1,7 @@
+
+
+
+
 # 빅데이터
 
 ## 20-02-11 화
@@ -764,4 +768,55 @@ where rownum <=3;
 
 #### 2. 조인
 
-ddd
+
+
+---
+
+## 20-03-11 수
+
+* Hadoop FireFox
+  * hadoop01:50030 : 네임노드 페이지 (파일탐색기)
+  * hadoop01:50070 : 잡트래커 페이지 (map, reduce 확인)
+
+* inputdata.txt 넣고 출력해보기
+
+![image-20200311094554513](images/image-20200311094554513.png)
+
+![image-20200311094736521](images/image-20200311094736521.png)
+
+* ```java
+  package mapreduce.basic;
+  
+  public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+  	IntWritable resultVal = new IntWritable();
+  	Text appenddata = new Text();
+  	String data = "";
+  	Text resultKey = new Text();
+  	
+  	@Override
+  	protected void reduce(Text key, Iterable<IntWritable> values,
+  			Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+  		int sum = 0;
+  		data = data + "reduce호출";
+  		appenddata.set(data);
+  		for (IntWritable value:values) {
+  			sum += value.get();
+  		}
+  		resultVal.set(sum);
+  		resultKey.set(key+":"+appenddata);
+  		
+  		context.write(resultKey, resultVal);
+  	}
+  	
+  }
+  ```
+
+  ![image-20200311101558368](images/image-20200311101558368.png)
+
+  ![image-20200311101612546](images/image-20200311101612546.png)
+
+=> 전달되는 key 갯수만큼 reduce 메소드가 실행됨
+
+
+
+* 커스터마이징이랑 그냥 동작하는 거랑 다르다.
