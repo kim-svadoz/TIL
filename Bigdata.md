@@ -817,6 +817,21 @@ where rownum <=3;
 
 => 전달되는 key 갯수만큼 reduce 메소드가 실행됨
 
-
-
 * 커스터마이징이랑 그냥 동작하는 거랑 다르다.
+
+---
+
+## 20-03-12 목
+
+### < sqoop 설치 및 설정 >
+
+* 하둡 스쿱 쿼리문
+
+sqoop import -connect jdbc:oracle:thin:@70.12.115.65:1521:xe -username shop -password shop -query "select prd_no prd_nm from tb_product" -target-dir /sqoop_where -m 1
+
+sqoop import -connect jdbc:oracle:thin:@70.12.115.65:1521:xe -username shop -password shop -query "select prd_no prd_nm from tb_product where $CONDITIONS" -target-dir /mywork/sqoop_where -m 1
+
+
+
+
+
