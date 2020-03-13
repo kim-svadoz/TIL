@@ -823,7 +823,7 @@ where rownum <=3;
 
 ## 20-03-12 목
 
-### < sqoop 설치 및 설정 >
+### < Sqoop 설치 및 설정 >
 
 * 하둡 스쿱 쿼리문
 
@@ -831,7 +831,151 @@ sqoop import -connect jdbc:oracle:thin:@70.12.115.65:1521:xe -username shop -pas
 
 sqoop import -connect jdbc:oracle:thin:@70.12.115.65:1521:xe -username shop -password shop -query "select prd_no prd_nm from tb_product where $CONDITIONS" -target-dir /mywork/sqoop_where -m 1
 
+---
 
+## 20-03-13 금
+
+### < Flume 설치 및 설정 >
+
+> 데이터를 추출하기 위해 사용되는 프로그램
+>
+> 시스템로그, 웹 서버의 로그, 클릭로그, 보안로그... 비정형 데이터를 HDFS에 적재하기 위해 사용되는 프로그램
+>
+> 대규모의 데이터로그가 발생하면 효율적으로 수집하고 저장하기위해 관리
+>
+> flume, chukwa, scribe, fluented, splunk
+
+* apache.org - Flume
+
+![image-20200313101723218](images/image-20200313101723218.png)
+
+A Flume event is defined as a unit of data flow having a byte payload and an optional set of string attributes. A Flume agent is a (JVM) process that hosts the components through which events flow from an external source to the next destination (hop).
+
+![image-20200313102252354](images/image-20200313102252354.png)
+
+In order to flow the data across multiple agents or hops, the sink of the previous agent and source of the current hop need to be avro type with the sink pointing to the hostname (or IP address) and port of the source.
+
+![image-20200313102221682](images/image-20200313102221682.png)
+
+A very common scenario in log collection is a large number of log producing clients sending data to a few consumer agents that are attached to the storage subsystem. For example, logs collected from hundreds of web servers sent to a dozen of agents that write to HDFS cluster.
+
+this can be achieved in Flume by configuring a number of first tier agents with an avro sink, all pointing to an avro source of single agent (Again you could use the thrift sources/sinks/clients in such a scenario). This source on the second tier agent consolidates the received events into a single channel which is consumed by a sink to its final destination.
+
+
+
+#### [설정]
+
+1. 다운로드(압축풀기)
+
+2. .bashrc에 설정 정보 등록하기
+
+   ![image-20200313104630971](images/image-20200313104630971.png)
+
+   
+
+3. flume-env.sh rename하고 정보등록
+
+   - jdk홈디렉토리
+
+   - hadoop홈디렉토리
+
+   ```hadoop
+   source .bashrc
+   cd apache-flume-1.6.0-bin/conf/
+   cp flume-env.sh.template flume-env.sh
+   ```
+
+4. flume설정정보를 등록
+
+   * "flume-conf.properties.template을 rename해서 XXXX.properties"
+   - flume agent의 source,channel,sink에 대한 정보를 등록
+
+   ```hadoop
+   cp flume-conf.properties.template console.properties
+   ```
+
+   ![image-20200313114023215](images/image-20200313114023215.png)
+
+![image-20200313114046086](images/image-20200313114046086.png)
+
+#### [ Flume의 구성요소 ]
+
+- flume의 실행중인 프로세스를 agent라 부르며 source, channel, sink로 구성
+
+##### 1. source
+
+> 데이터가 유입되는 지정(어떤 방식으로 데이터가 유입되는지 type으로 명시)
+
+agent명.sources.source명.type=값
+
+- type
+
+  - netcat : telnet을 통해서 터미널로 들어오는 입력데이터
+
+    (bind : 접속IP, port: 접속할 port)
+
+  - spoolDir : 특정 폴더에 저장된 파일
+
+    (spoolDir : 폴더명)
+
+##### 2. channel
+
+> 데이터를 보관하는 곳(source와 sink사이에 Queue)
+
+##### 3. sink
+
+> 데이터를 내보내는 곳(어떤 방식으로 내보낼지)
+
+* type
+  * logger : flume서버 콘솔에 출력이 전달
+    * flume을 실행할 때 -Dflume.root.logger=INFO.console을 추가
+  * file_roll : file을 읽어서 가져오는 경우
+    * directory : 읽어온 파일을 저장할 output 폴더를 명시
+
+#### [ Flume의실행 ]
+
+```hadoop
+실행명령어: ./bin/flume-ng agent
+옵션 : 
+--conf : 설정파일이 저장된 폴더명(-c)
+--conf-file : 설정파일명(-f)
+--name : agent의 이름(-n)
+-Dflume.root.logger=INFO.console : flumne의 로그창에 기록
+```
+
+```hadoop
+[hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent --conf conf --conf-file ./conf/console.properties --name myConsole -Dflume.root.logger=INFO,console => (source가 telnet으로 입력하는 데이터인경우)
+```
+
+```hadoop
+[root@hadoop01 ~]# yum install telnet
+su hadoop
+telnet localhost 44444
+```
+
+- 폴더에서 폴더로 이동시키기
+
+  ```hadoop
+  cp ./conf/console.properties ./conf/myfolder.properties
+  ```
+
+  ![image-20200313153959785](images/image-20200313153959785.png)
+
+  ```hadoop
+  [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/myfolder.properties -n myConsole
+  ```
+
+- hdfs로 이름 바꾸기
+
+  ```hadoop
+  [hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/console.properties ./conf/hdfs.properties
+  ```
+
+  ```hadoop
+  [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/hdfs.properties -n myhdfs
+  ```
+
+  
 
 
 
