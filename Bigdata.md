@@ -867,6 +867,10 @@ this can be achieved in Flume by configuring a number of first tier agents with 
 
 1. 다운로드(압축풀기)
 
+   ```hadoop
+   tar -zxvf flume~~~~
+   ```
+
 2. .bashrc에 설정 정보 등록하기
 
    ![image-20200313104630971](images/image-20200313104630971.png)
@@ -884,6 +888,8 @@ this can be achieved in Flume by configuring a number of first tier agents with 
    cd apache-flume-1.6.0-bin/conf/
    cp flume-env.sh.template flume-env.sh
    ```
+
+   ​	![image-20200314172107599](images/image-20200314172107599.png)
 
 4. flume설정정보를 등록
 
@@ -977,5 +983,153 @@ telnet localhost 44444
 
   
 
+---
+
+## 20-03-14 토
+
+* AVRO? Flume? WAS?
+* WAS에서 뽑아보는 작업?
+* AVRO : 네트워크 통신에 쓰이는 Sink의 타입명 중 하나
+* source의 타입
+  * netcat : 많이 쓰이진않음
+  * spoolDir : 폴더에서 가져오는 것이므로 많이쓰임
+* sink의 타입
+  * file_roll : 로컬에 저장할 때
+  * logger : 받아서 분석해야 하니 많이 쓰이진 않음
+  * hdfs
+
+### hdfs2.properties
+
+``` hadoop
+[hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs.properties ./conf/hdfs2.properties
+```
+
+![image-20200314101643089](images/image-20200314101643089.png)
+
+* 하둡실행하기
+
+```hadoop
+[hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/hdfs2.properties -n myhdfs
+```
+
+![image-20200314101916442](images/image-20200314101916442.png)
 
 
+
+### hdfs 3.properties
+
+```hadoop
+[hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs2.properties ./conf/hdfs3.properties
+```
+
+![image-20200314110500987](images/image-20200314110500987.png)
+
+* 하둡 실행하기
+
+```hadoop
+[hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/hdfs3.properties -n myhdfs
+```
+
+![image-20200314110604955](images/image-20200314110604955.png)
+
+
+
+### < hadoop0 머신2 에서 tomcat 실행하기 >
+
+1. 다운로드 한 tomcat 압축풀기
+
+   ```hadoop
+   [hadoop@hadoop02 ~]$ wget 붙여넣기
+   [hadoop@hadoop02 ~]$ tar -zxvf apache-tomcat-9.0.31.tar.gz 
+   ```
+
+2. hadoop01에 있던 .bashrc 02로 이동(복사)
+
+   ```hadoop
+   [hadoop@hadoop01 ~]$ scp .bashrc hadoop@hadoop02:/home/hadoop
+   
+   scp hdfs2.properties hadoop@hadoop03:/home/apache-flume-1.6.0-bin/conf
+   ```
+
+   ![image-20200314112733683](images/image-20200314112733683.png)
+
+3. 톰캣 실행하기
+
+   ```hadoop
+   [hadoop@hadoop02 ~]$ source .bashrc
+   [hadoop@hadoop02 ~]$ cd apache-tomcat-9.0.31/
+   [hadoop@hadoop02 apache-tomcat-9.0.31]$ cd bin/
+   ```
+
+   ```hadoop
+   [hadoop@hadoop02 bin]$ ./startup.sh 
+   [hadoop@hadoop02 bin]$ ./shutdown.sh 
+   [hadoop@hadoop02 bin]$ netstat -anp | grep 8080
+   [hadoop@hadoop02 bin]$ ./startup.sh
+   ```
+
+4. 서버 확인해보기
+
+   ![image-20200314113612393](images/image-20200314113612393.png)
+
+5. manager 권한 부여
+
+   ![image-20200314114909481](images/image-20200314114909481.png)
+
+   - 127.0.0.1:8080/manager
+
+   ![image-20200314114941784](images/image-20200314114941784.png)
+
+![image-20200314115036796](images/image-20200314115036796.png)
+
+6. ip 제한 해제하기
+
+![image-20200314133139655](images/image-20200314133139655.png)
+
+7. sts에 bigdatashop - META-INF - context.xml 
+
+```java
+<Resource name="jdbc/myspring" auth="Container"
+              type="javax.sql.DataSource" 
+              driverClassName="oracle.jdbc.driver.OracleDriver"
+              url="jdbc:oracle:thin:@70.12.115.65:1521:xe"
+              username="shop" password="shop"
+			  maxTotal="20" maxIdle="10"
+              maxWaitMillis="-1"/>
+// ip를 내 pc의 ip로 설정    
+```
+
+8. 프로젝트 export - web - war파일
+
+9. 크롬환경에서 http://192.168.111.129:8080/manager 에서 export해준 war파일 배치하기
+
+10. 크롬환경에서 http://192.168.111.129:8080/bigdataShop/index.do 로 접속가능. 끝.
+
+    => 이제 hadoop02가 나의 서버가 된 것이다 !!
+
+
+
+### < hadoop03에 WAS 구축하기 미션 >
+
+1. 3번에 WAS구축
+2. WAS에 bigdataShop을 배포
+3. hadoop03에 flume을 설치
+4. tomcat의 access log를 hdfs에 저장
+   - avro통신
+   - hdfs : /flume/tomcatlog
+5. 메일로 제출
+   - 3번의 was manager화면에 배포된 목록 캡쳐
+   - hdfs에 저장된 access log 캡쳐
+   - 각 머신의 flume설정 파일
+
+```bash
+./bin/flume-ng agent -c conf -f ./conf/hdfs2.properties -n myavro
+
+
+[hadoop@hadoop03 ~]$ mkdir flume_input
+[hadoop@hadoop03 ~]$ cp /home/hadoop/apache-tomcat-9.0.31/logs/localhost_access_log.2020-03-15.txt /home/hadoop/flume_input
+ 
+```
+
+* sink는 보낼 머신에 대한 정보(01머신에 대한 정보 입력)
+* 테스트는 하둡머신의 flume실행, WAS머신의 flume실행하고, flume_input폴더에 로그파일을 copy
