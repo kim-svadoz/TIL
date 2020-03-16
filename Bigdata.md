@@ -998,7 +998,7 @@ telnet localhost 44444
   * logger : 받아서 분석해야 하니 많이 쓰이진 않음
   * hdfs
 
-### hdfs2.properties
+#### hdfs2.properties
 
 ``` hadoop
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs.properties ./conf/hdfs2.properties
@@ -1016,7 +1016,7 @@ telnet localhost 44444
 
 
 
-### hdfs 3.properties
+#### hdfs 3.properties
 
 ```hadoop
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs2.properties ./conf/hdfs3.properties
@@ -1133,3 +1133,382 @@ telnet localhost 44444
 
 * sink는 보낼 머신에 대한 정보(01머신에 대한 정보 입력)
 * 테스트는 하둡머신의 flume실행, WAS머신의 flume실행하고, flume_input폴더에 로그파일을 copy
+* 1번과 3번 모두 1번IP 사용
+
+---
+
+## 20-03-16 월
+
+### MongoDB
+
+* NoSQL?
+* 비정형데이터
+* 스키마가 아니다 ( 이 컬럼은 무슨 타입이고 저건 무슨 타입이고 .. )
+* JSON으로 처리한다.
+* 문서를 기반으로 하기 때문에 조인을 할 수 없다.(하나의 문서 안에 모든 데이터가 들어가있음)
+
+- 레드햇계열의 리눅스? 데드뭐뭐계열의 리눅스?
+
+![image-20200316094051032](images/image-20200316094051032.png)
+
+
+
+* C:\Program Files\MongoDB\Server\3.6\bin 를 windows path 등록
+
+![image-20200316100749570](images/image-20200316100749570.png)
+
+![image-20200316100937095](images/image-20200316100937095.png)
+
+![image-20200316101203991](images/image-20200316101203991.png)
+
+
+
+* 데이터가 저장될 폴더가 필요하다! iot에 bigdata에 mongodata라고 만들자~
+
+![image-20200316101757913](images/image-20200316101757913.png)
+
+* MongoDB Enter Prise로 서버 접속하기
+
+![image-20200316102057052](images/image-20200316102057052.png)
+
+![image-20200316102117540](images/image-20200316102117540.png)
+
+* 실행됐구나~ 확인~
+
+![image-20200316102440076](images/image-20200316102440076.png)
+
+* 웹에서 포트 접속해보기
+
+![image-20200316102819916](images/image-20200316102819916.png)
+
+* 데이터베이스를 만들고 그 안에서 작업하는 개념! ( ex. conn scott/tiger )
+
+![image-20200316103903971](images/image-20200316103903971.png)
+
+![image-20200316104142170](images/image-20200316104142170.png)
+
+​	=> mydb에 아직 아무것도 안만들어 놨기 때문에 아무 것도 안 뜬다~
+
+#### 1. 용어
+
+* RDBMS : MongoDB
+  * table : collection
+  * column(컬럼) : field
+  * row(레코드) : document
+  * 기본키 : _id
+
+#### 2. 명령어
+
+* 
+
+![image-20200316104719054](images/image-20200316104719054.png)
+
+=> 
+
+##### 1. collection(RDBMS에서의 테이블)
+
+> 관계형 데이트에이스 처럼 스키마를 정의하지 않는다.
+
+- 종류
+
+  - capped collection
+
+    => 고정사이즈를 주고 생성하는 컬렉션
+
+    => 미리 지정한 저장공간이 모두 사용이 되면 맨 처음에 저장된 데이터가 삭제되고 공간으로 활용
+
+  - non capped collection
+
+    => 일반적인 컬렉션
+
+- 생성 명령문
+
+  ```bash
+  db.createCollection("컬렉션명")
+  	=> 일반 collection
+  db.createCollection("컬렉션명",{옵션 list})
+  	=> 각각의 옵션을 설정해서 작업(JSON)
+  ```
+
+  ![image-20200316111601657](images/image-20200316111601657.png)
+
+- 컬렉션이 capped속성인지 아닌지 확인하기
+
+  ```bash
+  db.컬렉션명.isCapped()
+  ```
+
+  ![image-20200316113853049](images/image-20200316113853049.png)
+
+  
+
+- 컬렉션의 속성 확인하기 => JSON으로 뿌려준다
+
+  ```bash
+  db.collection명.valiedate()
+  ```
+
+- 삭제 명령문
+
+  ```bash
+  db.collections명.drop()
+  ```
+
+![image-20200316112046357](images/image-20200316112046357.png)
+
+- 컬렉션명 변경 명령문
+
+  ```bash
+  db.컬렉션명.renameColletion("변경할 컬렉션명");
+  ```
+
+![image-20200316112208484](images/image-20200316112208484.png)
+
+​			<< 실습 >>
+
+mini 데이터베이스 생성
+
+emp (size : 10000, capped컬렉션)
+
+shop (일반 컬렉션)
+
+데이터베이스 목록, 컬렉션 목록, 컬렉션 validate()  화면 캡쳐
+
+
+
+#### 3. MongoDB에 insert하기
+
+> document(관계형db에서의 레코드 개념)에 대한 정보는 JSON의 형식으로 생성
+
+>  mongodb에서 document를 삽입하면 자동으로 _id가 생성
+
+##### [구문]
+
+```bash
+db.컬렉션명.insert({데이터...})
+db.컬렉션명.insertOne({데이터...})
+db.컬렉션명.inserMany({데이터...})
+```
+
+- "_id" : ObjectID("5e6ee7751bf5731af5cb2f8");
+
+  < 현재 timestap + machine id + mongodb프로세스id + 순차번호(추가될 때마다 증가) >
+
+![image-20200316114604831](images/image-20200316114604831.png)
+
+​	=> 스키마가 없기 때문에, 비정형 데이터를 넣기 적합하다~
+
+* 변수에다 저장해놓고 값을 넣어도 된다.
+
+![image-20200316131429973](images/image-20200316131429973.png)
+
+* 특정 값을 for문으로 설정 가능
+
+![image-20200316131910078](images/image-20200316131910078.png)
+
+* 배열은 [ ] 로 처리
+
+![image-20200316132344200](images/image-20200316132344200.png)
+
+![image-20200316132412257](images/image-20200316132412257.png)
+
+* 배열로 한꺼번에 처리할 수도 있다~
+
+![image-20200316132750098](images/image-20200316132750098.png)
+
+​	=> 추가로 it을 누르면 더 볼 수 있어용~
+
+#### 4. MongoDB에 update하기
+
+> document 수정
+>
+> 조건을 적용해서 수정하기 위한 코드도 JSON으로 구현
+
+##### [업데이트를 위한 명령어]
+
+- $set : 해당필드의 값을 변경(업데이트를 하기 위한 명령어)
+  - non capped collection인 경우 업데이트할 필드가 없는 경우 추가한다.
+- $inc : 해당필드에 저장된 숫자의 값을 증가
+- $unset : 원하는 필드를 삭제할 수 있다.
+- 업데이트 옵션
+  - multi : true를 추가하지 않으면 조건에 만족하는 document 중 첫 번재 document만 update 된다.
+
+##### [구문]
+
+```bash
+db.컬렉션명.update({조건필드:값}), // sql의 update문의 where절
+				{$set:{수정할필드:수정값}},
+				{update와 관련된 옵션:옵션값})
+```
+
+![image-20200316143147095](images/image-20200316143147095.png)
+
+​		<< 실습 >>
+
+1. id가 kang사람의 dept를 "총무"로 변경
+2. dept가 "전산'인 모든 addr을 "안양"으로 변경
+3. id가 jang인 document의 bonus를 1000추가하기
+4. dept가 "인사"인 모든 document의 bonus에 2000을 추가하기
+
+작업완료 후 캡쳐해서 메일 전송
+
+#### 5. MongoDB에서 배열 관리
+
+```bash
+db.score.update({id:"jang"}, 
+	{$set:
+		{info:
+			{city:["서울","안양"],
+			movie:["겨울왕국2","극한직업","쉬리"]
+			}
+		}
+	}
+)
+```
+
+##### [배열에서 사용할 수 있는 명령어]
+
+- addToSet : 배열의 요소를 추가 ( 중복 체크 )
+
+  ```bash
+  db.score.update({id:"jang"}, {$addToSet:{"info.city":"인천"}});
+  	// 중복된 데이터는 들어가지 않는다.
+  ```
+
+- push : 배열의 요소를 추가 ( 중복 허용 )
+
+  ```bash
+  db.score.update({id:"jang"}, {$push:{"info.city":"천안"}});
+  	// 중복된 데이터도 추가로 puash된다.
+  ```
+
+- pop : 배열에서 요소를 제거할 때 사용
+
+  => 1이면 마지막 요소를 제거, -1이면 첫 번째 요소를 제거
+
+  ```bash
+  db.score.update({id:"jang"}, {$pop:{"info.city":1}}); // 오른쪽 끝에서 한 개 삭제
+  db.score.update({id:"jang"}, {$pop:{"info.city":-1}}); // 왼쪽 끝에서 한 개 삭제
+  ```
+
+- each : addToSet이나 push에서 사용할 수 있다.
+
+  ```bash
+  db.score.update({id:"jang"},
+  				{$push:
+  					{"info.city":
+  						{$each:["천안","가평","군산"]}
+  					}
+  				});
+  ```
+
+- sort : 정렬( **1**: 오름차순, **-1** : 내림차순)
+
+  ```bash
+  db.score.update({id:"jang"},
+  				{$push:
+  					{"info.city":
+  						{$each:["천안","가평","군산"], $sort:1}
+  					}
+  				});
+  ```
+
+- pull : 배열에서 조건에 만족하는 요소를 제거(조건 한 개)
+
+  - pullAll : 조건 여러개
+
+  ```bash
+  db.score.update({id:"jang"},
+  				{$pull:{"info.city":"천안"}	
+  				}
+  				);
+  				
+  db.score.update({id:"jang"},
+  				{$pullAll:{"info.city":["가평","군산"]}	
+  				}
+  				);				
+  ```
+
+  
+
+  ​	<< 실습1 >>
+
+**score collection을 이용해서 작업해보세요**
+
+**1. song,jang,hong에 다음과 같은 값을 가질 수 있도록 배열로 필드를 추가하세요**
+
+**song : history (영업1팀, 총무, 기획실)**
+
+**jang: history(전략팀,총무,전산)**
+
+**hong : history(영업1팀, 기획실,전산)**
+
+**2. song의 document history에 자금부를 추가하세요**
+
+**3. jang의 document의 history에 마지막 데이터를 제거하세요**
+
+**4. servlet데이터가 100점인 모든 document에 bonus를 3000을 추가하세요. 기존데이터가 존재하면 증가되도록 구현하세요**
+
+**5. song의 lang.ms에 "visual basic","asp",".net"을 한꺼번에 추가하세요**
+
+
+
+1.
+db.score.update({id:"song"}, {$set:{history:["영업1팀", "총무", "기획실"]}});
+db.score.update({id:"jang"}, {$set:{history:["전략팀", "총무", "전산"]}});
+db.score.update({id:"hong"}, {$set:{history:["영업1팀", "기획실", "전산"]}});
+
+2.
+db.score.update({id:"song"}, {$addToSet:{history:"자금부"}});
+db.score.update({id:"song"}, {$pop:{history:1}});
+
+3.
+db.score.update({id:"jang"}, {$pop:{history:1}});
+
+4.
+db.score.update({servlet:100}, {$inc:{bonus:3000}}, {multi:true});
+
+5.
+db.score.update({id:"song"}, {$push:{"lang.ms":{$each:["visual basic","asp",".net"]}}});
+
+
+
+
+
+​		<< 실습 2 >>
+
+다음과 같은 조건으로 document를 구성해 보도록 하겠습니다.
+
+게시물과 댓글을 mongodb에 저장
+
+\1. board 컬렉션을 생성
+
+\2. document는 5개 insert
+
+no,id,title,content,count,writedate
+
+\3. 2번째 게시물에는 댓글이 3개 추가되도록
+
+update - 하위object와 배열로 구성
+
+댓글의 필드
+
+content,count1,count2,writedate
+
+```bash
+db.createCollection("board");
+db.board.insert({insertno:1, title:"aaaaaaaa", content:"hello1", count:11, wirtedate:"2020-03-16", id:"kim"});
+db.board.insert({insertno:1, title:"bbbbbb", content:"hello2", count:22, wirtedate:"2020-03-17", id:"park"});
+db.board.insert({insertno:1, title:"ccccccc", content:"hello3", count:33, wirtedate:"2020-03-18", id:"jung"});
+db.board.insert({insertno:1, title:"ddddddd", content:"hello4", count:44, wirtedate:"2020-03-16", id:"choi"});
+db.board.insert({insertno:1, title:"eeeeeee", content:"hello5", count:55, wirtedate:"2020-03-16", id:"lee"});
+
+comment1={content:"hi", count1:0, count2:0, writedate:"2020-04-01"};
+comment2={content:"HELLO", count1:0, count2:0, writedate:"2020-04-02"};
+comment3={content:"bye", count1:0, count2:0, writedate:"2020-04-03"};
+
+db.board.update({content:"hello2"}, {$push:{"sub":comment1}});
+db.board.update({content:"hello2"}, {$push:{"sub":comment2}});
+db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
+```
+
