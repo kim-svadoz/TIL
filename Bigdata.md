@@ -440,7 +440,7 @@
 
 * ^^^ 이 두가지를 보조네임노드가 작업한다.
 
-#### < LINUX 기본 명령어 >
+### < LINUX 기본 명령어 >
 
 * ls : 현재 디렉터리의 파일 목록
   * ls /etc/sysconfig : 특정 경로의 파일 목록
@@ -1511,4 +1511,384 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment1}});
 db.board.update({content:"hello2"}, {$push:{"sub":comment2}});
 db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
 ```
+
+---
+
+## 20-03-17 화
+
+- MongoDB도 클러스터링으로 한대처럼 사용할 수 있다.
+- 하지만 하둡의 hdfs와 맵리듀스를 성능적으로 훨씬 효율적이지만, MongoDB를 쓰는 경우도 있다~
+
+1. Aggregation
+2. map-reduce
+
+- 몽고디비는 많은양의 데이터를 가지고 해야 하거나, 복잡한 타입의 테이블이 필요할 때 사용하는거~
+
+
+
+#### 6. advanced MongDB
+
+- 이쁘게 출력하기
+
+  ```bash
+  db.컬렉션명.find().pretty()
+  ```
+
+- 변수처럼 사용할 수 있다.
+
+![image-20200317094957787](images/image-20200317094957787.png)
+
+- 전체 데이터의 갯수를 리턴
+
+  ```bash
+  db.컬렉션명.find().count()
+  ```
+
+![image-20200317095429357](images/image-20200317095429357.png)
+
+​		<< 실습 1 >>
+
+​	score의 모든 document에 num필드(1000)가 추가되도록 작업하고 실행결과 보기
+
+```bash
+var x = db.score.find();
+while(x.hasNext()){
+           var one = x.next();
+           one.num = 1000;
+           db.score.save(one);
+                   }
+db.score.find();         
+```
+
+
+
+##### [명령어]
+
+- find
+
+  ```bash
+  db.컬렉션명.find(조건, 조회할 필드에 대한 명시)
+  ```
+
+  - db.컬렉션명.find({})와 동일
+
+    => { }안에 아무것도 없으면 전체 데이터 조회
+
+  - 조건, 조회할 필드에 대한 명시 모두 JSON
+
+  - 조회할 필드의 정보를 정보 명시
+
+    => 형식 : {필드명:1...} : 화면에 표시하고 싶은 필드
+
+    ​				{필드명:0} : 명시한 필드가 조회되지 않도록 처리
+
+  - **[ 조건 ]**
+
+    - $lt : <
+    - $gt : >
+    - $lte : <=
+    - $gte : >=
+    - $or : 여러 필드를 이용해서 같이 비교 가능
+    - $and : and연산
+    - $in : 하나의 필드에서만 비교
+    - $nin : $in으로 정의한 조건을 제외한 document를 조회 ( not in )
+
+    
+
+    ex) addr이 인천인 데이터 : id, name, dept, addr 출력
+
+    ```bash
+    db.score.find({addr:"인천"},{id:1,name:1,dept:1,addr:1})
+    db.score.find({addr:"인천"},{id:1,name:1,dept:1,addr:1,_id:0}) // 기본키(_id) 제거
+    ```
+
+    ex) score컬렉션에서 java가 90점인 이상인 document 조회 : id, name, dept, java만 출력
+
+    ```bash
+    db.score.find({java:{$gte:90}},{id:1,name:1,dept:1,java:1,_id:0})
+    ```
+
+    ex) dept가 인사이거나 addr이 인천인 데이터 조회
+
+    ```bash
+    db.score.find({$or:[{dept:"인사"},{addr:"인천"}]})
+    ```
+
+    ex) id가 song, kang, hong인 데이터 조회
+
+    ```bash
+    db.score.find({$or:[{id:"song"},{id:"hong"},{id:"kang"}]})
+    db.score.find({id:{$in:["song","kang","hong"]}})
+    ```
+
+    ex) id가 song, kang, hong이 아닌 데이터 조회
+
+    ```bash
+    db.score.find({id:{$nin:["song","kang","hong"]}})
+    ```
+
+- 조회메소드
+
+  - findOne() : 첫번째 document 만 리턴
+
+  - find() : 모든 document리턴
+
+  - count() : 행의 갯수를 리턴
+
+  - sort({필드명:sort옵션}) : 정렬
+
+    ​										1 : 오름차순
+
+    ​										-1 : 내림차순
+
+  - limit(숫자) : 숫자만큼의 document만 출력
+
+  - skip(숫자) : 숫자만큼의 document를 skip하고 출력하고 조회
+
+    
+
+    ex) 여러가지 조회
+
+    ```bash
+    db.score.find({num:null})
+    db.score.find().sort({id:1});
+    db.score.find().sort({java:-1});
+    db.score.find().limit(5)
+    db.score.find().skip(5)
+    ```
+
+- 정규표현식을 적용
+
+  ```bash
+  db.컬렉션명.find({조건필드명:/정규표현식/옵션})
+  ```
+
+  - **[ 기호 ]**
+
+    - | : or
+
+    - ^ : ^ 뒤의 문자로 시작하는지 체크
+
+    - [  ] : 영문자 하나는 한 글자를 의미하고 [  ]로 묶으면 여러 글자를 표현
+
+      [ a-i ] : a에서 i까지 모든 영문자
+
+  - **[ 옵션 ]**
+
+    - i : 대소문자 구분없이 조회 가능
+
+    
+
+    ex) id가 kim과 park인 document 조회
+
+    ```bash
+    db.score.find({id:/kim|park/})
+    db.score.find({id:/kim|park/i}) // 대소문자 구분없이
+    ```
+
+    ex) id가 k로 시작하는 document 조회
+
+    ```bash
+    db.score.find({id:/^k/})
+    db.score.find({id:/^k/i}) //대소문자 구분없이
+    ```
+
+    ex) id에 [a-i]까지 영문이 있는 id를 조회
+
+    ```bash
+    db.score.find({id:/[a-i]/})
+    ```
+
+    ex) id가 k-p로 시작하는 document 조회
+
+    ```bash
+    db.score.find({id:/^[k-p]/})
+    ```
+
+    ex) id에 a랑 i가 있는 document 조회
+
+    ```bash
+    db.score.find({id:/[ai]/})
+    ```
+
+#### 7. MongoDB에 저장된 데이터 삭제하기 - remove()
+
+> 조건을 정의하는 방법은 find()나 update()와 동일
+
+- 삭제해보아용~
+
+  ex) servlet 점수가 80점 이하인 document 삭제
+
+  ```bash
+  db.score.remove({servlet:{$lt:80}})
+  ```
+
+  
+
+- 투표 : 30%
+
+- 코드내용 : 50%
+
+  - 기능이 얼마나 많이 구현되었는지
+  - 수업시간에 배운 내용이 충실하게 구현되었는지
+  - open api를 사용해서 새로운 기능에 도전했는지
+  - 실무에서 사용할 수 있는 형태를 고민해서 구현했는지
+  - 발표할 때 에러 없이 잘 실행
+  - 계획한 내용을 잘 완료
+
+- 협업 : 20%
+
+  ​	
+
+  ​		<< 실습 2 >>
+
+  **1. Score collection에서 이름과 주소와 servlet점수를 출력해보자**
+
+  db.score.find({},{name:1,addr:1,servlet:1,_id:0})
+
+  **2. Score collection에서 java점수 중 70점 이상을 출력해보자**
+
+  db.score.find({java:{$gte:70}});
+
+  **3. Score collection에서 이름, java점수를 출력하고 bonus가 2000이상**
+
+  **인 사람만 출력해보자**
+
+  db.score.find({bonus:{$gte:2000}}, {name:1, java:1, _id:0})
+
+  **4. score에서 dept가 인사이면서 addr이 안양이거나 대구인 document 출력**
+
+  db.score.find({$and:[{dept:"인사"}, {addr:{$in:["안양","대구"]}}]})
+
+  **5. servlet이 70에서 90사이이며 dept가 총무인 document 조회**
+
+  db.score.find({$and:[{dept:"총무"}, {$and:[{servlet:{$gte:70}}, {servlet:{$lt:90}}]}]})
+
+  **6. score에서 이름에 김씨인 사람 조회해보기**
+
+  db.score.find({name:/^[김]/})
+
+  **7. score에서 servlet점수가 가장 낮은 document와 가장 높은 document 출력하기**
+
+  db.score.find({servlet:{$not:{$exists:null}}}).sort({servlet:1}).limit(1);
+
+  db.score.find().sort({servlet:1}).limit(1)
+  db.score.find().count() // 13
+  db.score.find().sort({servlet:1}).skip(12)
+
+  **8. java점수가 가장 높은 document중에 7개를 출력하되 2개를 건너뛰고 출력해보자**
+
+  db.score.find().sort({java:-1}).skip(2).limit(7)
+
+  **9. 아이디에 n과 o가 들어가는 document 구하기**
+
+  db.score.find({id:/[no]/i})
+
+
+
+#### 8. Aggregation
+
+- Oracle에서의 Group by와 동일 개념
+
+- 간단한 집계를 구하는 경우 mapreduce를 적용하는 것 보다 간단하게 작업 가능
+
+- Pipeline을 내부에서 구현
+
+  => 한 연산의 결과가 또 다른 연산의 input데이터로 활용
+
+  => https://docs.mongodb.com/v3.6/aggregation/의 pipeline 참고
+
+##### [ 명령어 ]
+
+- $match : where절, having절
+- $group : group by
+- $sort : order by
+- $avg : avg그룹함수
+- $sum : sum그룹함수
+- $max : max그룹함수
+
+##### [ 형식 ]
+
+```bash
+db.컬렉션명.aggregate(aggregate 명령어를 정의)
+				   ----------------------- => 여러가지를 적용해야 하는 경우 배열로 표현
+				   
+$group:{_id:그룹으로 표시할 필드명,
+		연산결과를 저장할 필드명:{연산함수:값}}
+									---- => 숫자나 필드 참조
+$match:{필드명:{연산자:조건값}}									
+			 --------------- => 비교연산 or 조건이 여러 개
+```
+
+- addr별 인원수
+
+  ```bash
+  db.exam.aggregate([{$group:{_id:"$addr", num:{$sum:1}}}]);
+  ```
+
+- dept별 인원수
+
+  ```bash
+  db.exam.aggregate([{$group:{_id:"$dept", num:{$sum:1}}}]);
+  ```
+
+- dept별 java점수의 평균
+
+  ```bash
+  db.exam.aggregate([{$group:{_id:"$dept", num:{$avg:"$java"}}}])
+  ```
+
+- addr별 servlet합계
+
+  ```bash
+  db.exam.aggregate([{$group:{_id:"$addr", num:{$avg:"$servlet"}}}])
+  ```
+
+- dept별 java점수의 평균. 단, addr이 인천인 데이터만 작업 $match를 추가
+
+  ```bash
+  db.exam.aggregate([{$match:{addr:"인천"}}, {$group:{_id:"$dept", num:{$avg:"$java"}}}])
+  ```
+
+
+
+​		<< 실습 3 >>
+
+**1. dept가 인사인 document의 servlet평균 구하기** 
+
+```bash
+db.exam.aggregate([{$match:{dept:"인사"}}, {$group:{_id:"$dept", num:{$avg:"$servlet"}}}])
+```
+
+**2. java가 80점이 넘는 사람들의 부서별로 몇 명인지 구하기**
+
+```bash
+db.exam.aggregate([{$match:{java:{$gte:80}}}, {$group:{_id:"$dept", num:{$sum:1}}}])
+```
+
+**3. 2번 결과를 인원수데이터를 내림차순으로 정렬해 보세요.**
+
+```bash
+db.exam.aggregate([{$match:{java:{$gte:80}}}, {$group:{_id:"$dept", num:{$sum:1}}},{$sort:{num:-1}}])
+```
+
+
+
+#### 9. STS을 이용해서 WEB으로 MongoDB 데이터 확인하기 위한 설정
+
+![image-20200317163557473](images/image-20200317163557473.png)
+
+![image-20200317163431643](images/image-20200317163431643.png)
+
+![image-20200317163537044](images/image-20200317163537044.png)
+
+src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
+
+```bash
+<context:component-scan base-package="spring.data.mongodb" />
+```
+
+![image-20200317171236685](images/image-20200317171236685.png)
+
+![image-20200317171204262](images/image-20200317171204262.png)
 
