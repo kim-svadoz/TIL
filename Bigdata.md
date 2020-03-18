@@ -1892,3 +1892,41 @@ src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 
 ![image-20200317171204262](images/image-20200317171204262.png)
 
+---
+
+## 20-03-16 수
+
+- 몽고디비는 중간저장소?! 단기간 요청이 몰릴 수 있는 로그들을 작업하는?! 스키마 때문에?!
+- 스키마가 없기 때문에 유연성이 있다! 
+- 성능면에서 update(오버헤드 발생 가능)보다 insert가 낫다!
+- 요즘 시스템들이 JSON포맷이 많이 발생 하기 때문에 이것또한 몽고디비의 매력을 상승
+
+
+
+#### 10. MongoDB를 이용해 File Export/Import 해보기
+
+- test.csv 를 C:iot 폴더에 복사 후 새 cmd창을 이용해 파일 export해보기
+
+![image-20200318092851061](images/image-20200318092851061.png)
+
+![image-20200318093017105](images/image-20200318093017105.png)
+
+![image-20200318093105969](images/image-20200318093105969.png)
+
+* test.csv를 C:\iot폴더에 복사 후 iot에 있는 파일 import해보기
+
+![image-20200318093950544](images/image-20200318093950544.png)
+
+![image-20200318094240835](images/image-20200318094240835.png)
+
+​	-d : database
+
+​	-c : collection
+
+*  지금은 local이라 그냥 써주면 되지만 아니라면, /host 와 /port 설정해줘야 한다!
+
+
+
+#### 11. MongoDB로 Client 프로그램 만들기
+
+> STS-mongoTest에서 확인 !
