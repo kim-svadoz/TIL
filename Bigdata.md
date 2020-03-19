@@ -1930,3 +1930,40 @@ src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 #### 11. MongoDB로 Client 프로그램 만들기
 
 > STS-mongoTest에서 확인 !
+
+---
+
+## 20-03-19 목
+
+Mapredce 와 HDFS 위에 몽고디비가 올라가기도 하고~ 하이브가 올라가기도하고~
+
+로그발생시키고~ RDBMS~ 등등 < mapreduce,hdfs >로 들어가면 처리결과를 MongoDB, R, 머아웃?
+
+빅데이터로 갈거면 " spark ".. 꼭 해라..!! 덩치는 하둡이다!!!
+
+하둡과 스파크, 사용되는 쓰임새가 다르다~ 하둡은 배치, 스파크는 리얼타임~
+
+R.. 반드시 알아야행.. 통계교수님들이 좋아하는언어.. 파이썬으로 갈아타는고 요구하고 있는 경우가 많다
+
+### R
+
+> 데이터 분석 전문 도구(소프트웨어)
+
+[**https://rstudio.com/**](https://rstudio.com/)
+
+[**https://www.r-project.org/**](https://www.r-project.org/)**[\**[출처\]\** ](https://www.r-project.org/)
+
+- 오픈소스라서 좋아용~
+- 컴퓨터이름, 사용자이름, 설치경로(공백도 X) => 한글 X
+
+
+
+
+
+csv_exam.csv를 읽어서 데이터를 수정한 후 csv_exam_result.csv로 저장하기
+
+-  science가 80이상인 데이터를 추출
+- 추출된 데이터에 mytotal과 myavg컬럼을 추가
+- mytotal : 모든 과목의 총점
+- myavg : 모든 과목의 평균
+
