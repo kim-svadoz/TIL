@@ -1967,3 +1967,33 @@ csv_exam.csv를 읽어서 데이터를 수정한 후 csv_exam_result.csv로 저�
 - mytotal : 모든 과목의 총점
 - myavg : 모든 과목의 평균
 
+```R
+mydata <- read.csv("csv_exam.csv")
+mydataResult <- mydata[mydata$science>=80, ]
+mydataResult$mytotal <- as.numeric(mydataResult$math+mydataResult$english+mydataResult$science)
+mydataResult$myavg <- as.numeric(mydataResult$mytotal/3)
+write.csv9mydataResult, file="result.csv"
+```
+
+---
+
+## 20-03-20 금
+
+- vector : type 동일 "자바의 배열"
+- matrix : type 동일 "자바의 행렬(테이블)"
+- dataframe : 열방향으로 type이 동일 "테이블인데 열별로 다름"
+- list : 각 요소마다 타입이 다르다~ (2차원배열이라고 생각) "2차원 가변배열"
+
+### [데이터분석]
+
+#### 1. 데이터가져오기
+
+> R에서 사용할 수 있는 여러 형태의 데이터로 변환, 변환된 데이터를 액세스
+
+- 외부파일
+- 크롤링
+- DB(오라클,mongodb,hadoop,....)
+
+#### 2. 데이터의 정보를 확인
+
+> 컬럼갯수, row갯수, 타입, 유형, 실제 저장된 데이터...
