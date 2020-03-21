@@ -1997,3 +1997,27 @@ write.csv9mydataResult, file="result.csv"
 #### 2. 데이터의 정보를 확인
 
 > 컬럼갯수, row갯수, 타입, 유형, 실제 저장된 데이터...
+
+---
+
+## 20-03-21 토
+
+- apply_test
+  - apply
+- filter
+  - 데이터 정제
+  - 이상데이터 잘라내기
+- crawl
+  - 웹페이지에서 데이터를 추출(csv저장)
+
+### 크롤링
+
+#### 문자열관련 함수
+
+- Paste : 벡터를 연결해서 하나의 문자열로 생성
+  - paste0 - 여러개를 연결
+
+```bash
+str<-c("java","hadoop","mongodb")
+```
+
