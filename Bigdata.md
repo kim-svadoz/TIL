@@ -2021,3 +2021,57 @@ write.csv9mydataResult, file="result.csv"
 str<-c("java","hadoop","mongodb")
 ```
 
+---
+
+## 20-03-23 월
+
+### 몽고디비에 크롤링한 데이터 집어넣기.
+
+![image-20200323094959287](images/image-20200323094959287.png)
+
+![image-20200323095042468](images/image-20200323095042468.png)
+
+- 몇만건의 데이터가 있을땐 csv파일보다 RData로 보는게 훨씬 빠르고 성능이 좋다.
+
+![image-20200323095448373](images/image-20200323095448373.png)
+
+- RData 불러오기
+
+![image-20200323100827510](images/image-20200323100827510.png)
+
+
+
+<< 실습 1 >>
+
+crawl_content
+
+fianl_data의 1번 글의 내용을 출력하기
+
+#### - 기본적인 크롤링 방법
+
+> crawl_content_teacher.R 파일 확인
+
+#### - Final-Crawling
+
+<< 실습 2 >>
+
+모두의 광장의 1페이지 : 10페이지의모든 게시글 크롤링
+
+1. 모든페이지의 title,hit,url,content 추출하기
+2. crawl_result.csv, crawl_result.RData저장
+3. mongodb저장 ( 300개 저장 )
+4. for, if문을 활용
+
+
+
+#### - 형태소분석
+
+
+
+
+
+## 안드로이드
+
+#### [ 설치 ]
+
+https://developer.android.com/studio => 최신버전으로 다운받기.
