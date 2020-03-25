@@ -40,5 +40,84 @@
    1. 다시 2번(onStart)으로.
 6. onDestroy
 
+---
+
+## 20-03-25 수
+
+![image-20200325093709847](images/image-20200325093709847.png)
+
+- LinearLayout
+
+- app :
+
+- tools : device에는 적용 X
+
+  => 안드로이드 스튜디오에서만 보여지는 속성
+
+- 썬...?오라클..? 소송...?
+
+### Linear Layout 
+
+> 순차적으로 배치(평행, 수직)
+
+- layout_width : view의 너비
+
+  - match_parent :부모의 width size만큼 꽉차게 그리겠다. 폰 size에 꽉차게 레이아웃에 그리겠다.
+
+  - wrap_content : 자기가 갖고 있는 view의 size만큼 꽉차게 그리겠다.
+
+- layout_height : view의높이
+
+- layout_weight : 여백을 해당 view의 사이즈로 포함
+
+  => view가 여러개면 그 view들이 사이즈를 나눠갖겠다!
+
+- layout_gravity : parent내부에서 view의 정렬
+
+- gravity : view내부에서의 정렬
+
+- orientation : 배치 방향
+
+- id : 각 위젯을 식별할 수 있는 이름
+
+  - btn, txt
+
+- margin : 주위 여백
+
+- padding : 내부 컨텐츠와 border사이의 간격
+
+- **layout은 중첩해서 사용이 가능하다.**
+
+  
+
+  << 실습 >>
+
+  linear_exam01.xml
+
+  linear_exam02.xml
+
+  linear_exam03.xml
 
 
+
+### Constraint Layout
+
+> view를 배치하는 것에 제약사항이 있는것
+
+![image-20200325135249620](images/image-20200325135249620.png)
+
+
+
+### activity
+
+![image-20200325145224853](images/image-20200325145224853.png)
+
+
+
+- 저 두가지 태그가 둘 다 있으면 맨 처음 실행된다.
+
+
+
+- 추가로 액티비티를 사용하기 위해서는 Manifest에 등록해줘야 한다.
+
+![image-20200325164932889](images/image-20200325164932889.png)
