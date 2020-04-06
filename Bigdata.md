@@ -2075,3 +2075,12 @@ fianl_data의 1번 글의 내용을 출력하기
 #### [ 설치 ]
 
 https://developer.android.com/studio => 최신버전으로 다운받기.
+
+---
+
+## 20-03-24 화
+
+### word-count
+
+### word-clout
+
