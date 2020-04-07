@@ -275,7 +275,423 @@
 - SimpleAdapterTest
 - CustomRowTest
 
+---
+
+## 20-04-07 화
+
+### 레이아웃 인플레이션
+
+> XML레이아웃의 내용이 메모리에 객체화되는 과정
+
+- 패키지 구분하기.
+
+- 레이아웃을 만들때는 항상 context 객체가 들어간다.
+
+- .this 객체를 지정할 때, 익명이너클래스는 객체가 될 수 없기 때문에 아우터클래스.this를 활용하여 아우터클래스를 지칭해줘야 한다.
+
+- 이너클래스에서 아우터클래스의 변수를 접근할 때는 final을 붙여줘야한다.
+
+- **layout Inflator**
+
+  ```java
+   protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_inflator_test);
+          Button btn = findViewById(R.id.btnAdd);
+          final LinearLayout container = findViewById(R.id.container);
+          //레이아웃
+          btn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  LayoutInflater inflater = 	(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                  inflater.inflate(R.layout.include_view, container, true);
+              }
+          });
+      }
+  ```
+
+- 작업을 adapter로 하기 때문에 adapter가 없다면 xml파일의 id를 찾아오지 못하고 => 사용하지 못한다.
+
+### 사용자정의 Adapter 만들기
+
+> 사용자 정의로 디자인한 뷰를 목록으로 사용하고 싶은 경우
+
+- 안드로이드에서 앱을 구성할 때 목록형식을 가장 많이 사용
+
+- 안드로이드 내부에서 제공하는 Adapter로 표현하고 싶은 내용을 모두 표현할 수 없다.
+
+  => 이벤트연결, 각 목록의 구성을 다르게 생성
+
+#### [구성요소]
+
+- Adapter를 이용해서 출력할 데이터를 저장하는 객체 ( ex. DTO ) 
+
+  - 안드로이드는 getter,setter를 써도되고 안써도 된다. 변수로 접근하는 것이 가능하다.(웹과의 차이점)
+
+- *사용자 정의 Adapter*
+
+  ##### 1) 안드로이드에서 제공하는 Adapter클래스를 상속
+
+  - 리스트뷰를 만들 때 필요한 정보를 저장할 수 있도록 멤버변수 정의
+
+    ```java
+    정의(Context, row디자인 리소스, 데이터)
+    ```
+
+  ##### 2) 생성자 정의
+
+  - 상속받고 있는 ArrayAdapter의 생성자 호출
+
+  ##### 3) ArrayAdapter에 정의되어 있는 메소드를 오버라이딩
+
+  - getView : 리스트뷰의 한 항목이 만들어질 때마다 호출
+
+    => 전달된 리소스를 이용해서 뷰를 생성(LayoutInflator)
+
+    => 한 row를 구성하는 뷰를 찾아서 데이터와 연결
+
+  ##### 4) getView메소드에서 성능개선을 위한 코드를 작성
+
+  - 한번 생성한 view를 재사용
+  - findViewById는 한 번만 찾아오기
+
+  ##### 5) ViewHolder라는 객체를 생성
+
+  - row를 구성ㄹ하는 뷰를 한 번 findViewById하기
+  - row에 대한 구성 View를 멤버변수로 선언
+  - 생성자에서 findViewById처리를 구성
+  - 최초로 뷰를 만들 때(row에 대한 뷰) 이 객체를 활용
+
+  ##### 6) row를 구성하는 뷰에 상태값을 저장하기
+
+  - 각 뷰의 이벤트를 통해 저장
+
+  - 각 뷰의 상태값을 저장할 수 있도록 객체를 생성
+
+    => 상태값을 저장한 객체를 자료 구조에 저장 
+
+    ​	=> focus를 잃어버릴 때 상태를 저장
+
+  ```java
+  < xml파일 >
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context=".view.activity.CustomAdapterTestActivity">
+      <TextView
+          android:id="@+id/txtInfo_cust"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textAppearance="@style/TextAppearance.AppCompat.Large"
+          android:text="Info"/>
+      <ListView
+          android:id="@+id/cust_listview"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+  
+  </LinearLayout>
+  ```
+
+  ```java
+  public class MyAdapter extends ArrayAdapter<User>{
+      private Context context;
+      private int resId;
+      private ArrayList<User> datalist;
+  
+      public MyAdapter(Context context, int resId, ArrayList<User> datalist) {
+          super(context, resId, datalist);
+          this.context = context;
+          this.resId = resId;
+          this.datalist = datalist;
+      }
+  
+      //리스트 갯수를 반환
+      @Override
+      public int getCount() {
+          return datalist.size();
+      }
+      //매개변수로 전달받은 순서에 있는 리스트 항목을 반환
+      @Override
+      public User getItem(int position) {
+          return datalist.get(position);
+      }
+      //리스트의 한 항목을 만들 때 호출되는 메소드 - 리스트항목이 100개면 100번 호출
+      //position => 리스트 순서
+      //convertView => 한 항목에 대한 뷰를 리턴
+      @Override
+      public View getView(int position, View convertView, ViewGroup parent) {
+          Log.d("getview","getview"+position);
+          long start = System.nanoTime();
+          //View를 생성
+          LayoutInflater inflater =
+                  (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+          convertView = inflater.inflate(resId, null);
+  
+          //ArrayList에서 리턴된 리스트 항목의 번호와 동일한 데이터를 구하기
+          User user = datalist.get(position);
+  
+          //위에서 생성한 뷰의 각 요소에 데이터를 연결
+          ImageView imageView = convertView.findViewById(R.id.img);
+          TextView nameView = convertView.findViewById(R.id.txtcust1);
+          TextView telNumView = convertView.findViewById(R.id.txtcust2);
+  
+          imageView.setImageResource(user.myImg);
+          nameView.setText(user.name);
+          telNumView.setText(user.telNum);
+  
+          long end = System.nanoTime();
+          Log.d("getview",(end-start)+"");
+  
+          return convertView;
+      }
+  }
+  ```
+
+  => getSystemService는 context가 갖고 있는 환경정보이다.
+
+  => 커스터마이징 하는 getView는 액티비티가 아니기 때문에 위에 선언한 context를 이용하여 getSystemService 호출
+
+  ```java
+  public class CustomAdapterTestActivity extends AppCompatActivity {
+  
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          setContentView(R.layout.activity_custom_adapter_test);
+          TextView info = findViewById(R.id.txtInfo_cust);
+          ListView listView = findViewById(R.id.cust_listview);
+  
+          //1. list에 출력할 데이터
+          ArrayList<User> datalist = new ArrayList<User>();
+          for(int i=1; i<101; i++){
+              User user = new User(R.drawable.ic_launcher_foreground,
+                                  "name"+i,
+                                  "000000"+i);
+              datalist.add(user);
+          }
+          //2. 사용자정의 어댑터 객체 생성
+          MyAdapter adpater = new MyAdapter(this, R.layout.custrow2, datalist);
+  
+          //3. ListView에 어댑터 연결
+          listView.setAdapter(adpater);
+      }
+  }
+  ```
+
+- Adapter를 통해 만들어진 리스트뷰를 보여줄 액티비티
+  - main layout필요 !
+
+#### MyAdapt의 성능개선.ver
+
+> 성능 개선을 위한 작업 추가
+>
+> 1. 한번 만든 뷰는 재사용
+> 2. findViewById 한 번 작업한 뷰에 대한 정보는 저장해 놓고 다시 사용
+
+```java
+public class MyAdapter2 extends ArrayAdapter<User>{
+    private Context context;
+    private int resId;
+    private ArrayList<User> datalist;
+
+    //row마다 사용자가 설정한 값을 position과 함께 저장
+    //해당 position에 대한 설정 값을 같이 출력
+    //저장하는 시점은 사용자가 설정을 끝낸 시점 - focus를 잃어 버리는 시점
+    HashMap<Integer, SaveUserState> saveData = new HashMap<Integer, SaveUserState>();
+
+    public MyAdapter2(Context context, int resId, ArrayList<User> datalist) {
+        super(context, resId, datalist);
+        this.context = context;
+        this.resId = resId;
+        this.datalist = datalist;
+    }
+
+    //리스트 갯수를 반환
+    @Override
+    public int getCount() {
+        return datalist.size();
+    }
+
+    //매개변수로 전달받은 순서에 있는 리스트 항목을 반환
+    @Override
+    public User getItem(int position) {
+        return datalist.get(position);
+    }
+
+    //리스트의 한 항목을 만들 때 호출되는 메소드 - 리스트항목이 100개면 100번 호출
+    //position => 리스트 순서
+    //convertView => 한 항목에 대한 뷰를 리턴
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.d("getview","getview"+position);
+        long start = System.nanoTime();
+        //View를 생성 - 매개변수로 전달되는 converView를 재사용
+        UserViewHolder holder = null;
+        if(convertView==null){
+            LayoutInflater inflater =
+                    (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(resId, null);
+
+            //============최초작업이므로 뷰를 찾아서 가져오기=============
+            holder = new UserViewHolder(convertView);
+            //홀더를 저장
+            convertView.setTag(holder);
+        }else{
+            //=============최초 작업이 아니라 뷰를 재사용하는 중이라면============
+            holder = (UserViewHolder)convertView.getTag();
+        }
+
+        //ArrayList에서 리턴된 리스트 항목의 번호와 동일한 데이터를 구하기
+        User user = datalist.get(position);
+        if(user!=null){
+            //위에서 생성한 뷰의 각 요소에 데이터를 연결
+            ImageView imageView = holder.myImg;
+            TextView nameView = holder.nameView;
+            TextView telNumView = holder.telNumView;
+            final EditText editView = holder.editView;
+
+            imageView.setImageResource(user.myImg);
+            nameView.setText(user.name);
+            telNumView.setText(user.telNum);
+
+            //뷰를 만들때 저장된 내용이 있는지 체크해서 값을 출력하기
+            SaveUserState state = saveData.get(position);
+            if(state==null){ // 저장된 객체가 없으면 빈 값을 출력
+                editView.setText("");
+            }else{ // 저장된 객체가 있음면 객체에서 data를 추출해서 출력
+                editView.setText(state.data);
+            }
+
+            //EditText가 focus를 잃어버리는 시점에 입력한 데이터를 저장
+            editView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        String data = editView.getText().toString();
+                        SaveUserState objstate = new SaveUserState();
+                        objstate.data = data;
+                        saveData.put(position, objstate);
+                    }
+                }
+            });
+        }
+
+        long end = System.nanoTime();
+        Log.d("getview",(end-start)+"");
+        return convertView;
+    }
+}
+
+```
+
+#### ExamAdapt
+
+```java
+public class ExamAdapter extends ArrayAdapter {
+    private Context context;
+    private int resId;
+    private ArrayList<ActorItem> actorlist;
+
+    HashMap<Integer, SaveActorState> saveData = new HashMap<Integer, SaveActorState>();
+
+    public ExamAdapter(Context context, int resId, ArrayList<ActorItem> actorlist) {
+        super(context, resId, actorlist);
+        this.context = context;
+        this.resId = resId;
+        this.actorlist = actorlist;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return super.getItem(position);
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+
+        ViewHolder holder = null;
+        if(convertView==null){
+            LayoutInflater inflater =
+                    (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(resId, null);
+
+            //============최초작업이므로 뷰를 찾아서 가져오기=============
+            holder = new ViewHolder(convertView);
+            //홀더를 저장
+            convertView.setTag(holder);
+        }else{
+            //=============최초 작업이 아니라 뷰를 재사용하는 중이라면============
+            holder = (ViewHolder)convertView.getTag();
+        }
+
+        ActorItem actor = actorlist.get(position);
+        if(actor!=null){
+            //위에서 생성한 뷰의 각 요소에 데이터를 연결
+            ImageView imageView = holder.myImg;
+            TextView nameView = holder.nameView;
+            TextView dateView = holder.dateView;
+            TextView textView = holder.textView;
+            final CheckBox checkView = holder.checkView;
+
+            imageView.setImageResource(actor.myImg);
+            nameView.setText(actor.name);
+            dateView.setText(actor.date);
+            textView.setText(actor.text);
+
+            //뷰를 만들때 저장된 내용이 있는지 체크해서 값을 출력하기
+            SaveActorState state = saveData.get(position);
+            if(state==null){ // 저장된 객체가 없으면 빈 값을 출력
+                checkView.setChecked(false);
+            }else{ // 저장된 객체가 있음면 객체에서 data를 추출해서 출력
+                checkView.setChecked(state.chkValue);
+            }
+
+            checkView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean chkValue = checkView.isChecked();
+                    SaveActorState chkstate = new SaveActorState();
+                    chkstate.chkValue = chkValue;
+                    saveData.put(position, chkstate);
+                }
+            });
 
 
 
+        }
+        return convertView;
+    }
+}
+```
+
+
+
+### 안드로이드 앱의 네 가지 구성요소 ?
+
+1. 액티비티(Activity)
+
+   => 화면
+
+2. 서비스(Service)
+
+3. 브로드캐스트 수신자(Broadcast Receiver)
+
+   => 영상통화-배터리량보존되어야함- 이럴때.
+
+   => device에서 일어나는 어떤 사건이 언제일어날지 모를 때 사용
+
+4. 내용 제공자(Content Provider)
+
+   => 화면 공유 , 데이터 공유 가능하게 함
+
+### Intent(인텐트)
+
+> 여러 화면간 전환을 위해 사용 ( 두 가지 방법 존재)
+
+- 실행흐름
+
+  : Activity "A" -> Intent -> 안드로이드OS -> Intent -> Activity "B"
 
