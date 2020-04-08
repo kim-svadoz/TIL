@@ -482,6 +482,7 @@
   ```
 
 - Adapter를 통해 만들어진 리스트뷰를 보여줄 액티비티
+  
   - main layout필요 !
 
 #### MyAdapt의 성능개선.ver
@@ -669,7 +670,7 @@ public class ExamAdapter extends ArrayAdapter {
 
 
 
-### 안드로이드 앱의 네 가지 구성요소 ?
+### 안드로이드 앱의 네 가지 구성요소 (component)?
 
 1. 액티비티(Activity)
 
@@ -694,4 +695,219 @@ public class ExamAdapter extends ArrayAdapter {
 - 실행흐름
 
   : Activity "A" -> Intent -> 안드로이드OS -> Intent -> Activity "B"
+
+---
+
+## 02-04-08 수
+
+### Intent(인텐트)
+
+> 안드로이드에서 사용하는 주요 컴포턴트 4개는 안드로이드 OS에서 실행되게 해주어야 한다. 이를 이해 Activity간의 화면전환을 위해 데이터 Intent가 전달하며 공유하는 방식.
+
+#### [기본 실행흐름]
+
+1. 인텐트 객체를 생성하고 실행할 액티비티의 정보와 데이터를 셋팅
+   - 값 셋팅 : putExtra 메소드를 이용
+   - 객체 셋팅 : Parcelable을 implement하여 이용
+     - writeToParcel 메소드 자동호출
+2. 안드로이드OS에 인텐트 객체 넘기며 의뢰
+   - startActivity : 액티비티 실행
+3. 인텐트에 설정되어 있는 액티비티 호출
+4. 호출된 액티비티에서는 안드로이드OS가 넘겨준 인텐트를 가져오기
+5. 인텐트에 셋팅된 데이터를 꺼내서 활용
+
+```java
+public class ReturnDataFirstActivity extends AppCompatActivity
+			implements OnClickListener{
+
+    public static final int SECOND_BUTTON = 10;
+    /** Called when the activity is first created. */
+	Button bt1;
+	Button bt2;
+    Button bt3;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.first2);
+        bt1 = (Button)findViewById(R.id.call1);
+        bt2 = (Button)findViewById(R.id.call2);
+        bt3 = (Button)findViewById(R.id.btnExit);
+        
+        bt1.setOnClickListener(this);
+        bt2.setOnClickListener(this);
+        bt3.setOnClickListener(this);
+        Log.d("kim","onCreate()");
+    }
+	@Override
+	public void onClick(View v) {
+		if(v.getId()==R.id.btnExit){
+		    finish();
+        }else if(v.getId()==R.id.call1){
+		    Intent intent  = new Intent();
+            intent.putExtra("info","첫 번째 액티비티가 넘기는 메시지");
+            startActivity(intent);
+        }else if(v.getId()==R.id.call2){
+		    //새로운 액티비티를 실행해서 작업을 완료한 후 되돌아오는 작업을 수행
+            Intent intent = new Intent(this, ReturnDataSecondActivity.class);
+            intent.putExtra("code","call2");
+            intent.putExtra("data","첫 번째 액티비티가 넘기는 메시지");
+
+            //되돌아올 때 사용되는 메소드가 startActivityForResult
+            //인텐트객체와 함께 request_code를 넘긴다.(사용자 정의)
+            startActivityForResult(intent, SECOND_BUTTON);
+        }
+	}
+
+	//인텐트를 통해서 액티비티를 호출하고 되돌아오는 경우 자동으로 onActivityResult를 호출한다
+    //  => 되돌아와서 마무리해야 하므로!
+    //  => onActivityResult를 오버라이딩해서 처리할 작업을 구현해주자
+    // * reuqestCode : 요청을 했던 뷰를 구분하기 위한 코드
+    // * resultCode : 결과 코드
+    // * data : Intent객체
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(requestCode==SECOND_BUTTON && resultCode==RESULT_OK){
+            String returndata = intent.getStringExtra("second");
+            Toast.makeText(this, returndata, Toast.LENGTH_LONG).show();
+        }
+    }
+}
+```
+
+```java
+public class ReturnDataSecondActivity extends AppCompatActivity {
+	String code;
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    setContentView(R.layout.second2);
+	    Button bt1 = (Button)findViewById(R.id.btnClose1);
+		final TextView txt = findViewById(R.id.secondTxt);
+		final Intent intent = getIntent();
+		code = intent.getStringExtra("code");
+	    bt1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switch(code){
+					case "call2":
+						String data = intent.getStringExtra("data");
+						txt.setText(data);
+
+						intent.putExtra("second","두 번째 액티비티에서 실행 완료");
+
+						//실행 후에 호출한 액티비티로 되돌아가기
+						//되돌아갈 때 값을 공유하기 위해 intent객체를 넘긴다.
+						setResult(RESULT_OK, intent);
+						finish();
+				}
+			}
+		});
+	}
+
+}
+```
+
+#### < intent-filter >
+
+```java
+<activity android:name=".exam.SelectView_ExamActivity">
+    <intent-filter>
+  	    <action android:name="com.exam.selectview"/> // 우리끼리만의 앱을 이용하고 싶을때 임의로 naming
+        <category android:name="android.intent.category.DEFAULT"/> //안드로이드가 실행할 범주
+    </intent-filter>
+ </activity>
+```
+
+#### BasicRunApp
+
+- 지도앱 실행
+
+  ```java
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_basic_app_run);
+  }
+  ```
+
+- 웹 브라우저 실행
+
+  ```java
+  public void runGoogleMap(View v){
+      Uri uri = Uri.parse("geo:37.501579 , 127.039585");
+      Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+      startActivity(intent);
+  }
+  ```
+
+- 전화걸기 화면 실행
+
+  ```java
+  public void runWeb(View v){
+      Uri uri = Uri.parse("https://www.daum.net");
+      Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+      startActivity(intent);
+  }
+  ```
+
+- 전화걸기 실행
+
+  ```java
+  //AndroidManifest.xml
+  <uses-permission android:name="android.permission.CALL_PHONE"/>
+  
+  //activity
+  String[] permission_list = {
+      Manifest.permission.CALL_PHONE
+  };    
+  
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      setContentView(R.layout.activity_basic_app_run);
+  
+      //권한체크 메소드를 호출
+      runPermission();
+  }
+  
+  //권한을 체크 - 승인처리
+  public void runPermission(){
+      //하위버전이면 실행되지 않도록 처리
+      if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
+          return; //종료
+      }
+      //모든 권한을 셀프체크
+      for(String permission:permission_list){
+          int chk = checkCallingOrSelfPermission(permission);
+          if(chk== PackageManager.PERMISSION_DENIED){
+              requestPermissions(permission_list, 0);
+              break;
+          }
+      }
+  }
+  
+  //실제 전화 걸기 위한메소드
+  public void runCallPhone(View v){
+      Intent intent = null;
+      int chk = PermissionChecker.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+      if(chk==PackageManager.PERMISSION_GRANTED){
+          Log.d("tel","성공");
+          intent = new Intent(Intent.ACTION_CALL,
+                              Uri.parse("tel:01072971287"));
+      }else{
+          Log.d("tel","실패");
+          return;
+      }
+      startActivity(intent);
+  }
+  ```
+
+  ![image-20200408171048771](images/image-20200408171048771.png)
+
+![image-20200408171520363](images/image-20200408171520363.png)
+
+![image-20200408171617040](images/image-20200408171617040.png)
+
+
 
