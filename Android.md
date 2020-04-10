@@ -698,9 +698,9 @@ public class ExamAdapter extends ArrayAdapter {
 
 ---
 
-## 02-04-08 수
+## 20-04-08 수
 
-### Intent(인텐트)
+### ** Intent(인텐트)
 
 > 안드로이드에서 사용하는 주요 컴포턴트 4개는 안드로이드 OS에서 실행되게 해주어야 한다. 이를 이해 Activity간의 화면전환을 위해 데이터 Intent가 전달하며 공유하는 방식.
 
@@ -908,6 +908,221 @@ public class ReturnDataSecondActivity extends AppCompatActivity {
 ![image-20200408171520363](images/image-20200408171520363.png)
 
 ![image-20200408171617040](images/image-20200408171617040.png)
+
+
+
+---
+
+## 20-04-10 금
+
+### Permission
+
+마시맬로 버전 이후부터는 퍼미션 등록뿐 아니라, 사용자가 사용하기 전 퍼미션 안내 및 등록 및 직접 설정
+
+#### 종류
+
+- 일반권함
+
+- 위험권한
+
+  > 액티비티를 실행하거나 버튼을 누르거나 어떤 기능을 사용할 때 권한에 대한 처리를 할 수 있도록 구현
+
+  
+
+  - **사용 메소드**
+
+    - checkSelfPermission : 퍼미션의 현재 상태를 확인하는 메소드
+
+      ```java
+      - PERMISSION_DENIED : 퍼미션이 부여되지 않은 상태
+      - PERMISSION_GRANTED : 퍼미션이 부여되지 있는 상태
+      ```
+
+    - requestPermissions : (checkSelfPermission : PERMISSION_DENIED )권한이 체크되어 있지 않은 경우에 권한을 요청하는 메시지를표시
+
+      (이 메소드 이외에도 제공되는 메소드는 여러개임)
+
+    - onRequestPermissionsResult : requestPermission의 결과로 호출되는 메소드
+
+      ```java
+      // 퍼미션 설정 정보를 매개변수로 넘긴다.
+      int requestCode : 퍼미션 요청할 때 넘긴 요청코드
+      String[] permissions : 요청퍼미션 목록
+      int[] grantResults :퍼미션 설정 성공 결과
+      ```
+
+      
+
+  - **처리 순서**
+
+    1. 현재 사용하려고 하는 권한이 설정되어 있는지 체크
+
+       => checkSelfPermission 을 이용
+
+    2. 1번에서 리턴값이 PERMISSION_DENIED 인 경우 사용자가 권한을 설정할 수 있도록 메시지를 표시
+
+       => requestPermissions
+
+    3. 요청 처리 후 자동으로 호출되는 메소드를 통해 다음에 어떤 처리를 할 것인지 정의
+
+       - 권한 성공 : 기능이 실행되도록
+       - 권한 실패 : Preference를 통해 설정할 수 있도록 Activity를 이동하거나 안내 메시지 출력
+
+
+
+#### 사용자 정의 Permmsion
+
+```java
+<uses-permission android:name="com.exam.permission.JAVA_PERMISSION" /> // 뷰에 대한 권한 설정 ((사용자))
+<uses-permission android:name="android.permission.INTERNET"/> // 인터넷 권한 설정(( 일반 ))
+<uses-permission android:name="android.permission.CAMERA"/> // 카메라 권한 설정 (( 위험 ))
+
+<application android:usesCleartextTraffic="true" /> // 문자열 통신 text에 대한 설정
+```
+
+- 권한을 테스트할 때는 번거롭더라도 앱을 삭제하고 다시 실행하기
+
+```java
+public class RuntimePermissionTest extends AppCompatActivity {
+    //퍼미션의 상태를 저장할 변수
+    boolean permission_state; //초기값 false
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_runtime_permission_test);
+        // 1. Permission 먼저 체크
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED){
+            permission_state = true;
+            printToast("권한이 설정되었습니다.");
+        }else{
+            permission_state = false;
+            printToast("권한을 설정해야 합니다.");
+            // 2. 권한이 없는 경우 권한을 설정하는 메시지를 띄운다.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
+                    1000);
+        }
+    }
+
+    // 3. requestPermissions의 메시지창에서 선택한 후 호출되는 메소드
+    //  결과를 리턴 - 결과에 따라 다르게 처리할 수 있도록 구현
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==1000 && grantResults.length>0){ //권한의 성공설정에 대한 결과가 있다는 의미
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                permission_state = true;
+                printToast("권한 설정 마무리 완료~");
+            }else{
+                printToast("권한 설정을 하지 않았으므로 기능으 사용할 수 없습니다.");
+            }
+        }
+    }
+
+    public void printToast(String msg){
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+    }
+
+    public void runCamera(View v){
+        if(permission_state){
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivity(intent);
+        }else{
+            printToast("권한을 설정해야 기능을 사용할 수 있습니다.");
+            //권한을 설정할 수 있는 Activity로 자동 이동되도록
+            //(사용자로 하여금 권한을 다시 설정할 수 있도록 만들기)
+        }
+
+    }
+}
+```
+
+
+
+### FileSystem
+
+![image-20200410134349447](images/image-20200410134349447.png)
+
+-  앱별로 내부저장소가 패키지별로 따로 관리가 되고 있고, 아무도 접근하지 못하는 공간.
+- 패키지가 지워지면 자동으로 지워진다~
+
+![image-20200410134638076](images/image-20200410134638076.png)
+
+- 외부저장소인데 패키지 이름과 똑같이만들면 삭제될 때 같이 저장된다.
+
+![image-20200410134731960](images/image-20200410134731960.png)
+
+- 똑같이 외부저장소
+
+![image-20200410134844549](images/image-20200410134844549.png)
+
+- 똑같이 외부저장소
+
+
+
+#### 내부저장소
+
+- 이 앱만 사용하기 때문에 권한체크 안해도 됨
+
+#### 외부저장소
+
+- 외부저장소는 다른 것들을 같이 건드리지 못하도록 권한체크 필수
+- 사용자로 하여금 권한을 줄건지 말건지 설정해야 함
+- 데이터를 지워도 외부저장소에는 데이터가 남아있다.
+
+```java
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> // 외부저장소 권한 설정
+    
+<application android:requestLegacyExternalStorage="true"> // 이전버전 저장소 권한 설정
+```
+
+```java
+// 외부저장소/임의의디렉토리 생성
+//  => 앱을 삭제해도 데이터는 남아있다.
+String dirPath = external.getAbsolutePath()+"/myApp";
+
+// 외부저장소/android/data/앱의 패키지 명으로 디렉토리 생성
+//  => 앱 삭제하면 데이터가 같이 삭제된다.
+String dirPath = external.getAbsolutePath();
+```
+
+
+
+**exam1** 
+
+- 권한 체크는 액티비티
+- 저장버튼을 눌렀을때
+  - 권한 이 설정 된 경우 : Toast("권한설정 완료");
+  - 권한 이 설정안된 경우 : Toast("권한설정하세요");
+
+**exam2**
+
+아래와 같이 단순한 형식의 메모장을 작성하세요.
+
+레이아웃 - 버튼 세 개와 EditText(종류는 디자인 창에서 적절한 것을 찾아서 하세요)
+
+- 기능 1 : Write와 Read기능을 구현하세요.
+
+  - 모두 외부저장소에서 액세스 하도록 구현하세요
+
+  - BufferedReader와 FileWriter를 이용하세요
+
+  - EditText에 입력한 파일을 외부 저장소 디렉토리에 /mynote라는 폴더를 
+
+    ​      만들고 오늘날짜_memo.txt로 저장하세요
+
+    ​      ex) 4월10일 -> 20200410_memo.txt
+
+- 기능 2 : 퍼미션에 대한 처리를 하세요
+
+  - READ / WRITE에 대한 퍼미션을 모두 한 꺼번에 처리되도록 구현하세요.
+
+![image-20200410161644662](images/image-20200410161644662.png)
+
+
+
+
 
 
 
