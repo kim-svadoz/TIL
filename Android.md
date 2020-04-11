@@ -1122,7 +1122,27 @@ String dirPath = external.getAbsolutePath();
 
 
 
+---
 
+## 20-04-11 토
+
+https://sqlite.browser.org
+
+![image-20200411113848472](images/image-20200411113848472.png)
+
+### 안드로이드에서 데이터 저장하기
+
+- 내 앱에 저장하는 데이터는 앱을 지우면 데이터가 삭제 => 내부저장소 사용
+
+#### 1. Shared & Preference
+
+> 설정용
+
+#### 2. Sqlite
+
+##### - DBHelper
+
+> 데이트베이스가 업데이트 되거나, DB를 처음 생성하거나
 
 
 
