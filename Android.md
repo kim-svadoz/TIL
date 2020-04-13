@@ -1144,5 +1144,57 @@ https://sqlite.browser.org
 
 > 데이트베이스가 업데이트 되거나, DB를 처음 생성하거나
 
+---
 
+## 20-04-13 월
+
+- Map, Location, Tab, ViewPage, Fragment
+
+https://console.developers.google.com/
+
+### Map
+
+![image-20200413093913231](images/image-20200413093913231.png)
+
+![image-20200413100822114](images/image-20200413100822114.png)
+
+- dependencies에 필요한 라이브러리를 등록
+
+  ```java
+  implementation 'com.google.android.gms:play-services-maps:17.0.0'
+  implementation 'com.google.android.gms:play-services-location:17.0.0'
+  ```
+
+- layout에 fragment 추가
+
+![image-20200413101505717](images/image-20200413101505717.png)
+
+- Manifest에 인터넷 설정과 메타데이터 추가하기.
+
+  ```java
+  <uses-permission android:name="android.permission.INTERNET"/>
+      
+  <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="AIzaSyBjNJtdvT1BE8rvmb5WTOnZgIdk7rPTmmE"/> - 발급받은 API-Key
+  ```
+
+  ![image-20200413103538137](images/image-20200413103538137.png)
+
+### Location
+
+- ㅇㅇㅇㅇ
+
+  ```java
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  ```
+
+  
+
+### Fragment
+
+>  메모리를 적게 사용하면서 화면 전환을 실행시키는 기법
+>
+> 화면은 액티비티인데 그 화면 안의 고정되어있는 부분에 그 영역에 교체되어서 들어가게 하는 역할?
 
