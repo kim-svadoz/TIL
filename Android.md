@@ -1198,3 +1198,166 @@ https://console.developers.google.com/
 >
 > 화면은 액티비티인데 그 화면 안의 고정되어있는 부분에 그 영역에 교체되어서 들어가게 하는 역할?
 
+
+
+> 자세한 내용이 궁금하다면 Github 참조.
+
+---
+
+## 20-04-14 화
+
+### Fragment
+
+- 안드로이드에겐 Back stack이 있어서 새로운 프래그먼트가 들어오면 기존에 있던 액티비티들은 Back Stack으로 들어간다.
+- 여기서 뒤로버튼을 누르면?(액티비티 종료) => 백스택에 맨 위에 있던 액티비티가 올라와 화면에 뿌려진다
+
+#### - lifecycle
+
+![image-20200414104812005](images/image-20200414104812005.png)
+
+=> lifecycle 확인을 위해 오버라이딩 해야 하는 메소드. ( + onDestroy() )
+
+![image-20200414112301938](images/image-20200414112301938.png)
+
+
+
+- addTobackStack 사용할 때의 lifecycle
+
+![image-20200414114135621](images/image-20200414114135621.png)
+
+
+
+### ViewPager
+
+#### - baisc view.ver
+
+#### - fragment.ver
+
+
+
+  << 실습 >>
+
+1. Fragment로 작업한 예제를 ViewPager에 추가해서 동작하도록 작성
+
+   - Fragment를 한 개 추가
+   - => 지도가 출력되는 MainActivity도 fragment로 추가
+   - 총 4개의 Fragment가 ViewPager로 실행될 수 있도록
+
+   ```java
+   public class FragmentExam01 extends AppCompatActivity {
+       private final List<Fragment> mFragmentList = new ArrayList<>();
+       private final List<String> mFragmentTitleList = new ArrayList<>();
+       ViewPager examPager;
+       ExamPagerAdapter adapter = new ExamPagerAdapter(getSupportFragmentManager());
+       ViewFragment1 viewFragment1;
+       //ViewFragment2 viewFragment2;
+       ListFragmentTest viewFragment2;
+       ViewFragment3 viewFragment3;
+       ViewFragment4 viewFragment4;
+   
+       @Override
+       protected void onCreate(Bundle savedInstanceState) {
+           super.onCreate(savedInstanceState);
+           setContentView(R.layout.activity_view_pager_exam);
+           examPager = findViewById(R.id.examPager);
+           setupViewPager(examPager);
+           examPager.addOnPageChangeListener(new PageListener());
+   
+           viewFragment1 = new ViewFragment1();
+           viewFragment2 = new ListFragmentTest();
+           viewFragment3 = new ViewFragment3();
+           viewFragment4 = new ViewFragment4();
+   
+       }
+   
+       public void setupViewPager(ViewPager viewPager){
+           adapter.addFragment(new ViewFragment1(), "첫번째 뷰");
+           adapter.addFragment(new ListFragmentTest(), "두번째 뷰");
+           adapter.addFragment(new ViewFragment3(), "세번째 뷰");
+           adapter.addFragment(new ViewFragment4(), "네번째 뷰");
+           viewPager.setAdapter(adapter);
+       }
+   
+       public void btn_click(View view){
+           examPager.setCurrentItem(Integer.parseInt(view.getTag().toString()));
+       }
+   
+       class ExamPagerAdapter extends FragmentPagerAdapter{
+   
+           public ExamPagerAdapter(FragmentManager supportFragmentManager) {
+               super(supportFragmentManager);
+           }
+   
+           public CharSequence getPageTitle(int position) {
+               return mFragmentTitleList.get(position);
+           }
+   
+           public void addFragment(Fragment fragment, String title){
+               mFragmentList.add(fragment);
+               mFragmentTitleList.add(title);
+           }
+   
+           @NonNull
+           @Override
+           public Fragment getItem(int position) {
+               return mFragmentList.get(position);
+           }
+   
+           @Override
+           public int getCount() {
+               return mFragmentList.size();
+           }
+       }
+   
+       class PageListener implements ViewPager.OnPageChangeListener {
+   
+           @Override
+           public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+   
+           }
+   
+           @Override
+           public void onPageSelected(int position) {
+               //페이지가 변경되었을 때
+               Toast.makeText(FragmentExam01.this, "페이지가 전환", Toast.LENGTH_SHORT).show();
+   
+           }
+   
+           @Override
+           public void onPageScrollStateChanged(int state) {
+   
+           }
+       }
+   
+   }
+   ```
+
+   ```xml
+   <androidx.viewpager.widget.ViewPager
+           android:id="@+id/examPager"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <LinearLayout
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/container">
+                  <!-- 이 안에 프레그먼트를 정의하세요 -->
+                  <!--fragment 첫번째 뷰 페이지를 연결
+                       id : fragment
+                       ViewFragment1, ViewFragment2, ViewFragment3
+                       버튼을 누를때마다 fragment의 영역이 변경되도록 구현
+                    -->
+               <!--xml에 fragment를 추가하면 동적(코드)로 제어가 어렵다.-->
+               <fragment
+                   android:id="@+id/fragment"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:name="multi.android.support_lib.fragment.exam.OneFragment"/>
+            </LinearLayout>
+   </androidx.viewpager.widget.ViewPager>
+   ```
+
+   - 어떤 인터넷망을 이용하냐에 따라서 다르다.
+   - 특정 API키로는 하나의 앱만을 사용할 수 있다.
