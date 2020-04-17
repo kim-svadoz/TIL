@@ -1368,7 +1368,9 @@ https://console.developers.google.com/
 
 - 머티리얼 디자인
 
-### TabLayout
+### TabLayout & design
+
+> 
 
 - gradle(app) 라이브러리 다운로드
 
@@ -1471,5 +1473,143 @@ public class FragmentExam01 extends AppCompatActivity {
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"/>
+```
+
+---
+
+## 20-04-17 금
+
+### drawer
+
+> navigation view, recycler view, 
+
+![image-20200417093205107](images/image-20200417093205107.png)
+
+- design 이용할 때는 프로젝트 새로만들었으니 library를 추가해주어야 한다.
+
+
+
+- circle_image_View
+
+```java
+implementation 'de.hdodenhof:circleimageview:3.0.1'
+```
+
+### Recycler View
+
+#### - 실행과정
+
+1. Recycler에 출력할 데이터 준비 
+
+2. Adapter생성
+
+   => row하나에 대한 구성 레이아웃
+
+   1. Recycler에 레이아웃을 설정
+
+   => ex) LinearLayout, GirdLayout
+
+3. Recycler와 adapter를 연결
+
+4. 추가적인 요소들을 적용할 수 있다. - 꾸미기, 애니메이션
+
+#### -SimpleRecyclerView
+
+```java
+public class SimpleRecyclerTest extends AppCompatActivity {
+    RecyclerView list;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_simple_recycler_test);
+
+        list = findViewById(R.id.list);
+        //1. Recycler에 출력할 데이터 준비
+        List<SimpleItem> recycler_simple_data = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            SimpleItem item = new SimpleItem("simple_item"+i);
+            recycler_simple_data.add(item);
+        }
+        //2. Adapter생성
+        SimpleItemAdapter adaptaer = new SimpleItemAdapter(this,
+                R.layout.simple_item, recycler_simple_data);
+        //3. Recycler에 레이아웃을 설정 **
+        //  => ex) LinearLayout, GirdLayout
+        //  RecyclerView에 설정할 레이아웃 객체 설정
+
+        // 1. LinearLayout 설정
+        /*LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);*/
+
+        // 2. GridLayout설정
+        GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+        list.setHasFixedSize(true);
+
+        list.setLayoutManager((manager));// VERTICAL LinearLayout이 셋팅
+        //4. Recycler와 adapter를 연결
+        list.setAdapter(adaptaer);
+        //5. 추가적인 요소들을 적용할 수 있다. - 꾸미기, 애니메이션
+    }
+```
+
+```java
+//RecyclerView에서 사용하는 Adapter를 커스터마이징
+//Adapter안에 ViewHolder 포함 - 정의(ListView사용할때와 동일한 역할)
+//           -------------
+//                  ^ㅡㅡㅡㅡㅡㅡ inner Class로 정의
+public class SimpleItemAdapter
+        extends RecyclerView.Adapter<SimpleItemAdapter.ViewHolder> {
+    Context context;
+    int row_res_id; // row를 구성하는 layout
+    List<SimpleItem> data; //RecyclerView에 출력될 전체 데이터
+
+    public SimpleItemAdapter(Context context, int row_res_id, List<SimpleItem> data) {
+        this.context = context;
+        this.row_res_id = row_res_id;
+        this.data = data;
+    }
+
+    //xml로부터 뷰(한 row에 대한 뷰)를 만들어서 ViewHolder로 넘기는 작업
+    //View를 구성하는 구성요소의 리소스를 가져오는 작업을 하는 객체
+    //1. onCreateViewHolder에서 row에 대한 뷰를 inflate해서 생성
+    //2. ViewHolder객체를 만들어서 1번에서 생성한 뷰를 넘긴다.
+    //3. ViewHolder객체안에서 onCreateViewHolder메소드에서 리턴반은 객체에서 데이터를 연결할 뷰를 찾아온다.
+    //4. onBindViewHolder메소드에서 ViewHolder가 갖고 있는 구성요소에 데이터를 연결하기
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(row_res_id, null);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("recycler","onBindViewHolder:"+position);
+        //ViewHolder가 찾아놓은 TextView를 꺼내고
+        TextView row_txt_view = holder.txtview;
+        //꺼낸 TextView에 데이터 연결
+        row_txt_view.setText(data.get(position).getData());
+        //TextView에 클릭이벤트 연결
+        row_txt_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "데이터연결완료", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    //RecyclerView에 출력할 데이터의 갯수 리턴
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtview;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtview = itemView.findViewById(R.id.itemview);
+        }
+    }
 ```
 
