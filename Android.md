@@ -1613,3 +1613,253 @@ public class SimpleItemAdapter
     }
 ```
 
+---
+
+## 20-04-20 월
+
+### 구글맵 location 설정하기
+
+- SupporMapFragment로 부터 지도객체를 추출해야 지도에 여러 가지 작업을 처리할 수 있는데구글맵은 카메라로 지도를 비추고 있는 형태가 모델링 되어있기 때문에 이 위치를 찾는데 시간이 걸린다.
+
+  => 따라서 내부에서 자동으로 전달될 수 있도록 작업해야한다.(ver.2로 바뀌면서 적용된 내용)
+
+0. FragmentManager를 이용해서 SupportMapFRagment를 find
+1. OnMapReadyCallback을 구현하고 onMapReady메소드를 오버라이딩
+2. SupportMapFragment객체에 getMapAsync메소드를 이용해서 1번에서 구현한 onMapReadyCallback 객체를 연결
+3. 맵이 준비되었을 때 자동으로 onMapReady메소드가 호출되면서 매개변수로 구글맵이 전달된다.
+
+```java
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //Map프래그먼트를 추출
+        //현재 xml문서에 정의된 Fragment를 추출하는 경우 FragmentManager를 이용해서 추출
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    GoogleMap map;
+    MarkerOptions markerOptions; //마커에 대한 정보를 담고 있는 객체
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d("mymap","준비완료");
+        map = googleMap;
+        if(map!=null){
+            //위도, 경도를 셋팅
+            LatLng myloc = new LatLng(37.5856988,126.9723925);
+            //구글맵이 v2가 되면서 카메라개념이 추가
+            //지도는 카메라로 아래를 내려다보는 듯한 내용이 모델링
+            //변경사항에 관련된 내용을 담고 있는 객체 - CameraUpdate
+            //CameraUpdate객체에 변경할 값들을 셋팅해서 매개변수로 전달
+            //CameraUpdate객체를 만드는 객체가 CameraUpdateFactory
+            //CameraUpdate객체의 여러 메소드를 통해서 CameraUpdate객체를 생성
+
+            //map.moveCamera(CameraUpdateFactory.newLatLng(myloc));
+            //map.moveCamera(CameraUpdateFactory.newLatLngZoom(myloc,15));
+
+            //현재 카메라의 정보를 담고 있는 객체
+            //target() - 화면에 출력되기 위해서 특정 위치의 중앙으로 이동
+            //zoom() - 지도의확대 축소 레벨을 설정
+            CameraPosition.Builder builder = new CameraPosition.Builder();
+            builder.target(myloc);
+            builder.zoom(15);
+            CameraPosition position = builder.build();
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
+        }
+    }
+    public void setPosition(View view){
+        LatLng myloc = new LatLng(37.497895, 127.0303356);
+        //카메라가 이동할 때 애니메이션이 적용
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc, 17));
+    }
+    public void setMarker(View view){
+        LatLng myloc = new LatLng(37.497895, 127.0303356);
+        markerOptions = new MarkerOptions();
+        markerOptions.position(myloc); //마커를 출력할 위치
+        markerOptions.title("멀티캠퍼스"); //마커를 클릭했을 때 보여줄 풍선도움말 타이틀
+        markerOptions.snippet("IT교육센터"); //풍선도움말 내용(추가텍스트)
+        map.addMarker(markerOptions); //마커가 생성되어 map에 추가
+    }
+    public void addCircle(View view){
+        //반경을 반투명한 원으로 표현
+        LatLng myloc = new LatLng(37.497895, 127.0303356);
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.strokeWidth(10); // circle의 선 width
+        circleOptions.strokeColor(0); // 선 색깔
+        circleOptions.fillColor(Color.parseColor("#55FF00FF"));
+        circleOptions.center(myloc); //circle의 중심
+        circleOptions.radius(100); // 미터단위(반지름)
+        map.addCircle(circleOptions);
+    }
+    public void changeMarker(View view){
+        //drawable폴더의 resource로 저장되어 있는 이미지 파일을 Bitmap의 형식으로 읽어오기
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.arrow);
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        Bitmap smallMaker = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMaker));
+        map.addMarker(markerOptions);
+    }
+}
+```
+
+- 지도화면이 출력된 후에 이벤트를 연결할 수 있어야 한다. 지도를 클릭하거나 지도를 드래그, 줌레벨 버튼을 이용해서 줌레벨을 변경
+
+```java
+/*
+ 지도화면이 출려된 후에 이벤트를 연결할 수 있어야 핟. 지도를 클릭하거나 지도를 드래그, 줌레벨 버튼을 이용해서 줌레벨을 변경
+    - OnMapClickListener => 지도를 클릭할 때 발생하는 이벤트에 대한 처리
+    - OnMapLongClickListener => 맵을 길게 눌렀을 때 이벤트에 대한 처리
+    - OnCameraMoveListener => 지도의 위치가 바뀌거나 줌레벨이 변경되어 카메라가 이동될 때 이벤트에 대한 처리
+    - OnCameraMoveStartedListener => 지도의 위치가 바뀌거나 줌레벨이 변경되어 카메라가 이동되기 시작할 때 이벤트에 대한 처리
+        [순서] OnCameraMoveStartedListener->OnCameraMoveListener
+*/
+
+public class MapEventTest extends AppCompatActivity implements OnMapReadyCallback,
+                GoogleMap.OnMapClickListener,
+                 GoogleMap.OnMapLongClickListener,
+                  GoogleMap.OnCameraMoveListener,
+                   GoogleMap.OnCameraMoveStartedListener {
+    GoogleMap map;
+    MarkerOptions markerOptions;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map_event_test);
+        //Map프레그먼트로 부터 맵을 얻기
+        FragmentManager manager = getSupportFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment)manager.findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        if(map!=null){
+            //위도,경도지정
+            LatLng latLng= new LatLng(37.5858031,126.9763605);
+            //지도 확대 축소 버튼을 추가
+            map.getUiSettings().setZoomControlsEnabled(true);
+            //현재 나의 위치를 포인트로 표시 - 위치기반 서비스에 대한 퍼미션 체크가 완료되어야 표시
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+
+            //map에 이벤트연결
+            map.setOnMapClickListener(this);
+            map.setOnMapLongClickListener(this);
+            map.setOnCameraMoveListener(this);
+            map.setOnCameraMoveStartedListener(this);
+        }
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        map.clear();
+        Toast.makeText(this, "지도를 클릭했습니다. " +
+                "위도:"+latLng.latitude+", 경도:"+latLng.longitude, Toast.LENGTH_SHORT).show();
+        LatLng myloc = new LatLng(37.497895, 127.0303356);
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.strokeWidth(10); // circle의 선 width
+        circleOptions.strokeColor(0); // 선 색깔
+        circleOptions.fillColor(Color.parseColor("#55FF00FF"));
+        circleOptions.center(latLng); //circle의 중심
+        circleOptions.radius(100); // 미터단위(반지름)
+        map.addCircle(circleOptions);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        Toast.makeText(this, "지도를 길게 클릭했습니다. " +
+                "위도:"+latLng.latitude+", 경도:"+latLng.longitude, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraMove() {
+        Toast.makeText(this, "카메라가 이동됩니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraMoveStarted(int i) {
+        Toast.makeText(this, "카메라가 시작됩니다.", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+### Thread(쓰레드)
+
+- 각각의 프로세스들은 서로 관여할 수 없다.
+- 지금까지 배운 것 하나의 프로세스에서는 하나의 실행흐름만 처리할 수 있었다.
+- 하나의 프로세스에서 여러 개의 실행흐름을 동시에 관리하는 것 => **멀티쓰레드 프로그래밍**
+- 여러 공유데이터에 관한 스케쥴링이 필요하다.(게임하기, 채팅하기, 쪽지, 음악듣기, 인쇄하기, .... )
+
+
+
+  << 실습 >>
+
+1. 쓰레드 프로그래밍을 구현하세요
+   - 1부터 100까지 출력하는 DigitThread
+   - A부터 Z까지 출력하는 AlphaThread
+   - ThreadExam01의 main메소드에서 DigitThread와 AlphaThread를 동시에 실행해보자.
+
+```java
+class DigitThread extends Thread{
+	public DigitThread() {
+		
+	}
+	public void run() {
+		for(int i=1; i<100; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+class AlphaThread extends Thread{
+	public AlphaThread() {
+		
+	}
+	
+	public void run() {
+		for(char i='A'; i<='Z'; i++) {
+			System.out.println(i);
+			try {
+				Thread.sleep(150);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+}
+
+public class ThreadExam01 {
+	public static void main(String[] args) {
+		DigitThread dt = new DigitThread();
+		AlphaThread at = new AlphaThread();
+		dt.start();
+		at.start();
+		System.out.println("작업중......!!");
+		for(int i=1; i<=10; i++) {
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("=======main======");
+		}
+		System.out.println("*************프로그램종료**********");
+		
+	}
+
+}
+```
+
