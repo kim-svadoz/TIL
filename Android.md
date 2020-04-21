@@ -1863,3 +1863,220 @@ public class ThreadExam01 {
 }
 ```
 
+---
+
+## 20-04-21 화
+
+- 푸쉬 알림 FCM ?! notification?!
+
+### Thread
+
+- 웹은 알아서 자동으로 쓰레드 처리를 해주기 때문에 웹에서는 안해도 됐다.
+- run 메소드가 아닌 start메소드를 호출해야 적절한 시점에 메소드를 자동으로 호출해준다.
+- 쓰레드는 한 번 종료된 것은 못살리고 새로 만들어주어야 한다.
+
+<< 실습 >>
+
+ThreadTest02를 RunnablTest02로 변경
+
+- Runnable을 상속받도록 구현
+- AlphaThread -> AlphaThread2
+- DigitThread -> DigitThread2
+
+#### 쓰레드 종료
+
+1. 임의의 변수를 선언해서 종료
+
+   - flag 변수
+     - 변수에 저장된 값에 따라서 처리할 수 있도록 구현(실행 or 종료)
+     - 변수값을 체크(오래걸리는 작업이 있는 경우 중간에 이 값을 체크해서 쓰레드를 종료할 수 있다.)
+
+   ```java
+   class StopThread01 extends Thread{
+   	private boolean state = true;
+   	public void run() {
+   		while(state) {
+   			System.out.println("쓰레드 실행 중~~");
+   			try {
+   				Thread.sleep(1000);
+   			} catch (InterruptedException e) {
+   				// TODO Auto-generated catch block
+   				e.printStackTrace();
+   			}
+   		}
+   		System.out.println("현재상태:종료상태........");
+   	}
+   	//쓰레드의 상태를 조절할 수 있는 변수의 값을 변경하는 메소드
+   	public void stopThread() {
+   		state = false;
+   	}
+   }
+   public class StopThreadTest01 {
+   	public static void main(String[] args) {
+   		System.out.println("main쓰레드 시작");
+   		StopThread01 t1 = new StopThread01();
+   		t1.start();
+   		try {
+   			Thread.sleep(3000);
+   		} catch (InterruptedException e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+   		}
+   		t1.stopThread();
+   		System.out.println("main쓰레드 종료**");
+   	}
+   }
+   ```
+
+   
+
+2. 인터럽트를 발생시키고 현재 상태를 확인하고 작업하기
+   - isInterrupted() 메소드를 이용해서 현재 쓰레드의 상태가 인터럽트 상태인지 파악
+     - 인터럽트 상태이면 true 리턴
+
+
+
+> 쓰레드가 공유객체에 접근할 때 다른 객체가 들어오지 못하게 Lock을 걸어주어야 한다.
+
+=> synchronized를 이용해서 Lock을 걸어 놓는다.
+
+
+
+  << 실습 >>
+
+1. 계좌이체 쓰레드
+2. 두사람의 잔액 대조
+
+
+
+- 어떤 코드의 어디에다가 쓰레드를 적용하지? => 제일 중요함
+
+
+
+### Handler
+
+- UI의 변경은 UI쓰레드에서만 작업야 한다.
+
+  => Handler에게 의뢰한다.
+
+- handler : 지속적으로 몇가지 처리를 반복적으로 작업으로 뷰를 변경할 때 쓰이는 것
+
+### 안드로이드에서 쓰레드 처리하기
+
+#### 1. Handler를 이용
+
+1. 동시 실행흐름을 처리할 내용을 쓰레드 객체로 구현
+2. UI쓰레드에서 Handler객체를 생성(하위객체를 구현)
+   - onCreate메소드 내부에서 처리
+3. worker thread에서 Handler객쳉게 작업을 의뢰
+4. handler 객체에서 worker thread로부터 의뢰받은 내용을 처리
+   - handleMessage메소드를 이용해서 처리(오버라이딩해서 구현)
+   - worker Thread에게 전달받은 값으로 view를 변경
+   - 쓰레드로부터 요청이 올 때마다 handleMessage메소드가 호출된다.
+
+```java
+public class MainActivity extends AppCompatActivity {
+    ProgressBar progressBar;
+    TextView textView;
+    int progressVal;
+    Handler handler1;
+    Handler handler2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        progressBar = findViewById(R.id.progressBar);
+        textView = findViewById(R.id.textView);
+
+        //worker thread의 요청을처리할 handler객체를 정의
+        //Handler의 하위객체를 익명으로 정의하고 생성
+        handler1 = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                Log.d("mythread","handleMessage요청");
+                textView.setText("progressbar진행률:"+progressVal+"%");
+                progressBar.incrementProgressBy(1);
+            }
+        };
+        handler2 = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                /*Log.d("mythread",msg.what+"");*/
+                if(msg.what==1){
+                    int val = msg.arg1;
+                    textView.setText("progressbar진행률2:"+val+"%");
+                    progressBar.incrementProgressBy(val);
+                }
+            }
+        };
+    }
+    /*
+            [화면을 변경하는 작업을 다른 메소드에서 처리 ]
+            긴 시간동안 실행하며 view를 변경하려고 하는 경우
+            실행되는 동안 다른 작업을 할 수 없다. 실행이 되는 동안 사용자의 이벤트가
+            발생하고 이벤트에 5초 동안 반응하지 않으면 안드로이드 OS는 어플리케이션을 강제 종료한다.
+            => "ANR" (Application Not Responding)
+            오랫동안 처리해야 하는 작업을 UI쓰레드에 정의하면 안된다.
+                    -------------------------------------------
+                      => 별도의 작업 쓰레드를 정의하고 동시에 실행
+    */
+    public void btnNoThread(View view){
+        for(progressVal=1; progressVal<=100; progressVal++){
+            progressBar.setProgress(progressVal);
+            SystemClock.sleep(1000); //1초동안 쉬게(1초동안 멈춰있는 효과)
+        }
+    }
+    //개발자가 마든 쓰레드 안에서 UI를 변경
+    //- 잠정적인 문제점을 갖고 있는 방법(UI의 변경은 UI쓰레드에서만 작업)
+    public void useThread(View view){
+        //프로그래스바에 진행상태가 출력되도록 설정
+        //프로그래스바의 progress가 변경되는 것을 쓰레드로 만들어서 실행
+        //개발자가 만든 쓰레드 - worker thread라고 한다.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(progressVal=1; progressVal<=100; progressVal++){
+                    progressBar.setProgress(progressVal);
+                    textView.setText("progressbar진행률:"+progressVal+"%");
+                    SystemClock.sleep(1000); //1초동안 쉬게(1초동안 멈춰있는 효과)
+                }
+            }
+        }).start();
+    }
+    //작업쓰레드가 핸들러에게 View에 대한 변경을 요청한다.
+    //핸들러는 작업쓰레드로부터 받은 요청정보를 꺼내서 뷰를 변경
+    public void userHandler(View view){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(progressVal=1; progressVal<=100; progressVal++){
+                    //handler가 갖고 있는 Mesaage객체를 매개변수로 전달
+                    handler1.sendMessage(handler1.obtainMessage());
+                    SystemClock.sleep(100); //1초동안 쉬게(1초동안 멈춰있는 효과)
+                }
+            }
+        }).start();
+    }
+
+    //핸들러를 이용해서 UI변경 요청
+    //작업쓰레드에서 값을 핸들러에게 넘기기
+    //핸들러에게 작업을 의뢰할 때 Message객체를 생성해서 전달
+    public void useMessageHandler(View view){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=1; i<=100; i++){
+                    //변경할 뷰의 정보나 Handler에게 전달한 데이터를 Message객체로 생성
+                    Message msg = new Message();
+                    // handler에게 작업을 의뢰한 쓰레드를 구분하기 위한 코드
+                    msg.what = 1;
+                    msg.arg1 = i; // 전달할 데이터
+                    //Message객체를 전달하여 핸들러에게 작업을 의뢰
+                    handler2.sendMessage(msg);
+                    SystemClock.sleep(100); //1초동안 쉬게(1초동안 멈춰있는 효과)
+                }
+            }
+        }).start();
+    }
+```
+
