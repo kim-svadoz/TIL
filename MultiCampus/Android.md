@@ -970,7 +970,7 @@ public class ReturnDataSecondActivity extends AppCompatActivity {
 
 
 
-#### 사용자 정의 Permmsion
+#### 사용자 정의 Permmision
 
 ```java
 <uses-permission android:name="com.exam.permission.JAVA_PERMISSION" /> // 뷰에 대한 권한 설정 ((사용자))

@@ -417,3 +417,20 @@ $ git rm origin
 $ git push origin master
 ```
 
+
+# :1st_place_medal: 포트폴리오 만들기
+
+- [카카오 기술 블로그](https://tech.kakao.com/blog/)
+- [깃헙페이지](https://pages.github.com/)
+- 정적 사이트 생성기(generator)
+  - .md ======> HTML/CSS , JS로 생성
+    - jekyll(ruby) : 오래 되고, 자료 많고
+  - gatsby(js, react + graphql) : 최신, 유명해서 자료 많음
+- [수업시간, 템플릿으로 만들 수 있는 페이지](https://startbootstrap.com/)
+  - [Resume](https://startbootstrap.com/themes/resume/)
+  - [VisualStudioCode](https://code.visualstudio.com/)
+
+![image-20200423152922755](../images/image-20200423152922755.png)
+
+1. 이름 변경
+2. 아이콘 등등 변경
