@@ -33,11 +33,10 @@
 | 42840_셔틀버스        | [Link](./알고리즘/Programmers/ShuttleBus_1768.java)          |                                                              |                      |
 | 42588_탑쌓기          | [Link](./알고리즘/Programmers/top_42588.java)                |                                                              |                      |
 | 43164_여행경로        | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        |                                                              |                      |
-| 42889_실패율          | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](./https://programmers.co.kr/learn/courses/30/lessons/42889) |                      |
-| 43105_정수삼각형      | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](./https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) |                      |
-|                       |                                                              |                                                              |                      |
+| 42889_실패율          | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) |                      |
+| 43105_정수삼각형      | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) |                      |
 
-### [LeetCode](./알고리즘/Leetcode)
+### [LeetCode](./알고리즘/LeetCode)
 
 | 문제번호 | 솔루션                                                       | 문제 링크 | 비고                |
 | -------- | ------------------------------------------------------------ | --------- | ------------------- |
