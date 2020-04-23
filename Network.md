@@ -24,3 +24,9 @@ TCP통신을 할거야 우린~ => 연결지향 : 데이터를 보내고 잘 갔�
 
 URLTest2.java
 
+- URl객체를 생성
+  - image copy
+  - image폴더에 저장
+
+
+
