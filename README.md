@@ -35,8 +35,10 @@
 | 43164_여행경로        | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        |                                                              |                      |
 | 42889_실패율          | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) |                      |
 | 43105_정수삼각형      | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) |                      |
-| 17686_문자열정렬      | [Link](./알고리즘/Programmers/SortFileName_17686.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17686) | Sort, Compartor      |
+| 17686_문자열정렬      | [Link](./알고리즘/Programmers/SortFileName_17686.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17686) | Sort, Comparator     |
 | 42862_체육복          | [Link](./알고리즘/Programmers/GymWear_42862.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42862) | Greedy               |
+| 17682_다트게임        | [Link](./알고리즘/Programmers/DartGame.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/17682) | 정규표현식, 패턴     |
+| 12915_문자열정렬      | [Link](./알고리즘/Programmers/SortStrings.java)              | [문제](https://programmers.co.kr/learn/courses/30/lessons/12915) | sort, Comparator     |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
