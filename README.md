@@ -35,6 +35,8 @@
 | 43164_여행경로        | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        |                                                              |                      |
 | 42889_실패율          | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) |                      |
 | 43105_정수삼각형      | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) |                      |
+| 17686_문자열정렬      | [Link](./알고리즘/Programmers/SortFileName_17686.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17686) | Sort, Compartor      |
+| 42862_체육복          | [Link](./알고리즘/Programmers/GymWear_42862.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42862) | Greedy               |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
