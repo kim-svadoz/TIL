@@ -8,16 +8,17 @@
 
 ### [Baekjoon](./알고리즘/Baekjoon)
 
-| 문제번호         | 솔루션                                                      | 문제 링크                                     | 비고       |
-| ---------------- | ----------------------------------------------------------- | --------------------------------------------- | ---------- |
-| 1018_체스판      | [Link](./알고리즘/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)  | 완전탐색   |
-| 2667_단지번호    | [Link](./알고리즘/Baekjoon/danji_2667.java)                 | [문제](https://www.acmicpc.net/problem/2667)  | DFS        |
-| 1076_저항        | [Link](./알고리즘/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)  | -          |
-| 14502_연구소     | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502) | BFS        |
-| 14503_로봇청소기 | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503) | BFS        |
-| 13460_구슬탈출   | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460) | BFS        |
-| 14891_톱니바퀴   | [Link](./알고리즘/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891) | 시뮬레이션 |
-| 1596_영식이      | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션 |
+| 문제번호         | 솔루션                                                      | 문제 링크                                     | 비고             |
+| ---------------- | ----------------------------------------------------------- | --------------------------------------------- | ---------------- |
+| 1018_체스판      | [Link](./알고리즘/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)  | 완전탐색         |
+| 2667_단지번호    | [Link](./알고리즘/Baekjoon/danji_2667.java)                 | [문제](https://www.acmicpc.net/problem/2667)  | DFS              |
+| 1076_저항        | [Link](./알고리즘/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)  | -                |
+| 14502_연구소     | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502) | BFS              |
+| 14503_로봇청소기 | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503) | BFS              |
+| 13460_구슬탈출   | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460) | BFS              |
+| 14891_톱니바퀴   | [Link](./알고리즘/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891) | 시뮬레이션       |
+| 1596_영식이      | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션       |
+| 15686_치킨배달   | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686) | dfs, combination |
 
 ### [Programmers](./알고리즘/Programmers)
 
