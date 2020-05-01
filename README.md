@@ -19,7 +19,7 @@
 | 14891_톱니바퀴   | [Link](./알고리즘/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891) | 시뮬레이션       |
 | 1596_영식이      | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션       |
 | 15686_치킨배달   | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686) | dfs, combination |
-| 아기상어         |                                                             |                                               | BFS              |
+| _아기상어        |                                                             |                                               | BFS              |
 
 ### [Programmers](./알고리즘/Programmers)
 
