@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- gathering관련 작업을 하기 위해 필요한 뷰만 설정 -->
+	<definition name="gathering/home" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/home.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	
+	<definition name="gathering/board" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/board.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<definition name="gathering/boardsearch" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/boardsearch.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<definition name="gathering/article" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/article.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<definition name="gathering/newarticle" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/newarticle.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<definition name="gathering/newgathering" extends="gatheringTemplate3">
+		<put-attribute name="content" value="/WEB-INF/gathering/newgathering.jsp"/>
+	</definition>
+	<!-- ==============================여기서부터 김성현 작업시작================================= -->
+	<definition name="gathering/sch_main" extends="gatheringTemplate2">
+		<put-attribute name="menu" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_main.jsp"/>
+	</definition>
+	
+	<definition name="gathering/sch_create" extends="gatheringTemplate3">
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_create.jsp"/>
+	</definition>
+	
+	<definition name="gathering/sch_createFinish" extends="gatheringTemplate3">
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_createFinish.jsp"/>
+	</definition>
+	
+	<definition name="gathering/sch_calendar" extends="gatheringTemplate3">
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_calendar.jsp"/>
+	</definition>
+	
+	<definition name="gathering/sch_moimAll" extends="gatheringTemplate3">
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_moimAll.jsp"/>
+	</definition>
+	<!-- ==============================여기서부터 혜란님 작업시작================================= -->
+	<definition name="gathering/memberDetail" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_memberDetail.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<definition name="gathering/moim" extends="gatheringTemplate">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/khrmoim.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+</tiles-definitions>

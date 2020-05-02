@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 템플릿 등록 -->
+	<!-- 메인 화면 템플릿 -->
+	<definition name="mainTemplate"
+	template="/WEB-INF/layout/mainLayout.jsp">
+		<put-attribute name="top" value="/WEB-INF/commonTiles/header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/member/main.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/commonTiles/footer.jsp"/>
+	</definition>
+	<!-- 모임 화면 템플릿 -->
+	<definition name="gatheringTemplate"
+	template="/WEB-INF/layout/gathering.jsp">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/home.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/gathering/include/footer.jsp"/>
+	</definition>
+	<!-- tiles설정 -->
+ 	<!-- 실제 요청할 뷰를 등록(미리 등록한 템플릿을 기반으로 동작한다.) -->
+	<definition name="gatheringTemplate2"
+	template="/WEB-INF/layout/gathering2.jsp">
+		<put-attribute name="top" value="/WEB-INF/gathering/include/top.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/gathering/home.jsp"/>
+	</definition>
+	<definition name="gatheringTemplate3"
+	template="/WEB-INF/layout/gathering3.jsp">
+		<put-attribute name="content" value="/WEB-INF/gathering/sch_create.jsp"/>
+	</definition>
+	
+	
+</tiles-definitions>

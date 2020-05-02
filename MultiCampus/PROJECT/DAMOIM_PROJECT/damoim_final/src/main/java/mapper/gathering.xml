@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gathering.info">
+	<select id="read" resultType="gathering" parameterType="String">
+		select g.*
+		from gathering g
+		where g.gath_no=#{gath_no}
+	</select>
+
+	<select id="membersearch" resultType="gatheringmember"
+		parameterType="String">
+		select gm.*, m.*
+		from gathering_member gm, member m
+		where gm.gath_mem_mno=m.mem_id
+		and gm.gath_mem_gno=#{gath_no}
+	</select>
+	<select id="checkingathering" resultType="gatheringmember" parameterType="Map">
+		select gm.*, m.*
+		from gathering_member gm, member m
+		where gm.gath_mem_mno=m.mem_id
+		and gm.gath_mem_gno=#{gath_no}
+		and gm.gath_mem_mno=#{mem_id}
+	</select>
+	<insert id="makegathering">
+		insert into gathering values('G'||GATH_NO.nextval,#{gath_name},#{gath_info},'',sysdate,#{gath_major},'',#{gath_chat},#{gath_loc},#{gath_master});
+	</insert>
+	<insert id="join" parameterType="Map">
+		insert into gathering_member values(#{gath_no},#{mem_id},sysdate,'일반회원')
+	</insert>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gathering.join">
+	<insert id="insert" parameterType="Map">
+		insert into schedule_mem values(#{sche_mem_mno}, #{sche_mem_gno}, #{sche_no})
+	</insert>
+	
+	<select id="listall" resultType="member">
+		select m.mem_profile, m.mem_name, m.mem_msg, count(me.sche_mem_gno) as mem_count
+		from schedule_mem me, member m
+		where m.mem_id=me.sche_mem_mno
+		and me.sche_mem_gno = #{gath_no}
+		group by m.mem_profile, m.mem_name, m.mem_msg
+		order by count(me.sche_mem_gno) desc
+	</select>
+	<select id="memberDetail" resultType="member" parameterType="String">
+		select * from member where mem_id=#{sche_mem_mno}
+	</select>
+</mapper>

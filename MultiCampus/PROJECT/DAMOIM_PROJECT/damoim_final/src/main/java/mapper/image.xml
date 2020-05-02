@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="image">
+	<insert id="insert" parameterType="Map">
+		insert into images values(#{name},#{image_gno},#{image_mno},#{image_bno},#{tag},sysdate)
+	</insert>
+	<select id="searchone" parameterType="Map" resultType="image">
+		select * from images
+		<if test="tag=='member' and search!=''">
+			where image_mno=#{search}
+		</if>
+		<if test="tag=='board' and search!=''">
+			where image_bno=#{search}
+		</if>
+		<if test="tag=='gathering' and search!=''">
+			where image_gno=#{search}
+			and tag='board'
+		</if>
+		<if test="tag=='title' and search!=''">
+			where image_gno=#{search}
+			and tag='title'
+		</if>
+	</select>
+	<select id="searchlist" parameterType="Map" resultType="image">
+		select * from images
+		<if test="tag=='member' and search!=''">
+			where image_mno=#{search}
+		</if>
+		<if test="tag=='board' and search!=''">
+			where image_bno=#{search}
+		</if>
+		<if test="tag=='gathering' and search!=''">
+			where image_gno=#{search}
+			and tag='board'
+		</if>
+		<if test="tag=='title' and search!=''">
+			where image_gno=#{search}
+			and tag='title'
+		</if>
+		order by image_date desc
+	</select>
+
+	
+</mapper>
