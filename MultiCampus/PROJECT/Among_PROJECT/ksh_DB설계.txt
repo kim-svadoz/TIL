@@ -6,66 +6,43 @@ create table board(
 	board_seq number primary key,
 	title varchar2(1000) not null,
 	text varchar2(3000) not null,
-	write_date varchar2(500));
+	write_date varchar2(500),
+	user_ID varchar2(20)
+);
 
 drop table reply;
 drop sequence comment_seq;
 
+create sequence comment_seq start with 1 increment by 1 maxvalue 10000;
+create table reply(
+	comment_seq number primary key,
+	mcomment varchar2(3000) not null,
+	writedate varchar2(500),
+	user_ID varchar2(20)
+);
 
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorbackground"
-    tools:context=".children.fragment.communityFragment"
-    >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintVertical_weight="8"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/edit_search"
-        android:scrollbarFadeDuration="0"
-        android:scrollbarSize="6dp"
-        android:scrollbars="vertical"
-        android:background="@color/colorbackground"
-        android:layout_marginBottom="10dp">
-    </androidx.recyclerview.widget.RecyclerView>
+drop table member;
+create table member(
+    idx number primary key,
+    userID varchar2(20), 
+    name varchar2(20),
+    password varchar2(20),
+    phone varchar2(15),
+    birth varchar2(10),
+    gender varchar2(10),
+    token varchar2(300)
+);
 
-    <Spinner
-        android:id="@+id/board_spinner"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
-        app:layout_constraintRight_toLeftOf="@id/edit_search"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:entries="@array/board"/>
+create sequence member_seq;
+글은 아무나 쓸 수 있음.
+댓글도 아무나 쓸 수 있음.
 
-    <EditText
-        android:id="@+id/edit_search"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintRight_toLeftOf="@id/board_insert"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:hint="검색 내용을 입력하세요"/>
-    <Button
-        android:id="@+id/board_insert"
-        android:padding="3dp"
-        android:layout_margin="4dp"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="글 작성하기"/>
+근데 수정, 삭제는 id가 동일한 경우만. => 이미 로그인 페이지에서 id값은 만들어져 있으니 테이블에 추가해주기만 하면 된다.
 
+댓글은 클릭하는 seq와 board의 seq와 일치하는 댓글만 보여지도록.(단순 selectAll이 아닌 조건이 추가된 select)
 
-</LinearLayout>
+노티 + DB연동
+게시글, 댓글 DB연동
+영상통화
 
+일단 제일 먼저 DB연동 필수(인텐트 넘기고 넘기고)
