@@ -18,7 +18,8 @@ create table reply(
 	comment_seq number primary key,
 	mcomment varchar2(3000) not null,
 	writedate varchar2(500),
-	user_ID varchar2(20)
+	user_ID varchar2(20),
+	board_num number
 );
 
 drop table member;
