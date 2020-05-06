@@ -22,10 +22,23 @@ create table reply(
 	board_num number
 );
 
+drop table child;
+drop sequence seq;
+
+create sequence seq start with 1 increment by 1 maxvalue 10000;
+create table child(
+	parents_user_id varchar2(500),
+	seq number,
+	name varchar2(500),
+	phone_number varchar2(500),
+	img number);
+
 drop table member;
+drop sequence member_seq;
+create sequence member_seq;
 create table member(
     idx number primary key,
-    userID varchar2(20), 
+    userID varchar2(40), 
     name varchar2(20),
     password varchar2(20),
     phone varchar2(15),
@@ -34,7 +47,24 @@ create table member(
     token varchar2(300)
 );
 
-create sequence member_seq;
+
+
+insert into child values('andoridID', seq.nextval, 'kim', '01088889999', 1111);
+
+
+drop table fcm_table;
+drop sequence fcm_val;
+
+create sequence fcm_val start with 1 increment by 1 maxvalue 10000;
+creat table fcm_table{
+	fcm_val number,
+	mem_id varchar2(300),
+	fcm_token varchar2(1000),
+	
+}
+
+
+
 글은 아무나 쓸 수 있음.
 댓글도 아무나 쓸 수 있음.
 
