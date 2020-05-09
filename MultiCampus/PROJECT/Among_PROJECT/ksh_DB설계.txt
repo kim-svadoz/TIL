@@ -7,7 +7,7 @@ create table board(
 	title varchar2(1000) not null,
 	text varchar2(3000) not null,
 	write_date varchar2(500),
-	user_ID varchar2(20)
+	user_ID varchar2(1000)
 );
 
 drop table reply;
@@ -18,7 +18,7 @@ create table reply(
 	comment_seq number primary key,
 	mcomment varchar2(3000) not null,
 	writedate varchar2(500),
-	user_ID varchar2(20),
+	user_ID varchar2(1000),
 	board_num number
 );
 
@@ -38,7 +38,7 @@ drop sequence member_seq;
 create sequence member_seq;
 create table member(
     idx number primary key,
-    userID varchar2(40), 
+    userID varchar2(1000), 
     name varchar2(20),
     password varchar2(20),
     phone varchar2(15),
