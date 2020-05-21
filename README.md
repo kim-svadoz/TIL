@@ -20,7 +20,7 @@
 | 1596_영식이         | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션       |
 | 15686_치킨배달      | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686) | dfs, combination |
 | 16236_아기상어      | [Link](./알고리즘/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236) | BFS              |
-| 17144_미세먼지안녕! | [Link]()                                                    | [문제](https://www.acmicpc.net/problem/17144) | 시뮬레이션       |
+| 17144_미세먼지안녕! | [Link](./알고리즘/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144) | 시뮬레이션       |
 
 ### [Programmers](./알고리즘/Programmers)
 
