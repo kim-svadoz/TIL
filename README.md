@@ -55,6 +55,8 @@
 | LC200    | [Link](./알고리즘/LeetCode/LC200_NumberOfIsland_DFS.java)    | [문제](https://leetcode.com/problems/number-of-islands/)     | DFS                 |
 | LC260    | [Link](./알고리즘/LeetCode/LC260_SingleNumber_XOR.java)      | [문제](https://leetcode.com/problems/single-number-iii/)     | 비트연산            |
 | LC380    | [Link](./알고리즘/LeetCode/LC380_HashMapandArrayLIst.java)   | [문제](https://leetcode.com/problems/insert-delete-getrandom-o1/) | HashMap , ArrayList |
+| LC938    | [Link](./알고리즘/LeetCode/LC938_RangeSumOfBST.java)         | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                 |
+| LC64     | [Link](./알고리즘/LeetCode/LC64_MinimumPathSum.java)         | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                  |
 
 ### [실전코테](./알고리즘/실전코테)
 
