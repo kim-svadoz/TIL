@@ -1,0 +1,11 @@
+create table family(
+	family_id varchar2(50) primary key,
+	family_pass varchar2(50),
+	family_ceim_state varchar2(2000),
+	family_car_state varchar2(2000));
+
+create table admin(
+	admin_id varchar2(50),
+	admin_pass varchar2(50));
+
+insert into admin values('sunghyun', '1234');
