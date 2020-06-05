@@ -127,5 +127,11 @@
 
 # CAN
 
-# SERIAL
+serial통신의 일종.
+
+
+
+# SQLD
+
+# 정보처리기사
 
