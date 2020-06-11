@@ -99,6 +99,8 @@
 
 ### 7. [Spring](./MultiCampus/Spring.md)
 
+### 8. [Django](./MultiCampus/django.md)
+
 ---
 
 ## Android
