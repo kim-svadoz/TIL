@@ -354,3 +354,33 @@ def forif(request):
 ```
 
 ![image-20200610150956879](images/image-20200610150956879.png)
+
+## Django form태그 사용
+
+- 프로젝트 기획 단계에서는 `페르소나` 를 중시해라!
+
+
+
+throw.html 상대경로 사용
+
+
+
+가져오는 방식이 2가지
+
+- []  ---> 값이 없을 때 오류 발생
+
+- .get --->  값이 없어도 오류 발생 안함. 값이 없으면 none 출력
+
+  - request.GET == 딕셔너리와 유사하다.
+
+    request.GET != dict()
+
+```bas
+print(request.GET['message'])
+print(request.GET.get('message'))
+```
+
+
+
+ 
+
