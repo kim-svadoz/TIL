@@ -358,22 +358,14 @@ def forif(request):
 ## Django form태그 사용
 
 - 프로젝트 기획 단계에서는 `페르소나` 를 중시해라!
+- form 태그는 기본이 GET방식!
 
+- **가져오는 방식이 2가지**
+  - []  ---> 값이 없을 때 오류 발생
 
-
-throw.html 상대경로 사용
-
-
-
-가져오는 방식이 2가지
-
-- []  ---> 값이 없을 때 오류 발생
-
-- .get --->  값이 없어도 오류 발생 안함. 값이 없으면 none 출력
-
-  - request.GET == 딕셔너리와 유사하다.
-
-    request.GET != dict()
+  - .get --->  값이 없어도 오류 발생 안함. 값이 없으면 none 출력
+    - request.GET == 딕셔너리와 유사하다.
+    - request.GET != dict()
 
 ```bas
 print(request.GET['message'])
@@ -382,5 +374,212 @@ print(request.GET.get('message'))
 
 
 
- 
+### 절대경로? 상대경로?
 
+- 절대경로 : 파일이 같이 올라가도 C:\에서 시작하는 그 경로로 접근할 수 없어서 이미지가 깨진다.
+
+- 상대경로 : 루트경로로부터 작성된 경로로 찾아가기 때문에 해당 위치에 이미지가 있으면 찾을 수 있다.
+
+
+
+Q1
+
+```python
+# 1. 사용자가 숫자 입력
+# 2. 입력 받은 횟수 만큼 반복해서
+# 3. 리스트에 로또 번호 담는다.
+# 3-1. random.sample(range(1, 46), 6)
+# 4. 사용자가 입력한 숫자와 로또번호가 담긴 리스트를 출력
+# 5. ul태그를 사용하여 각 번호들을 한줄 씩 출력
+# urls.py
+path('lottoT/', views.lottoT),
+path('lottoC/', views.lottoC),
+
+# views.py
+def lottoT(request):
+    return render(request, 'lottoT.html')
+
+def lottoC(request):
+    num = int(request.GET.get('num'))
+    lottos = []
+    for data in range(num):
+        lottos.append(random.sample(range(1, 46), 6))
+    context={
+        'num' : num,
+        'lottos' : lottos,
+    }
+
+    return render(request, 'lottoC.html', context)
+
+# lottoT.html
+<h1> 로또 번호를 입력해주세용~ </h1>
+<form action="/lottoC/">
+  <label for="buy"> 구매 하고자 하는 갯수 : </label>
+  <input type="number" name="num" id="buy">
+  <input type="submit" value="제출" >
+</form>
+
+# lottoC.html
+<h1> 결과는? </h1>
+<p>로또를 {{num}}개 구매하셨습니다.</p>
+<ul>
+  {% for lotto in lottos %}
+  <li>{{ lotto }}</li>
+  {% endfor %}
+</ul>
+```
+
+
+
+## Second App
+
+### 경로 분리하기
+
+- 기존의 pages Application에 있던 urls의 view는 pages폴더 하위로 이사한다.
+
+  ```python
+  # urls.py ( project )
+  from django.contrib import admin
+  from django.urls import path, include
+  
+  urlpatterns = [
+      path('secondapp/', include('secondapp.urls')),
+      path('pages/', include('pages.urls')),
+      path('admin/', admin.site.urls),
+  ]
+  
+  # urls.py ( pages )
+  from django.urls import path
+  from . import views
+  
+  urlpatterns = [
+      path('index/', views.index, name="index"),
+      path('hello/', views.hello, name="hello"),
+      path('name/', views.name, name="name"),
+      path('introduce/', views.introduce, name="introduce"),
+      path('classRandomChoice/', views.classRandomChoice, name="classRandomChoice"),
+      path('yourname/<str:name>/', views.yourname, name="yourname"),
+      path('urlcopy/<str:name>/<int:age>', views.urlcopy, name="urlcopy"),
+      path('multiply/<int:num1>/<int:num2>', views.multiply, name="multiply"),
+      path('multipletable/<int:big>/<int:small>', views.multipletable, name="multipletable"),
+      path('dtl/', views.dtl, name="dtl"),
+      path('forif/', views.forif, name="forif"),
+      path('loop/', views.loop, name="loop"),
+      path('throw/', views.throw, name="throw"),
+      path('catch/', views.catch, name="catch"),
+      path('lottoT/', views.lottoT, name="lottoT"),
+      path('lottoC/', views.lottoC, name="lottoC"),
+      path('artii/', views.artii, name="artii"),
+      path('result/', views.result, name="result"),
+  ]
+  ```
+
+- 추후에 페이지가 커지고 원활한 유지보수를 위해 path 경로에 name을 지정할 수 가 있다.
+
+  - 경로가 바뀌더라도 form태그나 경로로 무언가를 요청하던 일이 있을 때 이름으로 지정하기.
+
+  ex)
+
+  ```python
+  # urls.py
+  path('catch/', views.catch, name="catch"),
+  
+  # html
+  #### 원래는 "/pages/catch/" ####
+  <form action="{% url 'catch' %}" method="GET">
+    이름 : <input type="text" name="name">
+    나이 : <input type="number" name="age">
+    <input type="submit" value="제출">
+  </form>
+  ```
+
+  
+
+- 장고는 자동으로 templates 폴더를 가서 index를 가져온다.
+
+  - settings와 urls에서 먼저 선언한것을 먼저 찾아옴
+  - 따라서 모든 html을 templates 하위에 앱이름으로 폴더를 생성하고 옮겨준다.
+  - views에 html을 return하는 부분에도 경로 수정하기.
+
+  ex)
+
+  ```python
+  return render(request, 'pages/index.html', context)
+  ```
+
+### base bootstrap 설정
+
+- 베이스 페이지를 만들기 위해 프로젝트에 templates 폴더를 만들고 html에 부트스트랩 적용
+
+- base.html
+
+![image-20200613142000567](images/image-20200613142000567.png)
+
+- setting.py
+
+![image-20200613142820935](images/image-20200613142820935.png)
+
+=> **mysite에 있는 템플릿을 베이스로 사용하겠다!!**
+
+- 다른 app에 있는 html에서 베이스로 지정되있는 템플릿을 extends 하여 사용할 수 있다.
+
+![image-20200613142247147](images/image-20200613142247147.png)
+
+
+
+### static 설정
+
+- *폴더 구조가 바뀌면 서버를 껐다 켜주자!!*
+
+- image와 같은 정적 파일을 사용하기 위해 template과 같은 위치에 static폴더 생성하기
+
+  - setting.py
+
+  ![image-20200613153426971](images/image-20200613153426971.png)
+
+  - html
+
+  ![image-20200613153350207](images/image-20200613153350207.png)
+
+### 링크로 다른 앱 넘어가기
+
+- urls.py에 app_name을 설정해주고 해당 app_name을 통해 페이지를 연결
+
+![image-20200613161415674](images/image-20200613161415674.png)
+
+
+
+![image-20200613161435318](images/image-20200613161435318.png)
+
+
+
+![image-20200613161454569](images/image-20200613161454569.png)
+
+
+
+# Django Project
+
+## 프로젝트 생성
+
+- Project Name : mysite
+- App Name : articles
+
+## 페이지 생성
+
+1. **index page**
+   - `/index/` : 현재 게시글 목록을 보여 줄 페이지
+2. **create page**
+   - `/new/` : 글 작성을 위한 form(제목&내용) 입력 페이지
+   - `/create/` : 글 작성 결과(제목&내용)를 출력하는 페이지
+
+## 추가
+
+- base template 생성
+
+---
+
+## !!주의사항!!
+
+- **urls.py 설정 분리**
+  - app_name 설정 등
+- **template 폴더 구조 분리 **
