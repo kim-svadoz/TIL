@@ -583,3 +583,259 @@ def lottoC(request):
 - **urls.py 설정 분리**
   - app_name 설정 등
 - **template 폴더 구조 분리 **
+
+
+
+# Django ORM
+
+> Object Relational Mapping 
+>
+> 스프링에서는 mybatis를 썼었고, 장고에서는 이를 위한 기능이 따로 존재한다!
+
+드디어 models.py를 사용하기 시작합니다~
+
+파이썬의 객체와 DB의 객체를 Mapping해주어야 한다.
+
+그럼 파이썬의 객체는 어떻게 생성하는 가?
+
+- Articles에 models 작성
+
+```python
+# models.py
+
+# Create your models here.
+class Article(models.Model) : 
+    # articles_article
+    # CharField 는 글자 수 제한 할 때 사용
+    title = models.CharField(max_length=150)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+$ python manage.py makemigrations
+$ python manage.py migrate articles
+```
+
+- python manage.py makemigrations : DB에 설계도 대로 반영을 해라!! 
+  - migrations폴더에 아래의 설계도가 생성된다.
+
+![image-20200615142700436](images/image-20200615142700436.png)
+
+- python manage.py migrate articles : 해당 aritcles 설계도 대로만 스키마 테이블 만들어달라!
+- **실제 DB에 반영되기 위해서는?!**
+
+```python
+$ python manage.py migrate
+```
+
+
+
+---
+
+## CREATE
+
+```python
+# 직접 shell창 에서 작업하겠다.
+$ python manage.py shell
+>>> from articles.models import Article
+>>> Article.objects.all()
+```
+
+**1. INSERT INTO 테이블명 (column1, column2...) VALUES (values1, values2...)**
+
+```python
+# 첫 번째 방법
+>>> article = Article()
+>>> article.title = 'first'
+>>> article.content = 'django!!'
+>>> article.save()
+>>> article
+### 실제로 DB가 들어갔는지 확인! (N) 이 생겼어요!
+<Article: Article object (1)>
+    
+# 두 번째 방법
+# 어느 변수에 어떤 값을 넣을건지 명시
+# id가 생략되어 있을 뿐, 자동으로 생성된다.
+>>> article = Article(title='second', content='django~!')
+>>> article.save()
+>>> article
+<Article: Article object (2)>
+    
+# 세 번째 방법
+# save() 과정 없이 바로 저장이 된다.
+>>> Article.objects.create(title='third', content'django~~')
+<Article: Article object (3)>
+```
+
+- 첫, 두번째 방법은 인스턴스를 생상하고 그 안에 넣었다면 세번째는 그냥 넣어준다.
+  - 사용 용도가 다른것이다!!!!
+
+---
+
+## READ
+
+**2. SELECT * FROM articles_article(테이블명)**
+
+```python
+# 전체 조회
+>>> article = Article.objects.all()
+>>> article
+<QuerySet [<Article: Article object (1)>, <Article: Article object (2)>, <Article: Article object (3)>]>
+
+## 보기가 좋지 않으니
+>>> article[0].title
+'first'
+
+## 설정을 해줍시다~~
+```
+
+![image-20200615152758808](images/image-20200615152758808.png)
+
+*스키마의 형태가 변경이 되면 migration을 해줘야 하지만 단지 데이터의 출력 형태가 변경되는 것은 쉘 창을 종료하고 다시 켜준다.*
+
+```python
+$ exit()
+$ python manage.py shell
+>>> from articles.models import Article
+>>> Article.objects.all()
+<QuerySet [<Article: 1번째 글 - first : django!!>, <Article: 2번째 글 - second : django~!>, <Article: 3번째 글 - third : django~~>]>
+```
+
+
+
+**3. SELECT * FROM articles_article WHERE title = 'first'**
+
+```python
+# 특정 제목 불러오기
+>>> Article.objects.filter(title='first')
+<QuerySet [<Article: 1번째 글 - first : django!!>]>
+
+>>> Article.objects.create(title='first', content='hahahahahahahaha')
+<Article: 4번째 글 - first : hahahahahahahaha>
+
+>>> Article.objects.filter(title='first')        
+<QuerySet [<Article: 1번째 글 - first : django!!>, <Article: 4번째 글 - first : hahahahahahahaha>]>
+```
+
+
+
+**SELECT * FROM articles_article WHERE title='first' LIMIT= 1**
+
+```python
+>>> Article.objects.filter(title='first').first()
+>>> Article.objects.filter(title='first').last()
+
+>>> Article.objects.filter(title='first')[0]
+<Article: 1번째 글 - first : django!!>
+```
+
+
+
+**SELECT * FROM articles_article WHERE id=1**
+
+> PK처럼 고유값을 가지고 있어서 단 하나만 가지고 올 수 있는 방법!
+
+```python
+>>> Articles.objects.get(id=1)
+>>> Articles.objects.get(pk=1)
+<Article: 1번째 글 - first : django!!>
+        
+# !!주의점!!
+# 1.고유값이 아닌 내용을 필터링 해서 2개 이상의 값이 찾아지면 오류를 발생한다.
+# 	-> .get()은 반드시 하나의 객체만 가져올 수 있다.
+# 2. 없는 것을 가지고 오려고 해도 오류가 발생한다.
+# 	-> filter는 빈 쿼리셋이 반환이 된다.
+>>> Article.objects.filter(pk=10)
+<QuerySet []>
+```
+
+
+
+**Like / startswith / endswith**
+
+```python
+# XXX__contains : XXX에 해당 ''을 포함하고 있는 객체 반환
+>>> Article.objects.filter(title__contains='fir')
+<QuerySet [<Article: 1번째 글 - first : django!!>, <Article: 4번째 글 - first : hahahahahahahaha>]>
+
+>>> Article.objects.filter(title__startswith='se')
+<QuerySet [<Article: 2번째 글 - second : django~!>]>
+
+>>> Article.objects.filter(content__endswith='ha')
+<QuerySet [<Article: 4번째 글 - first : hahahahahahahaha>]>
+```
+
+---
+
+## UPDATE
+
+**UPDATE articles_article SET title='byebye' WHERE id=1**
+
+```python
+# 수정
+>>> article = Article.objects.get(pk=1)
+>>> article.title = 'byebye'
+>>> article
+<Article: 1번째 글 - byebye : django!!>
+
+## 보이는 shell에는 바뀐 것처럼 보이지만 실제 DB에 저장이 되려면 저장을 해줘야 한다.
+>>> article.save()
+```
+
+---
+
+## DELETE
+
+**DELETE FROM articles_article WHERE id=1**
+
+```python
+# 삭제
+>>> article = Article.objects.get(pk=1)
+>>> article.delete()
+(1, {'articles.Article': 1})
+
+>>> article = Article.objects.get(pk=1)
+## pk=1은 삭제하고 없기 때문에 오류가 난다.
+
+## delete는 별도로 저장을 해주지 않아도 자동으로 DB에 반영이 된다.
+```
+
+
+
+## 관리자 페이지로 확인하기
+
+![image-20200615161910998](images/image-20200615161910998.png)
+
+```python
+python manage.py runserver
+```
+
+- http://127.0.0.1:8000/admin
+
+![image-20200615162017084](images/image-20200615162017084.png)
+
+- 파이썬에는 슈퍼계정이 존재한다~
+
+```python
+# 모든 설정파일을 migrate 해준 뒤 슈퍼유저 생성
+$ python manage.py migrate
+$ python manage.py createsuperuser
+```
+
+![image-20200615162405109](images/image-20200615162405109.png)
+
+- 이메일 생략하고 비밀번호 1q2w3e4r 설정 후 다시 http://127.0.0.1:8000/admin로 접속
+
+![image-20200615162500379](images/image-20200615162500379.png)
+
+
+
+- admin.py에서 커스터마이징하기!
+
+![image-20200615162943645](images/image-20200615162943645.png)
+
+
+
+![image-20200615162957932](images/image-20200615162957932.png)
+
+customizing된 admin페이지를 확인할 수 있다 :)
