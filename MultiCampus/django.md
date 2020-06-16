@@ -662,7 +662,7 @@ $ python manage.py shell
 <Article: Article object (2)>
     
 # 세 번째 방법
-# save() 과정 없이 바로 저장이 된다.
+# save() 과정 없이 바로 저장이 된다. DB에 반영하는 방법이 포함되어 있다 !
 >>> Article.objects.create(title='third', content'django~~')
 <Article: Article object (3)>
 ```
@@ -754,6 +754,7 @@ $ python manage.py shell
 **Like / startswith / endswith**
 
 ```python
+# 특정 문자로 가져오기
 # XXX__contains : XXX에 해당 ''을 포함하고 있는 객체 반환
 >>> Article.objects.filter(title__contains='fir')
 <QuerySet [<Article: 1번째 글 - first : django!!>, <Article: 4번째 글 - first : hahahahahahahaha>]>
@@ -765,7 +766,24 @@ $ python manage.py shell
 <QuerySet [<Article: 4번째 글 - first : hahahahahahahaha>]>
 ```
 
----
+
+
+**ASC / DESC**
+
+```python
+# 오름차순
+>>> Article.objects.all().order_by('pk')
+
+# 내림차순
+>>> Article.objects.all().order_by('-pk')
+
+## Order_by는 DB단에서 역순으로 가져오는 것이고
+
+## 이것은 이미 가져온 것을 파이썬에서 역순으로 처리하는 것이다.
+>>> Article.objects.all()[::-1]
+```
+
+
 
 ## UPDATE
 
@@ -839,3 +857,235 @@ $ python manage.py createsuperuser
 ![image-20200615162957932](images/image-20200615162957932.png)
 
 customizing된 admin페이지를 확인할 수 있다 :)
+
+
+
+# Django ORM 복습 버억
+
+## index페이지에 전체 DB 보여주기
+
+```python
+# views.py
+
+from articles.models import Article
+
+# Create your views here.
+def index(request):
+    # 전체 데이터 가져오기
+    # 그 데이터 템플릿에게 넘겨주기
+    # 템플릿에서 반복문으로 각각의 게시글 pk, title 보여주기
+    article = Article.objects.all()
+    context = {
+        'articles' : article
+    }
+    return render(request, 'articles/index.html', context                            
+```
+
+```python
+# index.html
+{% extends 'base.html' %}
+{% block body %}
+<h1>게시판</h1>
+<hr>
+<a href="{% url 'articles:new' %}">NEW</a>
+<a href="{% url 'articles:introduce' %}">introduce</a>
+
+{% for article in articles %}
+  <h3>{{article.pk}}번 째 글</h3>
+  <h4>{{article.title}}</h4>
+  <h5>{{article.content}}</h5>
+  <hr>
+{% endfor %}
+
+{% endblock %}
+```
+
+![image-20200616111039547](images/image-20200616111039547.png)
+
+## new페이지에서 글 작성하기
+
+```python
+# views.py
+from django.shortcuts import render, redirect
+
+def new(request):
+    return render(request, 'articles/new.html')
+
+def create(request):
+    title = request.POST.get('title')
+    text = request.POST.get('text')
+    Article.objects.create(title=title, content=text)
+    
+	return redirect('articles:index')
+```
+
+```python
+# new.html
+
+{% block body %}
+<h1>글 작성 페이지</h1>
+
+<form action="{% url 'articles:create' %}" method="POST">
+  {% csrf_token %}
+  <label for="name">제목 : </label>
+  <input type="text" name="title">
+
+  <label for="cnt">내용 : </label>
+  <input type="text" name="text">
+
+  <input type="submit" value="글 작성">
+</form>
+{% endblock %}
+
+# create.html
+
+{% block body %}
+<p>{{ title }}, {{ text }}</p>
+{% endblock %}
+```
+
+- **csrf_token** 이란??
+  - 내 DB에 어떠한 조작을 할 수 있는 요청을 보낼 땐 항상 세트로 넣어줘야 한다.
+  - 보안을 위한 것. ( 없어도 요청은 감 )
+
+- redirect를 import하여 index로 redirect한다.
+
+## index페이지에서 상세페이지보기
+
+```python
+# urls.py
+path('<int:article_pk>detail/', views.detail, name="detail"),
+
+# views.py
+# 1. 상세 페이지를 보기위한 경로
+# 1-1. 특정 게시글에 대한 고유 값
+# 1-2. /articles/1/, /articles/2/...
+# 2. 해당 게시글에 대한 상세 내용
+# 2-1. 게스글의 pk, title, ...
+# 3. 인덱스 페이지로 돌아가는 링크
+def detail(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    context = {
+        'article' : article
+    }
+    return render(request, 'articles/detail.html', context)
+```
+
+```python
+# index.html
+{% for article in articles %}
+  <a href="{% url 'articles:detail' article.pk %}"><h3>{{article.pk}}번 째 글</h3></a>
+  <h4>{{article.title}}</h4>
+  <h5>{{article.content}}</h5>
+  <hr>
+{% endfor %}
+
+# detail.html
+{% block body %}
+	<h1> 상세 페이지^^</h1>
+    <h2>{{article.pk}}번 째 글</h2>
+    <h4>제목 : {{article.title}}</h4>
+    <h5>내용 : {{article.content}}</h5>
+    <p>생성 시간 : {{article.created_at}}</p>
+    <p>수정 시간 : {{article.updated_at}}</p>
+    <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
+```
+
+## 상세페이지에서 글 삭제하기
+
+```python
+# urls.py
+path('<int:article_pk>/delete/', views.delete, name="delete"),
+
+# views.py
+# 1. 특정 글 삭제를 위한 경로 작성
+# 1.1 /articles/delete/
+# 2. 글 삭제 처리를 해주는 view 작성
+# 3. 글 삭제 후, index page로 redirect
+# 4. 글 삭제를 위한 링크 detail에 작성
+def delete(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    article.delete()
+    return redirect('articles:index')
+```
+
+```python
+# detail.html
+{% block body %}
+  <h1> 상세 페이지^^</h1>
+    <h2>{{article.pk}}번 째 글</h2>
+    <h4>제목 : {{article.title}}</h4>
+    <h5>내용 : {{article.content}}</h5>
+    <p>생성 시간 : {{article.created_at}}</p>
+    <p>수정 시간 : {{article.updated_at}}</p>
+    <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+    <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
+```
+
+## 게시글 수정하기
+
+```python
+# urls.py
+path('<int:article_pk>/edit', views.edit, name="edit"),
+path('<int:article_pk>/update', views.update, name="update"),
+
+# views.py
+# 1. 특정 글 수정을 위한 경로 생성
+# 1-1. /articles/1/edit
+# 2. 글 수정 template를 render하는 edit view 작성
+# 2-1. 해당 templateㄹ에 form tag 생성
+# 2-2. 각 input tag 내부에 기존 내용이 들어있어야 함.
+# 3. edit 보낸 데이터 처리를 위한 경로 생성
+# 3-1. /articles/1/update
+# 4. 글 수정 처리를 하는 update view 작성
+# 5. 해당 글 상세 페이지로 redirect
+# 6. 글 수정을 위한 edit 링크 해당 글 상세 페이지에 생성
+# 6-1. {% url 'articles:edit' articles.pk %}
+def edit(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    context = {
+        'article' : article
+    }
+    return render(request, 'articles/edit.html', context)
+
+def update(request, article_pk):
+    edit_title = request.POST.get('edit_title')
+    edit_content = request.POST.get('edit_content')
+    article = Article.objects.get(pk=article_pk)
+    article.title = edit_title
+    article.content = edit_content
+    article.save()
+    return redirect('articles:detail', article_pk)
+```
+
+```python
+# detail.html
+{% block body %}
+  <h1> 상세 페이지^^</h1>
+    <h2>{{article.pk}}번 째 글</h2>
+    <h4>제목 : {{article.title}}</h4>
+    <h5>내용 : {{article.content}}</h5>
+    <p>생성 시간 : {{article.created_at}}</p>
+    <p>수정 시간 : {{article.updated_at}}</p>
+    <a href="{% url 'articles:edit' article.pk %}">수정</a>
+    <a href="{% url 'articles:delete' article.pk %}">삭제</a>
+    <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
+
+# edit.html
+{% block body %}
+<form action="{% url 'articles:update' article.pk %}" method="POST">
+  {% csrf_token %}
+  {{ article.pk }}번 째 글
+  제목 : <input type="text" name="edit_title" value="{{ article.title }}">
+  내용 : <input type="text" name="edit_content" value="{{ article.content }}">
+
+  <input type="submit" value="수정하기">
+</form>
+
+<a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
+```
+
