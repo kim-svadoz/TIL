@@ -1089,3 +1089,219 @@ def update(request, article_pk):
 {% endblock %}
 ```
 
+# Past Job APP
+
+---
+
+## Create APP
+
+- **APP Name** : jobs
+
+## Model
+
+- **Class Name**: Person
+
+- **Fields**
+
+  | name         | CharField     |
+  | ------------ | ------------- |
+  | **past_job** | **TextField** |
+
+  - makemigrations로 설계도 작성
+  - migrate로 DB에 설계도 반영
+
+---
+
+## 직업 리스트
+
+https://bit.ly/past_job_list
+
+## urls
+
+- urls 분리 필수: 프로젝트 폴더, jobs 아래 urls 
+- app_name, path name 설정 필수
+
+## views 
+
+1. `/index/`
+   - index.html 렌더링
+2. `/past_life/`
+   - 사용자가 form으로 날린 이름을 받아 저장 
+   - DB에 사용자가 입력한 이름이 있는지 확인 
+   - 만약 사용자가 입력한 이름이 DB에 있다면 기존 그 사용자의 past_job을 past_job 변수에 담기
+   - 직업군 리스트에서 무작위 하나를 뽑아 사용자에게 받은 이름과 새로 뽑은 직업을 DB에 저장 
+   - context로 담아서 past_life.html 로 넘김
+
+### ++수정 
+
+past_life 지문 수정
+
+사용자가 입력한 이름이 DB에 있다면 해당 이름과 직업 그대로 출력
+
+DB에 없다면 직업 리스트에서 무작위 하나를 뽑아 DB에 이름과 직업 저장 후 출력
+
+## templates
+
+1. 템플릿은 기본 `app/templates/app` 형태로 구분 
+   - base.html: 기존의 프로젝트 폴더의 base.html 활용(템플릿 확장)  
+   - index.html: 사용자에게 자신의 이름을 입력할 수 있는 form 제공 
+   - past_life.html: 무작위로 선정된 직업과 사용자에게 받은 이름 출력 
+   - 예시. {{ person.name }}님의 전생은 {{ person.past_job }}입니다.
+
+---
+
+# Django Model-Form
+
+```python
+# urls.py
+
+from django.urls import path
+from . import views
+
+app_name = "articles"
+
+urlpatterns = [
+    path('index/', views.index, name="index"),
+    path('create/', views.create, name="create"),
+    path('<int:article_pk>/update/', views.update, name="update"),
+    path('<int:article_pk>/', views.detail, name="detail"),
+]
+```
+
+```python
+# views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ArticleForm
+from .models import Article
+
+# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+    context = {
+        'articles' : articles
+    }
+    return render(request, 'articles/index.html', context)
+
+def create(request):
+    if request.method =="POST":
+        form = ArticleForm(request.POST)
+        # 사용자로부터 받은 form이 유효하다면 TRUE를 리턴, 아니면 FALSE를 리턴한다.
+        if form.is_valid():
+            # article = Article.objects.get(pk=pk)
+            # form에 담긴 정보가 ArticleForm이고
+            # ArticleForm은 Article의 정보를 가지고 있다.
+            article = form.save()
+            return redirect('articles:index')
+    else:
+        form = ArticleForm()
+    context={
+        'form' : form
+    }
+    return render(request, 'articles/form.html', context)
+
+def update(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    if request.method=="POST":
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            article = form.save()
+            return redirect('articles:index')
+    else:
+        form = ArticleForm(instance=article)
+    context={
+        'form' : form
+    }
+    return render(request, 'articles/form.html', context)
+
+def detail(request, article_pk):
+    article = get_object_or_404(Article, pk=article_pk)    
+    # article = Article.objects.get(pk=article_pk)
+    context={
+        'article' : article
+    }
+    return render(request, 'articles/detail.html', context)
+```
+
+```python 
+### index.html
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block body %}
+<h1>메인 페이지 입니다.</h1>
+
+<a href="{% url 'articles:create' %}">글 생성</a>
+
+<hr>
+{% for article in articles %}
+  <a href="{% url 'articles:detail' article.pk %}">{{article.title}}</a>
+{% endfor %}
+{% endblock %}
+
+
+### form.html
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block body %}
+{% if request.resolver_match.url_name == 'create' %}
+  <h1> 글 생성 </h1>
+{% else %}
+  <h1> 글 수정 </h1>
+{% endif %}
+
+<hr>
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="제출">
+</form>
+
+<a href="{% url 'articles:index' %}">index 페이지 슝</a>
+
+{% endblock %}
+
+### detail.html
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block body %}
+  <h2>{{ article.pk }}번 째 글^^</h2>
+  <h3>{{ article.title }}</h3>
+  <h4>{{ article.content }}</h4>
+  <hr>
+  <a href="{% url 'articles:update' article.pk %}">글 수정</a>
+  <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock %}
+```
+
+## Django-Bootstrap-4
+
+```python
+$ pip install django-bootstrap4
+
+# 각 html에서 불러오기!
+$ {% load bootstrap4 %}
+```
+
+- settings.py 에서 부트스트랩사용한다고 설정해주기
+
+![image-20200617170926574](images/image-20200617170926574.png)
+
+- form.html 도 부트스트랩4에 맞게 수정
+
+![image-20200617171216549](images/image-20200617171216549.png)
+
+- base.html 모두 바꿔주기
+
+![image-20200617171259506](images/image-20200617171259506.png)
+
+
+
+![image-20200617171422329](images/image-20200617171422329.png)
+
+**짜잔!!!**
