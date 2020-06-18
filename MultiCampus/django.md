@@ -1196,7 +1196,7 @@ def create(request):
     else:
         form = ArticleForm()
     context={
-        'form' : form
+        'form' : form		
     }
     return render(request, 'articles/form.html', context)
 
@@ -1305,3 +1305,12 @@ $ {% load bootstrap4 %}
 ![image-20200617171422329](images/image-20200617171422329.png)
 
 **짜잔!!!**
+
+
+
+
+
+# PRACTICE(Movie)
+
+
+
