@@ -1314,3 +1314,14 @@ $ {% load bootstrap4 %}
 
 
 
+# django_review
+
+![image-20200620140155502](images/image-20200620140155502.png)
+
+
+
+![image-20200620140916416](images/image-20200620140916416.png)
+
+원래는 html의 form태그에서 경로를 넣어줬는데 경로를 안넣어주면 내 현재 위치로 다시 보내주는 것.
+
+차이점은 method를 POST로 지정해줬기 때문에 action을 비워놔도 된다.
