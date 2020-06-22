@@ -58,7 +58,7 @@
 | LC938    | [Link](./알고리즘/LeetCode/LC938_RangeSumOfBST.java)         | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                 |
 | LC64     | [Link](./알고리즘/LeetCode/LC64_MinimumPathSum.java)         | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                  |
 | LC53     | [Link](./알고리즘/LeetCode/LC53_MaximumSubarray.java)        | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                  |
-| LC       |                                                              |                                                              |                     |
+| LC72     | [Link](./알고리즘/LeetCode/LC72_EditDistance.java)           | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리        |
 
 ### [실전코테](./알고리즘/실전코테)
 
