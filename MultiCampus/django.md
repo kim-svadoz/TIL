@@ -1325,3 +1325,470 @@ $ {% load bootstrap4 %}
 원래는 html의 form태그에서 경로를 넣어줬는데 경로를 안넣어주면 내 현재 위치로 다시 보내주는 것.
 
 차이점은 method를 POST로 지정해줬기 때문에 action을 비워놔도 된다.
+
+
+
+# django relation 1:N 
+
+>  06/22
+
+cascade만 사용
+
+
+
+django 확장 툴 설치
+
+```bash
+$ pip install django-extensions
+```
+
+settings에 등록해줘야 한다.
+
+'django_extensions' 으로 등록
+
+
+
+쉘창을 켠다  -> mysite 위치로 가서 켜야한다.
+
+```bash
+$ python manage.py shell_plus
+```
+
+
+
+ipython 설치
+
+```bash
+$ pip install ipython
+```
+
+
+
+0623
+
+## Admin 관리자 계정 생성
+
+```python
+# musicians/admin.py -admin 정의
+from.models import Musician, Album
+admin.site.register(Musician, Alubm)
+```
+
+```bash
+# bash 관리자계정 생성
+python manage.py createsuperuser
+```
+
+
+
+http -> 일반적으로 상태를 저장하지 않는다.
+
+## CREATE
+
+```python
+# 1. 댓글 생성
+#인스턴스화
+comment = Comment()
+comment.content = '첫번째 댓글'
+comment.save()
+
+# 2. 게시글 하나 불러오기
+article = Article.objects.get(pk=1)
+
+# 2-1. comment와 article 연결하기
+comment.article = article
+comment.save()
+
+# 또 다른 방법
+# 작성하는 숫자는 article의 pk값
+# 주의할 점 -> 참조하고자 하는 이름은 article_id로 해줘야 한다. not pk
+comment.article_id = 1
+comment.save()
+```
+
+## READ
+
+```python
+# comment 변수들 불러오기
+# 1. 댓글 pk 조회
+comment.pk
+
+# 2. 댓글 content 조회
+comment.content
+
+# 3. 댓글이 어느 게시글에 연결되어 있는가
+comment.article_id 
+
+# 4. 댓글이 연결된 게시글
+comment.article
+
+# 4-1. 댓글이 연결된 게시글의 제목과 내용
+comment.article.pk
+comment.article.title
+comment.article.content
+
+# article의 경우는?
+article.comment_set.all()
+# querySet 형태로 가지고 온다
+```
+
+
+
+# Django 로그인 /회원가입
+
+## 회원가입
+
+```python
+# urls.py
+path('signup/', views.signup, name="signup"),
+
+# views.py
+from django.contrib.auth.forms import UserCreationForm
+
+# Create your views here.
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('articles:index')
+    else:
+        form = UserCreationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/signup.html', context)
+
+# signup.html
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+<h1>회원가입</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  {% endbuttons %}
+</form>
+
+{% endblock %}
+```
+
+## 로그인
+
+```python
+# urls.py
+path('login/', views.login, name="login"),
+
+# views.py
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as auth_login
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        # AuthenticationForm은 ModelForm이 아닌 Form을 상속하기 때문에 생긴게 달라진다.
+        # 별도로 정의된 Model이 없다는 뜻 => 고로 넘겨주는 인자가 달라진다.
+        if form.is_valid():
+            # 로그인은 DB에 뭔가 작성하는 것은 동일하지만 연결된 모듈이 있는 것은 아니다.
+            # 그럼 확인해야 하는것은????
+            #   => 세션과 유저정보를 확인해야 하기때문에
+            #   => 세션(request)와 유저정보(form.get_user())를 확인해야 한다.
+            auth_login(request, form.get_user())
+			return redirect(request.GET.get('next') or 'articles:index')
+    else:
+        form = AuthenticationForm
+    context={
+        'form' : form
+    }
+    return render(request, 'accounts/login.html', context)
+
+# login.html
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block body %}
+<h1>로그인</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  {% endbuttons %}
+</form>
+
+{% endblock %}
+```
+
+## 로그아웃
+
+```python
+# urls.py
+path('logout/', views.logout, name="logout"),
+
+# views.py
+from django.contrib.auth import logout as auth_logout
+def logout(request):
+    auth_logout(request)
+    return redirect('articles:index')
+
+# base.html
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css %}
+  <title>Document</title>
+</head>
+<body>
+  <h1>{{ user.username }}</h1>
+  
+  {% if user.username == "" %}
+  <a href="{% url 'accounts:login' %}">login</a>
+  {% else %}
+  <a href="{% url 'accounts:logout' %}">logout</a>
+  {% endif %}
+  <div class="container">
+    {% block body %}
+    {% endblock %}
+  </div>
+  {% bootstrap_javascript jquery='full' %}
+</body>
+</html>
+```
+
+![image-20200623130701596](images/image-20200623130701596.png)
+
+user가 anonymous일때는 항상 false를 리턴.
+
+```python
+from IPython import embed
+
+def index(request):
+    embed()
+    ...
+
+#shell
+request.user
+
+# 로그인 안했을 시
+request.user.is_anonymous
+-> True
+
+request.user.is_authenticated
+-> False
+
+# 로그인 안했을 시
+request.user.is_anonymous
+-> False
+
+request.user.is_authenticated
+-> True
+```
+
+shell 창에서 request를 출력해보면 anonymous가 들어있는 것을 확인할 수 있음.
+
+**따라서 다음과 같이 base.html의 조건문을 변경해주는게 좋다 **
+
+```python
+{% if user.is_authenticated %}
+<a href="{% url 'accounts:login' %}">login</a>
+{% else %}
+<a href="{% url 'accounts:logout' %}">logout</a>
+{% endif %}
+```
+
+=> 세션에 접근을 해서 통과를 해 정보를 가져와서 무엇을 하는 게 아니라 단지 로그인했는지만 체크하는것
+
+> 템플릿에서  user를 쓸 수 있는 이유는 우리가 항상 request를 보내주기 때문이다.
+
+## 로그인/비로그인 페이지 분할
+
+ex ) 네이버와 구글의 로그인 페이지 
+
+- 로그인이 되어있는데도 또 로그인 페이지 접근을 시도하면 index페이지로 redirect시키기(회원가입도)
+
+```python
+###### 회원가입 하자마자 로그인 하기 위한 로직 추가
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('articles:index')
+    else:
+        if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+				##### VVVVVVV
+                auth_login(request, user)
+                return redirect('articles:index')
+        else:
+            form = UserCreationForm()
+        context = {
+            'form' : form
+        }
+    return render(request, 'accounts/signup.html', context)
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('articles:index')
+    else:
+        if request.method == 'POST':
+            form = AuthenticationForm(request, request.POST)
+            # AuthenticationForm은 ModelForm이 아닌 Form을 상속하기 때문에 생긴게 달라진다.
+            # 별도로 정의된 Model이 없다는 뜻 => 고로 넘겨주는 인자가 달라진다.
+            if form.is_valid():
+                # 로그인은 DB에 뭔가 작성하는 것은 동일하지만 연결된 모듈이 있는 것은 아니다.
+                # 그럼 확인해야 하는것은????
+                #   => 세션과 유저정보를 확인해야 하기때문에
+                #   => 세션(request)와 유저정보(form.get_user())를 확인해야 한다.
+                auth_login(request, form.get_user())
+				return redirect(request.GET.get('next') or 'articles:index')
+        else:
+            form = AuthenticationForm
+        context={
+            'form' : form
+        }
+    return render(request, 'accounts/login.html', context)
+```
+
+
+
+
+
+```python
+from django.contrib.auth.decorators import login_required
+```
+
+- articles app 에 있는 detail, index 제외한 모든 함수에 @login_required를 붙여준다...
+
+![image-20200623140626122](images/image-20200623140626122.png)
+
+=> login이 안된상태에서 create버튼을 누르면 login페이지로 넘어간다.
+
+## 회원 탈퇴
+
+먼저 `@require_POST`를 사용하기 위해 import해주는 작업
+
+```python
+from django.views.decorators.http import require_POST
+```
+
+```python
+# urls.py
+path('delete/', views.delete, name="delete"),
+
+# views.py
+# @login_required가 있으면 페이지405 오류가 뜬다. 따라서 GET방식 뭐시기
+@require_POST
+def delete(request):
+    request.user.delete()
+    return redirect('articles:index')
+
+# base.html
+{% if user.is_authenticated %}
+  <a href="{% url 'accounts:logout' %}"><h5>logout</h5></a>
+  <form action="{% url 'accounts'delete %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value="회원 탈퇴">
+  </form>
+  {% else %}
+  <a href="{% url 'accounts:login' %}"><h5>login</h5></a>
+  <a href="{% url 'accounts:signup' %}"><h5>[회원가입]</h5></a>
+{% endif %}
+```
+
+## 회원수정
+
+```python
+# urls.py
+path('update/', views.update, name="update"),
+
+# views.py
+from .forms import CustomUserChangeForm
+@login_required
+def update(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance = request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = CustomUserChangeForm(instance = request.user)
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/update.html', context)
+
+# base.html
+<a href="{% url 'accounts:update' %}">회원 수정</a>
+```
+
+- UserChangeForm 커스터마이징
+
+```python
+# forms.py
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name','last_name']
+
+```
+
+## 비밀번호 수정
+
+```python
+from django.contrib.auth.forms import PasswordChangeForm
+```
+
+```python
+# urls.py
+path('password/', views.password, name="password"),
+
+# views.py
+@login_required
+def password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+			user = form.save()
+            auth_login(request, user)
+            return redirect('articles:index')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/password.html', context)
+```
+
+- 비밀번호 수정 후에도 세션을 유지시키기 위한 작업
+
+```python
+from django.contrib.auth import update_session_auth_hash
+
+@login_required
+def password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('articles:index')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/password.html', context)
+```
+
+=> 눈에 보이지 않는 세션 값이 기존과 그대로 유지한다.
