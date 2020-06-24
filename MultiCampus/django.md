@@ -1792,3 +1792,169 @@ def password(request):
 ```
 
 => 눈에 보이지 않는 세션 값이 기존과 그대로 유지한다.
+
+
+
+# Django 사용자 분할
+
+- Article 모델에 외래키 설정 후 마이그레이션 작업 진행
+  - 연결할 User 모델은 settings.AUTH_USER_MODEL이다.
+  - 마이그레이션 작업을 진행 시 기존의 데이터에 USER 정보가 없으므로 Default값 설정.
+  - 현재 프로젝트의 admin 계정의 PK 값을 찾아 해당 값을 Default로 설정.
+
+- CREATE 로직 수정 & 게시글 작성자 표기
+  - 게시글 생성 시 , 게시글 작성자 정보를 넣어서 저장한다.
+
+- UPDATE & DELETE 로직 수정
+  - 사용자가 자신의 글만 수정/삭제 할 수 있도록 내부 로직 수정
+  - 해당 게시글의 작성자가 아니라면, 수정/삭제 버튼이 보이지 않도록 Template 수정
+
+- user 모델을 외래키로 참조
+
+![image-20200624130814231](images/image-20200624130814231.png)
+
+- 해당 사용자만 수정/삭제가 가능하도록 하자
+
+![image-20200624130932120](images/image-20200624130932120.png)
+
+- 객체는 생성하지만 DB에는 반영하지 않겠다.
+
+![image-20200624131456721](images/image-20200624131456721.png)
+
+![image-20200624134036835](images/image-20200624134036835.png)
+
+- 필요없는 field가 나오지 않도록 해주자
+
+![image-20200624131018154](images/image-20200624131018154.png)
+
+- html도 변경해주자
+
+![image-20200624131119816](images/image-20200624131119816.png)
+
+
+
+## 메시지 출력하기
+
+```python
+# views.py
+from django.contrib import messages
+messages.success(request, '게시글 작성 완료')
+
+# base.html
+<body>
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message.message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+</body>
+
+# settings.py
+
+import os
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger',
+}
+```
+
+## static 파일 관리하기
+
+### image
+
+- blank=True
+  - 유효성 검사시
+- null=True
+  - DB상의 컬럼에 null이 가능. TextField에서는 사용하지마세요!!
+
+```python
+$ pip install Pillow # Python image 관리
+
+class Article(models.Model):
+	image = models.ImageField(blank=True, null=True)
+    
+$ python manage.py makemigrations
+$ python manage.py migrate
+```
+
+- enc type 설정하기
+
+```python
+# form.html
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+  {% endbuttons %}
+</form>
+```
+
+- html 설정하기
+
+```python
+# detail.html
+
+{% if article.image %}
+<img src="{{ article.image.url }}" alt="{{ article.image }}">
+{% endif %}
+```
+
+- views.py
+
+![image-20200624141816812](images/image-20200624141816812.png)
+
+- settings.py
+
+![image-20200624142952884](images/image-20200624142952884.png)
+
+- urls.py ( project )
+
+![image-20200624142716430](images/image-20200624142716430.png)
+
+- 아린
+
+![image-20200624143015990](images/image-20200624143015990.png)
+
+
+
+- 날짜별로 폴더 정리
+
+![image-20200624143251489](images/image-20200624143251489.png)
+
+![image-20200624143349944](images/image-20200624143349944.png)
+
+
+
+- 이미지 크기를 관리하는 방법
+
+```python
+$ pip install pilkit
+$ pip install django-imagekit
+
+# settings.py
+INSTALLED_APPS = [
+    'imagekit',
+]
+
+# models.py
+from imagekit.models import ImageSpecField
+from imagekit.processors import Thumbnail
+```
+
+![image-20200624151337397](images/image-20200624151337397.png)
+
+
+
+- user가 저장한 사진 별로 이미지 관리를 하고 싶은 경우 models.py 
+
+![image-20200624151826256](images/image-20200624151826256.png)
+
+
+
+
+
