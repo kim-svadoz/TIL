@@ -1965,7 +1965,7 @@ from imagekit.processors import Thumbnail
 ### 유저 생성 ORM
 
 ```python
-User.objects.create.user(username='test', password='test')
+User.objects.create(username='test', password='test')
 ```
 
 ### 게시글 생성 ORM
@@ -2212,3 +2212,143 @@ def like(request, article_pk):
 {% endif %}
 ```
 
+
+
+- font awesome 사용하기
+  - base.html에 Kit code를 붙여넣는다.
+
+![image-20200625130756735](images/image-20200625130756735.png)
+
+
+
+- 좋아요를 하나의 모듈로 만들기
+
+```python
+# _like.html
+{% if user in article.like_users.all %}
+<a href="{% url 'articles:like' article.pk %}"> 좋아요취소<i class="fas fa-thumbs-down"></i> </a>
+{% else %}
+<a href="{% url 'articles:like' article.pk %}"> 좋아요<i class="fas fa-thumbs-up"></i> </a>
+{% endif %}
+</div>
+
+<div class="col-lg-2">
+{% if user in article.recommend_users.all %}
+<a href="{% url 'articles:recommend' article.pk %}"> 추천 취소 </a>
+{% else %}
+<a href="{% url 'articles:recommend' article.pk %}"> 추천 </a>
+{% endif %}
+
+# index.html
+## 넣고 싶은 부분에 include를 이용
+{% include 'articles/_like.html' %}      
+
+```
+
+
+
+## 프로필만들기
+
+```python
+# urls.py
+path('<str:username>/', views.profile, name="profile"),
+
+# views.py
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+
+def profile(request, username):
+    person = get_object_or_404(get_user_model(), username=username)
+    context={
+        'person' : person
+    }
+    return render(request, 'accounts/profile.html', context)
+
+# profile.html
+{% extends 'base.html' %}
+{% block body %}
+<h3>{{ person.username }}</h3>
+<!-- 유저가 작성한 모든 게시물 -->
+<p>유저가 작성한 게시글들</p>
+<ul>
+  {% for article in person.article_set.all %}
+    <li>{{ article.title }}</li>
+    <li>{{ article.content }}</li>
+  {% endfor %}
+</ul>
+
+<p>유저가 작성한 게시글들</p>
+<ul>
+  {% for comment in person.comment_set.all %}
+    <li>{{ comment.content }}</li>
+  {% empty %}
+    <p>댓글을 단 적이 없습니다.</p>
+  {% endfor %}
+</ul>
+
+<p>유저가 좋아요 누른 게시글들</p>
+<ul>
+  {% for comment in person.like_articles.all %}
+    <li>{{ like.content }}</li>
+  {% empty %}
+    <p>좋아요를 누른 적이 없습니다.</p>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+```
+
+
+
+## 팔로우하기
+
+- `get_user_model` vs `AUTH_USER_MODEL`
+  - 전자는 객체를 반환하기때문에 accounts를 바라보게된다? => 활성화된 객체를 찾아간다.
+  - 후자는 스트링값 반환=> migrations -> migrate 과정에서 문자열이기 때문에 원활하게 진행
+
+- articles에 있는 models.py에서는 AUTH_USER_MODEL을 사용
+- accounts에 있는 models.py에서는 get_user_model을 사용
+- **Models.py에서 정의할 때 빼고는 전부 get_user_model을 사용하면된다!!**
+
+```python
+# admin.py ( accounts )
+###### ^^^^^^ 여기서만 예외 ########
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+
+admin.site.register(User, UserAdmin)
+```
+
+```python
+# models.py ( accounts )
+from django.db import models
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+
+# Create your models here.
+class User(AbstractUser):
+    followers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="followings",
+        blanck=True
+    )
+```
+
+- 추가로 forms.py도 커스터마이징해줘야한다!!
+
+```python
+# forms.py ( accounts )
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        # fileds = 
+        
+# views.py ( accounts )        
+from .forms import CustomUserCreationForm
+```
+
+UserCreationForm.Meta를 써주면 기존에 있는 Meta를 쓰기때문에 필드를 생략해도 된다.
+
+![image-20200625154026206](images/image-20200625154026206.png)
