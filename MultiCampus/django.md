@@ -1795,7 +1795,7 @@ def password(request):
 
 
 
-# Django 사용자 분할
+# Django 사용자 분할(1:N)
 
 - Article 모델에 외래키 설정 후 마이그레이션 작업 진행
   - 연결할 User 모델은 settings.AUTH_USER_MODEL이다.
@@ -1957,4 +1957,258 @@ from imagekit.processors import Thumbnail
 
 
 
+
+---
+
+# 1:N 관계 복습
+
+### 유저 생성 ORM
+
+```python
+User.objects.create.user(username='test', password='test')
+```
+
+### 게시글 생성 ORM
+
+```python
+$ python manage.py shell_plus
+```
+
+```python
+user1 = User.objects.get(pk=2)
+In[] user1
+Out[] <User:ksh>
+Article.objects.create(title='aaaa', content='bbbbb', user=user1)
+Article.objects.create(title='aaaa', content='bbbbb', user_id=user1.pk)
+```
+
+### 댓글 생성 ORM
+
+```python
+comment = Comment.objects.get()
+
+comment.article.pk
+4
+
+comment.article.title
+title
+
+article = Article.objects.get(pk=4)
+
+
+# article과 user의 입장에서 댓글과 게시글이 있는지 없는지 모르기때문에 set.all()로 가져온다.
+article.comment_set.all()
+user1.article_set.all()
+
+# 반복문으로도 사용가능
+for article in user1.article_set.all():
+    print(article.title)
+
+
+article1 = Article.objects.get(pk=?)
+Comment.objects.create(content='content', user=user1, article=article1)
+```
+
+- 1:N 관계에서 N의 입장은 항상 참조하는 관계가 존재하고 1을 보장할 수 있기 때문에 바로바로 접근가능
+  - 1의 입장에서는 접근하는 방법이 달라진다
+    - `_set.all()` !!
+
+### 특정 게시글이 가지고 있는 전체 댓글 불러오기
+
+```python
+article = Article.objects.get(pk=?)
+article.comment_set.all()
+= Article.objects.get(pk=?).comment_set.all()
+```
+
+### 특정 댓글이 어느 게시글과 연결되어 있는지 확인하기
+
+```python
+comment = Comment.objects.get(pk=?)
+comment.article.title
+```
+
+### 특정 게시글이 어느 유저와 연결되어 있는지 확인하기
+
+```python
+article = Article.objects.get(pk=?)
+article.user.username
+```
+
+### 특정 유저가 작성한 전체 게시글 가져오기
+
+```python
+user1 = User.objects.get(pk=?)
+user1.article_set.all()
+```
+
+### 특정 유저가 작성한 전체 댓글 가져오기
+
+```python
+user1 = User.objects.get(pk=?)
+user1.comment_set.all()
+```
+
+
+
+
+
+# M:N 관계
+
+## ex) 의사-환자 모델링
+
+- models.py
+
+```python
+from django.db import models
+
+# Create your models here.
+class Doctor(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.pk}번 의사 {self.name}'
+
+class Patient(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.pk}번 환자 {self.name}'
+
+class Reservation(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.doctor}의 {self.patient}'
+```
+
+- shell_plus
+
+```shell
+In [1]: doctor = Doctor.objects.create(name='KIM')
+
+In [2]: patient = Patient.objects.create(name='TOM')
+
+In [3]: doctor
+Out[3]: <Doctor: 1번 의사 KIM>
+
+In [4]: patient
+Out[4]: <Patient: 1번 환자 TOM>
+
+# reservation을 활용해서 의사와 환자를 연결한다.
+In [5]: Reservation.objects.create(doctor=doctor, patient=patient)
+Out[5]: <Reservation: 1번 의사 KIM의 1번 환자 TOM>
+
+# 의사 입장에서 예약정보를 가져오기
+# 1은 N을 보장할 수 없기 때문에
+In [6]: doctor.reservation_set.all()
+Out[6]: <QuerySet [<Reservation: 1번 의사 KIM의 1번 환자 TOM>]>
+
+# 환자 입장에서 예약정보를 가져오기
+In [7]: patient.reservation_set.all()
+Out[7]: <QuerySet [<Reservation: 1번 의사 KIM의 1번 환자 TOM>]>
+
+# 2번환자 생성하고 연결하기
+In [8]: patient2 = Patient.objects.create(name='KANG')
+
+In [9]: Reservation.objects.create(doctor=doctor, patient=patient2)
+Out[9]: <Reservation: 1번 의사 KIM의 2번 환자 KANG>
+
+In [10]: doctor.reservation_set.all()
+Out[10]: <QuerySet [<Reservation: 1번 의사 KIM의 1번 환자 TOM>, <Reservation: 1번 의사 KIM의 2번 환자 KANG>]>
+
+# 의사1의 환자이름
+In [11]: for reservation in doctor.reservation_set.all():
+    ...:     print(reservation.patient.name)
+    ...: 
+TOM
+KANG
+
+# 의사1의 환자번호
+In [12]: for reservation in doctor.reservation_set.all():
+    ...:     print(reservation.patient.pk)
+    ...: 
+1
+2
+```
+
+- 위의 중개모델 말고도 조금 더 쉽게 가져올 수 있는 방법이 존재한다.(ManyToManyField)
+
+![image-20200625103231363](images/image-20200625103231363.png)
+
+```shell
+# 환자 입장에서 의사 가져오기
+In [1]: patient = Patient.objects.get(pk=1)
+In [2]: patient.doctors.all()
+Out[2]: <QuerySet [<Doctor: 1번 의사 KIM>]>
+
+# 의사 입장에서 환자 가져오기
+doctor = Doctor.objects.get(pk=1)
+In [10]: doctor.patient_set.all()
+Out[10]: <QuerySet [<Patient: 1번 환자 TOM>, <Patient: 2번 환자 KANG>]>
+```
+
+![image-20200625103949825](images/image-20200625103949825.png)
+
+```shell
+# 이제는 patient_set.all()로 가져올 수 없고 지정한 patients로만 가져올 수 있다.
+In [1]: doctor = Doctor.objects.get(pk=1)
+In [2]: doctor.patients.all()
+Out[2]: <QuerySet [<Patient: 1번 환자 TOM>, <Patient: 2번 환자 KANG>]>
+```
+
+= > **relate_name을 쓸거면 reservation 클래스가 필요없다.**
+
+![image-20200625104225288](images/image-20200625104225288.png)
+
+```shell
+In [1]: doctor = Doctor.objects.create(name='KIM')
+In [2]: patient = Patient.objects.create(name='TOM')
+
+# 환자 추가
+In [3]: doctor.patients.add(patient)
+# 환자 제거
+In [4]: doctor.patients.remove(patient)
+
+In [5]: doctor.patients.all()
+Out[5]: <QuerySet []>
+```
+
+**!! 추가 필드가 요구될 시에는 중개모델(ex. Reservaion class)을 만들어줘야한다.!!**
+
+- 언제 related_name이 반드시 필요한가?
+  - ?
+
+## 게시글 좋아요 만들기
+
+![image-20200625111435406](images/image-20200625111435406.png)
+
+
+
+```python
+# urls.py
+path('<int:article_pk>/like/', views.like, name="like"),
+
+# views.py
+@login_required
+def like(request, article_pk):
+    # 특정 게시물에 대한 정보
+    article = get_object_or_404(Article, pk=article_pk)
+    # 좋아요를 누른 유저에 대한 정보
+    user = request.user
+    # 사용자가 게시글의 좋아요 목록에 있으면 지우고 없으면 추가한다.
+    if user in article.like_users.all():
+        article.like_users.remove(user)
+    else:
+        article.like_users.add(user)
+    return redirect('articles:index')
+
+# index.html
+{% if user in article.like_users.all %}
+<a href="{% url 'articles:like' article.pk %}"> 좋아요 취소 </a>
+{% else %}
+<a href="{% url 'articles:like' article.pk %}"> 좋아요 </a>
+{% endif %}
+```
 
