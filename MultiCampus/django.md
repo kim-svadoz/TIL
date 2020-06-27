@@ -2352,3 +2352,142 @@ from .forms import CustomUserCreationForm
 UserCreationForm.Meta를 써주면 기존에 있는 Meta를 쓰기때문에 필드를 생략해도 된다.
 
 ![image-20200625154026206](images/image-20200625154026206.png)
+
+
+
+```
+# 기존 에서
+def signup(request):    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('articles:index')
+    else:
+        form = UserCreationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/signup.html', context)
+
+# 이렇게 바꾼다.
+def signup(request):    
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('articles:index')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/signup.html', context)
+
+# accounts/urls.py
+urlpatterns = [
+    path('signup/', views.signup, name="signup"),
+    path('login/', views.login, name="login"),
+    path('logout', views.logout, name="logout"),
+    path('delete/', views.delete, name="delete"),
+    path('update/', views.update, name="update"),
+    path('password/', views.password, name="password"),
+    path('follow/<int:user_pk>/', views.follow, name="follow"),  # 여기에 추가했다
+    path('<str:username>/', views.profile, name="profile"), # 문자열 하나만 받을 친구는 밑에 둬야한다.(오류생김)
+]
+
+# accounts/views.py
+def follow(request, user_pk):
+    # person에 담긴 user_pk값을 가진 유저는
+    # 프로필의 주인이다.
+    # request.user는 나. 요청을 보내온 사용자이다
+    person = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.user in person.followers.all():
+        person.followers.remove(request.user)
+    else :
+        person.followers.add(request.user)
+    return redirect('accounts:profile',person.username)
+<!--profile.html-->
+{% extends 'base.html' %}
+{% block body %}
+<h3>{{ person.username }}</h3>
+<!-- 팔로우 로직 구현-->
+{% if user != person %} <!-- 본인일때는 팔로우 안보이도록-->
+{% if user in person.followers.all %}
+<a href="{% url 'accounts:follow' person.pk %}">팔로우 취소</a>
+{% else %}
+<a href="{% url 'accounts:follow' person.pk %}">팔로우</a>
+{% endif %}
+{% endif %}
+...
+...
+...
+```
+
+**DB다 지우고 makemigrations와 migrate한다**
+
+## 페이징 구현
+
+```
+# articles/views.py
+from django.core.paginator import Paginator
+
+def index(request):  #index 부분을 수정한다.(paging 추가)
+    #embed()
+    articles = Article.objects.all()
+    # 1. Paginator(전체 리스트, 한 페이지당 개수)
+    paginator = Paginator(articles, 3)
+    # 2. 몇 번째 페이지를 보여줄 것인지 GET으로 받
+    # 'articles/?page=3'
+    page = request.GET.get('page')
+    # 해당하는 페이지의 게시글만 가져오기
+    articles = paginator.get_page(page)
+    context = {
+        'articles': articles
+    }
+    return render(request, 'articles/index.html', context)
+```
+
+- index.html
+
+```
+{% extends 'base.html' %}
+{% block body %}
+<h1>메인 페이지 입니다.</h1>
+<hr>
+<a href="{% url 'articles:create' %}">[CREATE]</a>
+<hr>
+<p>{{ articles.all|length }}개의 글</p>
+<hr>
+{% for article in articles %}
+ <p>{{ article.pk }}번째 글</p>
+ <h2>{{ article.title }}</h2>
+<p>좋아요 개수 : {{ article.like_users.all|length }}</p>
+<p>추천 개수 : {{ article.recommend_users.all|length }}</p>
+<p>댓글 개수 : {{ article.comment_set.all|length }}</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2">
+      {% include 'articles/_like.html' %}
+    </div>
+
+    <div class="col-lg-2">
+      <a href="{% url 'articles:detail' article.pk %}">[DETAIL]</a>
+    </div>
+  </div>
+</div>
+ <hr>
+ 
+{% endfor %}
+{% for num in articles.paginator.page_range %}
+<a href="{% url articles:index' %}?page={{ num }}">{{ num }}</a>
+{% endfor %}
+{% endblock %}
+```
+
+아이디 2개를 만들어 주소로 내 아이디 말고 다른 사람 아이디를 들어가보면
+
+[![image](images/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)](https://user-images.githubusercontent.com/22831002/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)
