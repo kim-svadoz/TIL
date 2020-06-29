@@ -2491,3 +2491,109 @@ def index(request):  #index 부분을 수정한다.(paging 추가)
 아이디 2개를 만들어 주소로 내 아이디 말고 다른 사람 아이디를 들어가보면
 
 [![image](images/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)](https://user-images.githubusercontent.com/22831002/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)
+
+
+
+
+
+
+
+# 자바스크립트
+
+## 자바스크립트를 활용해 좋아요 구현
+
+- base.html
+
+```python
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+```
+
+- _like.html
+
+```python
+{% if user in article.like_users.all %}
+<i class="fas fa-thumbs-down like-button" data-id="{{ article.id }}" style="color : tomato"></i>
+{% else %}
+<i class="fas fa-thumbs-up like-button" data-id="{{ article.id }}" style="color : black" ></i>
+{% endif %}
+<span class="like-count-{{ article.id }}"> {{ article.like_users.count }}</span>
+
+{% if user in article.recommend_users.all %}
+<a href="{% url 'articles:recommend' article.pk %}"> 추천 취소 </a>
+{% else %}
+<a href="{% url 'articles:recommend' article.pk %}"> 추천 </a>
+{% endif %}
+```
+
+- index.html
+
+```python
+{% load static %}
+...
+
+<script src="{% static 'articles/js/like.js' %}">
+```
+
+- detail.html
+
+```python
+{% load static %}
+...
+
+<script src="{% static 'articles/js/like.js' %}">
+```
+
+- like.js
+
+```javascript
+const likeButton = document.querySelectorAll('.like-button')
+likeButton.forEach(button =>{
+    button.addEventListener('click', function(event){
+        const articleId = event.target.dataset.id
+        const likeCount = document.querySelector(`.like-count-${articleId}`)
+
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
+
+        axios.post(`/articles/${articleId}/like/`)
+        .then(response => {
+            likeCount.innerText = response.data.count
+            if(response.data.liked){
+                event.target.className = 'fas fa-thumbs-up like-button'
+                event.target.style.color = 'crimson'
+            } else{
+                event.target.className = 'fas fa-thumbs-down like-button'
+                event.target.style.color = 'black'
+            }
+        })
+    })
+})
+```
+
+=> csrf를 쓰기 위해선 httpcsrftoken을 사용하면 된다!
+
+- views.py
+
+```python
+from django.http import JsonResponse
+
+@login_required
+def like(request, article_pk):
+    # 특정 게시물에 대한 정보
+    article = get_object_or_404(Article, pk=article_pk)
+    # 좋아요를 누른 유저에 대한 정보
+    user = request.user
+    # 사용자가 게시글의 좋아요 목록에 있으면 지우고 없으면 추가한다.
+    if user in article.like_users.all():
+        article.like_users.remove(user)
+        liked = False
+    else:
+        article.like_users.add(user)
+        liked = True
+    context = {
+        'liked' : liked,
+        'count' : article.like_users.count()
+    }
+    return JsonResponse(context)
+```
+
