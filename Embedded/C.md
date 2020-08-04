@@ -697,7 +697,7 @@ int main(){
 - 역참조 연산자 *는 포인터 앞에 붙인다. 다음과 같이 numPtr 앞에 *를 붙이면 numPtr에 저장된 메모리 주소로 가서 값을 가져온다. 여기서는 numPtr이 num1의 메모리 주소를 저장하고 있으므로 num1의 값인 10이 출력된다.
 - 즉, 포인터는 변수의 주소만 가리키며 역참조는 주소에 접근하여 값을 가져온다.
 
-![image-20200731141038249](probation/image/image-20200731141038249.png)
+![image-20200731141038249](./images/image-20200731141038249.png)
 
 ```C
 // 참고 
@@ -740,7 +740,7 @@ int main(){
 - 역참조 연산자는 값을 가져올 수 도 있고 값을 저장할 수도 있다. 여기서는 `*numPtr = 20;` 과 같이 numPtr에 저장된 메모리 주소에 접근하여 20을 저장했다. 따라서 printf로 *numPtr을 출력해보면 20이 나온다.
 - 또 한가지 중요한 점은 `*numPtr = 20;`으로 20을 저장한뒤 printf로 변수 num1의 값을 출력해보면 20이 나온다는 것이다. 왜냐하면 numPtr에는 num1의 메모리 주소가 저장되어 있으므로 역참조 연산자로 값을 저장하면 결국 num1에 저장하게 되는것이다.
 
-![image-20200731141740909](probation/image/image-20200731141740909.png)
+![image-20200731141740909](./images/image-20200731141740909.png)
 
 - 역참조 연산자는 자료형을 바꾸는 효과를 낸다. 즉, `int *numPtr;`에서 *numPtr처럼 역참조하면 pointer to int에서 pointer to를 제거하여 그냥 int로 만든다.
   (int 포인터 -> int)
@@ -767,7 +767,7 @@ numPtr = &num1;			// numPtr은 int포인터형이고, &num1은 int형 변수의 
 
 **즉, pointer to int와 address of int는 자료형이 같은것이다.**
 
-![image-20200731142146129](probation/image/image-20200731142146129.png)
+![image-20200731142146129](./images/image-20200731142146129.png)
 
 
 
