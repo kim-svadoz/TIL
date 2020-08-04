@@ -128,15 +128,7 @@
 
 ### [ProjectManage](./MultiCampus/ProjectManage.md)
 
+### [정보처리기사 실기 요약](./Embedded/EIPP.md)
+
 ---
-
-# CAN
-
-# SQLD
-
-# 정보처리기사
-
-# ADSP
-
-
 
