@@ -1849,7 +1849,206 @@ NUM is 2
 
 - 이런 형태를 만들어서 중복참조를 막는데 header파일에서 `#ifndef`라는 전처리문을 사용하는 핵심이유가 된다.
 
+# [ 함수와 포인터 ]
+
+## void 포인터 매개변수 사용하기
+
+void 포인터 매개변수를 사용하면 자료형 변환을 하지 않아도 모든 자료형을 함수에 넣을 수 있다. 이번에는 char, int, float형을 매개변수로 받아서 값을 서로 바꿔보겠다.
+
+```C
+#include <stdio.h>
+
+enum TYPE {
+    TYPE_CHAR,
+    TYPE_INT,
+    TYPE_FLOAT
+};
+
+void swapValue(void *ptr1, void *ptr2, enum TYPE t){
+    switch(t){
+        case TYPE_CHAR:{	// 문자면 char *로 변환한 뒤 역참조하여 값을 서로 바꿈
+            char temp;
+            temp = *(char *)ptr1;
+            *(char *)ptr1 = *(char *)ptr2;
+            *(char *)ptr2 = temp;
+            break;
+        }
+        case TYPE_INT:{		// 정수면 int *로 변환한 뒤 역참조하여 값을 서로 바꿈
+            int temp;
+            temp = *(int *)ptr1;
+            *(int *)ptr1 = *(int *)ptr2;
+            *(int *)ptr2 = temp;
+            break;
+        }
+        case TYPE_FLOAT:{		// 실수면 float *로 변환한 뒤 역참조하여 값을 서로 바꿈
+            float temp;
+            temp = *(float *)ptr1;
+            *(float *)ptr1 = *(float *)ptr2;
+            *(float *)ptr2 = temp;
+            break;
+        }           
+    }
+}
+
+int main(){
+    char c1 = 'a';
+    char c2 = 'b';
+    swapValue(&c1, &c2, TYPE_CHAR);		// 변수의 메모리 주소와 TYPE_CHAR를 넣음
+    printf("%c %c\n", c1, c2);			// b a : swapValue에 의해서 값이 서로 바뀜
+    
+    int num1 = 10;
+    int num2 = 20;
+    swapValue(&num1, &num2, TYPE_INT);		// 변수의 메모리 주소와 TYPE_INT를 넣음
+    printf("%f %f\n", num3, num4);			// 20 10 : swapValue에 의해서 값이 서로 바뀜
+    
+    float num3 = 1.234567f;
+    float num4 = 7.654321f;
+    swapValue(&num3, &num4, TYPE_FLOAT);		// 변수의 메모리 주소와 TYPE_FLOAT를 넣음
+    printf("%f %f\n", num3, num4);			// 7.654321f 1.234567 : swapValue에 의해서 값이 서로 바뀜
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+b a 
+20 10
+7.654321 1.234567
+```
+
+- void 포인터는 역참조를 할 수 없으므로 어떤 자료형의 역참조할지 알려주기위해 TYPE열거형도 함께 받았다. 함수 안에서는 TYPE에 따라 각 자료형의 포인터로 변환한 뒤 역참조하여 값을 서로 바꾼다.
+- swapValue 함수를 사용할 때는 자료형 변환을 하지 않아도 다양한 자료형의 포인터(메모리 주소)를 넣을 수 있다. 여기서는 `&(주소 연산자)`를 사용하여 char, int, float 형 변수의 주소를 구해서 swapValue 함수에 넣었다. 물론 어떤 자료형인지 알려줘야 하므로 TYPE 열거형 값도 넣었다.
+- `void 포인터 매개변수`에는 변수의 메모리 주소뿐만 아니라 메모리를 할당한 포인터도 넣을 수 있다. 또한, 일반 자료형의 포인터뿐만 아니라 구조체, 공용체, 열거형 등의 포인터도 넣을 수 있다!
+
+## 이중 포인터 매개변수 사용하기
+
+지금까지는 함수에서 포인터 매개변수를 이용해서 정수, 실수 등의 값을 가져왔다. 그러면 일반적인 값 대신 포인터(메모리주소)를 가져오려면?!
+
+먼저 함수에 포인터를 넘겨준 뒤 메모리를 할당해보겠다.
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+void allocMemory(void *ptr, int size){		// 반환값 없음, void 포인터 매개변수 지정
+    ptr = malloc(size);				//	ptr은 allocMemory를 벗어나면 사용할 수 없음.
+}
+
+int main(){
+    long long *numPtr = NULL;
+    
+    // numPtr과 할당할 크기를 넣어줌
+    allocMemory(numPtr, sizeof(long long));
+    
+    *numPtr = 10;			// 메모리가 할당되지 않았으므로 실행 에러
+    printf("%lld\n", *numPtr);
+    
+    free(numPtr);
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+에러
+```
+
+왜 에러가 날까요? ptr에 메모리를 할당해봐야 allocMemory 함수를 벗어나면 사용할 수가 없기 때문이다. 결국 메모리 누수가 일어난다.
+
+***그렇다면 이중포인터를 사용해서 함수 안에서 메모리를 할당한 뒤 가져와보자***
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+void allocMemory(void **ptr, int size){		// 반환값 없음, void 이중 포인터 매개변수 지정
+    *ptr = malloc(size);		// void **ptr을 역참조하여 void *ptr에 메모리 할당
+}
+
+int main(){
+    long long *numPtr;
+    
+    // 단일 포인터 long long *numPtr의 메모리 주소는 long long **와 같다. 할당할 크기도 넣음
+    allocMemory(&numPtr, sizeof(long long));
+    
+    *numPtr = 10;
+    printf("lld\n", *numPtr);
+    
+    free(numPtr);
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+10
+```
+
+- 함수를 만들 때 `void 이중 포인터` ptr을 받도록 만든다. 물론 할당할 메모리의 크기도 알아야 하니 size도 함께 받는다.
+- 함수 안에서는 매개변수 `void **ptr`을 역참조하여 `void *ptr`이 되도록 만든 뒤 `malloc`함수로 메모리를 할당한다.
+- 이제 `long long *numPtr;`와 같은 단일 포인터를 선언한 뒤 numPtr의 메모리 주소를 구해서 allocMemory 함수에 넣어준다. 즉, `long long *numPtr;`의 메모리 주소는 `long long **`과 같으므로 `void **ptr`로 받을 수 있다.
+- 다음과 같이 매개변수 `void **ptr`를 역참조하여 실제로는 `numPtr`에 메모리를 할당하게 된다.
+
+![image-20200805180627527](images/image-20200805180627527.png)
+
+## 문자열 매개변수 사용하기
+
+함수에서 매개변수로 문자열을 받으려면 다음과같이 매개변수를 문자열 포인터로 지정하면 된다.
+
+```C
+#include <stdio.h>
+
+void helloString(char *s1){			// 반환값 없음, char 포인터 매개변수 한 개 지정
+    printf("Hello, %s\n", s1);		// Hello, 와 매개변수를 조합하여 문자열 출력
+}
+
+int main(){
+    helloString("world!");			// Hello, world!: 함수를 호출할 때 문자열을 전달
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+Hello, World!
+```
+
+- 먽더 함수를 정의할 때 괄호안에 `char *s1`과 같이 매개변수를 문자열 포인터로 지정한다. 여기서는 printf로 `"Hello, "`문자열을 출력하면서 서식 지정자 `%s`로 매개변수의 값을 함께 출력한다.
+- 다음과 같이 배열 형태의 문자열도 문자열 포인터 매개변수에 전달할 수 있다. 이때도 매개변수는 char 포인터로 지정한다.
+
+```C
+#include <stdio.h>
+
+void helloString(char *s1){
+    printf("Hello, %s\n", s1);
+}
+
+int main(){
+    char s1[10] = "world!";		// 배열 형태의 문자열
+    helloString(s1);
+    return 0;
+}
+```
+
+- 매개변수로 문자 배열을 받는 다는 것을 확실히 해주려면 다음과 같이 매개변수 뒤에 `[ ](대괄호)`를 붙여주면 된다. 단, 대괄호 안에 들어가는 배열의 크기는 생략한다.
+
+```C
+#include <stdio.h>
+
+void helloString(char s1[]){
+    printf("Hello, %s", s1);
+    
+    helloString(s1);		// 함수를 호출할 때 배열 전달
+    helloString("world!")	// 함수를 호출할 때 문자열 전달
+};
+```
+
+- **매개변수를 `char s1[]`과 같이 지정하더라도 배열뿐만 아니라 문자열이나 메모리가 할당된 포인터도 전달할 수 있다.**
+
 # <<<<<알고리즘>>>>>
+
+---
 
 ## - 회문판별
 
