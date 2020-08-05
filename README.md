@@ -120,6 +120,14 @@
 
 ---
 
+## Embedded
+
+### 1. [C](./Embedded/C.d)
+
+### 2. [SSD](./Embedded/SSD.md)
+
+---
+
 ## 기타
 
 ### [Markdown](./MultiCampus/markdown.md)
@@ -134,4 +142,3 @@ want more..
 
 ---
 
-수정확인
