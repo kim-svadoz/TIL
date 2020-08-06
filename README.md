@@ -122,9 +122,13 @@
 
 ## Embedded
 
-### 1. [C](./Embedded/C.d)
+### 1. [C](./Embedded/C.md)
 
 ### 2. [SSD](./Embedded/SSD.md)
+
+### 3. [Video](./Embedded/Video.md)
+
+### 4. [Embedded_Basic](./Embedded/Embedded_Basic.md)
 
 ---
 
