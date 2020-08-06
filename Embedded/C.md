@@ -836,7 +836,7 @@ int main(){
   memset(numPtr, 0, 0);		// numPtr이 가리키는 메모리를 8바이트만큼 0으로 설정
   ```
 
-### > > 자료형의 크기와 포인터의 크기
+### >  자료형의 크기와 포인터의 크기
 
 ```C
 // memset 함수에 설정할 크기를 지정할 때 보통 숫자대신 sizeof를 사용한다.
@@ -845,7 +845,7 @@ memset(numPtr, 0, sizeof(long long));
 // 여기서 메모리를 sizeof(long long)크기만큼 할당했으므로 설정할 크기도 sizeof(long long)과 같이 지정해야 하며 sizeof(long long *)과 같이 포인터의 크기를 지정하면 안된다! 포인터의 크기는 메모리주소의 크기일뿐 실제 메모리가 차지하는 크기가 아니다. 이부분은 char 포인터에 메모리를 할당해보면 잘 알 수 있을것이다.
 
 char *cPtr = malloc(sizeof(char));		// char의 크기 1바이트만큼 동적 메모리 할당
-memset(cPtr, 0, sizeof(char));		// char의 크기 1바이트만큼 0으로 섲렁(올바른 방법)
+memset(cPtr, 0, sizeof(char));		// char의 크기 1바이트만큼 0으로 설렁(올바른 방법)
 memset(cPtr, 0, sizeof(char *));	// 32비트 : char 포인터의 크기 4바이트만큼 0으로 설정(잘못된 방법)
 								// 64비트 : char 포인터의 크기 8바이트만큼 0으로 설정(잘못된 방법)
 
@@ -879,7 +879,7 @@ int main(){
   }
   ```
 
-## 포인터에 할된 메모리를 배열처럼 사용하기
+## 포인터에 할당된 메모리를 배열처럼 사용하기
 
 ```C
 #include <stdio.h>
@@ -1079,7 +1079,7 @@ struct Data{
 };
 
 int main(){
-    struct Data d[3] = { {10, 20}, {30, 40}, {50, 60}};		// 구조체 배열 선언과 값 초기화
+    struct Data d[3] = { {10, 20}, {30, 40}, {50, 60} };		// 구조체 배열 선언과 값 초기화
     struct Data *ptr;		// 구조체 포인터 선언
     
     ptr = d;		// 구조체 배열 첫 번째 요소의 메모리 주소를 포인터에 저장
@@ -2045,6 +2045,421 @@ void helloString(char s1[]){
 ```
 
 - **매개변수를 `char s1[]`과 같이 지정하더라도 배열뿐만 아니라 문자열이나 메모리가 할당된 포인터도 전달할 수 있다.**
+
+# [ 함수와 배열 ]
+
+>  함수에서 배열을 매개변수로 사용하면 연속된 값을 전달할 수 있꼬, 전달한 배열의 요소를 함수 안에서 변경할 수 있다.
+
+## 1차원배열 매개변수
+
+- 함수에서 배열을 매개변수로 사용하려면 `( )(괄호)`안에서 매개변수 이름 뒤에 `[ ](대괄호)`를 붙이거나 매개변수를 포인터로 지정해줍니다.
+
+1. 대괄호를 포인터로 지정하기 
+
+```C
+반환값자료형 함수이름(자료형 매개변수[]){
+    
+}
+반환값자료형 함수이름(자료형 *매개변수){
+    
+}
+```
+
+```C
+#include <stdio.h>
+
+void printArray(int arr[], int count){		// 배열의 포인터와 개수를 받음
+    for(int i=0; i<count; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+int main(){
+    int numArr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    printArray(numArr, sizeof(numArr) / sizeof(int));		// 배열과 요소의 개수를 넣음
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+1 2 3 4 5 6 7 8 9 10
+```
+
+- 함수에서 배열을 매개변수로 사용할 때는 매개변수 이름 뒤에 `[ ]`만 붙이면 된다.(대괄호 안에 크기를 지정하더라도 무시된다.)
+- 즉 `arr[ ]`은 배열의 메모리 주소를 담고 있는 포인터이며 배열의 실제크기를 알 수 없으므로 다른 매개변수를 통해 배열의 크기를 받아야 한다.
+- 요소의 개수를 구할 때는 `sizeof(배열)/sizeof(자료형)` 이다. 배열의 크기인 10을 그대로 넣어도 되지만 `sizeof`로 크기를 구하면 배열의 크기가 바뀌었을 때 코드를 수정하지 않아도 된다.
+- **매개변수를 `arr[ ]`과 같이 지정했다면 arr은 포인터이다. 따라서 다음과 같이 함수 안에서 매개변수로 받은 배열의 요소를 변경하면 함수 바깥에 있는 배열의 요소가 바뀌게 된다.**
+
+```C
+#include <stdio.h>
+
+void setElement(int arr[]){		// 배열의 포인터를 받음
+    arr[2] = 300;		// 매개변수로 받은 배열의 요소를 변경
+}
+
+int main(){
+    int numArr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    setElement(numArr);		// 배열을 넣어줌
+    
+    printf("%d\n", numArr[2]);		// 300 : setElement에서 변경한 값이 출력된다.
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+300
+```
+
+- setElement 함수 안에서 arr[2]에 저장했음. **배열의 메모리 주소를 전달했기 때문에 실제로는 바깥에 있는 배열의 요소가 바뀌었다.**
+
+![image-20200806101949837](images/image-20200806101949837.png)
+
+2. 이번에는 대괄호 없이 매개변수로 포인터를 지정해보겠다.
+
+```C
+#include <stdio.h>
+
+void printArray(int *arr, int count){		// 매개변수를 포인터로 지정하여 배열을 받음
+    for(int i=0; i<count; i++){
+        printf("%d ", arr[i]);
+    }
+}
+
+int main(){
+    int numArr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    printArray(numArr, sizeof(numArr)/sizeof(int));		// 배열과 요소의 개수를 넣음
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+1 2 3 4 5 6 7 8 9 10
+```
+
+- 1차원 배열은 `int *arr`과 같이 int형 포인터로 받을 수 있다. 물론 포인터로는 배열의 크기를 알 수 없으므로 다른 매개변수를 통해 배열의 크기를 받는다.
+- 여기서도 arr은 포인터이므로 함수안에서 배열의 요소를 변경하면 함수 바깥에 있는 배열의 요소가 바뀌게 된다. 이러한 특성을 이용해 이번에는 배열에서 특정 요소의 값을 서로 바꿔보겠따.
+
+```C
+#include <stdio.h>
+
+void swapElement(int arr[], int first, int second){
+    int temp;
+    
+    temp = arr[first];
+    arr[first] = arr[second];
+    arr[second] = temp;
+}
+
+int main(){
+    int numArr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    swapElement(numArr, 0, 1);		// 배열과 값을 서로 바꿀인덱스를 넣음
+    
+    printf("%d %d\n", numArr[0], numArr[1]);		// 2 1 : swapElement에 의해 배열 요소의 값이 서로 바뀜
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+2 1
+```
+
+### > 복합리터럴 사용하기
+
+> 함수에 배열을 넘겨줄 때 복합 리터럴을 사용하면 배열을 따로 선언하지 않아도 된다.(복합리터럴은 C99에 추가된 기능)
+
+- `(자료형[ ]) { val1, val2, val3 }`
+- `(자료형[크기]) { val1, val2, val3 }`
+
+```C
+#include <stdio.h>
+
+void printArray(int arr[], int count){
+    for(int i=0; i<count; i++){
+        printf("%d ", arr[i]);
+    }
+}
+
+int main(){
+    // 복합 리터럴 방식으로 배열을 넘겨준디
+    printArray((int[]) {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 10);
+    return 0;
+}
+```
+
+### > 함수의 배열 매개변수에서 요소의 최소 개수 지정하기
+
+> 함수에 배열 매개변수에 static과 숫자를 사용하면 요소의 초소 개수를 지정할 수 있다. 이렇게 하면 매개변수로 들어온 배열의 요소 개수가 지정된 개수보다 작을 때 경고가 발생한다. `VS2015`에서는 사용할수 없으며, `GCC`, `Clang`에서만 지원한다.
+
+```C
+반환값자료형 함수이름 (자료형 매개변수[static 최소개수]){
+    
+}
+```
+
+```C
+#incldue <stdio.h>
+void printArray(int arr[static 5], int count){		// 배열 요소의 최소 개수를 5개로 지정
+    for(int i=0; i<count; i++){
+        printf("%d ", arr[i]);
+    }
+}
+
+int main(){
+    int numArr1[5] = { 1, 2, 3, 4, 5 };
+    // 요소 개수가 5개이므로 OK
+    printArray(numArr1, sizeof(numArr1)/sizeof(int));
+    
+    int numArr2[3] = { 1, 2, 3 };
+    // 요소 개수가 3개이므로 경고
+    printArray(numArr2, sizeof(numArr1)/sizeof(int));
+    
+    return 0;
+}
+```
+
+## 2차원배열 매개변수
+
+- 함수에서 2차원배열을 매개변수로 사용하려면 `( )(괄호)`안에서 매개변수 이름뒤에 `[ ][가로크기](대괄호)`를 두 개 붙이고 가로크기를 지정하거나 괄호로 묶은 포인터 뒤에 `[ ]`를 붙이고 가로크기를 지정한다.
+
+```C
+반환값자료형 함수이름(자료형 매개변수[][가로크기]){
+    
+}
+반환값자료형 함수이름(자료형 (*매개변수)[가로크기]){
+    
+}
+```
+
+```C
+#include <stdio.h>
+
+void print2DArray(int arr[][5], int col, int row){
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main(){
+    int numArr[2][5] = {
+        { 1, 2, 3, 4, 5 },
+        { 6, 7, 8, 9 ,10 }
+    };
+    int col = sizeof(numArr[0])/sizeof(int);		// 5 : 2차원 배열의 가로크기를 구할 때는 가로 한줄을 요소의 크기로 나눠줌
+    int row = sizeof(numArr)/sizeof(numArr[0]);		// 2 : 2차원 배열의 세로크기를 구할 때는 배열이 차지하는 공간을 가로한줄의 크기로 나눠줌
+    print2DArray(numArr, col, row);
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+1 2 3 4 5
+6 7 8 9 10
+```
+
+- 함수에서 2차원배열을 매개변수로 사용때는 매개변수 이름 뒤에 `[ ]`를 두 개 붙이고 두번째 대괄호에는 배열의 가로크기를 지정해야 한다.
+- 즉, `arr[5]`는 2차원 배열의 메모리 주소를 담고 있는 포인터이며 2차원 배열의 실제 크기를 알 수 없으므로 다른 매개변수로 배열의 가로, 세로 크기를 받아야 한다.
+- 여기서 가로 크기를 구할 때는 가로한주을 요소(자료형)의 크기로 나누면 되고, 세로 크기를 구할 때는 배열이 차지하는 공감을 가로 한줄의 크기로 나눠주면 된다.
+- 1차원배열과 마찬가지로 대괄호 대신 포인터로 2차원배열을 지정할 수 도 있으며 복합리터럴 사용이 가능하다.
+
+# [ 함수와 가변인자 ]
+
+>  printf, scanf와 같이 매개변수의 개수가 정해지지 않은 개수가 있다. 이렇게 매번 함수에 들어가는 인수(argument)의 개수가 변하는 것을 가변 인자(가변 인수, variable argument)라고 한다.
+
+- 함수에서 가변인자를 정의할 때는 고정 매개변수가 한 개 이상 있어야 하며 고정 매개변수 뒤에 `...`을 붙여 매개변수의 개수가 정해지지않았다는 표시를 해준다. 단, `...`뒤에는 다른 매개변수를 지정할 수 없다.
+
+```C
+반환값 자료형 함수이름(자료형 고정매개변수, ...){
+    
+}
+```
+
+```C
+#include <stdio.h>
+
+// args는 고정 매개변수
+void printNumbers(int args, ...){
+    printf("%d ", args);
+}
+
+int main(){
+    printNumbers(1, 10);
+    printNumbers(2, 10, 20);
+    printNumbers(3, 10, 20, 30);
+    printNumbers(4, 10, 20, 30, 40);
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+1 2 3 4
+```
+
+- 이제 `...` 부분의 매개변수를 사용해보자
+
+```C
+#include <stdio.h>
+#include <stdarg.h>		// va_list, va_start, va_arg, va_end가 정의된 헤더파일
+
+void printNumbers(int args, ...){
+    va_list = ap;				// 가변 인자 목록 포인터
+    va_start(ap, args); 		// 가변인자 목록 포인터 설정
+    for(int i=0; i<args; i++){
+        int num = va_arg(ap, int);	// int 크기만큼 가변 인자 목록에 서 값을 가져옴
+        printf("%d ", num);			// ap를 int 크기만큼 순방향으로 이동
+    }
+    va_end(ap);				// 가변 인자 목록 포인터를 NULL로 초기화
+    printf("\n");
+}
+
+int main(){
+    printNumbers(1, 100);
+    printNumbers(2, 10, 20);
+    printNumbers(3, 10, 20, 30);
+    printNumbers(4, 10, 20, 30, 40);
+    
+    return 0;
+}
+```
+
+- `va_list` : 가변 인자 목록. 가변인자의 메모리 주소를 저장하는 포인터
+- `va_start` : 가변 인자를 가져올 수 있도록 포인터를 설정
+- `va_arg` : 가변인자 포인터에서 특정 자료형 크기만큼 값을 가져옴
+- `va_end` : 가변 인자 처리가 끝났을 떄 포인터를 NULL로 초기화
+
+- 함수 안에서는 `va_start`매크로에 가변인자 목록 포인터 ap와 가변인자 개수 args를 넣어 가변 인자를 가져올 수 있도록 준비한다.(ap = argument pointer)
+- 만약 가변인자가 4개 들어잇는게 `printNumbers(4, 10, 20, 30, 40);`를 호출한 뒤 va_start 매크로를 실행하면 다음과 같은 모양이 나온다.
+
+![image-20200806111153464](images/image-20200806111153464.png)
+
+- 이제 반복문으로 가변 인자 개수만큼 반복하면서 `va_arg`매크로로 값을 가져오면 된다. 이때 `va_arg`에는 가변 인자의 자료형을 지정한다.
+- `int num= va_arg(ap, int);`를 실행하면 현재 ap에서 4바이트(int 크기)만큼 역참조하여 값을 가져온 뒤 ap를 4바이트만큼 순방향 이동시킨다.
+
+![image-20200806111329035](images/image-20200806111329035.png)
+
+
+
+- 즉, 반복문에서 반복할 때마다 ap는 4바이트만큼 순방향으로 이동하므로 10, 20, 30, 40을 순서대로 가져올 수 있다.
+
+#  [ goto에 관해 ]
+
+goto는 별다른 제약 조건 없이 원하는 부분으로 이동할 수 있기 때문에 초보 때는 goto를 남발하는 경우가 많다. 그러다 보니 처음에는 `goto`는 가급적 사용하지 말라고 한다. 하지만 `goto`를 적절히 활용하면 중복되는 코드를 없애고 코드를 좀 더 간결히 만들 수 있을 것이다. 특히 에러처리에 매우 유용하기 때문에 리눅스커널에서도 자주 쓰이며 `for`, `switch` 등 중첩 반복문에 많이 쓰이는 것을 알아두자.
+
+```bash
+# 스파게티 코드
+스파게티 코드는 `goto`를 과도하게 사용해서 프로그램의 흐름이 마치 스파게티 면발처럼 꼬여있다는데서 붙여진 이름이다. 그래서 스파게티 코드는 가독성이 떨어지고 유지보수가 매우 힘들다.
+```
+
+## goto와 레이블
+
+```C
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main(){
+    int num1;
+    
+    scanf("%d",&num1);
+    
+    if(num1==1)
+        goto ONE:
+    else if(num1==2)
+        goto TWO;
+    else
+        goto EXiT;
+    
+ONE:		// 레이블 ONE
+    printf("1입니다\n");
+    goto EXIT;	// 레이블 EXIT로 즉시 이동
+TWO:		// 레이블 TWO
+    printf("2입니다\n");
+    goto EXIT;	// 레이블 EXIT로 즉시 이동    
+EXIT:		// 레이블 EXIT
+    return 0;
+}
+```
+
+컴파일 후 1을 입력하고 엔터키
+
+```bash
+# 실행 결과
+1 (입력)
+1입니다.
+```
+
+- `goto`에 레이블을 지정하면 중간에 있는 코드는 무시하고 해당 레이블로 즉시 이동한다.
+
+## goto와 중첩루프
+
+```C
+#include <stdio.h>
+#include <stdbool.h>
+
+int main(){
+    int num1 = 0;
+    bool exitOuterLoop = false;	// 바깥쪽 루프를 빠져나올지 결정하는 변수
+    for(int i=0; i<10; i++){
+        for(int j=0; j<10; j++){
+            if(num1 == 20){
+                exitOuterLoop = true;		// 바깥쪽 루프도 빠져나가겟다
+                break;					// 안쪽 루프를 끝냄
+            }
+            num1++
+        }
+        if (exitOuterLoop == true) break;		// eOL이 TRUE라면 바깥쪽 루프를 끝냄
+    }
+    printf("%d\n", num1);		// 20
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+20
+```
+
+- `break`의 가장 큰 특징은 현재 루프만 끝낸다는 점이다. 따라서 중첩 루프의 안쪽 푸르에서 `break`를 사용하면 안쪽 루프만 끈탤 뿐 바깥쪽 루프는 계속 반복된다. 이처럼 중첩루프를 빠져나오려면 추가적인 코드가 더 필요한데 **`goto`를 사용하면 간단하게 빠져나올 수 있다.**
+
+```C
+#include <stdio.h>
+
+int main(){
+    int num1 = 0;
+    
+    for(int i=0; i<10; i++){
+        for(int j=0; j<10; j++){
+            if(num1==20) goto EXIT;
+            
+            num++;
+        }
+    }
+
+EXIT :			// 레이블 EXIT
+    printf("%d\n", num1);		//20
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+```
+
+- 변수 num1이 20이 되면 `goto`를 사용하여 레이블 EXIT로 즉시 이동한다. 따라서 안쪽과 바깥쪽 루프를 `break`로 끝낼 필요가 없다.
+- 이처럼 `goto`는 다중 루프를 빠져나올 때 유용하다. `for`문 뿐만 아니라, `while`, `do while`로 된 중첩 루프를 빠져 나올 수 도 있다.
+- **뿐만 아니라 에러처리코드를 한 곳에 모아놓고 `goto`를 사용하면 중복코드를 없앨 수 있고 코드의 의도를 명확히 전달할 수 있을것이다.**
+- **실무에서는 파일을 열어놓거나 메모리를 할당한 상태에서 에러가 발생하면 파일을 닫거나 메모리를 해제한 뒤 프로그램을 종료하는 패턴을 주로 사용한다.**
 
 # <<<<<알고리즘>>>>>
 
