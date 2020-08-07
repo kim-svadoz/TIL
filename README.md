@@ -1,6 +1,4 @@
-# KIM SUNG HYUN
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkim-svadoz%2Fhit-counter)](https://hits.seeyoufarm.com)
+# KIM SUNG HYUN:yum:
 
 > 매일 배운 것을 정리합니다.
 
@@ -131,6 +129,8 @@
 ### 3. [Video](./Embedded/Video.md)
 
 ### 4. [Embedded_Basic](./Embedded/Embedded_Basic.md)
+
+### 5. [Linux_Kernel](./Embedded/Linux_Kernel.md)
 
 ---
 
