@@ -778,7 +778,7 @@ $ git push origin master
    * 13d65b9 Complete test
    * fcdb5a7 (menu) test
    
-    ```
+   ```
 
 
 10. branch 삭제
@@ -809,7 +809,7 @@ $ git push origin master
 
 # Stash
 
-> 작업 내역을 임시 저장 할 수 있음
+> commit을 하지 않고 작업 내역을 임시 저장 할 수 있음
 
 ## 기본 명령어
 
@@ -823,7 +823,7 @@ $ git stash list
 stash@{0}: WIP on master : a8cde9 Init
 
 # 3. 임시 공간 내용 가져오기
-$ git stash pop
+$ git stash pop # ( git stash apply + git stash drop )
 ```
 
 ## 예시
