@@ -382,7 +382,7 @@ public Person(String name, String addr, int age){
 
 #### 3. static
 
-	##### 1. 변수
+##### 1. 변수
 
 *  static으로 선언한 변수는 인스턴스의 고유한 값을 저장하는 인스턴스 변수가 아니므로 인스턴스 변수로 선언할 수 없다.
 * static 멤버는 인스턴스의 소유가 아니므로 반드시 클래스명으로 접근해야 한다.

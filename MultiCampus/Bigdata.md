@@ -300,13 +300,13 @@
 
    
 
-![image-20200214104343107](images/image-20200214104343107.png)
+![image-20200214104343107](../../blogImg/image-20200214104343107.png)
 
 
 
 * 여기서 쓰고 파폭에서 http://hadoop04:50075로 확인가능
 
-![image-20200214104741331](images/image-20200214104741331.png)
+![image-20200214104741331](../../blogImg/image-20200214104741331.png)
 
 
 
@@ -541,11 +541,11 @@
 - hadoop의 hdfs는 외부에서 읽기 권한만 있고, 쓰기 권한은 없다.!
 - hdfs는 hadoop계정에서 하고 mapreduce는 다른계정에서 할 수 있도록 설정하기
 
-![image-20200224111256738](images/image-20200224111256738.png)
+![image-20200224111256738](../../blogImg/image-20200224111256738.png)
 
-![image-20200224111316090](images/image-20200224111316090.png)
+![image-20200224111316090](../../blogImg/image-20200224111316090.png)
 
-![image-20200224111330628](images/image-20200224111330628.png)
+![image-20200224111330628](../../blogImg/image-20200224111330628.png)
 
 
 
@@ -702,14 +702,14 @@ mapreduce의 기본동작은 분류와 집계하기. - 빈도수체크
 
 * 
 
-![image-20200309103624440](images/image-20200309103624440.png)
+![image-20200309103624440](../../blogImg/image-20200309103624440.png)
 
 * 컴바이너는 mini reducer
 * 합을 구하는 작업에서는 컴바이너쓴거랑 안쓴거랑 차이가 많이 난다. 아래는 컴바이너 쓴 것들. 기존에 비해서 데이터가 엄청 줄었음.
 
-![image-20200309114757083](images/image-20200309114757083.png)
+![image-20200309114757083](../../blogImg/image-20200309114757083.png)
 
-![image-20200309132004376](images/image-20200309132004376.png)
+![image-20200309132004376](../../blogImg/image-20200309132004376.png)
 
 #### - 컴바이너 클래스
 
@@ -780,9 +780,9 @@ where rownum <=3;
 
 * inputdata.txt 넣고 출력해보기
 
-![image-20200311094554513](images/image-20200311094554513.png)
+![image-20200311094554513](../../blogImg/image-20200311094554513.png)
 
-![image-20200311094736521](images/image-20200311094736521.png)
+![image-20200311094736521](../../blogImg/image-20200311094736521.png)
 
 * ```java
   package mapreduce.basic;
@@ -811,9 +811,9 @@ where rownum <=3;
   }
   ```
 
-  ![image-20200311101558368](images/image-20200311101558368.png)
+  ![image-20200311101558368](../../blogImg/image-20200311101558368.png)
 
-  ![image-20200311101612546](images/image-20200311101612546.png)
+  ![image-20200311101612546](../../blogImg/image-20200311101612546.png)
 
 => 전달되는 key 갯수만큼 reduce 메소드가 실행됨
 
@@ -847,15 +847,15 @@ sqoop import -connect jdbc:oracle:thin:@70.12.115.65:1521:xe -username shop -pas
 
 * apache.org - Flume
 
-![image-20200313101723218](images/image-20200313101723218.png)
+![image-20200313101723218](../../blogImg/image-20200313101723218.png)
 
 A Flume event is defined as a unit of data flow having a byte payload and an optional set of string attributes. A Flume agent is a (JVM) process that hosts the components through which events flow from an external source to the next destination (hop).
 
-![image-20200313102252354](images/image-20200313102252354.png)
+![image-20200313102252354](../../blogImg/image-20200313102252354.png)
 
 In order to flow the data across multiple agents or hops, the sink of the previous agent and source of the current hop need to be avro type with the sink pointing to the hostname (or IP address) and port of the source.
 
-![image-20200313102221682](images/image-20200313102221682.png)
+![image-20200313102221682](../../blogImg/image-20200313102221682.png)
 
 A very common scenario in log collection is a large number of log producing clients sending data to a few consumer agents that are attached to the storage subsystem. For example, logs collected from hundreds of web servers sent to a dozen of agents that write to HDFS cluster.
 
@@ -873,7 +873,7 @@ this can be achieved in Flume by configuring a number of first tier agents with 
 
 2. .bashrc에 설정 정보 등록하기
 
-   ![image-20200313104630971](images/image-20200313104630971.png)
+   ![image-20200313104630971](../../blogImg/image-20200313104630971.png)
 
    
 
@@ -889,7 +889,7 @@ this can be achieved in Flume by configuring a number of first tier agents with 
    cp flume-env.sh.template flume-env.sh
    ```
 
-   ​	![image-20200314172107599](images/image-20200314172107599.png)
+   ​	![image-20200314172107599](../../blogImg/image-20200314172107599.png)
 
 4. flume설정정보를 등록
 
@@ -900,9 +900,9 @@ this can be achieved in Flume by configuring a number of first tier agents with 
    cp flume-conf.properties.template console.properties
    ```
 
-   ![image-20200313114023215](images/image-20200313114023215.png)
+   ![image-20200313114023215](../../blogImg/image-20200313114023215.png)
 
-![image-20200313114046086](images/image-20200313114046086.png)
+![image-20200313114046086](../../blogImg/image-20200313114046086.png)
 
 #### [ Flume의 구성요소 ]
 
@@ -965,7 +965,7 @@ telnet localhost 44444
   cp ./conf/console.properties ./conf/myfolder.properties
   ```
 
-  ![image-20200313153959785](images/image-20200313153959785.png)
+  ![image-20200313153959785](../../blogImg/image-20200313153959785.png)
 
   ```hadoop
   [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/myfolder.properties -n myConsole
@@ -1004,7 +1004,7 @@ telnet localhost 44444
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs.properties ./conf/hdfs2.properties
 ```
 
-![image-20200314101643089](images/image-20200314101643089.png)
+![image-20200314101643089](../../blogImg/image-20200314101643089.png)
 
 * 하둡실행하기
 
@@ -1012,7 +1012,7 @@ telnet localhost 44444
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/hdfs2.properties -n myhdfs
 ```
 
-![image-20200314101916442](images/image-20200314101916442.png)
+![image-20200314101916442](../../blogImg/image-20200314101916442.png)
 
 
 
@@ -1022,7 +1022,7 @@ telnet localhost 44444
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ cp ./conf/hdfs2.properties ./conf/hdfs3.properties
 ```
 
-![image-20200314110500987](images/image-20200314110500987.png)
+![image-20200314110500987](../../blogImg/image-20200314110500987.png)
 
 * 하둡 실행하기
 
@@ -1030,7 +1030,7 @@ telnet localhost 44444
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/hdfs3.properties -n myhdfs
 ```
 
-![image-20200314110604955](images/image-20200314110604955.png)
+![image-20200314110604955](../../blogImg/image-20200314110604955.png)
 
 
 
@@ -1051,7 +1051,7 @@ telnet localhost 44444
    scp hdfs2.properties hadoop@hadoop03:/home/apache-flume-1.6.0-bin/conf
    ```
 
-   ![image-20200314112733683](images/image-20200314112733683.png)
+   ![image-20200314112733683](../../blogImg/image-20200314112733683.png)
 
 3. 톰캣 실행하기
 
@@ -1070,21 +1070,21 @@ telnet localhost 44444
 
 4. 서버 확인해보기
 
-   ![image-20200314113612393](images/image-20200314113612393.png)
+   ![image-20200314113612393](../../blogImg/image-20200314113612393.png)
 
 5. manager 권한 부여
 
-   ![image-20200314114909481](images/image-20200314114909481.png)
+   ![image-20200314114909481](../../blogImg/image-20200314114909481.png)
 
    - 127.0.0.1:8080/manager
 
-   ![image-20200314114941784](images/image-20200314114941784.png)
+   ![image-20200314114941784](../../blogImg/image-20200314114941784.png)
 
-![image-20200314115036796](images/image-20200314115036796.png)
+![image-20200314115036796](../../blogImg/image-20200314115036796.png)
 
 6. ip 제한 해제하기
 
-![image-20200314133139655](images/image-20200314133139655.png)
+![image-20200314133139655](../../blogImg/image-20200314133139655.png)
 
 7. sts에 bigdatashop - META-INF - context.xml 
 
@@ -1149,43 +1149,43 @@ telnet localhost 44444
 
 - 레드햇계열의 리눅스? 데드뭐뭐계열의 리눅스?
 
-![image-20200316094051032](images/image-20200316094051032.png)
+![image-20200316094051032](../../blogImg/image-20200316094051032.png)
 
 
 
 * C:\Program Files\MongoDB\Server\3.6\bin 를 windows path 등록
 
-![image-20200316100749570](images/image-20200316100749570.png)
+![image-20200316100749570](../../blogImg/image-20200316100749570.png)
 
-![image-20200316100937095](images/image-20200316100937095.png)
+![image-20200316100937095](../../blogImg/image-20200316100937095.png)
 
-![image-20200316101203991](images/image-20200316101203991.png)
+![image-20200316101203991](../../blogImg/image-20200316101203991.png)
 
 
 
 * 데이터가 저장될 폴더가 필요하다! iot에 bigdata에 mongodata라고 만들자~
 
-![image-20200316101757913](images/image-20200316101757913.png)
+![image-20200316101757913](../../blogImg/image-20200316101757913.png)
 
 * MongoDB Enter Prise로 서버 접속하기
 
-![image-20200316102057052](images/image-20200316102057052.png)
+![image-20200316102057052](../../blogImg/image-20200316102057052.png)
 
-![image-20200316102117540](images/image-20200316102117540.png)
+![image-20200316102117540](../../blogImg/image-20200316102117540.png)
 
 * 실행됐구나~ 확인~
 
-![image-20200316102440076](images/image-20200316102440076.png)
+![image-20200316102440076](../../blogImg/image-20200316102440076.png)
 
 * 웹에서 포트 접속해보기
 
-![image-20200316102819916](images/image-20200316102819916.png)
+![image-20200316102819916](../../blogImg/image-20200316102819916.png)
 
 * 데이터베이스를 만들고 그 안에서 작업하는 개념! ( ex. conn scott/tiger )
 
-![image-20200316103903971](images/image-20200316103903971.png)
+![image-20200316103903971](../../blogImg/image-20200316103903971.png)
 
-![image-20200316104142170](images/image-20200316104142170.png)
+![image-20200316104142170](../../blogImg/image-20200316104142170.png)
 
 ​	=> mydb에 아직 아무것도 안만들어 놨기 때문에 아무 것도 안 뜬다~
 
@@ -1201,7 +1201,7 @@ telnet localhost 44444
 
 * 
 
-![image-20200316104719054](images/image-20200316104719054.png)
+![image-20200316104719054](../../blogImg/image-20200316104719054.png)
 
 => 
 
@@ -1230,7 +1230,7 @@ telnet localhost 44444
   	=> 각각의 옵션을 설정해서 작업(JSON)
   ```
 
-  ![image-20200316111601657](images/image-20200316111601657.png)
+  ![image-20200316111601657](../../blogImg/image-20200316111601657.png)
 
 - 컬렉션이 capped속성인지 아닌지 확인하기
 
@@ -1238,7 +1238,7 @@ telnet localhost 44444
   db.컬렉션명.isCapped()
   ```
 
-  ![image-20200316113853049](images/image-20200316113853049.png)
+  ![image-20200316113853049](../../blogImg/image-20200316113853049.png)
 
   
 
@@ -1254,7 +1254,7 @@ telnet localhost 44444
   db.collections명.drop()
   ```
 
-![image-20200316112046357](images/image-20200316112046357.png)
+![image-20200316112046357](../../blogImg/image-20200316112046357.png)
 
 - 컬렉션명 변경 명령문
 
@@ -1262,7 +1262,7 @@ telnet localhost 44444
   db.컬렉션명.renameColletion("변경할 컬렉션명");
   ```
 
-![image-20200316112208484](images/image-20200316112208484.png)
+![image-20200316112208484](../../blogImg/image-20200316112208484.png)
 
 ​			<< 실습 >>
 
@@ -1294,27 +1294,27 @@ db.컬렉션명.inserMany({데이터...})
 
   < 현재 timestap + machine id + mongodb프로세스id + 순차번호(추가될 때마다 증가) >
 
-![image-20200316114604831](images/image-20200316114604831.png)
+![image-20200316114604831](../../blogImg/image-20200316114604831.png)
 
 ​	=> 스키마가 없기 때문에, 비정형 데이터를 넣기 적합하다~
 
 * 변수에다 저장해놓고 값을 넣어도 된다.
 
-![image-20200316131429973](images/image-20200316131429973.png)
+![image-20200316131429973](../../blogImg/image-20200316131429973.png)
 
 * 특정 값을 for문으로 설정 가능
 
-![image-20200316131910078](images/image-20200316131910078.png)
+![image-20200316131910078](../../blogImg/image-20200316131910078.png)
 
 * 배열은 [ ] 로 처리
 
-![image-20200316132344200](images/image-20200316132344200.png)
+![image-20200316132344200](../../blogImg/image-20200316132344200.png)
 
-![image-20200316132412257](images/image-20200316132412257.png)
+![image-20200316132412257](../../blogImg/image-20200316132412257.png)
 
 * 배열로 한꺼번에 처리할 수도 있다~
 
-![image-20200316132750098](images/image-20200316132750098.png)
+![image-20200316132750098](../../blogImg/image-20200316132750098.png)
 
 ​	=> 추가로 it을 누르면 더 볼 수 있어용~
 
@@ -1536,7 +1536,7 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
 
 - 변수처럼 사용할 수 있다.
 
-![image-20200317094957787](images/image-20200317094957787.png)
+![image-20200317094957787](../../blogImg/image-20200317094957787.png)
 
 - 전체 데이터의 갯수를 리턴
 
@@ -1544,7 +1544,7 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
   db.컬렉션명.find().count()
   ```
 
-![image-20200317095429357](images/image-20200317095429357.png)
+![image-20200317095429357](../../blogImg/image-20200317095429357.png)
 
 ​		<< 실습 1 >>
 
@@ -1876,11 +1876,11 @@ db.exam.aggregate([{$match:{java:{$gte:80}}}, {$group:{_id:"$dept", num:{$sum:1}
 
 #### 9. STS을 이용해서 WEB으로 MongoDB 데이터 확인하기 위한 설정
 
-![image-20200317163557473](images/image-20200317163557473.png)
+![image-20200317163557473](../../blogImg/image-20200317163557473.png)
 
-![image-20200317163431643](images/image-20200317163431643.png)
+![image-20200317163431643](../../blogImg/image-20200317163431643.png)
 
-![image-20200317163537044](images/image-20200317163537044.png)
+![image-20200317163537044](../../blogImg/image-20200317163537044.png)
 
 src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 
@@ -1888,9 +1888,9 @@ src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 <context:component-scan base-package="spring.data.mongodb" />
 ```
 
-![image-20200317171236685](images/image-20200317171236685.png)
+![image-20200317171236685](../../blogImg/image-20200317171236685.png)
 
-![image-20200317171204262](images/image-20200317171204262.png)
+![image-20200317171204262](../../blogImg/image-20200317171204262.png)
 
 ---
 
@@ -1907,17 +1907,17 @@ src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 
 - test.csv 를 C:iot 폴더에 복사 후 새 cmd창을 이용해 파일 export해보기
 
-![image-20200318092851061](images/image-20200318092851061.png)
+![image-20200318092851061](../../blogImg/image-20200318092851061.png)
 
-![image-20200318093017105](images/image-20200318093017105.png)
+![image-20200318093017105](../../blogImg/image-20200318093017105.png)
 
-![image-20200318093105969](images/image-20200318093105969.png)
+![image-20200318093105969](../../blogImg/image-20200318093105969.png)
 
 * test.csv를 C:\iot폴더에 복사 후 iot에 있는 파일 import해보기
 
-![image-20200318093950544](images/image-20200318093950544.png)
+![image-20200318093950544](../../blogImg/image-20200318093950544.png)
 
-![image-20200318094240835](images/image-20200318094240835.png)
+![image-20200318094240835](../../blogImg/image-20200318094240835.png)
 
 ​	-d : database
 
@@ -2027,17 +2027,17 @@ str<-c("java","hadoop","mongodb")
 
 ### 몽고디비에 크롤링한 데이터 집어넣기.
 
-![image-20200323094959287](images/image-20200323094959287.png)
+![image-20200323094959287](../../blogImg/image-20200323094959287.png)
 
-![image-20200323095042468](images/image-20200323095042468.png)
+![image-20200323095042468](../../blogImg/image-20200323095042468.png)
 
 - 몇만건의 데이터가 있을땐 csv파일보다 RData로 보는게 훨씬 빠르고 성능이 좋다.
 
-![image-20200323095448373](images/image-20200323095448373.png)
+![image-20200323095448373](../../blogImg/image-20200323095448373.png)
 
 - RData 불러오기
 
-![image-20200323100827510](images/image-20200323100827510.png)
+![image-20200323100827510](../../blogImg/image-20200323100827510.png)
 
 
 

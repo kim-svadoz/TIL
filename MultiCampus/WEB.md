@@ -155,7 +155,7 @@ WEB
 </html>
 ```
 
-![image-20191231161606592](images/image-20191231161606592.png)
+![image-20191231161606592](../../blogImg/image-20191231161606592.png)
 
 * ./은 현재경로 , ../은 상위경로
 * http://127.0.0.1:8088 을 생략해도 된다. => 자동으로 root로 인식
@@ -181,7 +181,7 @@ BYOWS (Bring Your Own Web Server).</p>
 </html>
 ```
 
-![image-20191231161651206](images/image-20191231161651206.png)
+![image-20191231161651206](../../blogImg/image-20191231161651206.png)
 
 #### list.html
 
@@ -222,7 +222,7 @@ BYOWS (Bring Your Own Web Server).</p>
 </html>
 ```
 
-![image-20191231172911167](images/image-20191231172911167.png)
+![image-20191231172911167](../../blogImg/image-20191231172911167.png)
 
 #### mypage.html
 
@@ -270,7 +270,7 @@ BYOWS (Bring Your Own Web Server).</p>
 
 
 
-![image-20200102093041773](images/image-20200102093041773.png)
+![image-20200102093041773](../../blogImg/image-20200102093041773.png)
 
 * 집에서 할 때 반드시 등록해줘야함(서버 더블클릭)
 
@@ -1466,7 +1466,7 @@ script 링크가 없으면 jQuery 실행 안된다.
   * 정해진 위치? : 표준화된 폴더 구조안에 있는 classes 폴더(서블릿 디렉토리)
     * C:\iot\setup\java\work\webwork\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps에서 찾는다.
 
-![image-20200114093838703](images/image-20200114093838703.png)
+![image-20200114093838703](../../blogImg/image-20200114093838703.png)
 
 #### 2. 서블릿 작성규칙
 
