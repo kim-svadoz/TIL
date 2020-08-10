@@ -17,7 +17,8 @@
 
 Model - Template(사용자가 보는 화면) - View(중간 관리자)
 
-![image-20200610100316308](images/image-20200610100316308.png)
+![image-20200610100316308](https://user-images.githubusercontent.com/58545240/89759699-b7ac0b80-db25-11ea-8b1a-d8a5d257dbdf.png)
+
 
 - **URLs:** 단일 함수를 통해 모든 URL 요청을 처리하는 것이 가능하지만, 분리된 뷰 함수를 작성하는 것이 각각의 리소스를 유지보수하기 훨씬 쉽습니다. URL mapper는 요청 URL을 기준으로 HTTP 요청을 적절한 view로 보내주기 위해 사용됩니다. 또한 URL mapper는 URL에 나타나는 특정한 문자열이나 숫자의 패턴을 일치시켜 데이터로서 뷰 함수에 전달할 수 있습니다.
 - **View:** view는 HTTP 요청을 수신하고 HTTP 응답을 반환하는 요청 처리 함수입니다. View는 Model을 통해 요청을 충족시키는 데 필요한 데이터에 접근합니다. 그리고 탬플릿에게 응답의 서식 설정을 맡깁니다.
@@ -69,11 +70,13 @@ python manage.py startapp pages(프로젝트 명)
 
 - setting.py에서 application 출생신고(?) 및 설정하기
 
-![image-202006091636286](images/image-20200609163627886.png)
+![image-20200609163627886](https://user-images.githubusercontent.com/58545240/89759735-ceeaf900-db25-11ea-891f-2ca3018b1ccd.png)
 
 
 
-![image-2020060916384929](images/image-20200609163824929.png)
+
+![image-20200609163824929](https://user-images.githubusercontent.com/58545240/89759748-d9a58e00-db25-11ea-9f2e-d6df5299fe91.png)
+
 
 - 다시 서버 시작해보기
 
@@ -82,7 +85,8 @@ cd intro/
 python manage.py runserver
 ```
 
-![image-20200609164007909](images/image-20200609164007909.png)
+![image-20200609164007909](https://user-images.githubusercontent.com/58545240/89759760-e1653280-db25-11ea-97a7-72c365189085.png)
+
 
 언어(한글) 및 시간(서울) 설정 완료!
 
@@ -92,37 +96,36 @@ python manage.py runserver
 
 - url. py : 경로설정
 
-![image-20200610094001890](images/image-20200610094001890.png)
+![image-20200610094001890](https://user-images.githubusercontent.com/58545240/89759781-ea560400-db25-11ea-88d0-7444cc6bf66c.png)
 
 - views.py : 함수설정
 
-![image-20200610094119658](images/image-20200610094119658.png)
+![image-20200610094119658](https://user-images.githubusercontent.com/58545240/89759799-f0e47b80-db25-11ea-82d5-dee5d1864be3.png)
 
 - templates 안에 html파일 생성
 
-![image-20200610094359900](images/image-20200610094359900.png)
+![image-20200610094359900](https://user-images.githubusercontent.com/58545240/89759830-00fc5b00-db26-11ea-87ec-39744b3fbbbd.png)
 
 `{{ }}` 안에 value 값을 넣어준다~
 
-![image-20200610094441250](images/image-20200610094441250.png)!!!
+![image-20200610094441250](https://user-images.githubusercontent.com/58545240/89759845-05c10f00-db26-11ea-8fed-0ae8e7d0a029.png)!!!
 
 - 이렇게 key값과 value형태인 dictionary로 사용가능하다!
 
-![image-20200610101459650](images/image-20200610101459650.png)
+![image-20200610101459650](https://user-images.githubusercontent.com/58545240/89759865-0f4a7700-db26-11ea-9f8b-44d90e07a773.png)
 
-![image-20200610101543298](images/image-20200610101543298.png)
+![image-20200610101543298](https://user-images.githubusercontent.com/58545240/89759875-14a7c180-db26-11ea-987b-91f3476f9d00.png)
 
 - **조금 더 깔끔하게 작성하기.**
 
-![image-20200610102608265](images/image-20200610102608265.png)
+![image-20200610102608265](https://user-images.githubusercontent.com/58545240/89759900-20938380-db26-11ea-8043-e2e5b3908ff5.png)
 
-![image-20200610102620796](images/image-20200610102620796.png)
-
+![image-20200610102620796](https://user-images.githubusercontent.com/58545240/89759918-28ebbe80-db26-11ea-81a0-655ce09a20b7.png)
 
 
 - url에서 입력을 받을 때 특정 문자/숫자만 요청할 수 있다.
 
-![image-20200610111540035](images/image-20200610111540035.png)
+![image-20200610111540035](https://user-images.githubusercontent.com/58545240/89759937-2f7a3600-db26-11ea-8dc4-e61d879046ea.png)
 
 Q1
 
@@ -145,7 +148,8 @@ def urlcopy(request, name, age):
 <h2>URL로 입력받은 이름 : {{name}}, 나이 : {{age}}</h2>
 ```
 
-![image-20200610112032946](images/image-20200610112032946.png)
+![image-20200610112032946](https://user-images.githubusercontent.com/58545240/89759966-3ef97f00-db26-11ea-8267-31b7cf0fbe8e.png)
+
 
 
 
@@ -173,7 +177,7 @@ URL로 받은 숫자1 : {{num1}} , 숫자2 : {{num2}}
 곱한 값 => {{result}}
 ```
 
-![image-20200610113316969](images/image-20200610113316969.png)
+![image-20200610113316969](https://user-images.githubusercontent.com/58545240/89759984-491b7d80-db26-11ea-9472-607cfcb4f922.png)
 
 
 
@@ -213,9 +217,7 @@ DTL의 주석은 개발자모드(F12) 에서도 보이지 않는다!
 {% endfor %}
 ```
 
-![image-20200610131929723](images/image-20200610131929723.png)
-
-
+![image-20200610131929723](https://user-images.githubusercontent.com/58545240/89759999-520c4f00-db26-11ea-9b94-154b4be8e7e5.png)
 
 
 
@@ -287,12 +289,9 @@ def dtl(request):
 <p>{% lorem 3 p %}</p>
 ```
 
-![image-20200610134054558](images/image-20200610134054558.png)
+![image-20200610134054558](https://user-images.githubusercontent.com/58545240/89760028-69e3d300-db26-11ea-886f-ae9c61f67aa5.png)
 
-![image-20200610142052635](images/image-20200610142052635.png)
-
-
-
+![image-20200610142052635](https://user-images.githubusercontent.com/58545240/89760032-6e0ff080-db26-11ea-9534-99455bfc9863.png)
 
 
 - advanced 조건문, 반복문
@@ -353,7 +352,7 @@ def forif(request):
 {% endif %}
 ```
 
-![image-20200610150956879](images/image-20200610150956879.png)
+![image-20200610150956879](https://user-images.githubusercontent.com/58545240/89760051-7831ef00-db26-11ea-9559-9803e6a2929d.png)
 
 ## Django form태그 사용
 
@@ -513,18 +512,17 @@ def lottoC(request):
 
 - base.html
 
-![image-20200613142000567](images/image-20200613142000567.png)
+![image-20200613142000567](https://user-images.githubusercontent.com/58545240/89760067-86800b00-db26-11ea-8ef5-76b2f6bfd46b.png)
 
 - setting.py
 
-![image-20200613142820935](images/image-20200613142820935.png)
+![image-20200613142820935](https://user-images.githubusercontent.com/58545240/89760088-926bcd00-db26-11ea-8289-bd8b5624808d.png)
 
 => **mysite에 있는 템플릿을 베이스로 사용하겠다!!**
 
 - 다른 app에 있는 html에서 베이스로 지정되있는 템플릿을 extends 하여 사용할 수 있다.
 
-![image-20200613142247147](images/image-20200613142247147.png)
-
+![image-20200613142247147](https://user-images.githubusercontent.com/58545240/89760101-9b5c9e80-db26-11ea-86df-bb6a18547620.png)
 
 
 ### static 설정
@@ -535,25 +533,23 @@ def lottoC(request):
 
   - setting.py
 
-  ![image-20200613153426971](images/image-20200613153426971.png)
+  ![image-20200613153426971](https://user-images.githubusercontent.com/58545240/89760116-a31c4300-db26-11ea-8554-5611364d3ef3.png)
 
   - html
 
-  ![image-20200613153350207](images/image-20200613153350207.png)
+  ![image-20200613153350207](https://user-images.githubusercontent.com/58545240/89760143-af080500-db26-11ea-8f1b-0d71d1769f39.png)
 
 ### 링크로 다른 앱 넘어가기
 
 - urls.py에 app_name을 설정해주고 해당 app_name을 통해 페이지를 연결
 
-![image-20200613161415674](images/image-20200613161415674.png)
+![image-20200613161415674](https://user-images.githubusercontent.com/58545240/89760153-b62f1300-db26-11ea-8a16-9307918a30a3.png)
 
 
-
-![image-20200613161435318](images/image-20200613161435318.png)
-
+![image-20200613161435318](https://user-images.githubusercontent.com/58545240/89760159-bb8c5d80-db26-11ea-8da7-72d9813ddf9a.png)
 
 
-![image-20200613161454569](images/image-20200613161454569.png)
+![image-20200613161454569](https://user-images.githubusercontent.com/58545240/89760170-c0511180-db26-11ea-936a-472a2df629a2.png)
 
 
 

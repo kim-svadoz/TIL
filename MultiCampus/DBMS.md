@@ -70,7 +70,7 @@
 
 
 
-![img](https://t1.daumcdn.net/cfile/tistory/256E4F42584AAFBB06)
+![img](../Embedded/images/256E4F42584AAFBB06)
 
 
 
