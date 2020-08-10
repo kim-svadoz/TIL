@@ -2353,7 +2353,265 @@ int main(){
 
 - 즉, 반복문에서 반복할 때마다 ap는 4바이트만큼 순방향으로 이동하므로 10, 20, 30, 40을 순서대로 가져올 수 있다.
 
+# [ 함수 포인터 배열 활용 ]
+
+---
+
+## 함수 포인터 배열 사용하기
+
+```C
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int add(int a, int b){
+    return a + b;
+}
+int sub(int a, int b){
+    return a - b;
+}
+int mul(int a, int b){
+    return a * b;
+}
+int div(int a, int b){
+    return a / b;
+}
+
+int main(){
+    int funcNumber;			// 함수 번호
+    int num1, num2;
+    int (*fp)(int, int) = NULL;			// int형 반환값, int형 매개변수 두 개가 있는 함수 포인터 선언
+    
+    printf("함수 번호와 계산할 값을 입력하세요: ");
+    scanf("%d %d %d", &funcNumber, &num1, &num2);		// 함수 번호와 계산할 값을 입력받음
+
+    switch(funcNumber){
+        case 0:
+            fp = add;
+            break;
+        case 1:
+            fp = sub;
+            break;
+        case 2:
+            fp = mul;
+            break;
+        case 3:
+            fp = div;
+            break;
+    }
+    printf("%d\n", fp(num1, num2));		// 함수 포인터를 사용하여 계산 결과 출력
+    return 0;
+}
+```
+
+소스 컴파일 후 0 10 20 을 누르고 엔터키를 누르면
+
+```bash
+# 실행 결과
+함수 번호와 계산할 값을 입력하세요: 0 10 20(입력)
+30
+```
+
+- 함수 포인터 배열은 함수 포인터를 선언할 때 함수 포인터 이름 뒤에 `[ ]대괄호` 안에 배열의 크기를 지정하면 된다.
+
+  `반환값자료형 (*함수포인터이름)[크기](매개변수자료형1, 매개변수자료형2);`
+
+- 요소의 개수가 4개이며 add함수를 담을 수 있는 함수 포인터 배열은 이렇게 만든다.
+
+```C
+int (*fp[4])(int, int);		// int형 반환값, int형 매개변수 두 개가 ㅏ있는 함수 포인터 배열 선언
+```
+
+```C
+#define _CRT_SECURE_NO_WARNINGS		// scanf 보안 경고로 인한 컴파일 에러 방지
+#include <stdio.h>
+#include <string.h>
+
+int add(int a, int b){
+    return a + b;
+}
+int sub(int a, int b){
+    return a - b;
+}
+int mul(int a, int b){
+    return a * b;
+}
+int div(int a, int b){
+    return a / b;
+}
+
+int main(){
+    int funcNumber;		// 함수 번호
+    int num1, num2;
+    int (*fp[4])(int, int);		// int형 반환값, int형 매개변수 두 개가 있는 함수 포인터 배열 선언
+    
+    fp[0] = add;		// 첫 번째 요소에 덧셈 함수의 메모리 주소 저장
+    fp[1] = sub;		// 두 번째 요소에 뺄셈 함수의 메모리 주소 저장
+    fp[2] = mul;		// 세 번째 요소에 곱셈 함수의 메모리 주소 저장
+    fp[3] = div;		// 네 번째 요소에 나눗셈 함수의 메모리 주소 저장
+    
+    printf("함수 번화와 계산할 값을 입력하세요: ");
+    scanf("%d %d %d", &funcNumber, &num1, &num2);	// 함수 번화와 계산할 값을 입력받음
+    
+    printf("%d\n", fp[funcNumber](num1, num2));		// 함수 포인터 배열을 인덱스로 접근하여 함수 호출
+    
+    return 0;    
+}
+```
+
+소스 컴파일 후 0 10 20을 입력하고 엔터키
+
+```bash
+# 실행 결과
+함수 번호와 계산할 값을 입력하세요: 0 10 20(입력)
+30
+```
+
+- 먼저 함수 포인터 이름 `fp`뒤에 대괄호를 붙이고 크기를 4로 지정하여 요소가 4개인 함수 포인터 배열을 선언함
+- 이제 `fp`는 배열이므로 인덱스로 접근이 가능하다. 여기서는 `add`, `sub`, `mul`, `div` 함수의 메모리 주소를 각 요소에 저장했다.
+- 따라서 인덱스를 사용하여 요소에 접근하고 호출할 수 있다.
+
+```C
+// 참고
+// 함수 포인터 배열을 선언과 동시에 초기화
+int (*fp[4])(int, int) = { add, sub, mul, div };		// 중괄호로 함수의 메모리 주소를 저장
+```
+
+## 함수 포인터를 구조체로 사용하기
+
+지금까지 구조체에는 일반 자료형으로 된 멤버를 넣었다. 하지만 함수 포인터도 포인터이므로 구조체 멤버로 넣을 수 있다.
+
+함수 포인터를 구조체 멤버로 사용하려면 구조체를 정의할 때 멤버로 지정해주면 된다.
+
+```C
+struct 구조체이름 {
+    반환값 자료형 (*함수포인터이름)(매개변수 자료형1, 매개변수 자료형2);
+}
+```
+
+```C
+#include <stdio.h>
+
+struct Calc{
+    int (*fp)(int, int);
+};
+int add(int a, int b){
+    return a + b;
+}
+
+int main(){
+    struct Calc c;
+    c.fp = add;		// add 함수의 메모리 주소를 구조체 c의 멤버에 저장
+    
+    printf("%d\n", c.fp(10, 20));		// 30: 구조체 멤버로 add함수 호출
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+30
+```
+
+- 구조체 변수를 선언한 뒤 `.(점)`으로 함수 포인터 멤버에 접근하여 add 함수의 메모리주소를 저장한다.
+
+  (만약 구조체 포인터에 메모리를 할당했다면 `c->fp=add`가 될것)
+
+- 이제 구조체 멤버 `fp`에 괄호를 붙여서 함수를 호출할 수 있다!
+
+```bash
+# 참고
+보통 C언어는 객체지향 문법을 지원하지 않는다고 알려져 있다. 하지만 C언어에서도 구조체와 함수 포인터를 활용하면 충분히 객체지향으로 프로그래밍을 할 수 있다. 다음은 리눅스 커널에서 함수 포인터로 객체지향을 구현한 코드이다.
+```
+
+```C
+struct block_device_operations{
+    int (*open) (struct block_device *, fmode_t);
+    void (*release) (struct gendist *, fmode_t);
+    int (*rw_page)(struct block_device *, sector_t, struct page *, int rw);
+    struct module *owner;
+    ...
+}
+```
+
+## 함수 포인터를 함수의 매개변수로 사용하기
+
+함수포인터를 매개변수와 함수의 반환값으로 사용해보겠다. 매개변수 부분에 함수 포인터를 넣어주면 된다.
+
+```C
+#include <stdio.h>
+
+int add(int a, int b){
+    return a + b;
+}
+void executer(int (*fp)(int, int)){		// 함수 포인터를 매개변수로 지정
+    printf("%d\n", fp(10, 20));		// 30: 매개변수로 함수 호출
+}
+
+int main(){
+    executer(add);		// executer를 호출할 때 add함수의 메모리 주소를 전달
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+30
+```
+
+- 함수를 정의할 때 매개변수 부분에 함수 포인터를 그대로 만들어주면 된다. 따라서 함수 포인터의 이름이 매개변수가 되므로 `fp(10, 20)`과 같이 매개변수로 함수를 호출하면 된다.
+- 함수의 메모리 주소를 전달할 때는 함수 이름만 적어주면 된다. `add()`처럼 괄호까지 붙이면 add함수가 호출이 되어 반환값이 executer로 전달되니 주의한다.
+
+```C
+// 다음과 같이 executer(add);를 풀어서 쓸 수도 있음
+int (*fp)(int, int);
+fp = add;
+executer(fp);		// executer를 호출할 때 함수 포인터를 전달
+```
+
+## 함수 포인터를 함수의 반환값으로 사용하기
+
+```C
+#include <stdio.h>
+
+int add(int a, int b){
+    return a + b;
+}
+
+int(*getAdd())(int, int){		// 함수 포인터를 반환값으로 지정
+    return add;				// add 함수의 메모리 주소를 반환
+}
+
+int main(){
+    printf("%d\n", getAdd()(10, 20));		// 30: getAdd를 호출한 뒤 반환값으로 add함수 호출
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+30
+```
+
+- 함수 포인터를 반환값으로 사용할 때는 먼저 `(*getAdd())`과 같이 `*(애스터리스크)`뒤에 함수 이름을 지정하고 괄호를 붙인다. 다시 이상태에서 괄호로 묶어준 뒤 맨앞에는 함수 ㅍ호인터의 반환값 자료형, 맨 뒤 괄호에는 함수 포인터의 매개변수 자료형을 지정한다. 함수 안에서는 `return` 키워드로 add함수의 메모리 주소를 반환한다.
+- **매개변수가 있는 함수에서 함수 포인터 반환하기**
+
+```C
+// getAdd 뒤의 괄호 안에 매개변수의 자료형과 매개변수 이름을 지정해준다.
+int (*getAdd(int x, int y))(int, int){		// 함수 포인터 반환, int형 매개변수 두 개
+    printf("%d %d\n", x, y);			// x, y는 getAdd 함수의 매개변수
+    return add;
+}
+
+int main(){
+    printf("%d\n", getAdd(8, 9)(10, 20));		// 8, 9는 getAdd에 전달
+    										// 10, 20은 getAdd에서 반환된 add에 전달
+    return 0;
+}
+```
+
 #  [ goto에 관해 ]
+
+---
 
 goto는 별다른 제약 조건 없이 원하는 부분으로 이동할 수 있기 때문에 초보 때는 goto를 남발하는 경우가 많다. 그러다 보니 처음에는 `goto`는 가급적 사용하지 말라고 한다. 하지만 `goto`를 적절히 활용하면 중복되는 코드를 없애고 코드를 좀 더 간결히 만들 수 있을 것이다. 특히 에러처리에 매우 유용하기 때문에 리눅스커널에서도 자주 쓰이며 `for`, `switch` 등 중첩 반복문에 많이 쓰이는 것을 알아두자.
 
