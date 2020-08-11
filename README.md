@@ -82,7 +82,7 @@
 | KAKAO04    | [Link](./알고리즘/실전코테/KAKAO_INTERN_04)    |           | 2020(상)_카카오인턴.04              |
 | KAKAO05    | [Link](./알고리즘/실전코테/KAKAO_INTERN_05)    |           | 2020(상)_카카오인턴.05              |
 
-
+### 1. [algorithm](./알고리즘/Theroy.md)
 
 ---
 
@@ -126,7 +126,7 @@
 
 ### 2. [SSD](./Embedded/SSD.md)
 
-### 3. [Video](./Embedded/Video.md)
+### 3. [Video, Audio](./Embedded/Video, Audio.md)
 
 ### 4. [Embedded_Basic](./Embedded/Embedded_Basic.md)
 
