@@ -615,7 +615,7 @@ $ python manage.py migrate articles
 - python manage.py makemigrations : DB에 설계도 대로 반영을 해라!! 
   - migrations폴더에 아래의 설계도가 생성된다.
 
-![image-20200615142700436](images/image-20200615142700436.png)
+![image-20200615142700436](../../blogImg/image-20200615142700436.png)
 
 - python manage.py migrate articles : 해당 aritcles 설계도 대로만 스키마 테이블 만들어달라!
 - **실제 DB에 반영되기 위해서는?!**
@@ -685,7 +685,7 @@ $ python manage.py shell
 ## 설정을 해줍시다~~
 ```
 
-![image-20200615152758808](images/image-20200615152758808.png)
+![image-20200615152758808](../../blogImg/image-20200615152758808.png)
 
 *스키마의 형태가 변경이 되면 migration을 해줘야 하지만 단지 데이터의 출력 형태가 변경되는 것은 쉘 창을 종료하고 다시 켜준다.*
 
@@ -818,7 +818,7 @@ $ python manage.py shell
 
 ## 관리자 페이지로 확인하기
 
-![image-20200615161910998](images/image-20200615161910998.png)
+![image-20200615161910998](../../blogImg/image-20200615161910998.png)
 
 ```python
 python manage.py runserver
@@ -826,7 +826,7 @@ python manage.py runserver
 
 - http://127.0.0.1:8000/admin
 
-![image-20200615162017084](images/image-20200615162017084.png)
+![image-20200615162017084](../../blogImg/image-20200615162017084.png)
 
 - 파이썬에는 슈퍼계정이 존재한다~
 
@@ -840,17 +840,17 @@ $ python manage.py createsuperuser
 
 - 이메일 생략하고 비밀번호 1q2w3e4r 설정 후 다시 http://127.0.0.1:8000/admin로 접속
 
-![image-20200615162500379](images/image-20200615162500379.png)
+![image-20200615162500379](../../blogImg/image-20200615162500379.png)
 
 
 
 - admin.py에서 커스터마이징하기!
 
-![image-20200615162943645](images/image-20200615162943645.png)
+![image-20200615162943645](../../blogImg/image-20200615162943645.png)
 
 
 
-![image-20200615162957932](images/image-20200615162957932.png)
+![image-20200615162957932](../../blogImg/image-20200615162957932.png)
 
 customizing된 admin페이지를 확인할 수 있다 :)
 
@@ -896,7 +896,7 @@ def index(request):
 {% endblock %}
 ```
 
-![image-20200616111039547](images/image-20200616111039547.png)
+![image-20200616111039547](../../blogImg/image-20200616111039547.png)
 
 ## new페이지에서 글 작성하기
 
@@ -1286,19 +1286,19 @@ $ {% load bootstrap4 %}
 
 - settings.py 에서 부트스트랩사용한다고 설정해주기
 
-![image-20200617170926574](images/image-20200617170926574.png)
+![image-20200617170926574](../../blogImg/image-20200617170926574.png)
 
 - form.html 도 부트스트랩4에 맞게 수정
 
-![image-20200617171216549](images/image-20200617171216549.png)
+![image-20200617171216549](../../blogImg/image-20200617171216549.png)
 
 - base.html 모두 바꿔주기
 
-![image-20200617171259506](images/image-20200617171259506.png)
+![image-20200617171259506](../../blogImg/image-20200617171259506.png)
 
 
 
-![image-20200617171422329](images/image-20200617171422329.png)
+![image-20200617171422329](../../blogImg/image-20200617171422329.png)
 
 **짜잔!!!**
 
@@ -1312,11 +1312,11 @@ $ {% load bootstrap4 %}
 
 # django_review
 
-![image-20200620140155502](images/image-20200620140155502.png)
+![image-20200620140155502](../../blogImg/image-20200620140155502.png)
 
 
 
-![image-20200620140916416](images/image-20200620140916416.png)
+![image-20200620140916416](../../blogImg/image-20200620140916416.png)
 
 원래는 html의 form태그에서 경로를 넣어줬는데 경로를 안넣어주면 내 현재 위치로 다시 보내주는 것.
 
@@ -1559,7 +1559,7 @@ def logout(request):
 </html>
 ```
 
-![image-20200623130701596](images/image-20200623130701596.png)
+![image-20200623130701596](../../blogImg/image-20200623130701596.png)
 
 user가 anonymous일때는 항상 false를 리턴.
 
@@ -1663,7 +1663,7 @@ from django.contrib.auth.decorators import login_required
 
 - articles app 에 있는 detail, index 제외한 모든 함수에 @login_required를 붙여준다...
 
-![image-20200623140626122](images/image-20200623140626122.png)
+![image-20200623140626122](../../blogImg/image-20200623140626122.png)
 
 => login이 안된상태에서 create버튼을 누르면 login페이지로 넘어간다.
 
@@ -1807,25 +1807,25 @@ def password(request):
 
 - user 모델을 외래키로 참조
 
-![image-20200624130814231](images/image-20200624130814231.png)
+![image-20200624130814231](../../blogImg/image-20200624130814231.png)
 
 - 해당 사용자만 수정/삭제가 가능하도록 하자
 
-![image-20200624130932120](images/image-20200624130932120.png)
+![image-20200624130932120](../../blogImg/image-20200624130932120.png)
 
 - 객체는 생성하지만 DB에는 반영하지 않겠다.
 
-![image-20200624131456721](images/image-20200624131456721.png)
+![image-20200624131456721](../../blogImg/image-20200624131456721.png)
 
-![image-20200624134036835](images/image-20200624134036835.png)
+![image-20200624134036835](../../blogImg/image-20200624134036835.png)
 
 - 필요없는 field가 나오지 않도록 해주자
 
-![image-20200624131018154](images/image-20200624131018154.png)
+![image-20200624131018154](../../blogImg/image-20200624131018154.png)
 
 - html도 변경해주자
 
-![image-20200624131119816](images/image-20200624131119816.png)
+![image-20200624131119816](../../blogImg/image-20200624131119816.png)
 
 
 
@@ -1902,27 +1902,27 @@ $ python manage.py migrate
 
 - views.py
 
-![image-20200624141816812](images/image-20200624141816812.png)
+![image-20200624141816812](../../blogImg/image-20200624141816812.png)
 
 - settings.py
 
-![image-20200624142952884](images/image-20200624142952884.png)
+![image-20200624142952884](../../blogImg/image-20200624142952884.png)
 
 - urls.py ( project )
 
-![image-20200624142716430](images/image-20200624142716430.png)
+![image-20200624142716430](../../blogImg/image-20200624142716430.png)
 
 - 아린
 
-![image-20200624143015990](images/image-20200624143015990.png)
+![image-20200624143015990](../../blogImg/image-20200624143015990.png)
 
 
 
 - 날짜별로 폴더 정리
 
-![image-20200624143251489](images/image-20200624143251489.png)
+![image-20200624143251489](../../blogImg/image-20200624143251489.png)
 
-![image-20200624143349944](images/image-20200624143349944.png)
+![image-20200624143349944](../../blogImg/image-20200624143349944.png)
 
 
 
@@ -1942,13 +1942,13 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import Thumbnail
 ```
 
-![image-20200624151337397](images/image-20200624151337397.png)
+![image-20200624151337397](../../blogImg/image-20200624151337397.png)
 
 
 
 - user가 저장한 사진 별로 이미지 관리를 하고 싶은 경우 models.py 
 
-![image-20200624151826256](images/image-20200624151826256.png)
+![image-20200624151826256](../../blogImg/image-20200624151826256.png)
 
 
 
@@ -2131,7 +2131,7 @@ In [12]: for reservation in doctor.reservation_set.all():
 
 - 위의 중개모델 말고도 조금 더 쉽게 가져올 수 있는 방법이 존재한다.(ManyToManyField)
 
-![image-20200625103231363](images/image-20200625103231363.png)
+![image-20200625103231363](../../blogImg/image-20200625103231363.png)
 
 ```shell
 # 환자 입장에서 의사 가져오기
@@ -2145,7 +2145,7 @@ In [10]: doctor.patient_set.all()
 Out[10]: <QuerySet [<Patient: 1번 환자 TOM>, <Patient: 2번 환자 KANG>]>
 ```
 
-![image-20200625103949825](images/image-20200625103949825.png)
+![image-20200625103949825](../../blogImg/image-20200625103949825.png)
 
 ```shell
 # 이제는 patient_set.all()로 가져올 수 없고 지정한 patients로만 가져올 수 있다.
@@ -2156,7 +2156,7 @@ Out[2]: <QuerySet [<Patient: 1번 환자 TOM>, <Patient: 2번 환자 KANG>]>
 
 = > **relate_name을 쓸거면 reservation 클래스가 필요없다.**
 
-![image-20200625104225288](images/image-20200625104225288.png)
+![image-20200625104225288](../../blogImg/image-20200625104225288.png)
 
 ```shell
 In [1]: doctor = Doctor.objects.create(name='KIM')
@@ -2178,7 +2178,7 @@ Out[5]: <QuerySet []>
 
 ## 게시글 좋아요 만들기
 
-![image-20200625111435406](images/image-20200625111435406.png)
+![image-20200625111435406](../../blogImg/image-20200625111435406.png)
 
 
 
@@ -2213,7 +2213,7 @@ def like(request, article_pk):
 - font awesome 사용하기
   - base.html에 Kit code를 붙여넣는다.
 
-![image-20200625130756735](images/image-20200625130756735.png)
+![image-20200625130756735](../../blogImg/image-20200625130756735.png)
 
 
 
@@ -2347,7 +2347,7 @@ from .forms import CustomUserCreationForm
 
 UserCreationForm.Meta를 써주면 기존에 있는 Meta를 쓰기때문에 필드를 생략해도 된다.
 
-![image-20200625154026206](images/image-20200625154026206.png)
+![image-20200625154026206](../../blogImg/image-20200625154026206.png)
 
 
 
@@ -2486,7 +2486,7 @@ def index(request):  #index 부분을 수정한다.(paging 추가)
 
 아이디 2개를 만들어 주소로 내 아이디 말고 다른 사람 아이디를 들어가보면
 
-[![image](images/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)](https://user-images.githubusercontent.com/22831002/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)
+[![image](../../blogImg/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)](https://user-images.githubusercontent.com/22831002/85811879-2ada0800-b79a-11ea-9c99-8b654ea9ddf0.png)
 
 
 
