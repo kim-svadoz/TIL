@@ -44,7 +44,7 @@
 
 ## 20-03-25 수
 
-![image-20200325093709847](../../blogImg/image-20200325093709847.png)
+![image-20200325093709847](https://user-images.githubusercontent.com/58545240/89848380-1b374700-dbc1-11ea-8a83-9136997d3046.png)
 
 - LinearLayout
 
@@ -104,13 +104,13 @@
 
 > view를 배치하는 것에 제약사항이 있는것
 
-![image-20200325135249620](../../blogImg/image-20200325135249620.png)
+![image-20200325135249620](https://user-images.githubusercontent.com/58545240/89848382-1bcfdd80-dbc1-11ea-8b1d-9710bb9528f7.png)
 
 
 
 ### activity
 
-![image-20200325145224853](../../blogImg/image-20200325145224853.png)
+![image-20200325145224853](https://user-images.githubusercontent.com/58545240/89848383-1bcfdd80-dbc1-11ea-858c-58e1c6177da7.png)
 
 
 
@@ -118,7 +118,7 @@
 
 - 추가로 액티비티를 사용하기 위해서는 Manifest에 등록해줘야 한다.
 
-![image-20200325164932889](../../blogImg/image-20200325164932889.png)
+![image-20200325164932889](https://user-images.githubusercontent.com/58545240/89848384-1c687400-dbc1-11ea-91d4-f5994303cdfc.png)
 
 ---
 
@@ -132,9 +132,9 @@
 - 따라서 권장하지않아요~
 - 다만 예전에 만든 레이아웃이 '상대'인것이 많기 때문에 알야둬야 한다.
 
-![image-20200326094445746](../../blogImg/image-20200326094445746.png)
+![image-20200326094445746](https://user-images.githubusercontent.com/58545240/89848385-1d010a80-dbc1-11ea-854e-e004edbc9117.png)
 
-![image-20200326101856398](../../blogImg/image-20200326101856398.png)
+![image-20200326101856398](https://user-images.githubusercontent.com/58545240/89848390-1d99a100-dbc1-11ea-9e57-1587490efe1d.png)
 
 - View : 맨 마지막에 만들어진게 가장 위에 올라온다.
 - 모든것들은 제약레이아웃에도 동일하게 적용된다.
@@ -146,7 +146,7 @@
 
 > linear layout보다 weight를 주기가 편리하다~ 
 
-![image-20200326101823861](../../blogImg/image-20200326101823861.png)
+![image-20200326101823861](https://user-images.githubusercontent.com/58545240/89848387-1d010a80-dbc1-11ea-8c3d-dd63ef993911.png)
 
 - stretchColumns : 가로방향으로 여유 공간이 있다면 그 여유공간까지 모두 채워서 칼럼을 설정
 - 결국은 리니어를 가장 많이 써요~
@@ -181,7 +181,7 @@
 
 ### 익명이너클래스
 
-![image-20200327104157675](../../blogImg/image-20200327104157675.png)
+![image-20200327104157675](https://user-images.githubusercontent.com/58545240/89848398-1f636480-dbc1-11ea-9f62-274589913ae3.png)
 
 ---
 
@@ -190,21 +190,21 @@
 - drawble_test
 - drawble_img_커스터마이징하기
 
-![image-20200327093651183](../../blogImg/image-20200327093651183.png)
+![image-20200327093651183](https://user-images.githubusercontent.com/58545240/89848391-1d99a100-dbc1-11ea-9d9a-8d4442d2f8cf.png)
 
 ### TextTestActivity
 
 - AppCompat : OS에 맞게 화면으루 맞춰주겟다.
 
-![image-20200327101415350](../../blogImg/image-20200327101415350.png)
+![image-20200327101415350](https://user-images.githubusercontent.com/58545240/89848394-1e323780-dbc1-11ea-83e9-d5338488020d.png)
 
 #### - 리소스의 외부화
 
-- ![image-20200327102415008](../../blogImg/image-20200327102415008.png)
+- ![image-20200327102415008](https://user-images.githubusercontent.com/58545240/89848397-1ecace00-dbc1-11ea-8a76-52e4de7e9039.png)
 
-![image-20200327101810429](../../blogImg/image-20200327101810429.png)
+![image-20200327101810429](https://user-images.githubusercontent.com/58545240/89848395-1e323780-dbc1-11ea-8c35-32ea984467a9.png)
 
-![image-20200327101830111](../../blogImg/image-20200327101830111.png)
+![image-20200327101830111](https://user-images.githubusercontent.com/58545240/89848396-1ecace00-dbc1-11ea-9e20-d043ffcffb02.png)
 
 
 

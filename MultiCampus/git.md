@@ -295,7 +295,7 @@ $ git commit --amend
    1 file changed, 35 insertions(+)
   ```
 
-![image-20200423105204434](../../blogImg/image-20200423105204434.png)
+![image-20200423105204434](https://user-images.githubusercontent.com/58545240/89848399-1ffbfb00-dbc1-11ea-9f98-3305dcf3cebd.png)
 
 #### 4-1 특정 파일을 빼놓고 커밋 했을 때
 
@@ -363,7 +363,7 @@ Untracked files:
 
 - http://gitignore.io/ 를 활용
 
-  ![image-20200423114021833](../../blogImg/image-20200423114021833.png)
+  ![image-20200423114021833](https://user-images.githubusercontent.com/58545240/89848400-1ffbfb00-dbc1-11ea-84c3-351e7e7eed49.png)
 
 1. 사용하는 시스템 환경을 추가
 2. `.gitignore`에서 해당 파일들이 추가되었기 때문에 추후에 버전관리가 이루어지지 않음
@@ -430,7 +430,7 @@ $ git push origin master
   - [Resume](https://startbootstrap.com/themes/resume/)
   - [VisualStudioCode](https://code.visualstudio.com/)
 
-![image-20200423152922755](../../blogImg/image-20200423152922755.png)
+![image-20200423152922755](https://user-images.githubusercontent.com/58545240/89848401-20949180-dbc1-11ea-9ff2-8738e64d8fe6.png)
 
 1. 이름 변경
 2. 아이콘 등등 변경
@@ -793,7 +793,7 @@ $ git push origin master
 
 ## Git Flow
 
-![Git Flow model](../../blogImg/git-model@2x.png)
+![git-model@2x](https://user-images.githubusercontent.com/58545240/89848510-373ae880-dbc1-11ea-86ef-ad5312459e35.png)
 
 1. github( master 끼리 )
 2. github( branch + Pull Request)
