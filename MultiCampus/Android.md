@@ -1,4 +1,4 @@
-# 안드로이드
+# ![image-20200410134844549](https://user-images.githubusercontent.com/58545240/89968009-c8779100-dc8d-11ea-8241-9d10c52eb880.png)안드로이드
 
 ## 20-03-24 화
 
@@ -903,11 +903,11 @@ public class ReturnDataSecondActivity extends AppCompatActivity {
   }
   ```
 
-  ![image-20200408171048771](images/image-20200408171048771.png)
+  ![image-20200408171048771](https://user-images.githubusercontent.com/58545240/89967583-d2e55b00-dc8c-11ea-950b-55d9eb52e0d3.png)
 
-![image-20200408171520363](images/image-20200408171520363.png)
+![image-20200408171520363](https://user-images.githubusercontent.com/58545240/89967595-dc6ec300-dc8c-11ea-9ca3-1b3b6502d45c.png)
 
-![image-20200408171617040](images/image-20200408171617040.png)
+![image-20200408171617040](https://user-images.githubusercontent.com/58545240/89967610-e4c6fe00-dc8c-11ea-91c8-cdc0a77b0193.png)
 
 
 
@@ -1042,20 +1042,20 @@ public class RuntimePermissionTest extends AppCompatActivity {
 
 ### FileSystem
 
-![image-20200410134349447](images/image-20200410134349447.png)
+![image-20200410134349447](https://user-images.githubusercontent.com/58545240/89967947-9ebe6a00-dc8d-11ea-90e8-2e68c6265f67.png)
 
 -  앱별로 내부저장소가 패키지별로 따로 관리가 되고 있고, 아무도 접근하지 못하는 공간.
 - 패키지가 지워지면 자동으로 지워진다~
 
-![image-20200410134638076](images/image-20200410134638076.png)
+![image-20200410134638076](https://user-images.githubusercontent.com/58545240/89967970-abdb5900-dc8d-11ea-9a35-2d3cc2dd5a83.png)
 
 - 외부저장소인데 패키지 이름과 똑같이만들면 삭제될 때 같이 저장된다.
 
-![image-20200410134731960](images/image-20200410134731960.png)
+![image-20200410134731960](https://user-images.githubusercontent.com/58545240/89967995-bbf33880-dc8d-11ea-9d4c-9c95b9d13c0c.png)
 
 - 똑같이 외부저장소
 
-![image-20200410134844549](images/image-20200410134844549.png)
+![image-20200410134844549](https://user-images.githubusercontent.com/58545240/89968009-c8779100-dc8d-11ea-8241-9d10c52eb880.png)
 
 - 똑같이 외부저장소
 
@@ -1118,7 +1118,7 @@ String dirPath = external.getAbsolutePath();
 
   - READ / WRITE에 대한 퍼미션을 모두 한 꺼번에 처리되도록 구현하세요.
 
-![image-20200410161644662](images/image-20200410161644662.png)
+![image-20200410161644662](https://user-images.githubusercontent.com/58545240/89968037-d75e4380-dc8d-11ea-996c-1fd9413204eb.png)
 
 
 
@@ -1128,7 +1128,7 @@ String dirPath = external.getAbsolutePath();
 
 https://sqlite.browser.org
 
-![image-20200411113848472](images/image-20200411113848472.png)
+![image-20200411113848472](../../blogImg/image-20200411113848472.png)
 
 ### 안드로이드에서 데이터 저장하기
 
@@ -1154,9 +1154,9 @@ https://console.developers.google.com/
 
 ### Map
 
-![image-20200413093913231](images/image-20200413093913231.png)
+![image-20200413093913231](https://user-images.githubusercontent.com/58545240/89968418-bba76d00-dc8e-11ea-8baf-4157c7d52c6a.png)
 
-![image-20200413100822114](images/image-20200413100822114.png)
+![image-20200413100822114](https://user-images.githubusercontent.com/58545240/89968443-ca8e1f80-dc8e-11ea-9934-e6bc7f968d74.png)
 
 - dependencies에 필요한 라이브러리를 등록
 
@@ -1167,7 +1167,7 @@ https://console.developers.google.com/
 
 - layout에 fragment 추가
 
-![image-20200413101505717](images/image-20200413101505717.png)
+![image-20200413101505717](https://user-images.githubusercontent.com/58545240/89968482-da0d6880-dc8e-11ea-9122-a6a76907934f.png)
 
 - Manifest에 인터넷 설정과 메타데이터 추가하기.
 
@@ -1179,7 +1179,7 @@ https://console.developers.google.com/
       android:value="AIzaSyBjNJtdvT1BE8rvmb5WTOnZgIdk7rPTmmE"/> - 발급받은 API-Key
   ```
 
-  ![image-20200413103538137](images/image-20200413103538137.png)
+  ![image-20200413103538137](https://user-images.githubusercontent.com/58545240/89968498-e72a5780-dc8e-11ea-99ab-771b72f64673.png)
 
 ### Location
 
@@ -1213,17 +1213,17 @@ https://console.developers.google.com/
 
 #### - lifecycle
 
-![image-20200414104812005](images/image-20200414104812005.png)
+![image-20200414104812005](https://user-images.githubusercontent.com/58545240/89968698-7899c980-dc8f-11ea-825d-f2f104508be4.png)
 
 => lifecycle 확인을 위해 오버라이딩 해야 하는 메소드. ( + onDestroy() )
 
-![image-20200414112301938](images/image-20200414112301938.png)
+![image-20200414112301938](https://user-images.githubusercontent.com/58545240/89968724-88b1a900-dc8f-11ea-9d63-6dff9c004b88.png)
 
 
 
 - addTobackStack 사용할 때의 lifecycle
 
-![image-20200414114135621](images/image-20200414114135621.png)
+![image-20200414114135621](https://user-images.githubusercontent.com/58545240/89968746-9e26d300-dc8f-11ea-9fb0-ed130deff878.png)
 
 
 
@@ -1483,7 +1483,7 @@ public class FragmentExam01 extends AppCompatActivity {
 
 > navigation view, recycler view, 
 
-![image-20200417093205107](images/image-20200417093205107.png)
+![image-20200417093205107](https://user-images.githubusercontent.com/58545240/89969125-9582cc80-dc90-11ea-8d41-0545141df1de.png)
 
 - design 이용할 때는 프로젝트 새로만들었으니 library를 추가해주어야 한다.
 
