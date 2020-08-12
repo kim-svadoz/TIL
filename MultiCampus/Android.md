@@ -1623,7 +1623,7 @@ public class SimpleItemAdapter
 
   => 따라서 내부에서 자동으로 전달될 수 있도록 작업해야한다.(ver.2로 바뀌면서 적용된 내용)
 
-0. FragmentManager를 이용해서 SupportMapFRagment를 find
+0. FragmentManager를 이용해서 SupportMapFragment를 find
 1. OnMapReadyCallback을 구현하고 onMapReady메소드를 오버라이딩
 2. SupportMapFragment객체에 getMapAsync메소드를 이용해서 1번에서 구현한 onMapReadyCallback 객체를 연결
 3. 맵이 준비되었을 때 자동으로 onMapReady메소드가 호출되면서 매개변수로 구글맵이 전달된다.
@@ -2182,11 +2182,11 @@ public class HandlerExam2 extends AppCompatActivity {
 
    - AsyncTask의 execute메소드를 호출
 
-![image-20200422104403524](images/image-20200422104403524.png)
+![image-20200422104403524](https://user-images.githubusercontent.com/58545240/89978447-7f810600-dca8-11ea-8049-c26659dc3287.png)
 
-![image-20200422105740606](images/image-20200422105740606.png)
+![image-20200422105740606](https://user-images.githubusercontent.com/58545240/89978490-97f12080-dca8-11ea-96f9-50aae1c5c325.png)
 
-![image-20200422111447655](images/image-20200422111447655.png)
+![image-20200422111447655](https://user-images.githubusercontent.com/58545240/89978506-a2abb580-dca8-11ea-892f-78eb8db9660c.png)
 
 #### 3. RunOnUiThread
 

@@ -16,7 +16,7 @@
 
 그래서 코덱이 뭐냐? -> 카메라로 촬영한 영상 데이터를 압축을 하고 또 압축을 푸는 과정
 
-![image-20200716154423362](../../work/images/image-20200716154423362.png)
+![image-20200716154423362](https://user-images.githubusercontent.com/58545240/89979900-b9074080-dcab-11ea-97e1-2c53dbc417ce.png)
 
 ## MPEG-1
 
@@ -140,13 +140,13 @@ AAC는 최대 48채널까지도 부호화가 가능하고, 표본화 주파수�
 
 MJPEG는 이미지 압축방식이다.
 
-![image-20200717100525005](../../work/images/image-20200717100525005.png)
+![image-20200717100525005](https://user-images.githubusercontent.com/58545240/89979921-c4f30280-dcab-11ea-958e-8d06a968160e.png)
 
 ## 2. H.264
 
 H.264는 비디오 압축 방식이다.
 
-![image-20200717100558667](../../work/images/image-20200717100558667.png)
+![image-20200717100558667](https://user-images.githubusercontent.com/58545240/89979934-ce7c6a80-dcab-11ea-9c18-0bb796acfbd0.png)
 
 ## 차이점
 
@@ -159,11 +159,11 @@ MJPEG의 경우 처음부터 끝까지 자동차와 배경을 꾸준히 담아�
   - 비디오를 구성하는 프레임간 차이 데이터만 압축하는 방식을 사용하고 있다. 차이만 압축을 하므로 압축되는 데이터 크기가 이미지 압축방식보다 작다. (배경이미지를 저장하지 않아 데이터 감소를 기대할 수 있다.)
   - 프레임 간 연계성을 가지고 있어 프레임 손실이 있는 경우, 연계가 있는 프레임들은 재생을 할 수 없는 단점이 있다.
 
-![image-20200717100951900](../../work/images/image-20200717100951900.png)
+![image-20200717100951900](https://user-images.githubusercontent.com/58545240/89979962-d3d9b500-dcab-11ea-8543-165c4d4274d7.png)
 
-![image-20200717101016515](../../work/images/image-20200717101016515.png)
+![image-20200717101016515](https://user-images.githubusercontent.com/58545240/89979972-db995980-dcab-11ea-8104-1d11fafcfe93.png)
 
-![image-20200717101028037](../../work/images/image-20200717101028037.png)
+![image-20200717101028037](https://user-images.githubusercontent.com/58545240/89979981-e2c06780-dcab-11ea-9c47-eec5d386a674.png)
 
 # 화질
 
@@ -195,7 +195,7 @@ MJPEG의 경우 처음부터 끝까지 자동차와 배경을 꾸준히 담아�
 
 즉, 화소가 높다는 것은 이미지를 구성함에 있어 더 많은 픽셀로 표현한 것이다.
 
-![image-20200717101311562](../../work/images/image-20200717101311562.png)
+![image-20200717101311562](https://user-images.githubusercontent.com/58545240/89980156-4a76b280-dcac-11ea-88f4-fa1c37c5eb6b.png)
 
 => 왼쪽 이미지는 선명하게 보이는 반면 오른쪽 이미지는 흐릿
 
@@ -203,7 +203,7 @@ MJPEG의 경우 처음부터 끝까지 자동차와 배경을 꾸준히 담아�
 
 ## 해상도 규격
 
-![image-20200717101748973](../../work/images/image-20200717101748973.png)
+![image-20200717101748973](https://user-images.githubusercontent.com/58545240/89980174-53678400-dcac-11ea-938e-2f8ef896cde8.png)
 
 | 구분        | 해상도        | 픽셀 수    | 포맷      |
 | ----------- | ------------- | ---------- | --------- |
@@ -238,7 +238,7 @@ PPI는 1인치당 표현되어 있는 픽셀의 개수를 의미한다. 화면�
 [대각선픽셀] / [화면인치](대각선 길이) : `PPI`
 ```
 
-![image-20200717103219092](../../work/images/image-20200717103219092.png)
+![image-20200717103219092](https://user-images.githubusercontent.com/58545240/89980185-595d6500-dcac-11ea-9b34-7ad611a0ecb0.png)
 
 ## 인터레이스, 프로그레시브
 
@@ -250,13 +250,13 @@ TV광고나 카메라 광고를 보면 '1080p', '1080i'라고 써있는 것을 �
 
 인터레이스 방식은 하나의 프레임에 수평 주사선을 1개 간격으로  뛰어 넘어 주사하는 방식이다. 홀수열과 짝수열을 주사한 것을 필드라고 불리며, 두 필드를 합쳐 하나의 완전한 영상을 만들어 완전한 하나의 프레임이 구성된다.
 
-![image-20200717103548829](../../work/images/image-20200717103548829.png)
+![image-20200717103548829](https://user-images.githubusercontent.com/58545240/89980200-5febdc80-dcac-11ea-94d0-47ca760e1a1d.png)
 
 ### 2. 프로그레시브(Progressive)
 
 프로그레시브 스캔의 경우 아래 그림과 같이 완전한 한 장의 프레임 하나 하나를 연속적으로 보여주기 때문에 고화질 화면을 감상할 때 유리하다.
 
-![image-20200717103704333](../../work/images/image-20200717103704333.png)
+![image-20200717103704333](https://user-images.githubusercontent.com/58545240/89980209-65492700-dcac-11ea-9cb5-66fc716353d1.png)
 
 프로그레시브 방식은 한 장의 프레임 하나하나를 연속적으로 보여 주기 때문에 화면이 흔들리거나 `Flicker`(깜빡임 현상)가 발생한다. 이러한 프로그레시브 스캔의 단점을 보완할 수 있는 방식이 인터레이스이다.
 
@@ -280,7 +280,7 @@ ACOLADE의 Channel이라는 class에서 있는 모델들은 이러한 매질특�
 
 가장 일반적인 형태의 채널이며, 전 주파수 대역에서 고르게 잡음이 발생하는 채널이다. 특별한 주변요소 없이 자연상태 그대로의 랜덤한 잡음이다.
 
-![image-20200717110352458](../../work/images/image-20200717110352458.png)
+![image-20200717110352458](https://user-images.githubusercontent.com/58545240/89980225-6da16200-dcac-11ea-91b8-f460eb4827c6.png)
 
 ## 페이딩
 
@@ -314,11 +314,11 @@ y = hx + n
 
 여기서 x는 송신신호 , h는 채널, n은 가산잡음 그리고 y는 수신 신호이다. 이 경우에 채널의 특성을 나타내는 신호대 잡음비는 다음과 같다.
 
-![image-20200717110916843](../../work/images/image-20200717110916843.png)
+![image-20200717110916843](https://user-images.githubusercontent.com/58545240/89980235-742fd980-dcac-11ea-8f8a-ece50b4ace83.png)
 
 여기서 Px는 송신 신호인 x의 평균 크기이며 No는 가산 잡음인 n의 스펙트럴 덴시티이다. 이 채널의 최대 용량 (capacity)를 구해보면 다음과 같다.
 
-![image-20200717111027739](../../work/images/image-20200717111027739.png)
+![image-20200717111027739](https://user-images.githubusercontent.com/58545240/89980244-785bf700-dcac-11ea-935c-7e580fa77b23.png)
 
 여기서 C의 단위는 BPS/Hz이다. 오류없이 보낼 수 있는 최대 데이터 전송률은 최대 용량인 C보다 작다는 것을 의미한다.
 
@@ -415,11 +415,11 @@ y = hx + n
 
 이것 때문에 우리가 정한 `Sampling Rate` 이상의 소리는 아예 차단해버리는 `Anti-Aliasing Filter`를 만들어야 한다. 그러나 우리가 생각하는 것처럼 이상적인 필터(Brick Wall Filter)는 만들기가 힘이 든다.
 
-![image-20200811134657471](images/image-20200811134657471.png)
+![image-20200811134657471](https://user-images.githubusercontent.com/58545240/89980418-cffa6280-dcac-11ea-8935-55cab9e7d9fc.png)
 
 그래서 천천히 줄어드는 필터를 만들게 되고 그 필터의 특성상 22 0.5Hz까지 뻗어나가게 되기 때문에**`44.1kHz`**라는 `Sampling-Rate`이 CD에 채택된 것이다.
 
-![image-20200811134803164](images/image-20200811134803164.png)
+![image-20200811134803164](https://user-images.githubusercontent.com/58545240/89980435-d688da00-dcac-11ea-8177-f8034a98e879.png)
 
 ## 44.1kHz, 충분한가?
 
