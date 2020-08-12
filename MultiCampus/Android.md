@@ -1,4 +1,4 @@
-# ![image-20200410134844549](https://user-images.githubusercontent.com/58545240/89968009-c8779100-dc8d-11ea-8241-9d10c52eb880.png)안드로이드
+# 안드로이드
 
 ## 20-03-24 화
 
@@ -1128,7 +1128,7 @@ String dirPath = external.getAbsolutePath();
 
 https://sqlite.browser.org
 
-![image-20200411113848472](../../blogImg/image-20200411113848472.png)
+![image-20200411113848472](https://user-images.githubusercontent.com/58545240/89973301-fadbbb00-dc9a-11ea-9171-c427f81fcb32.png)
 
 ### 안드로이드에서 데이터 저장하기
 
