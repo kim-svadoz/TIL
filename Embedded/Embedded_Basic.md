@@ -253,7 +253,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 **2. I2C는 무엇이냐?**
 
-![image-20200716151853623](../../work/images/image-20200716151853623.png)
+![image-20200716151853623](https://user-images.githubusercontent.com/58545240/90083792-79ddfb80-dd4e-11ea-9229-c178e9d4867f.png)
 
 - I2C(Inter-Intergrated Circuit, 또는 TWI - Two Wire Interface)는 복수 개의 슬레이브 장치가 복수개의 마스터 장치와 통신하기 위한 프로토콜이다. SPI와 마찬가지로 하나의 완성품을 구성하는 요소들 간의 근거리 통신을 위해 고안되었음.
 - 비동기식 시리얼통신(이하 UART)은 클럭을 맞춰줘야 하고 데이터 라인으로 들어오는 신호를 항상 주시해야 하기 때문에 오버헤드가 있으며 하드웨어가 복잡해지는 단점이 있다. 결정적으로 UART통신은 1:1통신만 가능하다.
@@ -391,7 +391,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 ​	**안정화 구간**
 
-​	![image-20200720105534228](../../work/images/image-20200720105534228.png)
+![image-20200720105534228](https://user-images.githubusercontent.com/58545240/90083872-a98d0380-dd4e-11ea-9bc0-4682da199b65.png)
 
 ​	=> I2C 프로토콜에서 SCL이 '0'인 구간에서는 SDA의 상태 변화가 허용되지만 SCL이 '1'인 구간에서는 SDA는 안정된 논리 상태를 유지해야 한다. Master가 	Slave로 데이터를 출력할 때 SCL이 '0'인 구간에서 SDA의 비트 전환을 하며 SCL이 '1'인 구간에서는 SDA의 상태를 그대로 유지한다. 그래서 SCL이 '1'인 	구간은 데이터가 안정한 구간.
 
@@ -399,7 +399,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 ## 예약된 주소
 
-![image-20200728150822309](../../work/images/image-20200728150822309.png)
+![image-20200728150822309](https://user-images.githubusercontent.com/58545240/90083886-b3af0200-dd4e-11ea-8938-7945e5e4583c.png)
 
 위의 Slave address는 I2C에서 예약된 주소이다. 만약 Slave에서 7bit address를 설정할 수 있는 경우 예약된 주소는 피해야 한다. 특히 하드웨어로 주소를 설정하는 경우 하드웨어 디버깅이 불가피하게필요할 수 있다.
 
