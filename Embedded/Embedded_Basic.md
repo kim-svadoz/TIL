@@ -256,14 +256,40 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 ![image-20200716151853623](../../work/images/image-20200716151853623.png)
 
 - I2C(Inter-Intergrated Circuit, 또는 TWI - Two Wire Interface)는 복수 개의 슬레이브 장치가 복수개의 마스터 장치와 통신하기 위한 프로토콜이다. SPI와 마찬가지로 하나의 완성품을 구성하는 요소들 간의 근거리 통신을 위해 고안되었음.
-
 - 비동기식 시리얼통신(이하 UART)은 클럭을 맞춰줘야 하고 데이터 라인으로 들어오는 신호를 항상 주시해야 하기 때문에 오버헤드가 있으며 하드웨어가 복잡해지는 단점이 있다. 결정적으로 UART통신은 1:1통신만 가능하다.
-
 - 반면 동기식 시리얼 통신인 SPI는 클럭(CLK)라인을 이용해 데이터 라인을 동기화 하므로 하드웨어 구조도 간단하고 1:N통신이 가능하다. 송신용 핀과 수신용 핀이 분리되어 있고, full-duplex(동시 송수신) 연결을 이용해 10만 비트의 전송 속도를 지원하기도 한다. 하지만 SPI통신은 통신에 필요한 핀이 많아지는 단점이 있다. 하나의 장치를 연결하는 데 4개의 라인이 필요하고 추가로 장치를 더할 때 마다 라인이 하나씩 추가된다. 그리고 N:N통신은 불가.
 - I2C 통신은 SPI의 통신의 이런 단점들을 보완할 수 있는 동기식(synchronous) 시리얼 통신 방법이다. UART통신처럼 단 두라인만 사용하고 1008개의 슬레이브 장치를 지원한다. 또한 N:N통신도 지원이 가능하다.(단 마스터장치 끼리 통신은 불가) 하드웨어 요구사항이 SPI보다 복잡하긴 하지만 UART통신보다는 간단하다. 통신 속도면에서도 SPI와 UART통신의 중간쯤 된다.
 - SCL은 클럭신호를 생성해서 전달하는 역할을 하고 SDA는 실제 데이터가 전달되는 라인이다. 클럭 신호는 반드시 마스터 장치가 생성하는데 슬레이브 장치가 데이터 전송을 지연하기 위해 클럭신호를 만드는 경우도 있다. 이것을 clock stretching이라고 한다.
 - I2C통신은 UART/SPI통신과는 달리 I2C 하드웨어(bus driver) 장치가 `open drain` 속성을 가진다. 이 말은 I2C통신을 사용하는 장치 하나가 데이터 전송을 위해 라인에 LOW신호를 넣고 있으면 다른 장치들은 이걸 강제로 HIGH로 바꿀 수 없다는 의미이다. I2C통신의 두 라인 SCL, SDA은 모두 풀업 저항에 연결되어 있으므로 통신라인이 사용이 끝나면 자동으로 HIGH상태로 복귀한다.
 - 또한 풀업 저항은 동작 전압이 다른 장치들이 연결되어 통신하는 데 발생하는 문제점들을 없애준다. 풀업 저항이 두 장치가 사용하는 전압보다 낮은 레벨로 유지시켜주기 때문에 별도의 level-shifting 회로가 필요하지 않다. (두 장치의 전압차가 큰 경우는 I2C level shifter가 필요하다)
+
+**UART, SPI, I2C 를 테이블 형식으로 비교 합니다.**
+
+| 항목                             | UART                                                         | SPI                                                          | I2C                                                          |
+| -------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 전체 이름                        | Universal Asyncronous Receiver/Transmitter                   | Serial Peripheral Interface                                  | Inter-Integrated Circuit                                     |
+| Interface Diagram                | ![image-20200716151853623](https://user-images.githubusercontent.com/58545240/89985324-dc36ed80-dcb5-11ea-8e4d-b8d579b1db3f.png) | ![SPI%2BInterface%2BDiagram](https://user-images.githubusercontent.com/58545240/89985376-ece76380-dcb5-11ea-85d8-badd470c6531.jpg) | ![I2C%2BInterface%2BDiagram](https://user-images.githubusercontent.com/58545240/89985409-fa045280-dcb5-11ea-83ed-390aad7bdc20.jpg) |
+| 핀                               | TxD: Transmit Data<br /> RxD: Receive Data                   | SCLK: Serial Clock<br />MOSI: Master Output, Slave Input<br />MISO: Master Input, Slave Output<br />SS: Slave Select | SDA: Serial Data<br />SCL: Serial Clock                      |
+| Data Rate<br />데이터 전송 속도  | 비동기(asynchronous) 통신이기 때문에 공유하는 Clock 이 없어서 통신하는 양쪽 기기의 속도를 동일하게 맞춰 주어야 한다. 동일하지 않아도 통신이 되는 경우가 있지만 의도하지 않은 데이터가 들어갈 경우가 있다.  Maximum 통신 속도는 Model 에 따라 다르며, 일반적으로 115,200bps 이다. | SPI에서 최대 데이터 속도는 정해져 있지 않다. 보통 10Mbps 에서 20Mbps 사이 이다. | I2C는 100Kbps, 400Kbps, 3.4Mbps 를 주로 사용하며 10Kbps 나 1Mbps를 사용하는 경우도 있다. |
+| Distance 거리                    | 5미터 이하                                                   | 가장 길다.                                                   | 길다.                                                        |
+| Type of communication통신의 종류 | 비동기통신을 하는 기기가 같은 clock을 공유하지 않는다는 의미로, 통신하는 두 기기가 동일한 속도를 맞춰야 한다. 편리한 점은 속도만 맞추면 어떤 기기와도 통신이 가능하다는 점 | 동기같은 clock을 사용하여 통신을 한다는 의미로, 개발 단계에서 연결이 되어야 한다. | 동기                                                         |
+| Number of masters                | Master가 없다. 각자 주고(Tx), 받는(Rx) 다.                   | Master 는 하나이며 변하지 않는다.                            | Master가 하나 이상이 될 수 있다.                             |
+| Clock                            | 공유하는 Clock이 없다. 각 기기는 각자의 Clock을 사용하며 통신 시에는 동일한 데이터 전송 속도를 설정하여 송수신 해야 한다. | Master와 Slave들은 동일한 Clock을 사용한다.                  | Master들과 Slave들은 동일한 클럭을 사용한다.                 |
+| Hardware Complexity              | 가장 복잡하지 않다.                                          | 복잡하지 않다.                                               | 복잡하다.                                                    |
+| Protocol                         | Data는 8bit로 보내며 앞에 Start bit와 뒤에 Stop bit를 붙인다. | 통일된 Protocol이 있지 않다. 그래서 해당 기기의 datasheet를 참조해야 한다. 예를 들어 microcontroller와 EEPROM의 통신을 한다면 EEPROM 의 datasheet를 봐야 한다. | Start bit와 Stop bit를 사용하며 데이터는 8bit를 전송한다. 8bit를 보내고 나면 (slave가?) ack를 사용하여 데이터가 잘 받아졌는지를 확인한다. 아래 그림에 표시 되어있다.<br />![I2C%2BProtocol](https://user-images.githubusercontent.com/58545240/89985552-33d55900-dcb6-11ea-8917-55f8f528a9a8.jpg) |
+| Software addressing              | 1:1 통신만을 하기 때문에 addressing은 필요 없다.             | Master에는 slave 개수만큼 slave select 라인이 있기 때문에 해당 line을 통해서 slave를 선택한다. | 다수의 master와 다수의 slave가 존재하고, 각 master는 모든 slave에 접근할 수 있다. 27개의 slave까지 지원이 되며 master는 고유 주소값을 통해 접근한다. |
+| 장점                             | 하드웨어가 간단해서 거의 모든 장치에서 UART를 지원하기 때문에 (9개의 핀이 연결되거나, USB가 있는 장치라면) 편리하다. RS232 라고도 불린다. RS232는 protocol의 이름이며 UART는 그것을 가능하게 해 주는 송수신기를 의미하기 때문이다. | 간단한 프로토콜이기 때문에 구현하는데 어렵지 않다. Full duplex(전체 동시 송수신, 전이중) 통신을 지원한다.나뉘어진 slave select 라인이 있기 때문에 같은 종류의 칩들이 회로에 사용될 수 있다.SPI는 push-pull을 사용하기 때문에 높은 데이터 전송률을 가지며 긴 거리도 가능하다.SPI는 I2C와 비교하면 적은 파워를 사용한다. | Open collector(?) 디자인이기 때문에 slew rate(출력 전압의 최대 변화율, 모양이 이상해 지는 것)가 제한적이다.한 개 이상의 master가 가능하다.선이 두 개 필요하다.Addressing 하는 방법이 간단해서 SPI 같이 여러 라인이 필요하지 않다.Open collector bus concept를 가지고 있어 bus의 voltage 가 유연(다른 voltage level 가능)하다.Flow control을 사용한다. (ack를 말하는 듯) Mixed speed 가 가능하다([Link](https://www.i2c-bus.org/highspeed/)) |
+| 단점                             | 1:1 통신만 지원한다.동일한 속도를 맞추고 시작해야 한다. 그렇지 않으면 데이터가 깨질 것이다. Voltage level 이 동일해야 한다. | Slave가 많아지면 각 slave별 라인이 필요하기 때문에 hardware 구성이 복잡해진다.만약 slave가 추가 된다면 선을 새로 연결해야 하며 addressing을 위해 software의 디자인이 변경되어야 한다.Master와 slave가 고정되어 있기 때문에 I2C에서 하는 것처럼 역할 변경을 할 수 없다.Flow control을 할 수 없다. Voltage level 이 동일해야 한다. | Master와 slave가 많아지면 복잡성이 증가한다.I2C 는 half duplex(반이중) 이다. 이 말은 하나의 선 SDA를 통해서 Data가 양 방향으로 갈 수 있지만 한번에는 하나의 데이터만 간다는 뜻이다. UART는 항상 한 방향으로만 가는데 반해 반 이중은 동시는 아니지만 양 방향이 가능하다. |
+| 참조                             | [RS232 Interface>>](http://www.rfwireless-world.com/Terminology/RS232-interface.html) UART는 회로를 의미하는 단어로, 일반적으로 EIA RS-232, RS-422, RS-485와 같은 통신 표준과 함께 사용한다. | [SPI Interface>>](http://www.rfwireless-world.com/Terminology/SPI-interface.html) | [I2C Interface>>](http://www.rfwireless-world.com/Terminology/I2C-vs-I2S.html) |
+
+
+**I2C**
+
+- I2C 의 Slave 주소는 해당 Chip의 Datasheet에 Idx의 구성에 따라 여러가지로 될 수 있다는 것이 명시되어 있다. 여러 Chip이 같은 Bus를 통해서 연결될 수 있기 때문이다. 그래서 실제 IDx 의 회로 구성을 확인하여 주소값을 확인해야 한다.
+- Slave I2C의 속도는 해당 Chip의 Register Setting 에 의해 변경될 수 있다. Clock 과 Data의 최대 속도를 확인하고 그 이상으로 셋팅하지 않아야 한다.
+- I2C 에서 1Byte 단위로 데이터를 송신하기 때문에 9번째 bit를 보면 ACK 여부를 확인할 수 있다. Start와 Stop 신호를 제외하면 모두 이 1byte(8bit) 단위로 송신이 되며 보통 Slave Address(1byte), Register Address(1~2 Byte), Value(1Byte) 로 한 셋트를 송신하지만 인접한 Address 의 경우에는 연속으로 쓸 수 있다. 이를 Burst Write 혹은 Sequential Write 라고 부른다.
+- I2C 를 여러 Chip 끼리 연결하려고 하면(같은 Bus) 신호의 Level 을 맞춰 주어야 한다. 보통 1.8V, 3.3V, 5V 등 이 있으며 이를 맞춰주기 위해서는 Level Shifter 가 회로에 구성되어 있어야 하면 그렇지 않으면 통신이 정상적으로 이루어 지지 않는다.
+- I2C 를 이해할 때는 몇 V 로 동작하는지, Start Condition은 SDA 가 default 1인 상태에서 0으로 갈 때 신호가 시작되고, SDA, SCL 모두 default 1인 상태에서 0으로 갈 때가 동작을 진행한 상태이므로 우선순위가 높다 그래서 ACK 신호가 low(SCL high, SDA low) 인 것이다. Start 와 Stop(SDA가 0으로 먼저 떨어지고 SCL high 가 된 상태) 를 제외하면 총 9bit를 사용하는데 8bit 가 하나의 1byte 이므로 이를 보내기 위해서 사용되며 나머지 1bit 가 반대쪽의(write 시 slave 에서 잘 받았다고 보내는 신호) ACK 이다. Mater에서 read 시에는 데이터를 slave 쪽에서 보내는 데 이 때 데이터를 전부 보내고 나면 NACK 를 보내 더이상 보낼 데이터가 없다는 것을 알려준다.
 
 ## I2C Protocol
 
@@ -319,7 +345,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 ## 데이터의 동작방식 알아보기
 
-![image-20200716152542545](../../work/images/image-20200716152542545.png)
+![image-20200716152542545](https://user-images.githubusercontent.com/58545240/89989937-9893b200-dcbc-11ea-9adf-4c2afde8f3a1.png)
 
 ```bash
 - I2C통신은 시작 신호와 데이터 신호, 정지 신호로 이루어진다.
@@ -355,11 +381,11 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 ​	**데이터를 쓸 경우**
 
-![image-20200716153312929](../../work/images/image-20200716153312929.png)
+![image-20200716153312929](https://user-images.githubusercontent.com/58545240/89992438-3ccb2800-dcc0-11ea-811e-c8bffa2b6d8b.png)
 
 ​	**데이터를 읽는 경우**
 
-![image-20200716153338512](../../work/images/image-20200716153338512.png)
+![image-20200716153338512](https://user-images.githubusercontent.com/58545240/89992494-4a80ad80-dcc0-11ea-9101-6305600b1ef0.png)
 
 ​	=> 대부분의 칩에서 I2C통신은 하드웨어 기능으로 구성되어 있어 I2C관련 레지스터의 비트를 설정하는 것만으로도 시작신호, 데이터신호, 클럭신호, 정지신호를 출력할 수 있다.
 
@@ -383,7 +409,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
   => alc5633q 메인 데이터시트
 
-  ![image-20200730175252892](../../work/images/image-20200730175252892.png)
+  ![image-20200730175252892](https://user-images.githubusercontent.com/58545240/89994987-d1835500-dcc3-11ea-9d7c-71e041bbcba8.png)
 
   => slave 주소가 0x38인것을 알 수 있다.
 
@@ -391,7 +417,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 - `OSTRICH_MAIN_V30_190210.pdf`
 
-  ![image-20200720113212577](../../work/images/image-20200720113212577.png)
+  ![image-20200720113212577](https://user-images.githubusercontent.com/58545240/89995037-ec55c980-dcc3-11ea-8ada-16bd01dcdc48.png)
 
   => 메인보드회로에 의해 SCL은 28번, SDA는 29번 핀을 사용한다!
 
@@ -675,7 +701,7 @@ for(i=0; i<8; i++){
 	}
 ```
 
-![image-20200727180442702](../../work/images/image-20200727180442702.png)
+![image-20200727180442702](https://user-images.githubusercontent.com/58545240/89995532-8ddd1b00-dcc4-11ea-92e1-09ec1276e294.png)
 
 ++ 문서를 보면 2바이트씩 데이터를 주고 받기 때문에, WRITE / READ 모두 2바이트씩 데이터를 처리해야한다.
 

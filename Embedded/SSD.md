@@ -52,7 +52,7 @@ SSD의 페이지는 덮어쓰기할 수 없다. 일단 페이지가 "stale"상�
 
 ---
 
-## ***9. FTL(Flash Translation Layer)******
+## **9. FTL(Flash Translation Layer)**
 
 ### 가.FTL의 개념
 
@@ -66,9 +66,9 @@ SSD의 페이지는 덮어쓰기할 수 없다. 일단 페이지가 "stale"상�
 
 ### 다. FTL의 계층 구조
 
-![image-20200728174535190](./images/image-20200728174535190.png)
+![image-20200728174535190](https://user-images.githubusercontent.com/58545240/90082188-279adb80-dd4a-11ea-9871-bdf111170b07.png)
 
-![image-20200728174549985](./images/image-20200728174549985.png)
+![image-20200728174549985](https://user-images.githubusercontent.com/58545240/90082237-371a2480-dd4a-11ea-9f4a-3777eef6a04e.png)
 
 ### 라. FTL의 구성 요소
 
@@ -105,10 +105,6 @@ SSD의 페이지는 덮어쓰기할 수 없다. 일단 페이지가 "stale"상�
    - Sector와 Block을 혼합한 기법
    - 장점 : Sector와 Block의 장점 혼합
    - 단점 : 구현의 복잡한 문제 존재
-
-
-
-
 
 FTL(Flash translation layer)는 호스트의 논리 블록 주소를 SSD의 물리 블록 주소로 맵핑해주는 SSD컨트롤러의 컴포넌트이다. 최근의 SSD 드라이브는 대부분 Log structred 파일 시스템과 비슷한 작동 방식을 가진 "hybrid log-block mapping"나 그로부터 파생된 블록 맵핑 알고리즘을 사용하고 있다. "hybrid log-block mapping" 맵핑 알고리즘은 랜덤쓰기를 시퀀셜하게 변환해주는 장점을 가지고 있다.
 
