@@ -126,7 +126,7 @@
 
 ### 2. [SSD](./Embedded/SSD.md)
 
-### 3. [Video, Audio](./Embedded/Video, Audio.md)
+### 3. [AudioAndImage](./Embedded/AudioAndImage.md)
 
 ### 4. [Embedded_Basic](./Embedded/Embedded_Basic.md)
 
