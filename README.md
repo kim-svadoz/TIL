@@ -132,6 +132,10 @@
 
 ### 5. [Linux_Kernel](./Embedded/Linux_Kernel.md)
 
+### 6. [Nandflash](./Embedded/Nandflash.md)
+
+### 7. [CAN](./Embedded/CAN.md)
+
 ---
 
 ## 기타

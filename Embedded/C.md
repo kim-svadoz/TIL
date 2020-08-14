@@ -1725,7 +1725,7 @@ int main(){
 
 - ptr에 p1의 메모리 주소를 할당했으므로 ptr의 멤버를 수정하면 결국 p1의 멤버도 바뀌게 된다. 접근하는 방식만 차이가 있을 뿐 결국 같은 곳의 내용을 수정하게 된다. ( 메모리 주소는 컴퓨터마다, 실행할 때마다 달라진다. )
 
-![image-20200803151945762](https://user-images.githubusercontent.com/58545240/90083467-8b72d380-dd4d-11ea-9a20-30eb406f52ec.png)![image-20200803151945762](../../tmpImg/image-20200803151945762.png)
+![image-20200803151945762](https://user-images.githubusercontent.com/58545240/90083467-8b72d380-dd4d-11ea-9a20-30eb406f52ec.png)
 
 # [ 공용체 ]
 
