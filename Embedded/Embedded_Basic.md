@@ -675,7 +675,7 @@ LSB와 MSB의 그 뜻 자체를 이해하는 것도 중요하지만 LSB나 MSB�
 
 ### > 오류상황
 
-![image-20200724111807088](../../work/images/image-20200724111807088.png)
+![image-20200724111807088](https://user-images.githubusercontent.com/58545240/90201577-377ff180-de16-11ea-9927-5c8a14b81518.png)
 
 WRITE 후 READ 시 ACK를 보내주었지만 버퍼를 읽을 수 없다... 타이밍의 문제 같아 보이는데 아직 어떻게 해결해야 할지 모르겠다. < 첫번째 과제
 
@@ -850,9 +850,9 @@ void I2c_Write_Word(unsigned char mSlave, unsigned char mReg, unsigned char mDat
 	I2c_AltFunc();
 }
 
-unsigned char I2c_Read_Word(unsigned char mSlave, unsigned char mReg, int i2cDataSize)
+unsigned int I2c_Read_Word(unsigned char mSlave, unsigned char mReg, int i2cDataSize)
 {
-	unsigned char temp;
+	unsigned int temp;
 	unsigned char ucHibyte = 0;
 	unsigned char ucLobyte = 0;
 
@@ -875,13 +875,13 @@ unsigned char I2c_Read_Word(unsigned char mSlave, unsigned char mReg, int i2cDat
 	for(int i=0; i<i2cDataSize; i++)
 	{
 		if(i==i2cDataSize-1) ucHibyte = I2c_Read_Byte(1);
-		else ucLobyte += I2c_Read_Byte(0);
+		else ucLobyte = I2c_Read_Byte(0);
 	}
 
 	I2c_Stop();
 
-	temp = (ucHibyte << (8*i2cDataSize-1)) + ucLobyte;
-	AmbaPrint("temp ::::: %u", temp);
+	temp = (ucLobyte << (8*i2cDataSize-1)) + ucHibyte;
+	AmbaPrint("temp ::::: %d", temp);
 
 	I2c_AltFunc();
 	return temp;
@@ -1049,7 +1049,11 @@ static int test_tw(int argc, char** argv, AMBA_SHELL_PRINT_f printf){
 }
 ```
 
+#### 3. 실행결과(teraterm)
 
+![image-20200813171705105](https://user-images.githubusercontent.com/58545240/90110998-fc83ac80-dd88-11ea-903a-02f986edac3a.png)
+
+![image-20200813171716569](https://user-images.githubusercontent.com/58545240/90111008-02798d80-dd89-11ea-8843-dbce2e9c1e69.png)
 
 # 워치독 타이머(WDT)
 

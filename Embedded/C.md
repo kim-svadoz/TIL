@@ -1990,7 +1990,7 @@ int main(){
 - 이제 `long long *numPtr;`와 같은 단일 포인터를 선언한 뒤 numPtr의 메모리 주소를 구해서 allocMemory 함수에 넣어준다. 즉, `long long *numPtr;`의 메모리 주소는 `long long **`과 같으므로 `void **ptr`로 받을 수 있다.
 - 다음과 같이 매개변수 `void **ptr`를 역참조하여 실제로는 `numPtr`에 메모리를 할당하게 된다.
 
-![image-20200805180627527](images/image-20200805180627527.png)
+![image-20200805180627527](https://user-images.githubusercontent.com/58545240/90200894-482f6800-de14-11ea-85fe-916ebf37ff86.png)
 
 ## 문자열 매개변수 사용하기
 
@@ -2116,7 +2116,7 @@ int main(){
 
 - setElement 함수 안에서 arr[2]에 저장했음. **배열의 메모리 주소를 전달했기 때문에 실제로는 바깥에 있는 배열의 요소가 바뀌었다.**
 
-![image-20200806101949837](images/image-20200806101949837.png)
+![image-20200806101949837](https://user-images.githubusercontent.com/58545240/90201000-83319b80-de14-11ea-92ed-7c379284d8b2.png)
 
 2. 이번에는 대괄호 없이 매개변수로 포인터를 지정해보겠다.
 
@@ -2342,12 +2342,12 @@ int main(){
 - 함수 안에서는 `va_start`매크로에 가변인자 목록 포인터 ap와 가변인자 개수 args를 넣어 가변 인자를 가져올 수 있도록 준비한다.(ap = argument pointer)
 - 만약 가변인자가 4개 들어잇는게 `printNumbers(4, 10, 20, 30, 40);`를 호출한 뒤 va_start 매크로를 실행하면 다음과 같은 모양이 나온다.
 
-![image-20200806111153464](images/image-20200806111153464.png)
+![image-20200806111153464](../../tmpImg/image-20200806111153464.png)
 
 - 이제 반복문으로 가변 인자 개수만큼 반복하면서 `va_arg`매크로로 값을 가져오면 된다. 이때 `va_arg`에는 가변 인자의 자료형을 지정한다.
 - `int num= va_arg(ap, int);`를 실행하면 현재 ap에서 4바이트(int 크기)만큼 역참조하여 값을 가져온 뒤 ap를 4바이트만큼 순방향 이동시킨다.
 
-![image-20200806111329035](images/image-20200806111329035.png)
+![image-20200806111329035](../../tmpImg/image-20200806111329035.png)
 
 
 

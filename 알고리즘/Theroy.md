@@ -467,7 +467,7 @@ int main(void)
 
 여기에 demand paging의 개념으로 확장해보자.
 
-![image-20200811173917448](../Embedded/images/image-20200811173917448.png)
+![image-20200811173917448](https://user-images.githubusercontent.com/58545240/90202217-0b657000-de18-11ea-8df8-be27a8ecaebc.png)
 
 자주 사용되는 페이지는 물리 메모리에만 두는게 아니라, 캐시에도 둔다. 그래서 빠르게 해당 페이지에 접근하게 된다.
 
