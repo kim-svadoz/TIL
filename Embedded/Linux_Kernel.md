@@ -1097,7 +1097,7 @@ CPU 스케쥴러가 `context_switch()`가 일어날 때마다, 레디큐에서 �
 
 ![image-20200811163854332](https://user-images.githubusercontent.com/58545240/90212850-4de67700-de2f-11ea-8586-a0b861cbd1c5.png)
 
-## 19.1 Mutual Exlusion — 상호 배제
+## 19.1 Mutual Exclusion — 상호 배제
 
 컴퓨터 시스템을 얘기할 때 가장 중요한 파트 중 하나가 **상호 배제 문제**이다. 시스템이 정상적으로 작동하기 위해서는 이 상호 배제 개념은 반드시 필요하다.
 
