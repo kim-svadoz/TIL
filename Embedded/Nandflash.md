@@ -183,7 +183,7 @@ Tunneling이란 낮은 에너지를 갖는 입자가 에너지가 높으나 공�
 
 ![image-20200814143821558](https://user-images.githubusercontent.com/58545240/90222202-94939b80-de46-11ea-89d8-770d3efdd245.png)
 
-이렇게 한 셀에 2비티를 저장하게 된 제품을 **MLC(Multi Level Cell)**라고 한다.
+이렇게 한 셀에 2비트를 저장하게 된 제품을 **MLC(Multi Level Cell)**라고 한다.
 
 여기서 더 나아간 것이 **TLC(Triple Level Cell)**이다. 한 셀에 3비트를 저장하는 것이다.
 
@@ -193,7 +193,7 @@ Tunneling이란 낮은 에너지를 갖는 입자가 에너지가 높으나 공�
 
 ## 왜 MLC, TLC로 갈 수록 쓰기 속도가 느린가?
 
-쓰기를 위한 `Control Gate` 전압이 한방에 구현되지 ㅇ낳기 때문이다.
+쓰기를 위한 `Control Gate` 전압이 한방에 구현되지 않기 때문이다.
 
 ![image-20200814144028230](https://user-images.githubusercontent.com/58545240/90222226-9d846d00-de46-11ea-8a84-5c7657f3a32e.png)
 
@@ -263,6 +263,14 @@ TLC에서 요구하는 8가지 상태를 기록하기 위해서는 7개의 전�
 
 ![image-20200814150042337](https://user-images.githubusercontent.com/58545240/90222242-a8d79880-de46-11ea-90dc-26b09e01ed66.png)
 
+SLC에서 MLC, TLC, QLC로 갈수록 각 데이터를 지정하고자 하는 그 간격이 좁아진다. 때문에 데이터를 저장하고 읽는 과정에서 생기는 오류도 많아지게 되는데, `ECC`는 이런 데이터의 오류를 검출하고 수정하기 위해서 오류정보를 저장하는 것이다.
+
+`ECC`값은 여분의 공간에 입력하고 우리는 그 값과 비교를 하게 된다. 그렇지 않은 경우 error를 수정하거나 보정하여 출력하게 되는 것 그래서 더욱 정밀해질수록 복잡해진다.
+
+저장해야할 `ECC code`의 용량 또한 증가하게 되고 그만큼 오류가 많이 생기니 해당하는 것을 하나씩 해석하기 위한 시간또한 필요하게 된다..
+
+![image-20200819111502694](https://user-images.githubusercontent.com/58545240/90584527-bd80ab80-e20d-11ea-89d3-d2101b791bee.png)
+
 ## 디지털신호처리
 
 > DSP
@@ -285,7 +293,7 @@ TLC에서 요구하는 8가지 상태를 기록하기 위해서는 7개의 전�
 
 예비용량을 확보해뒀다가 수명이 다해서 `Bad-Block`이 발생한 셀이 나타나면 예비 셀로 대체해서 전체 용량을 일정하게 유지하는 것이다.
 
-# :eight_pointed_black_star: NANDFLASH_F59L2G81A
+# NANDFLASH_F59L2G81A:zap: 
 
 ---
 
@@ -549,7 +557,7 @@ Id Cycle => cycle 5개
 
 ![image-20200818153413675](https://user-images.githubusercontent.com/58545240/90494829-e1e17700-e17e-11ea-9861-ad3142ba42ca.png)
 
-## :ballot_box_with_check: ===Operation Diagram===
+## ===Operation Diagram===:ballot_box_with_check: 
 
 > 크게 CLE로 동작되는 커맨드 사이클, ALE로 동작되는 어드레스 사이클, 데이터사이클(WE, RE)로 나뉘어진다.
 >
@@ -602,46 +610,642 @@ Id Cycle => cycle 5개
 
 
 
-# :zap: AMBA code
+# AMBA code:zap: 
 
-## - AmbaNAND.C
+---
 
-- AmbaNAND_Unlock()
-- AmbaNAND_Init()
-- AmbaNAND_ReadID()
-- AmbaNAND_Config()
-- AmbaNAND_GetDevInfo()
-- AmbaNAND_Reset()
-- AmbaNAND_ReadStatus()
-- AmbaNAND_Read()
-- AmbaNAND_Program()
-- AmbaNAND_PseudoCB()
-- AmbaNAND_CopyBack()
-- AmbaNAND_EraseBlock()
+## [ AmbaNAND.C ]
 
-## - AmbaNAND_Partition.C
+### > __PRE_ATTRIB_ALIGN()
 
-- AmbaNAND_InitPtbBbt()
-- AmbaNAND_CreatePTB()
-- AmbaNAND_LoadNvmRomFileTable()
-- AmbaNAND_GetRomFileSize()
-- AmbaNAND_GetRomFileInfo()
-- AmbaNAND_ReadRomFile()
-- AmbaNAND_ReadSysPartitionTable()
-- AmbaNAND_WriteSysPartitionTable()
-- AmbaNAND_ReadUserPartitionTable()
-- AmbaNAND_WriteUserPartitionTable()
-- AmbaNAND_ReadPartitionInfo()
-- AmbaNAND_ReadPartitionPartial()
-- AmbaNAND_ReadPartition()
-- AmbaNAND_WritePartition()
-- AmbaNAND_InvalidatePartition()
-- AmbaNAND_ErasePatition()
-- AmbaNAND_ReadVendorData()
-- AmbaNAND_WriteVendorData()
-- AmbaNAND_IsBldMagicCodeSet()
-- AmbaNAND_SetBldMagicCode()
-- AmbaNAND_EraseBldMagicCode()
-- AmbaNAND_ReadBldMagicCode()
-- AmbaNAND_SetWritePtbFlag()
+```C
+/* Work Buffer for 1 Block.  */
+__PRE_ATTRIB_ALIGN__(AMBA_CACHE_LINE_SIZE) __PRE_ATTRIB_NOINIT__
+static UINT8 PseudoCBBufMain[64 * 2 * 1024]
+__POST_ATTRIB_NOINIT__ __POST_ATTRIB_ALIGN__(AMBA_CACHE_LINE_SIZE);
+
+__PRE_ATTRIB_ALIGN__(AMBA_CACHE_LINE_SIZE) __PRE_ATTRIB_NOINIT__
+static UINT8 PseudoCBBufSpare[64 * 128]
+__POST_ATTRIB_NOINIT__ __POST_ATTRIB_ALIGN__(AMBA_CACHE_LINE_SIZE);
+
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Lock
+ *
+ *  @Description:: NAND Lock
+ *
+ *  @Input      :: none
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Lock(void)
+{
+#if 1
+    if (AmbaLink_Enable) {
+        AmbaIPC_MutexTake(AMBA_IPC_MUTEX_NAND, AMBA_KAL_WAIT_FOREVER);
+        AmbaINT_SetCpuTarget(AMBA_INT_SPI_ID104_FIO_CMD, 0x1);
+        AmbaINT_SetCpuTarget(AMBA_INT_SPI_ID105_FIO_DMA, 0x1);
+        AmbaINT_SetCpuTarget(AMBA_INT_SPI_ID102_FDMA, 0x1);
+
+        AmbaINT_IntEnable(AMBA_INT_SPI_ID104_FIO_CMD);
+        AmbaINT_IntEnable(AMBA_INT_SPI_ID102_FDMA);
+        AmbaINT_IntEnable(AMBA_INT_SPI_ID102_FDMA);
+
+        return OK;
+    }
+#endif
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaKAL_MutexTake(&_AmbaNAND_Ctrl.Mutex, AMBA_KAL_WAIT_FOREVER) != OK)
+        return NG;  /* should never happen */
+
+    return OK;
+}
+```
+
+### > AmbaNAND_Unlock()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Unlock
+ *
+ *  @Description:: Unlock NAND
+ *
+ *  @Input      :: none
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Unlock(void)
+{
+#if 1
+    if (AmbaLink_Enable) {
+        AmbaIPC_MutexGive(AMBA_IPC_MUTEX_NAND);
+
+        return OK;
+    }
+#endif
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+
+    return AmbaKAL_MutexGive(&_AmbaNAND_Ctrl.Mutex);
+}
+```
+
+### > AmbaNAND_Init()
+
+```c
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Init
+ *
+ *  @Description:: Initialize NAND data structure.
+ *
+ *  @Input      :: none
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Init(void)
+{
+    // _AmbaNAD_Ctrl을 _Amaba_Ctrl의 사이즈 크기만큼 0x0으로 설정
+    memset(&_AmbaNAND_Ctrl, 0x0, sizeof(_AmbaNAND_Ctrl));
+
+    /* Create Event Flag */
+    if (AmbaKAL_EventFlagCreate(&_AmbaNAND_Ctrl.EventFlag) != OK)
+        return NG;  /* should never happen ! */
+
+    /* Create Mutex */
+    if (AmbaKAL_MutexCreate(&_AmbaNAND_Ctrl.Mutex) != OK)
+        return NG;  /* should never happen ! */
+
+    if (AmbaRTSL_FioIsRandomReadMode()) {
+        // AMBA_I2S_CAHNNEL0에 FDMA를 사용하겠다.
+        AmbaRTSL_FdmaEnable();
+        AmbaRTSL_FioReset();
+        // DMA 방식을 사용하겠다.
+        AmbaCSL_FioDmaFifoModeEnable(); /* Enable DMA Mode for FIO-DMA FIFO */
+    }
+
+    AmbaRTSL_FioInit();             /* Initialize the FIO controller */
+
+    AmbaRTSL_FioNandCmdIsrRegister(NAND_FioNandCmdIsr); /* Call back function when NAND Command done */
+    AmbaRTSL_FioDmaIsrRegister(NAND_FioDmaIsr);         /* Call back function when FIO-DMA done */
+    AmbaRTSL_FdmaIsrRegister(NAND_FdmaIsr);             /* Call back function when FDMA done */
+
+    
+```
+
+### > AmbaNAND_ReadID()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_ReadID
+ *
+ *  @Description:: Read device ID
+ *
+ *  @Input      ::
+ *      NumReadCycle: number of cycles
+ *      pDeviceID:    pointer to the buffer of Device ID
+ *      TimeOut:      Time out value
+ *
+ *  @Output     ::
+ *      pDeviceID: pointer to the Device ID
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_ReadID(int NumReadCycle, UINT8 *pDeviceID, UINT32 TimeOut)
+{
+    int RetVal;
+    UINT32 ActualFlags = 0;
+
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaNAND_Lock() != OK)
+        return NG;
+
+    AmbaNAND_Reset(TimeOut);
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG);
+    AmbaRTSL_NandSendReadIdCmd(NumReadCycle);
+
+    /* wait for Command Done: Event Flag ! */
+    RetVal = AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG,
+                                   AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+    if (RetVal == OK)
+        AmbaRTSL_NandGetReadIdResponse(NumReadCycle, pDeviceID);
+
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+    AmbaNAND_Unlock();
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_Config()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Config
+ *
+ *  @Description:: NAND software configurations
+ *
+ *  @Input      ::
+ *      pNandConfig: pointer to NAND software configurations
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Config(AMBA_NAND_CONFIG_s *pNandConfig)
+{
+    int RetVal;
+
+    RetVal = AmbaRTSL_NandConfig(pNandConfig);
+
+    /* Workaround: 1st data of NAND read is incorrect. */
+    AmbaNAND_Read(2, 1, NULL, _AmbaRTSL_FioCtrl.pWorkBufSpare, 1000);
+
+    /* Init BBT and System/User Partition Tables */
+    RetVal |= AmbaNAND_InitPtbBbt(1000);
+
+    RetVal |= AmbaNAND_LoadNvmRomFileTable();   /* Load NAND ROM File Table */
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_GetDevInfo()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_GetDevInfo
+ *
+ *  @Description:: get the pointer to current NAND device information
+ *
+ *  @Input      :: none
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *      AMBA_NAND_DEV_INFO_s * : the pointer to current NAND device information
+\*-----------------------------------------------------------------------------------------------*/
+AMBA_NAND_DEV_INFO_s *AmbaNAND_GetDevInfo(void)
+{
+    return _AmbaRTSL_NandDevInfo;
+}
+```
+
+### > AmbaNAND_Reset()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Reset
+ *
+ *  @Description:: Reset NAND data structure.
+ *
+ *  @Input      ::
+ *      TimeOut:   The timeout value
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Reset(UINT32 TimeOut)
+{
+    UINT32 ActualFlags = 0;
+    int RetVal;
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG);
+
+    AmbaRTSL_NandSendResetCmd();
+
+    RetVal = AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG,
+                                   AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_ReadStatus()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_ReadStatus
+ *
+ *  @Description:: Get Nand current status.
+ *
+ *  @Input      ::
+ *      pStatus: pointer to the Status
+ *
+ *  @Output     ::
+ *      pStatus: pointer to the Status
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_ReadStatus(AMBA_NAND_STATUS_u *pStatus, UINT32 TimeOut)
+{
+    UINT32 ActualFlags = 0;
+    int RetVal;
+
+    if (pStatus == NULL)
+        return NG;
+
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaNAND_Lock() != OK)
+        return NG;
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG);
+
+    AmbaRTSL_NandSendReadStatusCmd();
+
+    RetVal = AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG, AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+    if (RetVal == OK)
+        AmbaRTSL_NandGetCmdResponse((UINT8*)pStatus);
+
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+    AmbaNAND_Unlock();
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_Read()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Read
+ *
+ *  @Description:: Read data from NAND flash
+ *
+ *  @Input      ::
+ *      PageAddr:  The first page address to read
+ *      NumPage:   Number of pages to read
+ *      pMainBuf:  pointer to DRAM buffer for main area data
+ *      pSpareBuf: pointer to DRAM buffer for spare area data
+ *      TimeOut:   The timeout value
+ *
+ *  @Output     ::
+ *      pMainBuf:  pointer to main area data
+ *      pSpareBuf: pointer to spare area data
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Read(UINT32 PageAddr, UINT32 NumPage, UINT8 *pMainBuf, UINT8 *pSpareBuf, UINT32 TimeOut)
+{
+    int RetVal;
+    AMBA_RTSL_FDMA_CTRL_s *pFdmaCtrl = (AMBA_RTSL_FDMA_CTRL_s *) &_AmbaRTSL_FioCtrl.FdmaCtrl;
+    UINT32 ActualFlags = 0;
+
+    if (NumPage == 0 || (pMainBuf == NULL && pSpareBuf == NULL) )
+        return NG;  /* wrong parameter */
+
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaNAND_Lock() != OK)
+        return NG;
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_EVENT_MASK );
+    RetVal = AmbaRTSL_NandReadStart(PageAddr, NumPage, pMainBuf, pSpareBuf);
+
+    RetVal |= AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_EVENT_MASK ,
+                                    AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+
+    if (RetVal == OK) {
+        AmbaCache_Invalidate((void *) pFdmaCtrl->pMainBuf, pFdmaCtrl->MainByteCount);
+        AmbaCache_Invalidate((void *) pFdmaCtrl->pSpareBuf, pFdmaCtrl->SpareByteCount);
+        RetVal = AmbaRTSL_NandCheckDeviceStatus(NumPage);
+    }
+
+    if (RetVal == OK) {
+        /* Copy back through DMA if output buf is not 8-Byte aligned. */
+        if (pMainBuf != NULL && pMainBuf != pFdmaCtrl->pMainBuf) {
+            memmove(pMainBuf, pFdmaCtrl->pMainBuf, pFdmaCtrl->MainByteCount);
+        }
+
+        if (pSpareBuf != NULL && pSpareBuf != pFdmaCtrl->pSpareBuf) {
+            memmove(pSpareBuf, pFdmaCtrl->pSpareBuf, pFdmaCtrl->SpareByteCount);
+        }
+    } else {
+        AmbaNAND_Reset(5000);
+    }
+
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+    AmbaNAND_Unlock();
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_Program()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_Program
+ *
+ *  @Description:: Perform NAND write data cmd flow setup
+ *
+ *  @Input      ::
+ *      PageAddr:  The first page address to write
+ *      NumPage:   Number of pages to write
+ *      pMainBuf:  pointer to DRAM buffer for main area data
+ *      pSpareBuf: pointer to DRAM buffer for spare area data
+ *      TimeOut:   The timeout value
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_Program(UINT32 PageAddr, UINT32 NumPage, UINT8 *pMainBuf, UINT8 *pSpareBuf, UINT32 TimeOut)
+{
+    int RetVal;
+    UINT32 ActualFlags = 0;
+
+    if (NumPage == 0 || (pMainBuf == NULL && pSpareBuf == NULL) )
+        return NG;  /* wrong parameter */
+
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaNAND_Lock() != OK)
+        return NG;
+
+    AmbaCSL_NandDisableWriteProtect();
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_EVENT_MASK);
+    RetVal = AmbaRTSL_NandProgramStart(PageAddr, NumPage, pMainBuf, pSpareBuf);
+    if (RetVal == OK)
+        RetVal |= AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_EVENT_MASK,
+                                        AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+
+    if (RetVal == OK) {
+        RetVal = AmbaRTSL_NandCheckDeviceStatus(NumPage);
+    }
+
+    AmbaCSL_NandEnableWriteProtect();
+
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+    AmbaNAND_Unlock();
+
+    return RetVal;
+}
+```
+
+### > AmbaNAND_PseudoCB()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: NandPseudoCB
+ *
+ *  @Description:: Copyback by read and program command.
+ *
+ *  @Input      ::
+ *          UINT32 BlockFrom    : Copy from
+ *          UINT32 Page         : Page to copied
+ *          UINT32 BlockTo      : Copy to
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+static int AmbaNAND_PseudoCB(UINT32 DestPageAddr, UINT32 SrcPageAddr, UINT32 TimeOut)
+{
+    int RetVal = OK;
+    UINT8 *pMainBuf = NULL, *pSpareBuf = NULL;
+
+    pMainBuf = PseudoCBBufMain;
+    pSpareBuf = PseudoCBBufSpare;
+
+    RetVal = AmbaNAND_Read(SrcPageAddr, 1, pMainBuf, pSpareBuf, TimeOut);
+    if (RetVal != OK) {
+        goto Done;
+    }
+
+    /* Program main and spare area */
+    RetVal = AmbaNAND_Program(DestPageAddr, 1, pMainBuf, pSpareBuf, TimeOut);
+    if (RetVal != OK) {
+        goto Done;
+    }
+
+Done:
+    return RetVal;
+}
+```
+
+### > AmbaNAND_CopyBack()
+
+```c
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_CopyBack
+ *
+ *  @Description:: Copy data from source page to destinaiton page
+ *
+ *  @Input      ::
+ *      DestPageAddr: Destination page address
+ *      SrcPageAddr: Source page address
+ *      TimeOut:     Time out value
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_CopyBack(UINT32 DestPageAddr, UINT32 SrcPageAddr, UINT32 TimeOut)
+{
+#if !defined(DISABLE_COPYBACK)
+    AMBA_NAND_DEV_INFO_s *pNandDevInfo = _AmbaRTSL_NandDevInfo;
+    UINT32 MainByteSize = 0;
+    UINT32 ActualFlags = 0;
+    int RetVal = OK;
+#endif
+
+#if !defined(DISABLE_COPYBACK)
+    if (pNandDevInfo == NULL)
+        return NG;
+
+    AmbaCSL_NandDisableWriteProtect();
+
+    MainByteSize = pNandDevInfo->MainByteSize;
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG);
+    AmbaCSL_NandSendCopyBackCmd(SrcPageAddr * MainByteSize, DestPageAddr * MainByteSize);
+
+    RetVal = AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG , AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+    if (RetVal != OK) {
+        return RetVal;
+    }
+
+    AmbaCSL_NandGetCmdResponse((UINT8 *) & (_AmbaRTSL_NandCtrl.Status[0]));
+
+    AmbaCSL_NandEnableWriteProtect();
+
+    return _AmbaRTSL_NandCtrl.Status[0].Bits[0].LastCmdFailed ? NG : OK;
+#else
+    return AmbaNAND_PseudoCB(DestPageAddr, SrcPageAddr, TimeOut);
+#endif
+}
+```
+
+### > AmbaNAND_EraseBlock()
+
+```C
+/*-----------------------------------------------------------------------------------------------*\
+ *  @RoutineName:: AmbaNAND_EraseBlock
+ *
+ *  @Description:: To erase the block of data identified by the block address parameter
+ *
+ *  @Input      ::
+ *      BlkAddr: Block address
+ *      TimeOut: Time out value
+ *
+ *  @Output     :: none
+ *
+ *  @Return     ::
+ *          int : OK(0)/NG(-1)
+\*-----------------------------------------------------------------------------------------------*/
+int AmbaNAND_EraseBlock(UINT32 BlkAddr, UINT32 TimeOut)
+{
+    UINT32 ActualFlags = 0;
+    int RetVal;
+
+    /*---------------------------------------------------*\
+     * Take the Mutex
+    \*---------------------------------------------------*/
+    if (AmbaNAND_Lock() != OK)
+        return NG;
+
+    AmbaCSL_NandDisableWriteProtect();
+
+    AmbaKAL_EventFlagClear(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG);
+    AmbaCSL_NandSendBlockEraseCmd(BlkAddr * _AmbaRTSL_NandCtrl.BlkByteSize);
+
+    RetVal = AmbaKAL_EventFlagTake(&_AmbaNAND_Ctrl.EventFlag, AMBA_FIO_NAND_CMD_DONE_FLAG, AMBA_KAL_AND_CLEAR, &ActualFlags, TimeOut);
+    if (RetVal == OK) {
+        AmbaCSL_NandGetCmdResponse((UINT8 *) & (_AmbaRTSL_NandCtrl.Status[0]));
+        RetVal = _AmbaRTSL_NandCtrl.Status[0].Bits[0].LastCmdFailed ? NG : OK;
+    }
+
+    AmbaCSL_NandEnableWriteProtect();
+
+    /*---------------------------------------------------*\
+     * Release the Mutex
+    \*---------------------------------------------------*/
+    AmbaNAND_Unlock();
+
+    return RetVal;
+}
+```
+
+## [ AmbaNAND_Partition.C ]
+
+### > AmbaNAND_InitPtbBbt()
+
+### > AmbaNAND_CreatePTB()
+
+### > AmbaNAND_LoadNvmRomFileTable()
+
+### > AmbaNAND_GetRomFileSize()
+
+### > AmbaNAND_GetRomFileInfo()
+
+### > AmbaNAND_ReadRomFile()
+
+### > AmbaNAND_ReadSysPartitionTable()
+
+### > AmbaNAND_WriteSysPartitionTable()
+
+### > AmbaNAND_ReadUserPartitionTable()
+
+### > AmbaNAND_WriteUserPartitionTable()
+
+### > AmbaNAND_ReadPartitionInfo()
+
+### > AmbaNAND_ReadPartitionPartial()
+
+### > AmbaNAND_ReadPartition()
+
+### > AmbaNAND_WritePartition()
+
+### > AmbaNAND_InvalidatePartition()
+
+### > AmbaNAND_ErasePatition()
+
+### > AmbaNAND_ReadVendorData()
+
+### > AmbaNAND_WriteVendorData()
+
+### > AmbaNAND_IsBldMagicCodeSet()
+
+### > AmbaNAND_SetBldMagicCode()
+
+### > AmbaNAND_EraseBldMagicCode()
+
+### > AmbaNAND_ReadBldMagicCode()
+
+### > AmbaNAND_SetWritePtbFlag()
 

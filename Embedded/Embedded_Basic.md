@@ -1132,3 +1132,196 @@ static int test_tw(int argc, char** argv, AMBA_SHELL_PRINT_f printf){
 ### 나. WDT SW 사례
 
 ![image-20200807171644205](https://user-images.githubusercontent.com/58545240/89979616-2cf51900-dcab-11ea-838a-edf314b19a38.png)
+
+
+
+# MUTEX를 이용한 쓰레드 동기화
+
+---
+
+## 1. 공유자원에 대한 접근 제어
+
+다수의 객체가 공유 자원에 접근하려고 하면, (공유 자원의 종류에 따라서) 접근 시점을 동기화 시켜줄 필요가 생긴다. 여기에서 동기화란 시간과 공간을 맞추어 준다는 의미로, 즉 공유 자원 영역(공간)에 접근하는 객체들의 진입 시간을 제어할 수 있어야 함을 의미한다.
+
+`Multi Thread(멀티 쓰레드)` 프로그램 역시 공유 자원에 여러 개의 쓰레드가 접근할 수 있으므로 **공유 자원 영역**에 대한 동기화가 필요하다.
+
+카운팅 프로그램을 예로 들어보자. 카운트 변수는 전역변수(:12)로 A,B 두개의 쓰레드가 공유하면서, 1씩 증가하는 카운팅 정보를 유지하기 위해 사용된다. 공유자원 영역 즉 **"count 값을 읽어 오고, 연산을 해서 저장하는"** 영역에 대한 쓰레드간 동기화가 이루어지지 않는다면 아래와 같은 일이 발생할 수 있따.
+
+1. global int count = 0;
+2. A 쓰레드가 count값 0을 읽는다.
+3. B 쓰레드가 count값 0을 읽는다.
+   - A 쓰레드가 카운팅 연산을 하기 전에 B 쓰레드가 접근해 버린 상황이다.
+4. A 쓰레드가 count+1 연산을 하고 값을 쓴다. count = 1
+5. B 쓰레드가 count+1 연산을 하고 값을 쓴다. count = 1
+
+A와 B 쓰레드가 한번씩 카운팅 연산을 했으므로 count값은 2가 되어야 하겠지만 실제로는 1이 저장되어 버렸다.
+
+이러한 문제의 해결을 위해 쓰레드를 동기화 시켜줄 필요가 있다!!
+
+## 2. 동기화 달성의 방법
+
+일반적으로 동기화는 "공간과 시간"을 제어하는 방식으로 이루어진다. 즉 **"접근 제어가 피요한 공간"을 지정하고 지정한 "공간에 진입 할 수 있는 시간"을 제어하는 방식**이다.
+
+여기에서 "접근 제어가 필요한 공간"에는 **보호해야할 공유자원**이 놓인다. 보호 해야할 공유 자원이 있는 공간을 **임계 영역**이라고 한다. 
+
+시간제어는 해당 **임계 영역**에 동 시간에 단지 하나의 쓰레드만 접근하도록 제한 하는 방식으로 이루어진다.
+
+임계영역에 들어가기 위한 **하난의 키**를 가지고 경쟁하는 것으로 이해하면 된다. 임계영역에 들어가기 위한 키는 단지 하나 밖에 없으므로 어떤 쓰레드가 키를 얻어서 임계영역에 진입하면, 다른 쓰레드는 키를 얻을 때 까지 ( 앞서 임계영역에 진입한 프로세스가 키를 되돌려 줄 때까지 ) 기다려야 한다.
+
+![image-20200819170012492](https://user-images.githubusercontent.com/58545240/90612300-cf307600-e242-11ea-9868-c547b8baf1bd.png)
+
+위의 카운팅 프로그램을 예로 들어 보자. **임계 영역**은
+
+1. count값을 읽어와서
+2. 카운팅 연산을 하고
+3. 연산 결과글 저장하는 
+
+코드영역으로 지정할 수 있을 것이다.
+
+**이 임계영역에는 오직 하나의 쓰레드만이 진입할 수 있다.** 즉 **쓰레드A**가 임계영역에 진입해서 코드를 수행 중에 있다면 **쓰레드 B**는 임계 영역 밖에서 기다려야 한다. 이렇게 쓰레드를 동기화 시킴으로써, 아래와 같이 제대로된 카운팅 연산을 보장할 수 있게 된다.
+
+1. global int count = 0;
+2. A쓰레드가 임계 영역에 진입
+3. B쓰레드가 임계 영역 진입을 시도하지만, A쓰레드가 진입해 있으므로 임계영역 밖에서 대기한다.
+4. A쓰레드가 count값을 일고 
+5. 카운팅 연산을해서
+6. 값을 저장한다. count = 1
+7. A쓰레드가 임계영역에서 빠져나온다
+8. 비로소 B쓰레드가 임계영역에 진입해서
+9. count값 읽어서 카운팅 연산을 하고 저장한다. count = 2
+
+## 3. MUTEX
+
+뮤텍스는 `pthread`에서 제공하는 동기화 매커니즘으로 **공유 자원 공간**에 대한 접근 시간 제어로 동기화를 달성한다. 기본적인 메커니즘은 `세마포어(:12)`와 비슷하다. 
+
+특히 **POSIX(:12) 세마포어**와 비슷하며, 동기화 매커니즘으로 뮤텍스 대신 세마포어를 사용할 수도 있다. 동기화 매커니즘의 핵심은 **상호 배제**로 다음과 같이 달성한다.
+
+```C
+global int v = 1;
+lock(){
+    while(1){
+        if(v==1) break;
+    }
+    v = 0;
+    return 1;
+}
+
+unlock(){
+    v = 1;
+    break;
+}
+```
+
+어디까지나 매커니즘 상으로 그렇다는 얘기고, 세마포어와 마찬가지로 `busy wait` 상태에 놓이지 않음을 보장한다.
+
+**상호 배제**는 잠금 형식으로 이루어진다. 쓰레드는 **잠금 v**를 얻어야 임계 영역에 진입할 수 있다. 임계 영역을 빠져나오면 잠금을 되돌려 줘서 다른 쓰레드가 잠금을 얻을 수 있도록 한다.
+
+뮤텍스 메커니즘의 특징을 정리했다.
+
+- **Atomicity** : mutex 잠금(lock)은 최소 단위 연적(atomic operation)으로 작동한다. 하나의 쓰레드가 `mutex`를 이용해서 잠금을 시도하는 도중에 다른 쓰레드가 `mutex` 잠금을 할 수 없도록 해준다는 뜻이다. 한번에 하나의 `mutex` 잠금을 하도록 보장해준다.
+- **Singularity** : 만약 쓰레드가 mutex 잠금을 했다면, 잠금을 한 쓰레드(:12)가 mutex 잠금을 해제 하기 전까지 다른 어떠한 쓰레드도 mutex 잠금을 할 수 없도록 보장해준다.
+- **Non-Busy Wait** : 바쁜대기 상태에 놓이지 않는다는 뜻으로, 하나의 쓰레드가 mutex 잠금을 시도하는 데 이미 다른 쓰레드가 mutex 잠금을 사용하고 있다면, 이 쎄르드는 다른 쓰레드가 락을 해제하기 전까지 해당 지점에 머물러 있으며 이 동안 어떠한 CPU 자원도 소비하지 않는다.(이를테면 `sleep`)
+
+## 4. MUTEX 만들기
+
+뮤텍스를 생성하기 위해서 우리는 먼저, 뮤텍스 정보를 저장하기 위한 타입인 **`pthread_mutex_t`**를 선언해주고 이것을 초기화 해주어야 한다.
+
+선언과 초기화의 가장 간단한 방법은 `PTHREAD_MUTEX_INITIALIZER` 상수를 할당하는 것으로 아래와 같이 사용할 수 있다.
+
+```c
+pthread_mutex_t a_mutex = PHTREAD_MUTEX_INITIALIZER;
+```
+
+혹은 `phread_mutex_init(3)`함수로 뮤텍스를 생성할 수도 있다.
+
+```C
+#include <pthread.h>
+
+int pthread_mutex_init(phtread_mutex_t *mutex, const phtread_mutex_attr *attr);
+```
+
+## 5. MUTEX 잠금, 잠금해제, 제거
+
+뮤텍스 잠금을 위한 함수로는 `phtread_mutex_lock()`함수를 제공한다. 이 함수는 해당 뮤텍스에 대해서 잠금을 시도하는데, 만약 잠그려는 뮤텍스가 다른 쓰레드에 의해서 이미 잠겨있다면, 잠금을 얻을 수 있을때까지( 이미 잠근 다른 쓰레드가 뮤텍스의 잠금을 해제할 때까지 ) 봉쇄( block )되게 된다.
+
+다음은 이러한 뮤텍스 잠금을 얻기 위한 지원함수들이다.
+
+```C
+int pthread_mutex_lock(phtread_mutex_t *mutex);
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+```
+
+`pthread_mutex_trylock()`을 사용하면 잠금을 얻을 수 없을 경우 해당 코드에서 `블럭`되지 않고 바로 에러코드를 돌려준다. 즉, `pthread_mutex_lock`의 비봉쇄 버전이라고 생각하면 된다.
+
+뮤텍스 잠금을 얻은 후 해당 영역에서의 작업을 마친 후 잠금을 해제하기 위해서 사용된다. 사용되는 함수는 `phtread_mutex_unlock(3)`이며 함수 원형은 다음과 같다.
+
+```C
+int phtread_mutex_unlock(pthread_mutex_t *mutex);
+```
+
+다음은 쓰레드간 공유되는 자원을 위해서 잠금을 어떻게 사용하는지를 보여주는 간단한 예제다.
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>
+
+int ncount;		// 쓰레드간 공유되는 자원
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;		// 쓰레드 초기화
+
+void* do_loop(void *data){
+    int i;
+    for(i=0; i<10; i++){
+        pthread_mutex_lock(&mutex);			// 잠금을 생성한다.
+        printf("loop1 : %d\n", ncount);
+        ncount ++;
+        if(i == 10) return;
+        pthread_mutex_unlock(&mutex);		// 잠금을 해제한다.
+        sleep(1);
+	}
+}
+
+void* do_loop2(void *data){
+    int i;
+    
+    // 잠금을 얻으려고 하지만 do_loop에서 이미 잠금을 얻었음으로 잠금이 해제될때까지 기다린다.
+    for(i=0; i<10; i++){
+        pthread_mutex_lock(&mutex);			// 잠금을 생성한다.
+        printf("loop2 : %d\n", ncount);
+        ncount++;
+        pthread_mutex_unlock(&mutex);		// 잠금을 해제한다.
+        sleep(2);
+    }
+}
+
+int main(){
+    int	thr_id;
+    pthread_t p_thread[2];
+    int status;
+    int a = 1;
+    
+    ncount = 0;
+    thr_id = pthread_create(&p_thread[0], NULL, do_loop, (void *)&a);
+    sleep(1);
+    thr_id = pthread_create(&p_thread[1], NULL, do_loop2, (void *)&a);
+    
+    pthread_join(p_thread[0], (void *)&status);
+    pthread_join(p_thread[1], (void *)&status);
+    
+    status = pthread_mutex_destroy(&mutex);
+    printf("code = %d\n", status);
+    printf("programming is end");
+    return 0;
+}
+```
+
+위의 코드를 우선 mutex 잠금을 하지 않은 채 컴파일 후 실행 해보자. 간단하게 `pthread_mutex_lock`과 `pthread_mutex_unlock`부분만 주석처리하면 된다.
+
+그러면 `do_loop2`과 `do_loop`이 일정 간격을 두고 ncount 자원에 접근하는 것을 볼 수 있을것이다. 그러나 우리는 `do_loop`가 ncount자원을 접근하고 있는 동안 다른 쓰레드가 접근하지 않기를 원할 때가 있을 것이다. 이럴 때 뮤텍스잠금을 사용하면 된다.
+
+위의 코드에서 잠금 부분의 주석을 다시 풀고 컴파일 후 실행해보면 `do_loop`쓰레드가 ncount 증가 작업을 모두 마칠 때까지 `do_loop2`쓰레드는 해당영역에서 `block`됨을 알 수 있다. 이런 식으로 **하나의 쓰레드가 특정자원에 접근할 때 다른 쓰레드가 접근하지 못하도록(한번에 하나의 쓰레드만 해당 자원에 접근할 수 있도록) 제어**할 수 있다.
+
+컴파일 방법은 `gcc -o mutex_lock mutex_lock.c -lpthread`이다.
+
+더이상 뮤텍스를 사용할 일이 없다면 `pthread_mutex_destroy`를 이용해서 뮤텍스 자원을 제거(free)하도록 한다. 만일 뮤텍스 자원을 사용하는 쓰레드가 하나라도 존재한다면 에러코드(`EBUSY`)를 리턴한다. 그러므로 **모든 쓰레드의 뮤텍스에 대해서 `pthread_mutex_unlock`을 이용해서 잠겨져야만 뮤텍스 제거가 성공할 수 있다. 성공할 경우 `0`을 넘겨준다.**
