@@ -628,7 +628,7 @@ boolean queens(int level){
 - 위 코드에서 보면 `queens()`메소드를 호출할 때마다 promising 여부를 검증하고 있다. 따라서 `cols[]`의 1,2,3에 해당하는 말들 간에는 충돌이 없다고 보장되어 있다.
 - 따라서 마지막에 놓인(`cols[4]`) 이 말이 이전에 놓인 다른 말들과 충돌하는지 검사하는 것으로 충분하다.
 
-![image-20200827174511493](../Embedded/images/image-20200827174511493.png)
+![image-20200827174511493](https://user-images.githubusercontent.com/58545240/91422989-e0a4fe00-e892-11ea-8373-90c7032ff5b3.png)
 
 - 코드는 다음과 같은 방식으로 작성한다.
   - 같은 열에 놓였는지,
