@@ -499,7 +499,7 @@ Bit Depth를 이해하기 가장 쉬운 방법은 **"Bit Depth는 오디오의 �
 
 Bit Depth는 역시 헤비록, EDM이 만들어지는 홈스튜디오라면 크게 중요하지 않을 수 있다. 하지만 만약 적절한 음량에서 듣고 녹음하는 경우라면, 전체 프로덕션 과정에서 Bit Depth의 차이는 크게 느껴질 수 있을 것이다. 적절한 Gain 스테이징과 모니터링 레벨에서는 이 차이는 더욱 크게 느껴진다.
 
-![image-20200820104249503](images/image-20200820104249503.png)
+![image-20200820104249503](https://user-images.githubusercontent.com/58545240/91411197-f4486880-e882-11ea-99dd-88b171d959cb.png)
 
 
 
@@ -510,7 +510,7 @@ Bit Depth는 Recording 하려는 음원이나 Audio File의 Line Level(0dB)부�
   - **Bit Depth를 크게 설정해줄수록 이 Noise Floor가 내려가게 된다.**
 - **Dynamic Range**란 Line Level과  Noise Floor의 사이를 일컫는다.
 
-![image-20200820104526216](images/image-20200820104526216.png)
+![image-20200820104526216](https://user-images.githubusercontent.com/58545240/91411219-fad6e000-e882-11ea-8c81-13a4ca72c97a.png)
 
 **Bit Depth를 크게 설정해 줄수록 Noise Floor가 내려간다**고 했는데, 이 말은 즉 Dynamic Range의 폭이 커진다는 얘기도 딘다.
 
@@ -524,7 +524,7 @@ Bit Depth는 Recording 하려는 음원이나 Audio File의 Line Level(0dB)부�
 
 실제 소리를 Recording할 때, `Sample Rate`가 음원을 세로로 잘게 쪼개는 거라면, `Bit Depth`는 가로로 쪼개는 것이다. `Bit Depth`가 높을 수록 더 많이 쪼개는 것. 소리가 점차적으로 커진다고 가정할 때, 낮은 `Bit Depth`에서는 우.우.웅!!! 하고 커진다면 **높은 `Bit Depth`**에서는 우우우우우웅!!하고 커진다. **더 실제에 가깝게 부드럽게 커지는 것**이다.
 
-![image-20200820105020826](images/image-20200820105020826.png)
+![image-20200820105020826](https://user-images.githubusercontent.com/58545240/91411229-ff9b9400-e882-11ea-9303-1ce67615f90a.png)
 
 # ADC와 DAC
 

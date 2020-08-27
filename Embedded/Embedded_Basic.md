@@ -1325,3 +1325,4 @@ int main(){
 컴파일 방법은 `gcc -o mutex_lock mutex_lock.c -lpthread`이다.
 
 더이상 뮤텍스를 사용할 일이 없다면 `pthread_mutex_destroy`를 이용해서 뮤텍스 자원을 제거(free)하도록 한다. 만일 뮤텍스 자원을 사용하는 쓰레드가 하나라도 존재한다면 에러코드(`EBUSY`)를 리턴한다. 그러므로 **모든 쓰레드의 뮤텍스에 대해서 `pthread_mutex_unlock`을 이용해서 잠겨져야만 뮤텍스 제거가 성공할 수 있다. 성공할 경우 `0`을 넘겨준다.**
+
