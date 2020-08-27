@@ -625,7 +625,7 @@ boolean queens(int level){
 
 ## Promising Test를 어떻게 할 것인가
 
-- 위 코드에서 보면 `queens()`메소드를 호출할 때마다 promising 여부를 검증핳고 있다. 따라서 `cols[]`의 1,2,3에 해당하는 말들 간에는 충돌이 없다고 보장되어 있다.
+- 위 코드에서 보면 `queens()`메소드를 호출할 때마다 promising 여부를 검증하고 있다. 따라서 `cols[]`의 1,2,3에 해당하는 말들 간에는 충돌이 없다고 보장되어 있다.
 - 따라서 마지막에 놓인(`cols[4]`) 이 말이 이전에 놓인 다른 말들과 충돌하는지 검사하는 것으로 충분하다.
 
 ![image-20200827174511493](../Embedded/images/image-20200827174511493.png)
@@ -669,7 +669,7 @@ public class NQueensProblem{
             return true;
         }
         for(int i=1; i<=N; i++){
-            cosl[level+1] = i;
+            cols[level+1] = i;
             if(queens(level+1)) return true;
         }
         return false;
