@@ -303,7 +303,7 @@ public static void printChars(String str){
 }
 ```
 
-### 문자열을 뒤집어 플니트
+### 문자열을 뒤집어 프린트
 
 - `recursive`하게 프린트 하려면
   - 먼저 첫 문자를 뺀 나머지 문자열을 뒤집어 프린트 한 후
@@ -448,7 +448,7 @@ int search(int[] data, int begin, int end, int target){
 ```java
 int search(int[] data, int begin, int end, int target){
     if (begin > end)
-        begin 01;
+       return -1;
     else {
         int middle = (begin + end) / 2;
         if (data[middle] == target)
