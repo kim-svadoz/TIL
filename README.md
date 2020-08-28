@@ -82,7 +82,13 @@
 | KAKAO04    | [Link](./알고리즘/실전코테/KAKAO_INTERN_04)    |           | 2020(상)_카카오인턴.04              |
 | KAKAO05    | [Link](./알고리즘/실전코테/KAKAO_INTERN_05)    |           | 2020(상)_카카오인턴.05              |
 
-### 1. [algorithm](./알고리즘/Theroy.md)
+### 1. [Basic](./알고리즘/Basic.md)
+
+### 2. [Sort](./알고리즘/Sort.md)
+
+### 3. [Recursion](./알고리즘/Recursion.md)
+
+### 4. [Tree](./알고리즘/Tree.md)
 
 ---
 
