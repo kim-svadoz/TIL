@@ -90,6 +90,10 @@
 
 ### 4. [Tree](./알고리즘/Tree.md)
 
+### 5. [Hash](./알고리즘/Hash.md)
+
+### 6. [Graph](./알고리즘/Graph.md)
+
 ---
 
 ## WEB

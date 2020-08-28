@@ -2,7 +2,7 @@
 
 # Sort :fist_oncoming:
 
-# > Locality의 관점에서 Quick sort가 Merge sort보다 빠른이유
+# **> Locality의 관점에서 Quick sort가 Merge sort보다 빠른이유**
 
 Quick sort와 Merge sort는 nlogn의 시간복잡도를 가지는 대표적인 정렬 방법이다.
 

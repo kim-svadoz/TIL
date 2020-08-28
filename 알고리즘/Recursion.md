@@ -1,6 +1,526 @@
-# Recursion :fist_oncoming:
+# 재귀(Recursion) :fist_oncoming:
 
-# > Tail Call Recursion
+# **> Recursion의 기본 개념과 예제**
+
+---
+
+## Recursion
+
+우리말로 순환 또는 재귀함수라고 한다. 즉, 자기 자신을 호출하는 함수, 메소드를 뜻한다.
+
+```java
+void func(){
+    ...
+    func();
+    ...
+}
+```
+
+**ex1 - 무한루프**
+
+```java
+public class Code01{
+    public static void main(String[] args){
+        func();
+    }
+    
+    private static void func(){
+        System.out.println("hello..");
+        func();
+    }
+}
+```
+
+**ex2 - 항상 무한루프에 빠질까?**
+
+- `recursion`이 적절한 구조를 가지고 있다면, 항상 무한루프에 빠지는 것은 아니다.
+  - **Base Case** : 적어도 하나의 `recursion`에 빠지지 않는 경우가 존재해야 한다.
+  - **Recursive Case** : `recursion`을 반복하다 보면 결국 Base Case로 수렴해야한다.
+
+```java
+public class Code2{
+    public static void main(String[] args){
+        int n = 4;
+        func(n);
+    }
+    
+    private static void func(int n) {
+    if (n <= 0)
+      return;
+    else {
+      System.out.println("Hello...");
+      func(n - 1);
+    }
+  }
+}
+```
+
+**ex3 - 1~n까지의 합**
+
+- 입력으로 받은 정수 n에 대해서 1~ n까지의 합을 구한다.
+
+```java
+public class Code03 {
+  public static void main(String[] args) {
+    int result = func(4);
+    System.out.println("result: " + result);
+  }
+
+  private static int func(int n) {
+    if (n == 0)
+      return 0;
+    else
+      return n + func(n - 1);
+  }
+}
+```
+
+```bash
+result: 10
+
+Process finished with exit code 0
+```
+
+### recursion의 해석
+
+- 이 함수의 mission은 0~n까지의 합을 구하는 것이다.
+- n = 0이라면 합은 0이다.
+- n이 0보다 크다면 0에서 n까지의 합은 0에서 n-1까지의 합에 n을 더한 것이다.
+
+```java
+public static int func(int n) {
+  if(n == 0) 
+    return 0;
+  else
+    return n + func(n - 1);
+}
+```
+
+### 순환함수와 수학적귀납법
+
+- 정리
+  - `func(int n)`은 음이 아닌 정수 n에 대해서 0에서 n까지의 합을 올바로 계산한다.
+- 증명
+  1. `n=0`인 경우 : n=0인 경우 0을 반환한다. 올바르다.
+  2. 임의의 양의 정수 k에 대해서 `n<k`인 경우 0에서 n까지의 합을 올바르게 계산하여 반환한다고 가정하자.
+  3. `n=k`인 경우를 고려해보자. func메소드는 먼저 `func(k-1)`을 호출하는데 2번에 가정에 의해서 0에서 k-1까지의 합이 올바로 계산되어 반환된다. 메소드 func는 그 값에 n을 더해서 반환한다. 따라서 메소드 func는 0에서 k까지의 합을 올바로 계산하여 반환한다.
+- 항상 이런식으로 증명을 작성할 필요는 없지만, `recursion`에 대해서 고민할 때 위와같은 방식으로 고민하는 것이 상당히 도움이 된다.
+
+## Factorial: n!
+
+- `0!=1`
+- `n! = nX(n-1)! n>0`
+- Factorial이 가진 recursive한 성질을 그대로 이용하여 아래와 같은 코드를 작성할 수 있다.
+
+```java
+public static int factorial(int n){
+    if(n==0){
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+```
+
+### 순환함수와 수학적귀납법
+
+- 정리
+  - `factorial(int n)`은 음이 아닌 정수 n에 대해서 n!을 올바로 계산한다.
+- 증명
+  1. `n=0`인 경우 : n=0인 경우 1을 반환한다. 올바르다.
+  2. 임의의 양의 정수 k에 대해서 `n<k`인 경우 `n!`을 올바르게 계산한다고 가정하자.
+  3. `n=k`인 경우를 고려해보자. factorial은 먼저 `factorial(k-1)` 호출하는데 2번의 가정에 의해서 `(k-1)!`이 올바로 계산되어 반환된다. 따라서 메소드 factorial은 `k *(k-1)! = k!` 을 반환한다.
+
+## Xⁿ
+
+- `X⁰ = 1`
+- `Xⁿ = X * Xⁿ⁻¹ if n>0`
+
+```java
+public static double power(double x, int n) {
+  if (n == 0)
+    return 1;
+  else
+    return x * power(x, n-1);
+}
+```
+
+## Fibonacci Number
+
+- `f₀ = 0`
+- `f₁ = 1`
+- `fn = fn₋₁ + fn₋₂ n>1`
+
+```java
+public int fibonacci(int n) {
+  if(n < 2) 
+    return n;
+  else
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
+## 최대 공약수: Euclid Method
+
+- m >= n인 두 양의 정수 m과 n에 대해서 m이 n의 배수이면 gcd(m, n) = n이고,
+- 그렇지 않으면 gcd(m, n) = gcd(n, m % n)이다.
+  - n과 m을 n으로 나눈 나머지 간의 최대공약수이다.
+
+```java
+public static int gcd(int m, int n) {
+  if (m < n) {
+    int tmp = m;
+    m = n;
+    n = tmp;
+  }
+  if (m % n == 0)
+    return n;
+  else
+    return gcd(n, m % n);
+}
+```
+
+### Euclid Method : 좀 더 단순한 버전
+
+- gcd(p, q)
+  - `if q = 0 -> p`
+  - otherwise gcd(q, p % q)
+
+```java
+public static int gcd(int p, int q) {
+  if (q == 0)
+    return p;
+  else
+    return gcd(q, p % q);
+}
+```
+
+### 최대공약수 최소공배수 예제(유클리드 호제법)
+
+```java
+public class Code04 {
+  public static void main(String[] args) {
+    int result = gcd(12, 6);
+    System.out.println("최대공약수: " + result);
+    result = euclidGcd(12, 6);
+    System.out.println("유클리드 호제법 최대공약수: " + result);
+    result = lcm(12, 8);
+    System.out.println("최소공배수: " + result);
+  }
+
+  private static int gcd(int m, int n) {
+    if (m < n) {
+      int tmp = m;
+      m = n;
+      n = tmp;
+    }
+    if (m % n == 0)
+      return n;
+    else
+      return gcd(n, m % n);
+  }
+
+  private static int euclidGcd(int p, int q) {
+    if (q == 0)
+      return p;
+    else
+      return euclidGcd(q, p % q);
+  }
+
+  private static int lcm(int m, int n) {
+    int bigger = 0;
+    bigger = (m > n) ? m : n;
+    while (true) {
+      if ((bigger % m == 0) && (bigger % n == 0))
+        return bigger;
+      bigger++;
+    }
+  }
+}
+```
+
+```bash
+최대공약수: 6
+유클리드 호제법 최대공약수: 6
+최소공배수: 24
+
+Process finished with exit code 0
+```
+
+# **> Recursion의 기본 개념과 예제2**
+
+## Recursive Thinking - 순환적 사고
+
+### Recursion은 수학함수 계산에만 유용한가?
+
+- 수학함수뿐 아니라 다른 많은 문제들을 recursion으로 해결할 수 있다.
+
+### 문자열의 길이 계산
+
+- 순서대로 앞에서부터 하나씩 카운트
+- 또는, 총 문자열의 길이는 첫 번째 문자를 뺀, 전체 문자열의 길이 +1(첫번째 문자)이다.
+
+```java
+if the string is empty	// base case
+    return 0;
+else
+    return 1 plus the length of the string that excludes the first character;
+```
+
+```java
+public static int length(String str){
+    if(str.equals(""))
+        return 0;
+    else
+        return 1 + length(str.substring(1));
+}
+```
+
+#### - substring의 정의
+
+```java
+public String substring(int start)
+```
+
+Returns a new `String` that contains a subsequence of characters currently contained in this character sequence.
+
+The substring begins at the specified index and extends to the end of this sequence.
+
+- Parameters : `start` - The beginning index, inclusive
+- Returns : The new string.
+- Throws : `StringIndexOutOfBoundsException` - if `start` is less than zero, or greater than the length of this object.
+
+### 문자열의 프린트
+
+```java
+public static void printChars(String str){
+    if(str.length() == 0)
+        return;
+    else {
+        System.out.print(str.charAt(0));
+        printChars(str.substring(1));
+    }
+}
+```
+
+### 문자열을 뒤집어 플니트
+
+- `recursive`하게 프린트 하려면
+  - 먼저 첫 문자를 뺀 나머지 문자열을 뒤집어 프린트 한 후
+  - 마지막으로 첫 문자를 프린트 한다.
+
+```java
+public static void printCharsReverse(String str){
+    if(str.length() == 0)
+        return;
+    else {
+        printCharsReverse(str.substring(1));
+        System.out.print(str.charAt(0));
+    }
+}
+```
+
+### 2진수로 변환하여 출력
+
+- 음이 아닌 정수 n을 이진수로 변환하여 인쇄한다.
+- n을 2로 나눈 몫을 먼저 2진수로 변환하여 인쇄한 후
+- n을 2로 나눈 나머지를 인쇄한다.
+
+```java
+public void printInBinary(int n) {
+  if (n < 2)
+    System.out.print(n);
+  else {
+    printInBinary(n / 2);
+    System.out.print(n % 2)
+  }
+}
+```
+
+### 배열의 합 구하기
+
+- data[0]에서 data[n-1]까지의 합을 구하여 반환한다.
+
+```java
+public static int sum(int n, int[] data) {
+  int (n <= 0)
+    return 0;
+  else
+    return sum(n-1, data) + data[n - 1];
+}
+```
+
+### 데이터파일로부터 n개의 정수 읽어오기
+
+- Scanner in이 참조하는 파일로부터 n개의 정수를 입력받아 배열 data의 data[0], ... , data[n-1]에 저장한다.
+
+```java
+public void readFrom(int n, int[] data, Scanner in) {
+  if (n == 0)
+    return;
+  else {
+    readFrom(n-1, data, in);
+    data[n-1] = in.nextInt();
+  }
+}
+```
+
+## Recursive VS Iteration
+
+- 모든 순환함수는 반복문(Iteration)으로 변경 가능
+- 그 역도 성립함. 즉, 모든 반복문은 recursion으로 표현 가능함
+- 순환함수는 복잡한 알고리즘을 단순하고 알기쉽게 표현하는 것을 가능하게 함
+- 하지만 recursion은 함수 호출에 따른 오버헤드가 있음(매개변수 전달, 액티베이션 프레임 생성 등)
+
+# **> Recursion의 기본 개념과 예제3**
+
+---
+
+## Desigining Recursion
+
+### 순환적 알고리즘의 설계
+
+- 적어도 하나의 base case, 즉 순환되지 않고 종료되는 case가 있어야 한다
+
+- 모든 case는 결국 base case로 수렴해야 한다
+
+  **ex - 가장 단순한 경우**
+
+  ```java
+  if(...){
+      // basecase
+  } else {
+      // recursion
+  }
+  ```
+
+- **암시적(implicit) 매개변수를 명시적(explicit) 매개변수로 바꾸어라!!**
+
+### 순차탐색
+
+이 함수의 미션은 `data[0]`에서 `data[n-1]`사이에서 target을 검색하는 것이다. 하지만 검색 구간의 시작 인덱스 0은 보통 생략한다. **즉, 0은 암시적 매개변수이다.**
+
+```java
+int search(int[] data, int n, int target){
+    for(int i=0; i<n; i++){
+        if(data[i] == target)
+            return i;
+    }
+    return -1;
+}
+```
+
+### 매개변수의 명시화 : 순차탐색
+
+- 이 함수의 미션은 `data[begin]`에서 `data[end]`사이에서 target을 검색한다. **즉, 검색구간의 시작점을 명시적으로(explicit)으로 지정한다.**
+- 이 함수를 `search(data, 0, n-1, target)으로 호출한다면 위에있는 순차탐색 함수와 완전히 동일한 일을 한다.
+
+```java
+int search(int[] data, int begin, int end, int target){
+    if(begin > end)
+        return -1;
+    else if (target == data[begin])
+        return begin;
+    else
+        return search(data, begin+1, end, target);
+}
+```
+
+### 순차탐색 : 다른버전
+
+- 이 함수의 미션은 `data[begin]`에서 `data[end]` 사이에서 target을 검색한다. 즉, 검색구간의 시작점을 명시적으로 지정한다.
+
+```java
+int search(int[] data, int begin, int end, int target){
+    if(begin > end)
+        return -1;
+    else if (target == data[begin])
+        return begin;
+    else
+        return search(data, begin, end-1, target);
+}
+```
+
+### 순차탐색 : 다른버전2
+
+- Binary Search 와는 다르다.
+
+```java
+int search(int[] data, int begin, int end, int target){
+    if (begin > end)
+        begin 01;
+    else {
+        int middle = (begin + end) / 2;
+        if (data[middle] == target)
+            return middle;
+        int index = search(data, begin, middle-1, target);
+        if (index != -1)
+            return index;
+        else
+            return search(data, middle+1, end, target);
+    }
+}
+```
+
+### 매개변수의 명시화 : 최대값 찾기
+
+- 이 함수의 미션은 `data[begin]`에서 `data[end]` 사이에서 최대값을 찾아 반환한다. `begin <= end`라고 가정한다.
+- 여기서 최대값을 찾는 법은 첫번째 인덱스에 해당하는 값과, 첫번째 인덱스를 제외한 나머지 범위에서의 값을 비교한 것들중에 순환적으로 최대값을 찾는다.
+- Base case 는 begin == end, 즉 데이터의 갯수가 1개인 경우다
+
+```java
+int findMax(int[] data, int begin, int end){
+    if (begin == end)
+        return data[begin];
+    else
+        return Math.max(data[begin], findMax(data, begin+1, end));
+}
+```
+
+### 최대값 찾기 : 다른버전
+
+```java
+int findMax(int[] data, int begin, int end){
+    if (begin == end)
+        return data[begin];
+    else {
+        int middle = (begin + end) / 2;
+        int max1 = findMax(data, begin, middle);
+        int max2 = findMax(data, middle+1, end);
+        return Math.max(max1, max2);
+    }
+}
+```
+
+### Binary Search
+
+- `items[begin]`에서 `items[add]` 사이에서 target을 검색한다.
+- 해당 메소드에 매개변수를 명시적으로 표시하지 않는다면, `recursion`으로 구현할 떄 내부에서 recursive하게 호출되는 함수를 표현할 수 있는 방법이 없어진다.
+
+```java
+public static int binarySearch(String[] items, String target, int begin, int end){
+    if (begin > end)
+        return -1;
+    else {
+        int middle = (begin + end) / 2;
+        int compResult = target.compareTo(items[middle]);
+        if (compResult == 0)
+            return middle;
+        else if (compResult < 0)
+            return binarySearch(item, target, begin, middle -1);
+        else
+            return binarySearch(item, target, middle-1, end);
+    }
+}
+```
+
+### 따라서, 순환 알고리즘을 설계하는데에 있어서 가장 중요한 것은
+
+- 적어도 하나의 base case, 즉 순환되지 않고 종료되는 case가 있어야 함
+- 모든 case는 결국 base case로 수렴해야 함
+- **암시적(implicit) 매개변수를 명시적(explicit) 매개변수로 바꾸어라!**
+
+# **> Tail Call Recursion**
 
 > C++
 
@@ -129,7 +649,7 @@ return 3;
 - [https://homoefficio.github.io/2015/07/27/%EC%9E%AC%EA%B7%80-%EB%B0%98%EB%B3%B5-Tail-Recursion](https://homoefficio.github.io/2015/07/27/재귀-반복-Tail-Recursion/)
 - https://en.wikipedia.org/wiki/Tail_call
 
-# > 미로찾기 (Recursion 응용)
+# **> 미로찾기 (Recursion 응용)**
 
 ---
 
@@ -287,7 +807,7 @@ public class Maze{
 {0, 1, 1, 1, 0, 1, 3, 3, }
 ```
 
-# > Counting Cells in a Blob (Recursion 응용)
+# **> Counting Cells in a Blob (Recursion 응용)**
 
 ---
 
@@ -434,7 +954,7 @@ BlobCount : 13
 [0, 1, 1, 0, 0, 2, 2, 2, ]
 ```
 
-# > N-Queens (Back tracking) (n = 8)
+# **> N-Queens (Back tracking) (n = 8)**
 
 ---
 
@@ -621,7 +1141,7 @@ public class NQueensProblem{
 (8, 4)
 ```
 
-# > 멱집합 (Recursion 응용)
+# **> 멱집합 (Recursion 응용)**
 
 ---
 
@@ -820,7 +1340,7 @@ public static void powerSet(int k){	// 트리상에서 현재 위치를 표현�
 
 - 상태공간트리는 이런 방식의 `Recursion`을 이해하는 데 도움을 주는 매우 강력한 도구이다.
 
-# > 멱집합2 ( 그 외 방법 )
+# **> 멱집합2 ( 그 외 방법 )**
 
 ---
 
@@ -921,7 +1441,7 @@ static void bit(int[] arr, int n){
 1 2 3
 ```
 
-# > 조합
+# **> 조합**
 
 ---
 
