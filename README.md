@@ -92,15 +92,17 @@
 
 ### 2. [Sort](./알고리즘/Sort.md)
 
-### 3. [Recursion](./알고리즘/Recursion.md)
+### 3. [Stack,Queue](./알고리즘/Stack,Queue.md)
 
-### 4. [Tree](./알고리즘/Tree.md)
+### 4. [Recursion](./알고리즘/Recursion.md)
 
-### 5. [Hash](./알고리즘/Hash.md)
+### 5. [Tree](./알고리즘/Tree.md)
 
-### 6. [Graph](./알고리즘/Graph.md)
+### 6. [Hash](./알고리즘/Hash.md)
 
-### 7. [KMP](./알고리즘/KMP.md)
+### 7. [Graph](./알고리즘/Graph.md)
+
+### 8. [KMP](./알고리즘/KMP.md)
 
 ---
 
