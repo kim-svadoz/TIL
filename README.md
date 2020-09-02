@@ -33,7 +33,7 @@
 | 17677_뉴스클러스터링   | [Link](./알고리즘/Programmers/News_Clustering_17677.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/17677) | 문자열 처리            |
 | 42841_숫자야구         | [Link](./알고리즘/Programmers/numberBaseball_42841.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42841) | 완전탐색, 최적화       |
 | 17678_셔틀버스         | [Link](./알고리즘/Programmers/ShuttleBus_1768.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/17678) | 문자열 변환            |
-| 42840_모의고사         | [Link](./알고리즘/Programmers/soopoja_1768.java)             | [문제](https://programmers.co.kr/learn/courses/30/lessons/42840) | 완전탐색               |
+| 42840_모의고사         | [Link](./알고리즘/Programmers/soopoja_42840.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42840) | 완전탐색               |
 | 42588_탑쌓기           | [Link](./알고리즘/Programmers/top_42588.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42588) | 스택, 큐               |
 | 43164_여행경로         | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/43164) | DFS                    |
 | 42889_실패율           | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) | sort                   |
