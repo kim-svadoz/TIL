@@ -8,19 +8,29 @@
 
 ### [Baekjoon](./알고리즘/Baekjoon)
 
-| 문제번호            | 솔루션                                                      | 문제 링크                                     | 비고             |
-| ------------------- | ----------------------------------------------------------- | --------------------------------------------- | ---------------- |
-| 1018_체스판         | [Link](./알고리즘/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)  | 완전탐색         |
-| 2667_단지번호       | [Link](./알고리즘/Baekjoon/danji_2667.java)                 | [문제](https://www.acmicpc.net/problem/2667)  | DFS              |
-| 1076_저항           | [Link](./알고리즘/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)  | -                |
-| 14502_연구소        | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502) | BFS              |
-| 14503_로봇청소기    | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503) | BFS              |
-| 13460_구슬탈출      | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460) | BFS              |
-| 14891_톱니바퀴      | [Link](./알고리즘/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891) | 시뮬레이션       |
-| 1596_영식이         | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션       |
-| 15686_치킨배달      | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686) | dfs, combination |
-| 16236_아기상어      | [Link](./알고리즘/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236) | BFS              |
-| 17144_미세먼지안녕! | [Link](./알고리즘/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144) | 시뮬레이션       |
+| 문제번호            | 솔루션                                                       | 문제 링크                                     | 비고                    |
+| ------------------- | ------------------------------------------------------------ | --------------------------------------------- | ----------------------- |
+| 1018_체스판         | [Link](./알고리즘/Baekjoon/chespan_1018.java)                | [문제](https://www.acmicpc.net/problem/1018)  | 완전탐색                |
+| 2667_단지번호       | [Link](./알고리즘/Baekjoon/danji_2667.java)                  | [문제](https://www.acmicpc.net/problem/2667)  | DFS                     |
+| 1076_저항           | [Link](./알고리즘/Baekjoon/resistance_1076.java)             | [문제](https://www.acmicpc.net/problem/1076)  | -                       |
+| 14502_연구소        | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)           | [문제](https://www.acmicpc.net/problem/14502) | BFS                     |
+| 14503_로봇청소기    | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)         | [문제](https://www.acmicpc.net/problem/14503) | BFS                     |
+| 13460_구슬탈출      | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java)  | [문제](https://www.acmicpc.net/problem/13460) | BFS                     |
+| 14891_톱니바퀴      | [Link](./알고리즘/Baekjoon/topni_14891.java)                 | [문제](https://www.acmicpc.net/problem/14891) | 시뮬레이션              |
+| 1596_영식이         | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)               | [문제](https://www.acmicpc.net/problem/1596)  | 시뮬레이션              |
+| 15686_치킨배달      | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)       | [문제](https://www.acmicpc.net/problem/15686) | dfs, combination        |
+| 16236_아기상어      | [Link](./알고리즘/Baekjoon/SAMSUNG_babyShark_16236.java)     | [문제](https://www.acmicpc.net/problem/16236) | BFS                     |
+| 17144_미세먼지안녕! | [Link](./알고리즘/Baekjoon/SAMSUNG_misemunji_17144.java)     | [문제](https://www.acmicpc.net/problem/17144) | 시뮬레이션              |
+| 1946_신입사원       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)  | Greedy, Comparator      |
+| 1931_회의실배정     | [Link](https://ju-nam2.tistory.com/44)                       | [문제](https://www.acmicpc.net/problem/1931)  | Greedy, Comparator      |
+| 2293_동전1          | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)  | DP(모든 경우의 수)      |
+| 2294_동전2          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)  | DP(최소 경우의 수)      |
+| 11559_뿌요뿌요      | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559) | BFS, DFS                |
+| 17472_다리만들기2   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472) | BFS, Kruscal Algorithm  |
+| 1197_최소스패닝트리 | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)  | Kruscal Algorithm(간선) |
+| 5545_최고의피자     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)  | Greedy                  |
+| 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)  | BFS, DFS                |
+| 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       |                                               | 3차원 BFS               |
 
 ### [Programmers](./알고리즘/Programmers)
 
