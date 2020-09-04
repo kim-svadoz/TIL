@@ -1,8 +1,4 @@
-
-
-
-
-# CAN통신이란?
+# **CAN통신이란?**
 
 > Controller Area Network
 
@@ -75,7 +71,7 @@
 
 => 배선 증가로 인한 무게 증가 => **연비하락**
 
-# CAN 데이터 송수신
+# **CAN 데이터 송수신**
 
 - CAN 통신에서 데이터는 **메시지 프레임**을 사용하여 송수신이 이루어진다
 - 메시지 프레임은 하나 또는 그 이상의 송신 노드로부터 데이터를 수신노드로 전송한다.
@@ -104,41 +100,41 @@
 
   **Check Sum** = (`G` + `1` + `0`) `&` `0xff`한 Hex ASCII 문자열
 
-# 데이터 수신 동작 시작
+# **데이터 수신 동작 시작**
 
 ## 동작 요청 명령
 
-![![image-20200814104212517](https://user-images.githubusercontent.com/58545240/90207266-c5f97080-de20-11ea-970e-17b5108f1684.png)
+![image-20200814104212517](https://user-images.githubusercontent.com/58545240/90207266-c5f97080-de20-11ea-970e-17b5108f1684.png)
 
 ## 정상응답
 
-![![image-20200814104223172](https://user-images.githubusercontent.com/58545240/90207270-c98cf780-de20-11ea-849c-9d78ffbe58d7.png)
+![image-20200814104223172](https://user-images.githubusercontent.com/58545240/90207270-c98cf780-de20-11ea-849c-9d78ffbe58d7.png)
 
-# 데이터 수신하기
+# **데이터 수신하기**
 
 - 현재 수신된 CAN데이터를 나타내며 이 명령은 CANPro에서 CAN 데이터 수신 동작이 시작된 이후 CAN데이터 수신 시 자동으로 PC측에 전송한다.
 
 ## 정상응답
 
-![![image-20200814104356886](https://user-images.githubusercontent.com/58545240/90207283-d0b40580-de20-11ea-9a5c-5447790f1e97.png)
+![image-20200814104356886](https://user-images.githubusercontent.com/58545240/90207283-d0b40580-de20-11ea-9a5c-5447790f1e97.png)
 
-# 데이터 송신하기
+# **데이터 송신하기**
 
 - CAN 네트워크상에 특정 CAN Message를 보내고자 할 때 사용하는 명령
 
 ## 동작 요청 명령
 
-![![image-20200814104429706](https://user-images.githubusercontent.com/58545240/90207289-d6a9e680-de20-11ea-8231-923b13f6de15.png)
+![image-20200814104429706](https://user-images.githubusercontent.com/58545240/90207289-d6a9e680-de20-11ea-8231-923b13f6de15.png)
 
 ## 정상응답
 
-![![image-20200814104437678](https://user-images.githubusercontent.com/58545240/90207306-e3c6d580-de20-11ea-9e80-651e586422df.png)
+![image-20200814104437678](https://user-images.githubusercontent.com/58545240/90207306-e3c6d580-de20-11ea-9e80-651e586422df.png)
 
 
 
 
 
-# OBD-II PIDs
+# **OBD-II PIDs**
 
 > 현재 차에서 쓰이고 있는 캔통신 프로토콜 중 하나.
 
@@ -150,9 +146,9 @@
 
 ## OBD II Connector
 
-![![image-20200814104850899](https://user-images.githubusercontent.com/58545240/90207336-f7723c00-de20-11ea-838c-60af79f6faf8.png)
+![image-20200814104850899](https://user-images.githubusercontent.com/58545240/90207336-f7723c00-de20-11ea-838c-60af79f6faf8.png)
 
-![![image-20200814104857480](https://user-images.githubusercontent.com/58545240/90207343-fb9e5980-de20-11ea-9a73-17d060b0f103.png)
+![image-20200814104857480](https://user-images.githubusercontent.com/58545240/90207343-fb9e5980-de20-11ea-9a73-17d060b0f103.png)
 
 - **Pinout**
   - `5` : Signal gorund
@@ -167,7 +163,7 @@
 
 자기 엔진의 아이디랑 rpm상태를 계속 뿌리기만 하면된다?
 
-![![image-20200814105031708](https://user-images.githubusercontent.com/58545240/90207350-ffca7700-de20-11ea-85e9-523f12faabbd.png)
+![image-20200814105031708](https://user-images.githubusercontent.com/58545240/90207350-ffca7700-de20-11ea-85e9-523f12faabbd.png)
 
 ## CAN bus format
 
@@ -182,7 +178,7 @@
 
 ## Service
 
-![![image-20200814105118220](https://user-images.githubusercontent.com/58545240/90207368-0e189300-de21-11ea-99e5-e95bccdb5e4e.png)
+![image-20200814105118220](https://user-images.githubusercontent.com/58545240/90207368-0e189300-de21-11ea-99e5-e95bccdb5e4e.png)
 
 ### ex) Query Speed
 
@@ -191,13 +187,13 @@ msgID = 7DF;									//	Transmit message ID (HEX)
 msgData = {02010D5555555555}; 						// Message data (HEX)
 ```
 
-![![image-20200814105306980](https://user-images.githubusercontent.com/58545240/90207372-140e7400-de21-11ea-9ada-15f8ab2ab50d.png)
+![image-20200814105306980](https://user-images.githubusercontent.com/58545240/90207372-140e7400-de21-11ea-9ada-15f8ab2ab50d.png)
 
 ## Respond
 
 - The vehicle responds to the PID query as 8h higher than PID address.
 
-![![image-20200814105344453](https://user-images.githubusercontent.com/58545240/90207391-1b358200-de21-11ea-8ee4-07bab5f3045c.png)
+![image-20200814105344453](https://user-images.githubusercontent.com/58545240/90207391-1b358200-de21-11ea-8ee4-07bab5f3045c.png)
 
 ### ex) Respond Speed
 
@@ -206,17 +202,17 @@ msgID = 7E8;							// Transmit message ID (HEX)
 msgData = {02010D5555555555}; 			// Message data (HEX)
 ```
 
-![![image-20200814105446924](https://user-images.githubusercontent.com/58545240/90207402-2092cc80-de21-11ea-8498-c5ed7650255f.png)
+![image-20200814105446924](https://user-images.githubusercontent.com/58545240/90207402-2092cc80-de21-11ea-8498-c5ed7650255f.png)
 
 ## Application data
 
-![![image-20200814105507425](https://user-images.githubusercontent.com/58545240/90207412-24265380-de21-11ea-9620-a7140c389498.png)
+![image-20200814105507425](https://user-images.githubusercontent.com/58545240/90207412-24265380-de21-11ea-9620-a7140c389498.png)
 
 
 
 
 
-# CAN 통신 IN 멀티캠퍼스
+# **CAN 통신 IN 멀티캠퍼스**
 
 *CAN통신을 만드는 건 어렵지 않은데 RS232 데이터를 모니터링하며 프로토콜을 구현해야 한다.*
 
@@ -232,7 +228,7 @@ msgData = {02010D5555555555}; 			// Message data (HEX)
   - 서버는 모든 사람들이 붙어서 이용하기 때문에.. 
   - 내 차에만 전송될 수 있도록 해야함.
 
-![![image-20200814110654180](https://user-images.githubusercontent.com/58545240/90207430-32746f80-de21-11ea-9724-88fa54b7c0dc.png)
+![image-20200814110654180](https://user-images.githubusercontent.com/58545240/90207430-32746f80-de21-11ea-9724-88fa54b7c0dc.png)
 
 ![![image-20200814110707737](https://user-images.githubusercontent.com/58545240/90207436-37d1ba00-de21-11ea-8e8c-2ddce7fcea06.png)
 

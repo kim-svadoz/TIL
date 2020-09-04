@@ -1,4 +1,4 @@
-# LINUX 커널 :black_nib:
+# **LINUX 커널 :black_nib:**
 
 ---
 
@@ -8,7 +8,7 @@
 
 ---
 
-# 1. 운영체제란?
+# **1. 운영체제란?**
 
 운영체제(Operating System)이란 하드웨어 자원들(cpu, memory, disk, tty)을 관리하고 프로그램들을 지원(support)해주는 것이다. 
 
@@ -113,7 +113,7 @@
 
 이해를 쉽게하기 위해 터미널은 콘솔의 부분집합이라고 생각하는 것도 좋다. 아래 커널 컴파일 도움말에 기술된 내용을 보면, 리눅스에서 콘솔과 터미널은 거의 동일한 의미로 사용되고 있다고 볼 수 있기 때문이다.
 
-# 2. 운영체제 비교, 리눅스 vs 윈도우
+# **2. 운영체제 비교, 리눅스 vs 윈도우**
 
 ---
 
@@ -237,7 +237,7 @@ CPU와 메모리 사이에는 **MMU(Memory Management Unit)**이라는 하드웨
 커널모드는 어떠한 메모리 영역도 접근 가능하며 어떠한 연산도 시행할 수 있는 특권을 가지고 있다. `오직 커널만이.`
 ```
 
-# 3. printf("Hello World!")의 진실
+# **3. printf("Hello World!")의 진실**
 
 ---
 
@@ -298,7 +298,7 @@ function이 호출되면 해당 function의 local variable(지역변수)들이 �
 
 **유저모드에서 유저만의 function들을 실행하고 리턴하기 위해서 유저모드에도 스택이 필요한 것이고, 커널모드도 마찬가지로 자신만의 function을 실행하고 리턴하기 때문에 스택이 필요하다.**
 
-# 4. 중간 정리
+# **4. 중간 정리**
 
 ---
 
@@ -314,7 +314,7 @@ function이 호출되면 해당 function의 local variable(지역변수)들이 �
 
 ![image-20200806161850869](https://user-images.githubusercontent.com/58545240/90212155-94d36d00-de2d-11ea-876c-8094b21058de.png)
 
-# 5. 인터럽트와 트랩
+# **5. 인터럽트와 트랩**
 
 ---
 
@@ -330,7 +330,7 @@ function이 호출되면 해당 function의 local variable(지역변수)들이 �
 
 ---
 
-# 6. 시스템 콜(System Call)
+# **6. 시스템 콜(System Call)**
 
 ---
 
@@ -448,7 +448,7 @@ function이 호출되면 해당 function의 local variable(지역변수)들이 �
 
 `Robert M. Love`의 책에서도 권장하는 방식이고 전 세계 모든 유닉스 사용자들이 이러한 방식을 사용하고 있다고 한다.
 
-# 7. Process Management
+# **7. Process Management**
 
 ---
 
@@ -525,7 +525,7 @@ function이 호출되면 해당 function의 local variable(지역변수)들이 �
 
 이런 `Waiting Queue`중 **CPU에 링크를 걸어놓고 기다리는 것을 ready queue**라고 **하고 디스크에 링크를 걸어놓고 기다리는 것을Disk I/O queue(또는 Disk wait queue)라고 한다.**
 
-# 8. Child Process 생성하기
+# **8. Child Process 생성하기**
 
 ---
 
@@ -598,7 +598,7 @@ fork()는 두 번 리턴하는데, 각 리턴값은 다음과 같다. Child Proc
 
 ---
 
-# 9. 주요 시스템 콜 동작 원리
+# **9. 주요 시스템 콜 동작 원리**
 
 ---
 
@@ -700,7 +700,7 @@ fork()는 두번 리턴된다. 한 번의 리턴은 자식 프로세스에게 0�
 
 커널에서 일어나는 동작으로는 **먼저 exit(2)을 호출한 프로세스의 CPU를 빼았고, ready queue에 있던 다른 프로세스에게 CPU를 넘겨**준다. 이 과정을 **스케쥴링(scheduling)**한다고 표현하는데, 실제로 **exit(2)을 호출하게 되면 커널 안의 schedule( ) 함수가 호출**된다. 스케쥴 함수 관련 설명은 글의 마지막 3번 부분에서 다룬다.
 
-# 10. 시스템 콜 요약 정리 (Summary)
+# **10. 시스템 콜 요약 정리 (Summary)**
 
 ---
 
@@ -708,7 +708,7 @@ fork()는 두번 리턴된다. 한 번의 리턴은 자식 프로세스에게 0�
 
 지금까지 우리는 프로세스를 위한 4가지 시스템 콜에 대해 살펴 보았다. `fork()`는 부모 프로세스와 아주 유사한 자식 프로세스를 만들어 내고, `exec()`은 진행 중인 프로세스 위에 새로운 프로세스 이미지를 덮어 씌운 후 `main()`으로 가게 된다. `wait()`은 이 시스템 콜을 호출한 프로세스를 잠들게 하는 것이고, `exit()`은 가지고 있던 모든 자원(resource)을 반환하고 부모 프로세스에게 알려주는 역할을 한다.
 
-# 11. Context Switch (유저 모드와 커널 모드 사이의 전환)
+# **11. Context Switch (유저 모드와 커널 모드 사이의 전환)**
 
 ---
 
@@ -745,7 +745,7 @@ P1은 자신의 **state vector에 해당하는 값들을 P1에 대응되는 PCB�
 
 즉 `schedule( )`은 **CPU의 임자가 바뀌어야 할 때(read( ), wait( ), exit( ))마다 불리고, 새로운 임자에게 할당해주기 위한 내부 작업을 진행**한다.
 
-# 12. 총정리
+# **12. 총정리**
 
 ---
 
@@ -815,7 +815,7 @@ P1은 자신의 **state vector에 해당하는 값들을 P1에 대응되는 PCB�
 
 ---
 
-# 13. 복습
+# **13. 복습**
 
 ---
 
@@ -853,7 +853,7 @@ P1은 자신의 **state vector에 해당하는 값들을 P1에 대응되는 PCB�
 
 *이렇게 하면 `fork()`의 과정이 끝이난다. 복습을 통하여 부모의 프로세스가 어떻게 자식 프로세스를 생성하고 자식 프로세스는 어떻게 종료되는지에 대해 알아보았다. 그렇다면 이제 본격적으로 `fork()`를 통해 프로세스를 생성하는 과정을 자세히 알아보자.*
 
-# 14. Process Create
+# **14. Process Create**
 
 ---
 
@@ -932,7 +932,7 @@ PCB에는 다양한 정보들이 수 킬로바이트라는 꽤 큰 용량으로 
 Unlike fork(2), these calls allow the child process to share parts of its execution context with the calling process.
 ```
 
-# 15. Process Copy
+# **15. Process Copy**
 
 ---
 
@@ -991,7 +991,7 @@ Unlike fork(2), these calls allow the child process to share parts of its execut
 
 ---
 
-# 16. Kernel Thread(커널 스레드)
+# **16. Kernel Thread(커널 스레드)**
 
 ---
 
@@ -1019,7 +1019,7 @@ Unlike fork(2), these calls allow the child process to share parts of its execut
 
 **Task basic info 안에는 state vector save area가 존재**하기 때문에**각 스레드마다 별도의 Program Counter와 Stack Pointer를 갖고 있을 수 있는 것**이다. 각 스레드가 **각자의 Stack**을 갖고 있기 때문에 **개별적으로 커널 내의 다른 함수들을 호출하면서 실행**될 수가 있다.
 
-# 17. Process State
+# **17. Process State**
 
 ---
 
@@ -1039,7 +1039,7 @@ CPU가 주어지면 **어느 정도의 시간(time slice)만큼만 동작하고,
 
 위와 같은 중요한 정보들이 `PCB`에 있기 때문에 `PCB`는 남겨둬야 한다. **따라서 자식 프로세스의 PCB는 부모 프로세스가 말소시키는 것이 맞다. parent가 말소시킬 때까지는 자식은 zombie상태인 것이다. 따라서 최상위 부모 프로세스는 자식 프로세스들이 사용한 모든 자원을 전부 파악할 수 있어야 한다.**
 
-# 18. Kernel Scheduling (커널 스케쥴링)
+# **18. Kernel Scheduling (커널 스케쥴링)**
 
 ---
 
@@ -1091,7 +1091,7 @@ CPU 스케쥴러가 `context_switch()`가 일어날 때마다, 레디큐에서 �
 
 ![image-20200811163837483](https://user-images.githubusercontent.com/58545240/90212842-4a52f000-de2f-11ea-95db-39672a7d9505.png)
 
-# 19. Kernel Preemption
+# **19. Kernel Preemption**
 
 ---
 
@@ -1139,7 +1139,7 @@ CPU 스케쥴러가 `context_switch()`가 일어날 때마다, 레디큐에서 �
 
 ---
 
-# 20. 타이머와 시간 관리
+# **20. 타이머와 시간 관리**
 
 ---
 
@@ -1184,7 +1184,7 @@ CPU 스케쥴러가 `context_switch()`가 일어날 때마다, 레디큐에서 �
 
 이러한 타이머는 프로그램으로 특정 시간으로 설정 할 수도 있으며 지연 시킬 수도 있다는 점 정도만 알아두고 이런 타이머에 의해 걸리는 인터럽트에 대해 자세히 알아보자
 
-# 21. 인터럽트
+# **21. 인터럽트**
 
 ---
 
