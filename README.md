@@ -30,7 +30,7 @@
 | 1197_최소스패닝트리 | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)  | Kruscal Algorithm(간선) |
 | 5545_최고의피자     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)  | Greedy                  |
 | 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)  | BFS, DFS                |
-| 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       |                                               | 3차원 BFS               |
+| 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)  | 3차원 BFS               |
 
 ### [Programmers](./알고리즘/Programmers)
 
@@ -61,6 +61,7 @@
 | 43162_네트워크         | [Link](./알고리즘/Programmers/Network_43162.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/43162) | DFS                     |
 | 43163_문자변환         | [Link](./알고리즘/Programmers/ChangeWord_43163.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43163) | BFS                     |
 | 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/60063) | BFS(방향까지 체크(3-D)) |
+| 12904_가장 긴 팰린드롬 | [Link](./알고리즘/Programmers/LongestPalindrome_12904.java)  | [문제](https://programmers.co.kr/learn/courses/30/lessons/12904) | DP                      |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
@@ -76,7 +77,10 @@
 | LC64     | [Link](./알고리즘/LeetCode/LC64_MinimumPathSum.java)         | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                  |
 | LC53     | [Link](./알고리즘/LeetCode/LC53_MaximumSubarray.java)        | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                  |
 | LC72     | [Link](./알고리즘/LeetCode/LC72_EditDistance.java)           | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리        |
-| LC       |                                                              |                                                              |                     |
+| LC152    | [Link](./알고리즘/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                  |
+| LC63     | [Link](./알고리즘/LeetCode/LC63_UniquePathII.java)           | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                  |
+| LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP                  |
+| LC215    | [Link](./알고리즘/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐         |
 
 ### [실전코테](./알고리즘/실전코테)
 
