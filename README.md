@@ -31,6 +31,7 @@
 | 5545_최고의피자     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)  | Greedy                  |
 | 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)  | BFS, DFS                |
 | 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)  | 3차원 BFS               |
+| 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865) | DP(배낭알고리즘)        |
 
 ### [Programmers](./알고리즘/Programmers)
 
@@ -79,7 +80,7 @@
 | LC72     | [Link](./알고리즘/LeetCode/LC72_EditDistance.java)           | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리        |
 | LC152    | [Link](./알고리즘/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                  |
 | LC63     | [Link](./알고리즘/LeetCode/LC63_UniquePathII.java)           | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                  |
-| LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP                  |
+| LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS             |
 | LC215    | [Link](./알고리즘/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐         |
 
 ### [실전코테](./알고리즘/실전코테)

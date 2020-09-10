@@ -775,7 +775,7 @@ Proxy나 Redirect가 없는 가장 기본적인 형태의 흐름은 다음과 �
 
 3. make ( = *컴파일* )
 
-4. chmod +x ksipserver.sh
+4. chmod +x ksipserver.sh (실행권한부여)
 
 5. UserXml > 1002.xml파일의 User 내부에 `<DND>ture</DND>`  추가하기
 
@@ -785,7 +785,7 @@ Proxy나 Redirect가 없는 가장 기본적인 형태의 흐름은 다음과 �
 
    *(착신전환 기능을 on 시킨 사용자 정보를 포함한 XML파일이다. CallForward에 착신전환할 전화번호를 넣어주면 된다.)*
 
-7. ... 추가하기!
+7. SipServer.Xml파일 수정하기(경로수정)
 
 8. ./ksipserver.sh start
 
