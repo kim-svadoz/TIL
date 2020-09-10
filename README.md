@@ -63,6 +63,7 @@
 | 43163_문자변환         | [Link](./알고리즘/Programmers/ChangeWord_43163.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43163) | BFS                     |
 | 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/60063) | BFS(방향까지 체크(3-D)) |
 | 12904_가장 긴 팰린드롬 | [Link](./알고리즘/Programmers/LongestPalindrome_12904.java)  | [문제](https://programmers.co.kr/learn/courses/30/lessons/12904) | DP                      |
+| 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42627) | 우선순위 큐, 정렬       |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
