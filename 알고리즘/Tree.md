@@ -542,7 +542,7 @@ int get_height(TreeNode *root){		// 트리의 높이를 구한다
 
 `root == NULL`의 의미를 좀 더 풀어서 설명하자면 **자식 노드가 있나 살펴보려 서브 트리를 방문했는데 아무것도 발견할 수 없었다**라는 의미다. 위 코드는 이 조건을 적용한 코드다.
 
-마지막으로 `ger_height`함수에서 맨 아래 리턴하는 부분을 살펴보자. **왜 1을 더해서 리턴해주는 걸까?**라는 의문이 든다면 그 이전에 어떤 작업을 시행했는지를 살펴보자. 특히 첫번째 완전한 순환이 끝났을 때를 생각해보자. 순환을 계속하면서 각 서브 트리의 끝까지 방문한 상태(정확히는 오른쪽 서브트리를 끝까지 방문한 상태)에서 한 단계 더 내려가 `root == NULL`이라는 탈출 조건을 만났다. 그렇게 탈출 조건을 만나 빠져나오면 마지막 리턴문을 만나게 되는데 이때의 상황은 더 이상의 자식노드, 서브트리가 없는 상황이므로 리턴문에 있는 `left_h`와 `right_h`는 둘 다 0이 될 것이다.
+마지막으로 `get_height`함수에서 맨 아래 리턴하는 부분을 살펴보자. **왜 1을 더해서 리턴해주는 걸까?**라는 의문이 든다면 그 이전에 어떤 작업을 시행했는지를 살펴보자. 특히 첫번째 완전한 순환이 끝났을 때를 생각해보자. 순환을 계속하면서 각 서브 트리의 끝까지 방문한 상태(정확히는 오른쪽 서브트리를 끝까지 방문한 상태)에서 한 단계 더 내려가 `root == NULL`이라는 탈출 조건을 만났다. 그렇게 탈출 조건을 만나 빠져나오면 마지막 리턴문을 만나게 되는데 이때의 상황은 더 이상의 자식노드, 서브트리가 없는 상황이므로 리턴문에 있는 `left_h`와 `right_h`는 둘 다 0이 될 것이다.
 
 위 상황에 대한 결론을 내려보면 나에게 자식노드, 서브트리는 존재하지 않지만 적어도 **나는 존재한다는 것을 입증했다는 것**이다. 따라서 나 자신을 하나의 개수로 칠 수 있다. 그래서 1을 더하는 것이다. 1을 더한 후에는 왼쪽 서브트리와 오른쪽 서브트리의 높이 중 더 큰 값을 택하기만 하면 되는 것이다.
 
@@ -584,3 +584,172 @@ int get_leaf(TreeNode *root){		// 트리에 존재하는 단말노드의 갯수�
 ```
 
 위 코드의 탈출 조건은 `if (root->left == NULL && root->right == NULL)`다. 즉 **자식노드 혹은 서브트리가 존재하지 않을 때**가 탈출 조건이다. 의미는 **자식 노드는 존재하지 않지만 내가 존재한다는 건 적어도 증명했으니 난 1개로 셀 수 있다**는 것이다. 첫번째 `if (!root)`의 조건은 누군가 이 함수를 사용할 때 존재하지 않는 노드를 매개변수로 넘겼을 때를 대비하기 위함이다 .오류를 방지하는 용도로서의 의미를 가진 조건이다. 이 조건을 탈출 조건으로 쓸 수 없는 것은 이 조건 만으로는 단말 노드의 여부를 증명할 수 없기 때문이다. 아무것도 존재하지 않으므로 개수를 셀 수 없다.
+
+# **> 트라이(Trie)**
+
+> **문자열에서의 검색을 빠르게 해주는 자료구조**
+
+우리는 정수형 자료형에 대해서 이진검색트리를 이용하면 O(logN)의 시간만에 원하는 데이터를 검색할 수 있다. 하지만 문자열에서 이진검색트리를 사용한다면 문자열의 최대길이가 M이라면 O(MlogN)의 시간 복잡도를 가지게 될 것이다.
+
+우리는 문자열 검색을 개선하기 위해 트라이를 이용하여 O(M)의 시간만에 원하는 문자열을 검색할 수 있다.
+
+트라이라는 명칭은 Re**trie**val에서 유래한다. 트라이가 retrieve(탐색)하는데 유용한 걸 생각하면 납득ㅇ ㅣ디ㅗㄴ다.
+
+자 그러면 트라이는 어떻게 문자열의 검색을 O(M)만에 처리할까?
+
+아래 그림은 문자열 집합 = {"AE" , "ATV", "ATES", "ATEV", "DE" ,"DC"} 가 존재할 때 트라이의 예입니다.
+
+![image-20200910180006571](https://user-images.githubusercontent.com/58545240/92707306-23d19780-f390-11ea-9dbc-fb8affcde180.png)
+
+쿼리에 따라서 처리해줄 수 있는 역할이 달라지겠지만 우리는 대부분 문자열이 끝나는 지점을 표시하는것이 쿼리를 처리할 때 편합니다.
+
+![image-20200910180022996](https://user-images.githubusercontent.com/58545240/92707337-2a600f00-f390-11ea-92e0-76236f2927c8.png)
+
+종료 노드들을 표시해주면 위와같은 그림이 되겠군요
+
+자 우리는 트리형태를 띄는 트라이에서 검색을 할 경우 최대 트리의 높이까지 탐색하게 됩니다.
+
+따라서 시간복잡도는 O(H)가 되겠죠 하지만 트리의 높이는 최대 문자열의 길이가 되기 때문에 O(M)의 시간복잡도에 문자열 검색이 가능한 것입니다.
+
+자 그러면 우리는 트라이를 어떻게 구현해야 할까요?
+
+많은 방법이 있겠지만 종만북을 참고하여 가장 보편적인 방법을 보여드리겠습니다.
+
+## TrieNode.java
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+public class TrieNode {
+    // [ 변수 ]
+    // 자식 노드 맵
+    private Map<Character, TrieNode> childNodes = new HashMap<>();
+    // 마지막 글자인지 여부
+    private boolean isLastChar;
+    // [ GETTER / SETTER 메서드 ]
+    // 자식 노드 맵 Getter
+    
+    Map<Character, TrieNode> getChildNodes() {
+        return this.childNodes;
+    }
+    // 마지막 글자인지 여부 Getter
+    boolean isLastChar() {
+        return this.isLastChar;
+    }
+    // 마지막 글자인지 여부 Setter
+    void setIsLastChar(boolean isLastChar) {
+        this.isLastChar = isLastChar;
+    }
+}
+```
+
+```c++
+struct Trie {
+    bool finish;    //끝나는 지점을 표시해줌
+    Trie* next[26];    //26가지 알파벳에 대한 트라이
+    Trie() : finish(false) {
+        memset(next, 0, sizeof(next));
+    }
+    ~Trie() {
+        for (int i = 0; i < 26; i++)
+            if (next[i])
+                delete next[i];
+    }
+    void insert(const char* key) {
+        if (*key == '\0')
+            finish = true;    //문자열이 끝나는 지점일 경우 표시
+        else {
+            int curr = *key - 'A';
+            if (next[curr] == NULL)
+                next[curr] = new Trie();    //탐색이 처음되는 지점일 경우 동적할당
+            next[curr]->insert(key + 1);    //다음 문자 삽입
+        }
+    }
+    Trie* find(const char* key) {
+        if (*key == '\0')return this;//문자열이 끝나는 위치를 반환
+        int curr = *key - 'A';
+        if (next[curr] == NULL)return NULL;//찾는 값이 존재하지 않음
+        return next[curr]->find(key + 1); //다음 문자를 탐색
+    }
+};
+```
+
+트라이는 자료구조이기 때문에 입맛에 따라서 변형하여 사용이 가능해야 합니다.
+
+따라서 우리는 문제에서 원하는 조건에 따라서 find함수를 여러방식으로 변형하여 사용하게 될것입니다. 
+
+그러면 우리는 트라이를 통하여 어떤 문제를 해결할 수 있을까요??
+
+[BOJ 5052 전화번호 목록](http://icpc.me/5052) 문제를 보겠습니다.
+
+전화 번호의 목록이 주어질 때 일관성이 있는지는 확인하는 문제입니다.
+
+우리는 트라이를 이용하여 이 문제를 간단하게 해결할 수 있습니다.
+
+모든 문자열을 트라이에 삽입해준 후 다시 모든 문자열을 트라이로 검색하면서 아직 검색중인데 finish인 부분이 한번이라도 존재한다면 일관성이 없다고 처리가 됩니다.
+
+총 시간 복잡도는 O(T*(N*10))이 되겠군요 여기서 10은 전화번호의 최대길이입니다.
+
+다음은 소스코드입니다.
+
+```c++
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#define MAX_N 10000
+using namespace std;
+struct Trie{
+    Trie* next[10];
+    bool term;
+    Trie() : term(false){
+        memset(next,0,sizeof(next));
+    }
+    ~Trie(){
+        for(int i=0;i<10;i++){
+            if(next[i])
+                delete next[i];
+        }
+    }
+    void insert(const char* key){
+        if(*key=='\0')
+            term=true;
+        else{
+            int curr = *key-'0';
+            if(next[curr]==NULL)
+                next[curr]=new Trie();
+            next[curr]->insert(key+1);
+        }
+    }
+    bool find(const char* key){
+         if(*key=='\0')
+            return 0;
+        if(term)
+            return 1;
+        int curr = *key-'0';
+        return next[curr]->find(key+1);
+    }
+};
+int t,n,r;
+char a[MAX_N][11];
+int main(){
+    scanf("%d",&t);
+    while(t--){
+        scanf("%d",&n);
+        getchar();
+        for(int i=0;i<n;i++)
+            scanf("%s",&a[i]);
+        Trie *root=new Trie;
+        r=0;
+        for(int i=0;i<n;i++)
+            root->insert(a[i]);
+        for(int i=0;i<n;i++){
+            if(root->find(a[i])){
+                r=1;
+            }
+        }
+        printf("%s\n",r?"NO":"YES");
+    }
+    return 0;
+}
+```
+

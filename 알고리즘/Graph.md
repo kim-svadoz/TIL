@@ -10,7 +10,7 @@
 
 - (무방향) 그래프 G = (V, E)
   - V : 노드 혹은 정점(vertex)
-  - E : 노드쌍을 연결하는 Edge 혹은 Link
+  - E : 노드쌍을 연결하는 Edge 혹은 Link(간선)
   - Object들 간의 이진관계를 표현
   - n = |V|, m = |E|
 
