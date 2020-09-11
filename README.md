@@ -32,38 +32,42 @@
 | 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)  | BFS, DFS                |
 | 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)  | 3차원 BFS               |
 | 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865) | DP(배낭알고리즘)        |
+| 2056_작업           | [Link]                                                       | [문제]                                        | 위상정렬, queue         |
+| 4195_친구네트워크   | [Link]                                                       | [문제]                                        | Kruscal, Union-Find     |
 
 ### [Programmers](./알고리즘/Programmers)
 
-| 문제번호               | 솔루션                                                       | 문제 링크                                                    | 비고                    |
-| ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------------- |
-| 17685_자동완성         | [Link](./알고리즘/Programmers/AutoComplete_17685.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17685) | 문자열비교, sort, Math  |
-| 43165_타겟넘버         | [Link](./알고리즘/Programmers/DFS_TargetNumber_43165.java)   | [문제](https://programmers.co.kr/learn/courses/30/lessons/43165) | DFS                     |
-| 12903_중간값구하기     | [Link](./알고리즘/Programmers/getMiddleNumber_12903.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/12903) | 문자열 처리             |
-| 1836_리틀프렌즈사천성  | [Link](./알고리즘/Programmers/Little_Friends_Sachunsung_1836.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/1836) | BFS, DFS                |
-| 17677_뉴스클러스터링   | [Link](./알고리즘/Programmers/News_Clustering_17677.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/17677) | 문자열 처리             |
-| 42841_숫자야구         | [Link](./알고리즘/Programmers/numberBaseball_42841.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42841) | 완전탐색, 최적화        |
-| 17678_셔틀버스         | [Link](./알고리즘/Programmers/ShuttleBus_1768.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/17678) | 문자열 변환             |
-| 42840_모의고사         | [Link](./알고리즘/Programmers/soopoja_42840.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42840) | 완전탐색                |
-| 42588_탑쌓기           | [Link](./알고리즘/Programmers/top_42588.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42588) | 스택, 큐                |
-| 43164_여행경로         | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/43164) | DFS                     |
-| 42889_실패율           | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) | sort                    |
-| 43105_정수삼각형       | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) | 동적프로그래밍(DP)      |
-| 17686_문자열정렬       | [Link](./알고리즘/Programmers/SortFileName_17686.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17686) | Sort, Comparator        |
-| 42862_체육복           | [Link](./알고리즘/Programmers/GymWear_42862.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42862) | Greedy                  |
-| 17682_다트게임         | [Link](./알고리즘/Programmers/DartGame.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/17682) | 정규표현식, 패턴        |
-| 12915_문자열정렬       | [Link](./알고리즘/Programmers/SortStrings.java)              | [문제](https://programmers.co.kr/learn/courses/30/lessons/12915) | sort, Comparator        |
-| 12982_예산             | [Link](./알고리즘/Programmers/Budget_12982.java)             | [문제](https://programmers.co.kr/learn/courses/30/lessons/12982) | sort                    |
-| 17681_비밀지도         | [Link](./알고리즘/Programmers/SecretMap_17681.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/17681) | BinaryString            |
-| 42576_완주하지 못한 자 | [Link](./알고리즘/Programmers/NoFullRacing_42576.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/42576) | Hash                    |
-| 42577_전화번호부       | [Link](./알고리즘/Programmers/PhoneNumberList_42577.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/42577) | Hash                    |
-| 42578_위장             | [Link](./알고리즘/Programmers/Camouflage_42578.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/42578) | Hash                    |
-| 42579_베스트앨범       | [Link](./알고리즘/Programmers/BestAlbum_42579.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/42579) | Hash                    |
-| 43162_네트워크         | [Link](./알고리즘/Programmers/Network_43162.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/43162) | DFS                     |
-| 43163_문자변환         | [Link](./알고리즘/Programmers/ChangeWord_43163.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43163) | BFS                     |
-| 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/60063) | BFS(방향까지 체크(3-D)) |
-| 12904_가장 긴 팰린드롬 | [Link](./알고리즘/Programmers/LongestPalindrome_12904.java)  | [문제](https://programmers.co.kr/learn/courses/30/lessons/12904) | DP                      |
-| 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42627) | 우선순위 큐, 정렬       |
+| 문제번호               | 솔루션                                                       | 문제 링크                                                    | 비고                         |
+| ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
+| 17685_자동완성         | [Link](./알고리즘/Programmers/AutoComplete_17685.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17685) | 문자열비교, sort, Math       |
+| 43165_타겟넘버         | [Link](./알고리즘/Programmers/DFS_TargetNumber_43165.java)   | [문제](https://programmers.co.kr/learn/courses/30/lessons/43165) | DFS                          |
+| 12903_중간값구하기     | [Link](./알고리즘/Programmers/getMiddleNumber_12903.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/12903) | 문자열 처리                  |
+| 1836_리틀프렌즈사천성  | [Link](./알고리즘/Programmers/Little_Friends_Sachunsung_1836.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/1836) | BFS, DFS                     |
+| 17677_뉴스클러스터링   | [Link](./알고리즘/Programmers/News_Clustering_17677.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/17677) | 문자열 처리                  |
+| 42841_숫자야구         | [Link](./알고리즘/Programmers/numberBaseball_42841.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42841) | 완전탐색, 최적화             |
+| 17678_셔틀버스         | [Link](./알고리즘/Programmers/ShuttleBus_1768.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/17678) | 문자열 변환                  |
+| 42840_모의고사         | [Link](./알고리즘/Programmers/soopoja_42840.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42840) | 완전탐색                     |
+| 42588_탑쌓기           | [Link](./알고리즘/Programmers/top_42588.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42588) | 스택, 큐                     |
+| 43164_여행경로         | [Link](./알고리즘/Programmers/TravleRoute_43164.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/43164) | DFS                          |
+| 42889_실패율           | [Link](./알고리즘/Programmers/fail_rate.java)                | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) | sort                         |
+| 43105_정수삼각형       | [Link](./알고리즘/Programmers/integer_triangle.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105?language=java) | 동적프로그래밍(DP)           |
+| 17686_문자열정렬       | [Link](./알고리즘/Programmers/SortFileName_17686.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17686) | Sort, Comparator             |
+| 42862_체육복           | [Link](./알고리즘/Programmers/GymWear_42862.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42862) | Greedy                       |
+| 17682_다트게임         | [Link](./알고리즘/Programmers/DartGame.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/17682) | 정규표현식, 패턴             |
+| 12915_문자열정렬       | [Link](./알고리즘/Programmers/SortStrings.java)              | [문제](https://programmers.co.kr/learn/courses/30/lessons/12915) | sort, Comparator             |
+| 12982_예산             | [Link](./알고리즘/Programmers/Budget_12982.java)             | [문제](https://programmers.co.kr/learn/courses/30/lessons/12982) | sort                         |
+| 17681_비밀지도         | [Link](./알고리즘/Programmers/SecretMap_17681.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/17681) | BinaryString                 |
+| 42576_완주하지 못한 자 | [Link](./알고리즘/Programmers/NoFullRacing_42576.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/42576) | Hash                         |
+| 42577_전화번호부       | [Link](./알고리즘/Programmers/PhoneNumberList_42577.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/42577) | Hash                         |
+| 42578_위장             | [Link](./알고리즘/Programmers/Camouflage_42578.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/42578) | Hash                         |
+| 42579_베스트앨범       | [Link](./알고리즘/Programmers/BestAlbum_42579.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/42579) | Hash                         |
+| 43162_네트워크         | [Link](./알고리즘/Programmers/Network_43162.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/43162) | DFS                          |
+| 43163_문자변환         | [Link](./알고리즘/Programmers/ChangeWord_43163.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43163) | BFS                          |
+| 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/60063) | BFS(방향까지 체크(3-D))      |
+| 12904_가장 긴 팰린드롬 | [Link](./알고리즘/Programmers/LongestPalindrome_12904.java)  | [문제](https://programmers.co.kr/learn/courses/30/lessons/12904) | DP                           |
+| 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42627) | 우선순위 큐, 정렬            |
+| 49189_가장 먼 노드     | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA49189-%EA%B0%80%EC%9E%A5-%EB%A8%BC-%EB%85%B8%EB%93%9C?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/49189) | Queue, Node, BFS             |
+| 42681_섬 연결하기      | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA42861-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/42861) | kruskal MTS, Union-Find, BFS |
 
 ### [LeetCode](./알고리즘/LeetCode)
 

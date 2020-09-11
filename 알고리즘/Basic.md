@@ -1,5 +1,13 @@
 # 알고리즘 이론:fist_oncoming:
 
+
+
+대회 알고리즘 이론은
+
+https://m.blog.naver.com/PostList.nhn?blogId=kks227&categoryNo=299&logCode=0&categoryName=%EB%8C%80%ED%9A%8C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
+
+여기서 참조하자.
+
 # **> 알고리즘의 분석**
 
 ---
@@ -300,6 +308,78 @@ public class Main {
 ```bash
 수행시간 : 216 MS, 메모리 : 11532 KB
 ```
+
+# **> Iterator**
+
+---
+
+**Iterator**는 자바의 컬렉션 프레임웍에서 컬렉션에 저장되어 있는 요소들을 읽어오는 방법을 표준화 하였는데 그중 하나가 **Iterator** 인터페이스이다.
+
+```java
+public interface iterator {
+    boolean hasNext();
+    Object next();
+    void remove;
+}
+```
+
+- **boolean hasNext()** : 읽어올 요소가 남아있는지 확인한다. 있으면 true, 없으면 false를 반환
+- **Obejct next()** : 읽어올 요소가 남아있는지 확인하는 메소드. 있으면 true 없으면 false를 반환
+- **void remove()** : `next()`로 읽어온 요소를 삭제한다. 따라서 `next()`를 호출한 다음에 `remove()`를 호출해야 한다. ( 선택적 기능임 )
+
+
+
+## List 정렬시키는 방법
+
+```java
+ArrayList<Integer> list = new ArrayList<Integer>();
+
+Iterator<Integer> it = list.iterator();
+while(it.hasNext()){
+    list.get(it.next());
+}
+```
+
+**Iterator**를 활용해서 list의 모든 값을 가져온다.
+
+**Iterator는 자동으로 Index를 관리해주기 때문에 사용헤 편리함이 있을수 있으나 Iterator를 열어보면 객체를 만들어 사용하기 때문에 느릴 수 밖에 없다.**
+
+**따라서 list의 size를 받아서 사용하는 것이 더 좋다 !!**
+
+
+
+## Map 정렬시키는 네가지 방법
+
+```java
+HashMap<String, String> map = new HashMap<String, String>();
+
+...
+    
+// 1
+Iterator<String> it = map.keySet().iterator();
+while(it.hasNext()){
+    String key = it.next();
+}
+
+// 2
+for(Map.Entry<String, String> elem : map.entrySet()) {
+    String key = elem.getKey();
+    String value = elem.getValue();
+}
+
+// 3
+for(String key : map.keySet()){
+    String key = key;
+    String value = map.get(key);
+}
+
+// 4
+map.forEach((key, value) -> System.out.println("key: "+key+", value: "+value));
+```
+
+성능테스트 결과
+
+4-> 2 -> 3 -> 1
 
 # **> 회문판별**
 

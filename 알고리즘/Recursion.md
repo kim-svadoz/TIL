@@ -413,7 +413,7 @@ int search(int[] data, int n, int target){
 ### 매개변수의 명시화 : 순차탐색
 
 - 이 함수의 미션은 `data[begin]`에서 `data[end]`사이에서 target을 검색한다. **즉, 검색구간의 시작점을 명시적으로(explicit)으로 지정한다.**
-- 이 함수를 `search(data, 0, n-1, target)으로 호출한다면 위에있는 순차탐색 함수와 완전히 동일한 일을 한다.
+- 이 함수를 `search(data, 0, n-1, target)`으로 호출한다면 위에있는 순차탐색 함수와 완전히 동일한 일을 한다.
 
 ```java
 int search(int[] data, int begin, int end, int target){
@@ -912,7 +912,7 @@ public class CountingCellsBlob{
         }
     }
     
-    public static vboid main(String[] args){
+    public static void main(String[] args){
         printGrid();
         int blobCount = countCells(3, 5);
         System.out.println();
@@ -1153,7 +1153,7 @@ public class NQueensProblem{
 
 ## Recursion을 이용하여 모든 부분집합 나열
 
-- `{a, b, c, d, e, f}`의 모든 부분집하을 나열하려면
+- `{a, b, c, d, e, f}`의 모든 부분집합을 나열하려면
 
   - 먼저 a를 포함하지 않는 부분집합과
 
