@@ -32,7 +32,7 @@
 | 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)  | BFS, DFS                |
 | 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)  | 3차원 BFS               |
 | 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865) | DP(배낭알고리즘)        |
-| 2056_작업           | [Link]                                                       | [문제]                                        | 위상정렬, queue         |
+| 2056_작업           | [Link](./알고리즘/Baekjoon/Work_2056.java)                   | [문제](https://www.acmicpc.net/problem/2056)  | 위상정렬, queue         |
 | 4195_친구네트워크   | [Link]                                                       | [문제]                                        | Kruscal, Union-Find     |
 
 ### [Programmers](./알고리즘/Programmers)
@@ -40,6 +40,8 @@
 | 문제번호               | 솔루션                                                       | 문제 링크                                                    | 비고                         |
 | ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
 | 17685_자동완성         | [Link](./알고리즘/Programmers/AutoComplete_17685.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17685) | 문자열비교, sort, Math       |
+| 42746_가장큰수         | [Link](./알고리즘/Programmers/LargestInteger_42746.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42746) | 문자열 정렬 및 숫자 변환     |
+| 12924_숫자의 표현      | [Link](./알고리즘/Programmers/ExpressionOfInteger_12924.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/12924) | 문자열 완전탐색              |
 | 43165_타겟넘버         | [Link](./알고리즘/Programmers/DFS_TargetNumber_43165.java)   | [문제](https://programmers.co.kr/learn/courses/30/lessons/43165) | DFS                          |
 | 12903_중간값구하기     | [Link](./알고리즘/Programmers/getMiddleNumber_12903.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/12903) | 문자열 처리                  |
 | 1836_리틀프렌즈사천성  | [Link](./알고리즘/Programmers/Little_Friends_Sachunsung_1836.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/1836) | BFS, DFS                     |
