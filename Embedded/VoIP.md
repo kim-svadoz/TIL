@@ -116,7 +116,7 @@
 
 ## :black_nib: ​SIP 구성요소
 
-**`SIP`**시스템의 구성요소는 SIP 클라이언트와 SIP 서버로 나누어 볼 수 있따.
+**`SIP`**시스템의 구성요소는 SIP 클라이언트와 SIP 서버로 나누어 볼 수 있다.
 
 - SIP 클라이언트
 
@@ -791,3 +791,70 @@ Proxy나 Redirect가 없는 가장 기본적인 형태의 흐름은 다음과 �
 
 
 
+서버 start 시켰으면 SIP 통화 해보자
+
+**SIP 클라이언트 프로그램 개발 가이드**
+
+**1. SipClient 폴더의 소스 코드 읽기**
+
+ \- SipClient 프로젝트는 C++ SIP stack 의 User Agent 의 기능을 SIP 클라이언트 입장에서 테스트하는 용도로 개발된 소스 코드입니다.
+
+ \- SipClient 에는 3개의 소스 파일이 포함되어 있고 각각에 대한 설명은 다음과 같습니다.
+
+  \* SipClient.cpp : SIP UserAgent callback 처리 클래스 정의
+
+  \* SipClient.h : SIP UserAgent callback 처리 클래스 선언
+
+  \* SipClientMain.cpp : SIP UserAgent 를 시작하고 기능 테스트
+
+
+
+**2. SipClientMFC 폴더의 소스 코드 읽기**
+
+ \- SipClientMFC 프로젝트는 MFC 기반 SIP 클라이언트 개발 예제 소스 코드입니다.
+
+ \- SipClientMFC 프로젝트에서는 SipUserAgent 와 SipUserAgentMFC 라이브러리를 이용하여서 개발하였습니다.
+
+ \- SipUserAgentMFC 라이브러리는 MFC 기반 윈도우 프로그램에서 효율적으로 callback 처리를 할 수 있는 기능이 개발되어 있습니다.
+
+
+
+
+
+## C++ SIP stack 구조
+
+![image-20200914103617338](images/image-20200914103617338.png)
+
+- **SipPlatform**
+  - C++ SIP stack 에서 사용되는 OS 독립적인 유틸리티 라이브러리
+  - 네트워크, 로그 등의 기능을 수행하는 라이브러리입니다.
+
+- **SipParser**
+  - SIP 메시지 파서/생성 라이브러리
+
+- **SdpParser**
+  - SDP 메시지 파서/생성 라이브러리
+
+- **SipStack**
+  - SIP stack 라이브러리
+  - SIP 메시지 수신 / SIP 메시지 파싱 및 callback, stack 관리 기능을 수행합니다. 
+
+- **SipUserAgent**
+  - SIP 로그인 / 통화 관리 라이브러리
+  - SIP Dialog 관리 기능
+  - 응용 프로그램에서 SIP 프로토콜에 대한 지식이 없어서 편리하게 통화 요청 / 수락 / 거절 / 통화 종료할 수 있습니다.
+
+- **XmlParser**
+  - XML 문자열을 파서/생성 라이브러리
+  - SIP body 에 포함된 XML 파싱 및 설정 파일 XML 파싱을 위한 기능
+
+
+
+## 문서 보는 순서
+
+1. [[오픈소스] C++ SIP stack 으로 IP-PBX 에 로그인하는 방법](http://blog.naver.com/websearch/220071177716)
+2. [[오픈소스] C++ SIP stack 으로 통화 호출하는 방법](https://blog.naver.com/websearch/220071411915)
+
+
+
+다익, 패턴, dfs, DP, 문자열 검색(트라이, KMP), 슬라이딩 윈도우, Hashmap,

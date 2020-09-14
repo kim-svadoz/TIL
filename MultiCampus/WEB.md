@@ -109,7 +109,7 @@ WEB
 
 #### basic.html
 
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -162,7 +162,7 @@ WEB
 
 #### lounge.html
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -185,7 +185,7 @@ BYOWS (Bring Your Own Web Server).</p>
 
 #### list.html
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -226,7 +226,7 @@ BYOWS (Bring Your Own Web Server).</p>
 
 #### mypage.html
 
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -279,7 +279,7 @@ BYOWS (Bring Your Own Web Server).</p>
 
 #### table.html
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -318,7 +318,7 @@ BYOWS (Bring Your Own Web Server).</p>
 </html>
 ```
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -354,7 +354,7 @@ BYOWS (Bring Your Own Web Server).</p>
 
 -   양식태그 : action과 mehod는 서버로 데이터를 보낼 때 굉장히 중요한 속성이다!
     
-    ```
+    ```html
     <!DOCTYPE html>
     <html>
     <head>
@@ -390,13 +390,6 @@ BYOWS (Bring Your Own Web Server).</p>
     
     ```
     
-
-```
-
-```
-```
-
-```
 
 ## 3\. 선택관련태그
 
@@ -457,7 +450,7 @@ hadoop hive mongodb sqoop
 
 #### customer.html
 
-```
+```html
 
 <table style="text-align: left;" border="1" width="400"><tbody><tr><td colspan="2" align="center"><b>회원가입</b></td></tr><tr><td>이름</td><td><input maxlength="10" name="name" type="text"></td></tr><tr><td>사용자 ID</td><td><input maxlength="20" name="id" type="text"></td></tr><tr><td>암호</td><td><input maxlength="20" name="pass" type="password"></td></tr><tr><td>암호확인</td><td><input maxlength="60" name="passcheck" type="password"></td></tr><tr><td>주민등록번호</td><td><input maxlength="6" name="regnum1" size="13" type="text">- <input maxlength="7" name="regnum2" size="13" type="text"></td></tr><tr><td>전화번호</td><td><input maxlength="3" name="phone1" size="8" type="number">- <input maxlength="4" name="phone2" size="8" type="number">- <input maxlength="4" name="phone3" size="8" type="number"></td></tr><tr><td>성별</td><td><input name="sex" type="radio" value="남자">남자 <input name="sex" type="radio" value="여자">여자</td></tr><tr><td>직업</td><td><select name="job" size="1"><option value="웹디자이너">웹디자이너</option> <option value="개발자">개발자</option> <option value="빅데이터개발자">빅데이터개발자</option> <option value="DBA">DBA</option> <option value="임베디드개발자">임베디드개발자</option></select></td></tr><tr><td>email주소</td><td><input name="mymail" type="email"></td></tr><tr><td colspan="2" align="center"><input type="submit" value="가입신청"> <input type="reset" value="취소"></td></tr></tbody></table>
 
@@ -515,25 +508,25 @@ hadoop hive mongodb sqoop
 
 -   타입선택자 : html요소를 선택하겠다.
 
-```
+```html
 P{ color: blue; }
 ```
 
 -   아이디선택자 : 특정한 요소(ex. id / name / pass)를 선택 ( javascrip나 jQuery에서 많이 사용 )
 
-```
+```html
 #special{ color: yellow; }
 ```
 
 -   클래스선택자 : 클래스로 묶어서 선택 ( css에서 많이 사용 )
 
-```
+```html
 .myclass{ color: red; }
 ```
 
 ##### 1) css의 기본 사용방법과 선택자의 종류 및 사용방법
 
-```
+```html
 <!DOCTYPE html>
 <!-- 1) css의 기본 사용방법과 선택자의 종류 및 사용방법 -->
 <html>
@@ -596,7 +589,7 @@ P{ color: blue; }
 
 ##### 2) css와 선택자를 활용하는 방법
 
-```
+```html
 <!DOCTYPE html>
 <!-- 2) css를 사용하는 방법과 선택자를 활용하는 방법 -->
 <html>
@@ -665,7 +658,7 @@ P{ color: blue; }
 
 ##### 1) 외부 스타일시트 사용방법
 
-```
+```css
 "mystyle.css"
 @charset "EUC-KR";
 body{
@@ -675,7 +668,7 @@ body{
 
 #### 3\. 폰트 스타일
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -759,7 +752,7 @@ body{
 
 #### 4\. 커서 스타일
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -804,7 +797,7 @@ body{
 -   " **:(콜론)** " 은 실체가 없고 상황이 주어졌을 때 실행되는 것.
 -   hover는 link와 visted다음에 위치해야 하고 active는 hover 다음에 위치해야한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -839,7 +832,7 @@ body{
 
 #### 6\. 리스트 스타일
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -878,7 +871,7 @@ body{
 </html>
 ```
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -919,7 +912,7 @@ body{
 
 #### 7\. 박스모델(box model)
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -961,7 +954,7 @@ body{
 
 ```
 
-```
+```html
 <!DOCTYPE html>
 <html>
     <head>
@@ -1002,7 +995,7 @@ body{
 
 #### 8.포지셔닝(positioning)
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -1222,7 +1215,7 @@ body{
     -   window.document.....
 -   form태그와 form태그 하위 태그를 객체로 접근하기 위해서 name속성을 정의하고 접근
     
-    ```
+    ```html
     <form name = "myform">
         아이디 :<input type="text" name="id">
         패스워드 :<input type="password" name="pass">
@@ -1236,7 +1229,7 @@ body{
     
     -   사실은 DOM의 방식인데 섞어서 쓰기도 한다.
     
-    ```
+    ```html
     <div id="mydiv">
     </div>
     객체 = document.getElementById("mydiv")
@@ -1471,7 +1464,7 @@ script 링크가 없으면 jQuery 실행 안된다.
     
     -   사용할 서블릿이 어떤 클래스인지 정의
     
-    ```
+    ```html
     <servlet>
           <servlet-name>서블릿의 이름(별칭)</servlet-name>
           <servlet-class>실제 사용할 서블릿클래스(패키지 포함)</servlet-class>
@@ -1480,7 +1473,7 @@ script 링크가 없으면 jQuery 실행 안된다.
     
     ex) basic패키지에 작성한 FirstServlet을 first라는 이름으로 등록
     
-    ```
+    ```html
     <servlet>
           <servlet-name>First</servlet-name>
           <servlet-class>basic.FirstServlet</servlet-class>
@@ -1491,7 +1484,7 @@ script 링크가 없으면 jQuery 실행 안된다.
     
     -   서블릿을 어떤 url로 요청할지 등록
     
-    ```
+    ```html
     <servlet-mapping>
           <servlet-name>미리등록한 서블릿의 이름</servlet-name>
           <url-pattern>요청url(반드시 /나 .으로 시작)</url-pattern> 
@@ -1500,7 +1493,7 @@ script 링크가 없으면 jQuery 실행 안된다.
     
     ex) 위에서 등록한 first서블릿을 /first.multi로 요청
     
-    ```
+    ```html
     <servlet-mapping>
           <servlet-name>first</servlet-name>
           <url-pattern>/first.html</url-pattern> //path이름은 내맘대로
@@ -1523,7 +1516,7 @@ script 링크가 없으면 jQuery 실행 안된다.
     -   _serverweb_ ? : server.xml에 등록한 path (보통은 context명)
     -   _first.multi_ ? : web.xml에 등록한 요청 path ( 에 등록 )
     
-    ```
+    ```html
     ex) GuGuServlet 작성하기
        => 콘솔에 7단출력하기
        서블릿명 : gugu
@@ -1531,7 +1524,7 @@ script 링크가 없으면 jQuery 실행 안된다.
        FistServlet과 동일한 방법으로 요청하고 .java와 실행화면 캡쳐 제출
     ```
     
-    ```
+    ```php+HTML
     <a href="http://localhost:8088/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
     <a href="http://70.12.115.65:8088/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
     <a href="/serverweb/first.multi">받은편지함(하이퍼링크 요청)</a>
@@ -1539,14 +1532,12 @@ script 링크가 없으면 jQuery 실행 안된다.
     
     2) 하이퍼링크 클릭
     
-    ```
+    ```html
     <a href="http://서버ip:port:contextpath/서블릿요청url">하이퍼링크</a>
     <a href="/contextpath/서블릿요청url">하이퍼링크</a>
     ```
     
-    3)
-    
-    태그에서 method속성을 "get"으로 설정하고 submit버튼 선택
+    3) 태그에서 method속성을 "get"으로 설정하고 submit버튼 선택
     
     -   action속성에서 설정한다
         
@@ -1622,185 +1613,9 @@ script 링크가 없으면 jQuery 실행 안된다.
         ~~/serverweb/login.do?id=lee&pass=1234
         
         -   id : 파라미터 name
-            
         -   lee : 파라미터 value
-            
-
-```
-    1.  _getParameter_
-
-    -   ServletRequest의 메소드로 메소드를 호출하며 전달한 name에 대한 value를 리턴한다.
-
-    -   리턴값 : String으로 파라미터의 값
-
-        -   파라미터 값 : 주소표시줄에 직접 넘긴 value로 =의 오른족에 있는 문자열
-
-            \=> form태그를 이용해서 사용자가 직접 이용한 값
-
-    -   매개변수 : String으로 파라미터의 이름
-
-        -   파라미터 이름 : 주소표시줄에 직접 넘긴 name으로 =의 왼쪽에 있는 문자열
-
-            \=> 양식태그를 정의할 때 name속성에 정의한 값
-
-
-```
-        <input type="text" name="id">
-                             ------ => 파라미터 이름
-        ```
-
-
-    2.  _getParameterValues_
-    
-    -   ServletRequest의 메소드로 파라미터명이 같은 모든 value를 모아서 String\[\]로 리턴
-    
-        \=> CheckBox, List에서 복수 개 선택, 임의로 동일한 이름을 정의해서 넘긴 데이터
-    
-    -   리턴타입 : String\[\]으로 파라미터의 값들
-    
-    -   매개변수 : String으로 파라미터의 이름을 정의
-
-
-    **3) 응답**
-    
-    \=> 클라이언트가 요청한 내용을 처리하고 처리결과를 웹 페이지에 출력되도록 응답해야 한다.
-    
-    \=> 서블릿에서는 응답할 수 있도록 출력스트림을 지원한다.
-    
-    1.  응답하는 무선의 방식과 인코딩방식을 정의
-    
-    ```
-    res.SetContentType("응답형식/(MIME타입);문자셋");
-    res.SetcontentType("test/html;charset=euc-kr");
-    ```
-    
-    2.  응답객체에서 출력스트림 얻기
-    
-    -   ServletResponse객체의 getWriter를 이용해서 리턴받는다.
-    
-    ```
-    PrintWriter pw = response.getWriter();
-    ```
-    
-    3.  메소드의 매개변수로 응답할 내용을 명시한다.
-    
-    -   실제로 불가능(추후에 개선된 내용을)
-    -   보통 Ajax용
-    
-    ```
-    pw.메소드("출력할 내용")
-            -------------- => html 태그
-    ```
-    
-    **4) 응답방식**
-    
-    -   200 : 정상요청
-    
-    -   404 : 요청한 url에 맞는 파일을 찾을 수 없습니다.
-    
-    -   405 : 요청방식에 따라 실행되는 메소드가 없다.
-    
-        \=> 요청방식과 메소드명을 확인
-```
-
-> 서블릿 객체의 소멸
-> 
-> 1.  WAS의 리로딩
-> 2.  Context의 리로딩
-> 3.  서블릿 컴파일
-
--   web에서 사용하는 내부 저장소 대부분이 Map이고 Set도 추가로 알아야 한다.
-    -   Set은 순서없이 가지고 있는 데이터의 집합
-    -   Map은 키와 밸류를 같이 저장하고 있는 구조
--   Iterator ?!
-
-#### 4\. 클라이언트가 전달하는 요청 메시지에서 클라이언트의 입력 정보를 추출하기
-
-#### 5\. DB연동
-
-## 20-01-15 수
-
-## 20-01-16 목
-
--   annotation
--   web.xml에 있는 name=" " 을 DB연동할 때의 컬럼명과 동일하게 작성하는 것이 좋다.
--   비지니스로직은 반드시 분리되어 있어야 한다.
-
----
-
-## 20-01-17 금
-
-### **< 요청재지정>**
-
--   화면은 분리해야 하는데 html에서는 자바코드를 쓸 수가 없는 아쉬움?! - 대안이 필요해요
-    
-    \=> _JSP_ : html문서하고 똑같이 생겼는데 자바코드를 쓸 수 있도록
-    
-    \=> 모든 html 파일을 .jsp 파일로 바꾸기
-    
--   클라이언트로부터 들어온 최초 요청을 servlet에서 원하는 다른 자원(jsp)으로 요청을 넘기는것을 요청재지정.
-    
--   요청재지정을 하는 목적은 서블릿에서 화면단을 분리시키고 분리시킨 화면이 응답하도록 하기 위해 필요.
-    
--   웹을 개발하기 위해 사용하는 최적화된 패턴인 MVC패턴을 적용하기 위해 반드시 필요한 개념
-    
-
-### 1\. 데이터 공유
-
-#### 1) scope
-
--   page, request, session, application에 각각 map 구조의 저장소를 갖고 있고 그 저장소에 추가하고 저장소에서 꺼냄.
-    
--   _page_ -> javax.servlet.jsp.PageContext
-    
-    \=> jsp문서 내에서만 사용할 수 있다.
-    
--   _request_ -> javax.servlet.SerlvetRequest
-    
-    \=> 한번에 request에 대해서 처리하고 response하기 전까지 사용되는 모든 객체에서 공유
-    
--   _session_ -> javax.servlet.http.HttpSession
-    
-    \=> 세션이 생성되고 사용되는 모든 것들이 공유할 수 있도록
-    
-    \=> 세션이 생성되는 시점이 로그인
-    
-    \=> 세션이 해제되는 시점이 로그아웃(or 정해진 시간동안 사이트를 사용하지 않은 경우)
-    
--   _application_ -> javax.servlet.ServletContext
-    
-    \=> 모두 공개 : 톰캣 메모리에 공유
-    
-    \=> 로그인 유무에 상관없이 사용하는 모든 곳에서 공유
-    
-
-#### 2) 데이터 공유하는 메소드
-
--   공유되는 데이터를 attribute라 한다.
--   모든객체(scope에 해당하는)의 setAttribute("공유할 attribute이름", 공유할 객체)
--   공유할 객체? : 자바에서 사용할 수 있는 모든 것
-
-#### 3) 공유된 데이터 가져오기
-
--   모든객체(scope에 해당하는)의 java.lang.object = getAttribute("공유된 attribute의 이름)
-
-### 2\. 요청 재지정 방법
-
-#### 1) 리다이렉트(sendRedirect)
-
-1.  문법
-    
-    -   HttpServletResponse의 sendRedirect메소드를 이용해서 구현
-    
-```
-    response.sendRedirect("요청재지정될 web application의 경로")
-                        ------------------------------------ => html, jsp, 서블릿 모두 가능
-                    contextpath/폴더명.../요청application의 path
-                    ex) /serverweb/dept/list.do
-    ```
 
 2.  실행흐름
-    
     1.  클라이언트에서 요청한다.
     2.  서블릿이 실행된다.
     3.  서블릿의 실행이 모두 완료되면 클라이언트로 응답한다.

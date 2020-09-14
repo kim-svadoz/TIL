@@ -175,7 +175,7 @@
 
 -   jdk(RPM) 다운 후 설치하기
     
-    ```
+    ```bash
     rpm -Uvh jdk-8u231-linux-x64.rpm
     'U' - 'update'
     'V' - 'view'
@@ -184,7 +184,7 @@
     
 -   Hadoop 다운 후 설치하기
     
-    ```
+    ```bash
     1. tar-zxvf hadoop-1.2.1.tar.gz 
     'Z' - 'gzip사용'
     'X' - '기존의 tar파일의 압축을 풀어주겠다'
@@ -198,7 +198,7 @@
     
 -   각종 설정하기
     
-    ```
+    ```bash
     <<< home - hadoop - hadopo.1.2.1. - conf >>>
     "<hadoop-env.sh>"
     # The java implementation to use.  Required.
@@ -273,7 +273,7 @@
     
 2.  hadoop 실행
     
-    ```
+    ```bash
     /home/hadoop/hadoop-1.2.1/bin/start-all.sh
     ```
     
@@ -341,20 +341,20 @@
     
 -   인코딩 버전확인하기
     
-    ```
+    ```bash
     su -
     echo $LANG
     ```
     
 -   input폴더에 NOTICE.txt 복사 ( hadoop/hadoop01 로 실행 )
     
-    ```
+    ```bash
     /home/hadoop/hadoop-1.2.1/bin/hadoop fs - copyFromLocal NOTICE.txt /input
     ```
     
 -   input폴더에 있는 NOTICE.txt에 wordcount적용
     
-    ```
+    ```bash
     /bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/NOTICE.txt /wordcount_output
     ```
     
@@ -365,7 +365,7 @@
     
 -   output.txt에 write하기
     
-    ```
+    ```bash
     [haddop@hadoop01 hadoop-1.2.1]$ cd..
     [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam01 output.txt hellohadoop 
     
@@ -376,7 +376,7 @@
     
 -   output.txt read하기
     
-    ```
+    ```bash
     [hadoop@hadoop01 ~]$ ./hadoop-1.2.1/bin/hadoop jar multi-hadoop-examples.jar hdfs.exam.HDFSExam02 output.txt
     ```
     
@@ -412,20 +412,20 @@
     
 -   path를 걸어주기 전까진 shell script를 모두 명시해야한다.
     
-    ```
+    ```bash
     /home/hadoop/hadopo-1.2.1/bin/hadoop
     ```
     
 -   path를 설정해주자~
     
-    ```
+    ```bash
     cd hadoop-1.2.1/ "path 설정 - [hadoop@hadoop01 hadop-1.2.1]"
     pwd "현재 디렉토리를 확인"
     ```
     
 -   bin 폴더를 사용하여 wordcount를 사용해서 input파일과 output파일
     
-    ```
+    ```bash
     [hadoop@hadoop01 hadop-1.2.1]$ ./bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input/README.txt /out
     ```
     
@@ -445,7 +445,7 @@
     -   ex ) api쓰다가 뭐가 안된다? 그러면 01,02,03,04 머신 가서 hadoop => hadoop-data를 모두 지운다 => namenode 초기화(-format)
 -   폴더 지우기
     
-    ```
+    ```bash
     ./bin/hadoop fs -rmr /경로
     ```
     
@@ -517,7 +517,7 @@
 
 -   STS에서 설정한 mapreduce Driver 실행시키기
     
-    ```
+    ```bash
     [hadoop@hadoop01 hadoop-1.2.1]
     
     ./bin/hadoop jar /home/hadoop/hadoop-mapred-examples.jar mapred.basic.WordCountDriver /input/README.txt /mywork/mywordcount
@@ -606,7 +606,7 @@
     -   \[ \]
     -   ( ) : 그룹으로 묶을 경우 사용
     
-    ```
+    ```java
     String patternStr = "java";                // 1. 정확하게 일치하는 것
     String patternStr = "^java";         // 2. ^뒤의 문자열로 시작
     String patternStr = "java$";         // 3. $앞의 문자열로 종료
@@ -674,7 +674,7 @@
     -   xxxx{1,3} : 1이상 3이하(x는 패턴을 의미)
     -   xxxx{3, } : 3이상
     
-    ```
+    ```java
     String str = "jaava programmaingm";
     String str ="-@-ja1- -111aCva--@@-@@@@- 한글 --@@@@-- progra44568EmgFmiJng";
     String str = "a 4 m 7 v 9  amJAVA _java aaaxl  programming and spring , hadoop";
@@ -691,7 +691,7 @@
     String patternStr = "\\D";         // 숫자를 뺀 나머지
     ```
     
-    ```
+    ```java
     System.out.println(Pattern.matches("[0-9]+", "1234java"));  //f
     System.out.println(Pattern.matches("[0-9]+", "java"));        //f
     System.out.println(Pattern.matches("[0-9]+", "1234"));        //t
@@ -741,7 +741,7 @@ mapreduce의 기본동작은 분류와 집계하기. - 빈도수체크
 
 -   가상의 테이블 만들기 - subquery를 from절에서 활용하기( 페이징 처리도 가능)
 
-```
+```java
 select rownum, ename, sal
 from (select *
        from emp
@@ -793,7 +793,7 @@ where rownum <=3;
 
 ![image-20200311094736521](https://user-images.githubusercontent.com/58545240/89753175-4020b100-db12-11ea-876f-473226a5dbbc.png)
 
--   ```
+-   ```java
     package mapreduce.basic;
     
     public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
@@ -875,18 +875,12 @@ this can be achieved in Flume by configuring a number of first tier agents with 
     -   hadoop홈디렉토리
         
 
-```
-
-```
+```bash
 source .bashrc
 cd apache-flume-1.6.0-bin/conf/
 cp flume-env.sh.template flume-env.sh
 ```
-
-
-
 ![image-20200313114023215](https://user-images.githubusercontent.com/58545240/89753328-cd640580-db12-11ea-9da0-0f11f741ea74.png)
-```
 
 4.  flume설정정보를 등록
     
@@ -896,13 +890,9 @@ cp flume-env.sh.template flume-env.sh
         
 
 ```
-
-```
 cp flume-conf.properties.template console.properties
 ```
-
 ![image-20200313114023215](https://user-images.githubusercontent.com/58545240/89753328-cd640580-db12-11ea-9da0-0f11f741ea74.png)
-```
 
 ![image-20200313114046086](https://user-images.githubusercontent.com/58545240/89753356-ea98d400-db12-11ea-80b3-bae503dc3f06.png)
 
@@ -943,7 +933,7 @@ agent명.sources.source명.type=값
 
 #### \[ Flume의실행 \]
 
-```
+```bash
 실행명령어: ./bin/flume-ng agent
 옵션 : 
 --conf : 설정파일이 저장된 폴더명(-c)
@@ -952,11 +942,11 @@ agent명.sources.source명.type=값
 -Dflume.root.logger=INFO.console : flumne의 로그창에 기록
 ```
 
-```
+```bash
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent --conf conf --conf-file ./conf/console.properties --name myConsole -Dflume.root.logger=INFO,console => (source가 telnet으로 입력하는 데이터인경우)
 ```
 
-```
+```bash
 [root@hadoop01 ~]# yum install telnet
 su hadoop
 telnet localhost 44444
@@ -964,20 +954,15 @@ telnet localhost 44444
 
 -   폴더에서 폴더로 이동시키기
     
-    ```
+    ```bash
     cp ./conf/console.properties ./conf/myfolder.properties
     ```
     
     ![image-20200313153959785](https://user-images.githubusercontent.com/58545240/89753366-f84e5980-db12-11ea-8e41-30680f5dbc30.png)
 
 ```
-
-```
 [hadoop@hadoop01 apache-flume-1.6.0-bin]$ ./bin/flume-ng agent -c conf -f ./conf/myfolder.properties -n myConsole
 ```
-
-```
-
 -   hdfs로 이름 바꾸기
     
     ```
@@ -1106,7 +1091,7 @@ telnet localhost 44444
 9.  크롬환경에서 [http://192.168.111.129:8080/manager](http://192.168.111.129:8080/manager) 에서 export해준 war파일 배치하기
     
 10.  크롬환경에서 [http://192.168.111.129:8080/bigdataShop/index.do](http://192.168.111.129:8080/bigdataShop/index.do) 로 접속가능. 끝.
-        
+     
     \=> 이제 hadoop02가 나의 서버가 된 것이다 !!
     
 
@@ -1349,7 +1334,7 @@ db.컬렉션명.update({조건필드:값}), // sql의 update문의 where절
 
 #### 5\. MongoDB에서 배열 관리
 
-```
+```sql
 db.score.update({id:"jang"}, 
     {$set:
         {info:
@@ -1365,14 +1350,14 @@ db.score.update({id:"jang"},
 
 -   addToSet : 배열의 요소를 추가 ( 중복 체크 )
     
-    ```
+    ```sql
     db.score.update({id:"jang"}, {$addToSet:{"info.city":"인천"}});
         // 중복된 데이터는 들어가지 않는다.
     ```
     
 -   push : 배열의 요소를 추가 ( 중복 허용 )
     
-    ```
+    ```sql
     db.score.update({id:"jang"}, {$push:{"info.city":"천안"}});
         // 중복된 데이터도 추가로 puash된다.
     ```
@@ -1381,14 +1366,14 @@ db.score.update({id:"jang"},
     
     \=> 1이면 마지막 요소를 제거, -1이면 첫 번째 요소를 제거
     
-    ```
+    ```sql
     db.score.update({id:"jang"}, {$pop:{"info.city":1}}); // 오른쪽 끝에서 한 개 삭제
     db.score.update({id:"jang"}, {$pop:{"info.city":-1}}); // 왼쪽 끝에서 한 개 삭제
     ```
     
 -   each : addToSet이나 push에서 사용할 수 있다.
     
-    ```
+    ```sql
     db.score.update({id:"jang"},
                     {$push:
                         {"info.city":
@@ -1399,7 +1384,7 @@ db.score.update({id:"jang"},
     
 -   sort : 정렬( **1**: 오름차순, **\-1** : 내림차순)
     
-    ```
+    ```sql
     db.score.update({id:"jang"},
                     {$push:
                         {"info.city":
@@ -1412,7 +1397,7 @@ db.score.update({id:"jang"},
     
     -   pullAll : 조건 여러개
     
-    ```
+    ```sql
     db.score.update({id:"jang"},
                     {$pull:{"info.city":"천안"}    
                     }
@@ -1479,7 +1464,7 @@ update - 하위object와 배열로 구성
 
 content,count1,count2,writedate
 
-```
+```sql
 db.createCollection("board");
 db.board.insert({insertno:1, title:"aaaaaaaa", content:"hello1", count:11, wirtedate:"2020-03-16", id:"kim"});
 db.board.insert({insertno:1, title:"bbbbbb", content:"hello2", count:22, wirtedate:"2020-03-17", id:"park"});
@@ -1512,7 +1497,7 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
 
 -   이쁘게 출력하기
     
-    ```
+    ```sql
     db.컬렉션명.find().pretty()
     ```
     
@@ -1523,7 +1508,7 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
 
 -   전체 데이터의 갯수를 리턴
     
-    ```
+    ```sql
     db.컬렉션명.find().count()
     ```
     
@@ -1534,7 +1519,7 @@ db.board.update({content:"hello2"}, {$push:{"sub":comment3}});
 
  score의 모든 document에 num필드(1000)가 추가되도록 작업하고 실행결과 보기
 
-```
+```sql
 var x = db.score.find();
 while(x.hasNext()){
            var one = x.next();
@@ -1548,7 +1533,7 @@ db.score.find();
 
 -   find
     
-    ```
+    ```sql
     db.컬렉션명.find(조건, 조회할 필드에 대한 명시)
     ```
     
@@ -1575,36 +1560,35 @@ db.score.find();
         -   $in : 하나의 필드에서만 비교
         -   $nin : $in으로 정의한 조건을 제외한 document를 조회 ( not in )
 
-```
 ex) addr이 인천인 데이터 : id, name, dept, addr 출력
 
-​```bash
+```sql
 db.score.find({addr:"인천"},{id:1,name:1,dept:1,addr:1})
 db.score.find({addr:"인천"},{id:1,name:1,dept:1,addr:1,_id:0}) // 기본키(_id) 제거
 ```
 
 ex) score컬렉션에서 java가 90점인 이상인 document 조회 : id, name, dept, java만 출력
 
-```
+```sql
 db.score.find({java:{$gte:90}},{id:1,name:1,dept:1,java:1,_id:0})
 ```
 
 ex) dept가 인사이거나 addr이 인천인 데이터 조회
 
-```
+```sql
 db.score.find({$or:[{dept:"인사"},{addr:"인천"}]})
 ```
 
 ex) id가 song, kang, hong인 데이터 조회
 
-```
+```sql
 db.score.find({$or:[{id:"song"},{id:"hong"},{id:"kang"}]})
 db.score.find({id:{$in:["song","kang","hong"]}})
 ```
 
 ex) id가 song, kang, hong이 아닌 데이터 조회
 
-```
+```sql
 db.score.find({id:{$nin:["song","kang","hong"]}})
 ```
 
@@ -1641,62 +1625,56 @@ db.score.find().limit(5)
 db.score.find().skip(5)
 ```
 
-```
-
 -   정규표현식을 적용
 
+```sql
+db.컬렉션명.find({조건필드명:/정규표현식/옵션})
 ```
-    db.컬렉션명.find({조건필드명:/정규표현식/옵션})
-    ```
-    
-    -   **\[ 기호 \]**
-    
-        -   | : or
-    
-        -   ^ : ^ 뒤의 문자로 시작하는지 체크
-    
-        -   \[ \] : 영문자 하나는 한 글자를 의미하고 \[ \]로 묶으면 여러 글자를 표현
-    
-            \[ a-i \] : a에서 i까지 모든 영문자
-    
-    -   **\[ 옵션 \]**
-    
-        -   i : 대소문자 구분없이 조회 가능
 
-```
+-   **\[ 기호 \]**
+
+    -   | : or
+
+    -   ^ : ^ 뒤의 문자로 시작하는지 체크
+
+    -   \[ \] : 영문자 하나는 한 글자를 의미하고 \[ \]로 묶으면 여러 글자를 표현
+
+        \[ a-i \] : a에서 i까지 모든 영문자
+
+-   **\[ 옵션 \]**
+
+    -   i : 대소문자 구분없이 조회 가능
 
 ex) id가 kim과 park인 document 조회
 
-```
+```sql
 db.score.find({id:/kim|park/})
 db.score.find({id:/kim|park/i}) // 대소문자 구분없이
 ```
 
 ex) id가 k로 시작하는 document 조회
 
-```
+```sql
 db.score.find({id:/^k/})
 db.score.find({id:/^k/i}) //대소문자 구분없이
 ```
 
 ex) id에 \[a-i\]까지 영문이 있는 id를 조회
 
-```
+```sqlite
 db.score.find({id:/[a-i]/})
 ```
 
 ex) id가 k-p로 시작하는 document 조회
 
-```
+```sql
 db.score.find({id:/^[k-p]/})
 ```
 
 ex) id에 a랑 i가 있는 document 조회
 
-```
+```sql
 db.score.find({id:/[ai]/})
-```
-
 ```
 
 #### 7\. MongoDB에 저장된 데이터 삭제하기 - remove()
@@ -1810,31 +1788,31 @@ $match:{필드명:{연산자:조건값}}
 
 -   addr별 인원수
 
-    ```
+    ```sql
     db.exam.aggregate([{$group:{_id:"$addr", num:{$sum:1}}}]);
     ```
 
 -   dept별 인원수
 
-    ```
+    ```sql
     db.exam.aggregate([{$group:{_id:"$dept", num:{$sum:1}}}]);
     ```
 
 -   dept별 java점수의 평균
 
-    ```
+    ```sql
     db.exam.aggregate([{$group:{_id:"$dept", num:{$avg:"$java"}}}])
     ```
 
 -   addr별 servlet합계
 
-    ```
+    ```sql
     db.exam.aggregate([{$group:{_id:"$addr", num:{$avg:"$servlet"}}}])
     ```
 
 -   dept별 java점수의 평균. 단, addr이 인천인 데이터만 작업 $match를 추가
 
-    ```
+    ```sql
     db.exam.aggregate([{$match:{addr:"인천"}}, {$group:{_id:"$dept", num:{$avg:"$java"}}}])
     ```
 
@@ -1843,26 +1821,20 @@ $match:{필드명:{연산자:조건값}}
 
 **1\. dept가 인사인 document의 servlet평균 구하기**
 
-```
-
+```sql
 db.exam.aggregate(\[{$match:{dept:"인사"}}, {$group:{\_id:"$dept", num:{$avg:"$servlet"}}}\])
-
 ```
 
 **2\. java가 80점이 넘는 사람들의 부서별로 몇 명인지 구하기**
 
-```
-
+```sql
 db.exam.aggregate(\[{$match:{java:{$gte:80}}}, {$group:{\_id:"$dept", num:{$sum:1}}}\])
-
 ```
 
 **3\. 2번 결과를 인원수데이터를 내림차순으로 정렬해 보세요.**
 
-```
-
+```sql
 db.exam.aggregate(\[{$match:{java:{$gte:80}}}, {$group:{\_id:"$dept", num:{$sum:1}}},{$sort:{num:-1}}\])
-
 ```
 
 #### 9\. STS을 이용해서 WEB으로 MongoDB 데이터 확인하기 위한 설정
@@ -1873,11 +1845,9 @@ db.exam.aggregate(\[{$match:{java:{$gte:80}}}, {$group:{\_id:"$dept", num:{$sum:
 
 src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 
-```
-
+```bash
 <context:component-scan base-package="spring.data.mongodb" />
-
-\`\`\`
+```
 
 ![image-20200317171236685](https://user-images.githubusercontent.com/58545240/89754066-58de9600-db15-11ea-9cfb-dd9acc7c7b0e.png)![image-20200318092851061](https://user-images.githubusercontent.com/58545240/89754071-5bd98680-db15-11ea-8fcc-86f643d8ab14.png)
 
@@ -1909,7 +1879,6 @@ src - main - webapp - WEB-INF - spring - appServlet - servlet-context.xml 에서
 #### 11\. MongoDB로 Client 프로그램 만들기
 
 > STS-mongoTest에서 확인 !
-```
 
 
 
@@ -1943,7 +1912,7 @@ csv\_exam.csv를 읽어서 데이터를 수정한 후 csv\_exam\_result.csv로 �
 -   mytotal : 모든 과목의 총점
 -   myavg : 모든 과목의 평균
 
-```
+```bash
 mydata <- read.csv("csv_exam.csv")
 mydataResult <- mydata[mydata$science>=80, ]
 mydataResult$mytotal <- as.numeric(mydataResult$math+mydataResult$english+mydataResult$science)

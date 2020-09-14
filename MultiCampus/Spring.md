@@ -182,7 +182,7 @@
     -   요청path를 기준으로 컨트롤러를 등록할 것이므로 id속성을 쓰지 않고 name속성을 사용한다.
     -   DispatcherServlet내부에서 요청path에 맞는 컨트롤러를 getBean할 수 있도록 등록
     
-    ```
+    ```java
     [형식]
     <bean name="요청path" class="컨트롤러 클래스"/>
     
@@ -274,7 +274,7 @@
 
 -   반드시 "config" - "spring-config.xml"에서 DistpatcherServlet 설정을 해줘야 한다 !!
 
-```
+```java
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -308,22 +308,20 @@
         \=> JDBC에서 하던 수많은 코드들을 대신 다 해준다
         
 
-```
-​```java
+```java
 JdbcTemplate mytemplate;
 return mytemplate.queryForObject("sql", Type)
 ```
-```
-
 -   rowMapper ?!
     
-```
-    While(rs.next()){
+
+```java
+While(rs.next()){
     DTO row = new DTO(rs.getString(1),.....); ----- 이 부분만 rowMapper 객체로 넘겨주는 것이다.
                                         => 유일하게 달라지는 부분(mapRow에 구현)
     list.add.....
-    }
-    ```
+}
+```
 
 -   근데 실제로 이것보다 mybatis를 더 많이 쓴다.
     
