@@ -70,6 +70,8 @@
 | 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42627) | 우선순위 큐, 정렬            |
 | 49189_가장 먼 노드     | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA49189-%EA%B0%80%EC%9E%A5-%EB%A8%BC-%EB%85%B8%EB%93%9C?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/49189) | Queue, Node, BFS             |
 | 42681_섬 연결하기      | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA42861-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/42861) | kruskal MTS, Union-Find, BFS |
+| 12899_124나라의숫자    | [Link](./알고리즘/Programmers/IntOf124_12899.java)           | [문제](https://programmers.co.kr/learn/courses/30/lessons/12899) | 숫자 변환                    |
+| 42586_기능개발         | [Link](./알고리즘/Programmers/FunctionDevelop_42586.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/42586) | BFS                          |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
