@@ -86,7 +86,7 @@
 
 > **Session Initiation Protocol**
 >
-> **멀티미디어 통신에 있어 세션이나 신호(Call)을 관리하는 프로토콜**
+> **멀티미디어 통신에 있어 세션이나 호(Call)을 관리하는 프로토콜**
 
 멀티미디어 데이터 전송 자체보다는 Signaling을 통한 멀티미디어 통신 관리에 중점을 두고 있다.
 
@@ -757,6 +757,157 @@ Proxy나 Redirect가 없는 가장 기본적인 형태의 흐름은 다음과 �
 
 
 
+# **IP PBX**
+
+---
+
+## :black_nib: PBX란?
+
+> Private Branch Exchange
+
+PBX, EPABX는 사설 전화 교환기 인데, 기업용 서비스에 특화가 되어 있는 장비이다.
+
+PBX는 기업에 필요한 다양한 기능들을 가지고 있어, 기업에서 전화를 이용해 빠르고 편하게 통신을 할 수 있께 해주는 장비이다.
+
+*하지만 예전부터 PBX가 지금의 것처럼 좋았던 것은 아닙니다. 
+예전에는 전화국의 교환원이 전화코드를 통화를 원하는 사람끼리 연결 해주던 시절이 있었습니다. 
+전화를 걸고자 하는 사람은 전화기에 달려있는 발전기를 돌려서 신호를 보내면 전화국의 교환원이 받게됩니다. 
+전화를 받은 교환원은 전화받을 사람을 물어보고 수동으로 연결해 주는 방식이었습니다. 
+이런 방식은 아직 우리군의 야전용으로 많이 사용되고 있습니다.*
+
+![image-20200915135743419](https://user-images.githubusercontent.com/58545240/93182670-efd1ea00-f774-11ea-814f-2139511665b0.png)
+
+하지만 **PABX** 즉, 전자식 전화교환기는 이런 교환원들의 일자리를 싹 빼았아 버렸다. 전화번호 설정만 미리 해놓으면 사람들이 누르는 전화번호를 입력받아서 자동으로 연결해주는 전자식 전화 교환기가 탄생!
+
+PABX는 TDM(Time-division multiplexing)방식의 자동 전화 교환기 이다. **PBX**는 TDM 백플레인을 가지고 있으며, 각 카드는 백플레인에 연결 되어서 호처리, 가입자 수용, 부가기능 수행, 음성 사서함, Ringback tone 등의 다양한 기능을 수행한다. 
+
+**PBX**에 연결된 전화기들은 ISDN규격에 따라 신호를 주고 받으며, 송신측과 수신측이 서로 다른 주파수 대역을 사용하여 통화하게 된다.
+
+PBX가 놓여져 있는 곳에는 MDF(Main Distributing Frame)라고 불리는, 선이 어지럽게 연결되 있는 일명 "짬빠" 작업을 하는 곳이 있다. PBX에 연결된 Telco Cable을 가입자의 전화 포트 아울렛으로 분배해주는 곳이다. 이렇게 작업이 된 케이블들은 PABX로부터 출발해 사무실의 각 자리로 들어가게 되고 사람들은 2가닥의 전화선을 `RJ-11`이라는 투명한 잭으로 만들어져 전화와 연결하게 된다. 즉 각 전화기들은 모두 **PBX**에 직접 연결되어 통화를 하게 된다.
+
+## :black_nib: IP PBX
+
+> Internet Protocol Private Branch Exchange
+>
+> **An IP (Internet Protocol) PBX (Private branch exchange) is a business telephone system designed to deliver voice or video over a data network and interoperate with the normal Public Switched Telephone Network (PSTN)**
+>
+> ​	=> IP PBX는 비지니스 전화시스템이다. 데이타 네트워크를 통해 보이스와 비디오를 전달하도록 설계되어 있다. 그리고 PSTN과 연동도 되도록 설계돼어있다.
+
+즉, **PBX**와 **IP PBX**는 같은 기능을 하는 전화교환기 이다. 다만 "짬빠"를 통해서 전화기가 연결되는 것이 아니라, IP Network 즉 여러분들이 인터넷을 사용하는 회선과 스위치에 **RJ-45**커넥터를 이용해서 전화가 연결된다. 또한 **Voice Gateway**를 통해서 **PSTN**과도 연결이 되어 집전화, 휴대폰으로도 전화가 가능하다.
+
+
+
+**IP PBX**는 아래 그림과 같이 하드웨어는 서버이다. 일반적으로 사용되는 X86서버에 IP PBX소프트웨어를 설치해서 PBX로 동작하게 만든다. IP PBX도 마찬가지로 **RJ-45**커넥터를 통해서 스위치에 연결되고, 호처리, 가입자 수용, 부가서비스 등 PBX와 똑같은 역할을 한다. 
+
+하지만 PBX와 같이 PSTN을 연결하는 기능흔 **Voice Gateway**에 일임을 하고 음성사서함과 같이 리소스가 많이 필요한 부가서비스도 별도의 서버로 독립시켜버렸다.
+
+![image-20200915141238976](https://user-images.githubusercontent.com/58545240/93182688-f3657100-f774-11ea-864e-8ccef9a76147.png)
+
+## :black_nib: IP PBX와 함께 IP TelePhony를 구성하는 요소
+
+**IP TelePhony**는 기존의 PBX에서 카드형태로 제공되던 것을 분리시켜, 각각 역할을 수행하는 장비들이 모여 하나의 PBX처럼 동작을 합니다. 이는 각각의 장비가 한 곳에 모여 있을 필요가 없이 용도에 따라, 목적에 따라 별도의 장소에서 동작할 수도 있습니다.
+
+### > Voice Gateway
+
+Voice Gateway는 Trunk Gateway, Analog Gateway 등 규모와 용도에 따라서 다른 이름으로 불려지기도 하며, 통틀어서 Media Gateway라고도 불려집니다. **Media Gateway**라고 불려지는 이유는 서로 다른 Media 즉, PSTN과 IP Network를 중간에서 관문역할을 하기 때문이다. 즉, 전화국과 연결되는 E1/T1(ISDN Trunk), FSX/FXO(일반 전화선과 전화기 연결)과 IP TelePhony와 연결이 된다.
+
+이 Voice Gateway를 통해서 IP Phone에서 IP Phone 뿐 아니라, 기존에 사용하던 집전화, 휴대폰 등으로 전화를 할 수 있도록 설계가 되었습니다.
+
+
+
+하지만 아래의 Voice Gateway가 IP TelePhony를 처음 접하는 사람이어도 익숙한 분들이 계실겁니다. Voice Gateway는 Router에 Voice Module을 설치해서 Voice Gateway역할을 한다. 또한 이 Voice Gateway를 통해서 작은 규모 사무실에 적합한 소규모 PBX와 음성 사서함 모듈을 통한 소규모 음성사서함, 그리고 IP PBX와 연결되는 WAN의 장애 발생시에 비상 복구모드인 SRST(Suvival Remote Site Telephony)의 용도로도 사용이 가능하도록 설계가 되어 있다.
+
+또한, 이 Voice Gateway는 기업용 SBC(Session Border Controller)인 CUBE(Cisco Unified Border Element)로도 사용이 가능하다.
+
+![image-20200915155706882](https://user-images.githubusercontent.com/58545240/93182698-f6f8f800-f774-11ea-935e-e762a2d88122.png)<Cisco Integrated Services Router = Voice Gateway>
+
+### > IP Phone
+
+PBX를 **IP PBX**로 바꾸게 되면 당연히 전화기도 IP Phone으로 바꿔야 한다. 물론 IP PBX를 사용하더라도 Analog Gateway를 통해서 일반 전화기도 사용할 수 있습니다만. 일번전화도 Analog Gate를 통하게 되면 IP Phone과 같은 방식으로 동작하게 된다.
+
+IP Phone은 아래 그림과 같이 일반적인 전화와 똑같이 생겼지만 IP Network에 연결이 되고, IP TelePhony를 위한 VoIP 프로토콜(H.323, SIP, Skinny 등)을 이용하여 IP PBX를 통해 Call Processing을 하게 되고, 통화로가 열리게 된다. IP Phone에서 음성 전달은 코텍(G.711, G.729, G.723 ....)을 이용하여 전달되게 되는데 이는 Legacy PBX에서 주파수를 이용하여 전달하는 것이라 생각 하시면 된다.
+
+**IP Phone**은 일반적으로 2개의 Swtich포트를 제공하여 한 포트는 Switch에 다른 한 포트는 사용자의 PC에 연결이 되며, 큰 화면을 통해서 XML 브라우저를 통한 정보전달, 소프트키를 통한 부가서비스 등 다양한 기능을 수행한다.
+
+![image-20200915163933132](https://user-images.githubusercontent.com/58545240/93182725-fe200600-f774-11ea-86cc-e7d15b1d2e7e.png)<Cisco IP Phone>
+
+### > PoE Switch
+
+> Power over Ethernet Swtich
+
+**IP PBX, Voice Gateway, IP Phone**과 같은 직접 텔레포니의 기능을 수행하는 장비들이 있다면, 이들을 연결하는 장비도 필요하다. 이 시대 사는 대부분의 사람들에게 익순한 Switch라는 장비가 IP TelePhony에서는 또 하나의 중요한 요소이다.
+
+하지만, 제목에서 그렇듯이 그냥 Switch가 아니다. ~~PoE스위치!!~~
+
+Inline Power Switch라고도 불리는 장비는 회선을 통해서 전화기에 전원을 공급한다.
+
+잠시, 아날로그 전화기로 화제를 바꿔 보자면, 일반적인 전화기는 전원을 위한 어댑터를 사용하지 않고도 전화가 가능하다. 즉, 집에 정전이 되어도 전화는 사용이 가능한 것이다. 이러한 이유는 PBX는 전화선을 통해 전원을 보내게 되어 있기 때문이다. 이렇듯 IP TelePhony에서도 전화기에 전원을 위한 어댑터를 사용하지 않아도 스위치를 통해 전원을 공급하게 된다.
+
+![image-20200915164224397](https://user-images.githubusercontent.com/58545240/93182736-02e4ba00-f775-11ea-8181-4632e1220b36.png)<Cisco Catalyst Switch>
+
+### > IP TelePhony의 기본구성
+
+위의 각 컴포넌트들을 합쳐 놓으면 **IP TelePhony**의 기본구조가 완성이 된다. IP PBX는 전화기의 등록, 호처리, 부가서비스를 담당하고, 스위치는 전화기에 전원 공급 및 패킷 스위칭을 하고, Voice Gateway는 ethernet과 PSTN을 연결하여 IPT와 PSTN의 관문 역할을 담당하게 된다.
+
+이러한 IPT환경을 기반으로 Unified Communication의 어플리케이션이 동작을 하게되고 사용자는 전화 뿐 아니라, 메세징, 협업, 텔레프레즌스 등의 서비스를 사용할 수 있게 된다.
+
+즉, IPT의 처음 도입은 중요하다! 어떠한 프로토콜을 사용하느냐, 어떠한 기능이 지원되느냐를 기본으로 어떠한 서비스를 편리하고 조화롭게 업무에 사용할 수 있느냐에 대한 고려도 많이 되어야 한다.
+
+![image-20200915164431796](https://user-images.githubusercontent.com/58545240/93182750-0710d780-f775-11ea-9ddc-58054548f933.png)<IP TelePhony의 기본구성>
+
+## :black_nib: IP PBX의 주요 기능
+
+**IP PBX**의 가장 기본이면서, 가장 중요한 것은 **호처리(Call Processing)**이다. 전화를 걸고 받는데에는 **시그널(Signal)과 미디어(Media)** 두 가지 형태의 패킷이 만들어 진다.
+
+- **Signal**은 발신자 전화번호(Caller ID, Calling Party), 수신자 전화번호(Called Party), 코덱, IP Address 등 음성 이외의 모든 전화를 위한 정보를 담고 있다.
+
+  => `SIP, H.323, MGCP, SCCP` 등 다양한 종류가 있으며 각 Signaliong Protocol은 각각 용도나 환경에 맞게끔 사용되게 된다.
+
+- **Media**는 정해진 코덱으로 인코딩된 음성을 **`RTP(Real Time Protocol)`**로 전송하게 된다.
+
+아래 그림의 Phone A가 Phone B에게 전화를 하려고 하는 상황이다.
+
+Phone A와 Phone B는 각각 Switch에 UTP케이블로 연결이 되어 있고 PBX도 마찬가지로 Switch에 연결이 되어있다. 그럼 전화를 거는 과정을 살펴보자
+
+1. Phone A의 수화기를 들면, Phone A는 다이얼 톤을 울리게 된다.
+
+2. Phone  A에서 Phone B의 전화번호를 누르면 전화번호 정보를 담은 Signal이 IP PBX에게 전달된다.
+
+3. IP PBX는 IP Phone B에게 Phone A가 전화가 왔다는 것을 알려주면 Phone B는 벨이 울리고, IP PBX는 Phone B의 벨이 울리고 있다는 것을 **Ring Back**을 통해 Phone A에게 알려준다.
+
+4. Phone B가 전화를 받게되면 Media가 PBX를 거치지 않고 Phone A와 Phone B간에 흐르게 된다.
+
+이와 같은 수순으로 Phone A와 Phone B 가 통화를 할 수 있게 된다.
+
+![image-20200915165028214](https://user-images.githubusercontent.com/58545240/93182769-0d9f4f00-f775-11ea-86b9-09903997de43.png)
+
+
+
+## :black_nib: 관리자 인터페이스
+
+일반적으로 IP PBX는 Web을 통해서 Config를 한다. 예전에 CLI를 지원하는 PBS의 관리보다 조금 불편한 점도 있다고 하지만, 직관적인 인터페이스로는 웹과 CLI를 비교할 수가 없다.
+
+![image-20200915165123357](https://user-images.githubusercontent.com/58545240/93182784-11cb6c80-f775-11ea-8e9b-5ee44e733fd9.png)
+
+## :black_nib: IP PBX의 장점
+
+1. **거리의 제약이 없다.**
+   - IP PBX는 IP Network의 위에서 사용되기 때문에 거리에 제약이 없다. 글로벌 회사들에서는 아시아의 여러나라에 있는 지사를 홍콩, 싱가폴 등 한 위치에 IP PBX를 놓고 다양한 아시아의 나라가 전화를 사용한다. 즉 몇백명 정도 있는 지사에 궂이 PBX를 설치할 필요없이 전화의 사용이 가능한 것
+   - 또한 그렇게 함으로써 **중앙 집중식 관리**가 가능하여, 본사의 정책을 지사에도 공통적으로 적용할 수 있고, 음성사서함, Visual Caller ID등의 부가기능도 본사와 지사가 하나의 서버를 사용할 수 있어서 중복투자 발생을 방지하고, 관리를 쉽게 할 수 있다.
+2. **다양하고 사용하기 쉬운 부가 서비스**
+   - 부가서비스는 Legacy PBX에도 다양하게 존재 했다. 하지만 그 특성상 사용자들이 편하게 사용할 수 없게끔 되어 있다. PBX의 그 다양한 기능을 제대로 사용하는 사람이 별로 없다.
+   - 가장 큰 이유는 직관적이지 못한 액세스 코드를 이용한 부가서비스를 제공함으로써 일반 유저들이 매일같이 사용하지 않으면 잊어버려서 더이상 존재하지 않는 부가서비스가 되는 것이다.
+   - 하지만 IP PBX는 IP Phone에 부가서비스에 대한 소프트키, 혹은 XML을 통한 그림버튼제공 등으로 직관적이고 User Friendly한 인터페이스를 제공하여 편하게 사용할 수 있도록 하는 것이 장점이다.
+3. **UC? FMC? Collaboration?**
+   - IP TelePhony는 전화기와 PBX만을 바꾸기 위해 도입하는 경우는 점점 줄어들고 있다. 일반적으로 **VoIP**를 사용하여 전화요금의 축소를 위한 것이 큰 목적인 회사의 경우 IPT도입만으로도 큰 도움이 되겠습니다만, 지금 도입을 생각하고 있는 대부분의 기업은 협업, 기업용 메신저, 스마트폰 도입, 그룹웨어와의 연동 등 IPT를 기반으로 좀 더 편리하고 좋은 기업환경과 Business Process의 개선을 위한 도입이 많아진다.
+   - 이러한 UC, FMC, Collaboration은 IPTelePhony를 기반으로 Integration을 하면 더 많고 편리하게 사용이 가능해지며 생산성 향상에 도움이 된다.
+
+## :black_nib: 마지막으로
+
+1800년대 후반 전화기가 발명된 후 PBX의 발전이 음성과 음성을 보조하는 기술에 꾸준한 발전이 이루어졌다면, 최근 15년간은 음성과, 영상, 메신저, 협업, 소셜네트워킹과 같은 분야에 커다란 발전이 있었습니다. 그 발전의 기반은 IP Network와 PC의 보급 그리고 인터넷 문화의 확산에 따른 것이고, 이러한 문화에 익숙한 사람들이 일하는 세상은 점점 더 그들의 문화에 맞게 변해갈 것입니다. 
+
+*IP PBX는 단순한 PBX 대용이 아니다. 새로운 통신의 기반이고, 플랫폼이다!*
+
 
 
 # :point_up: Ubuntu환경에서 SIP Server 실행하기
@@ -823,7 +974,7 @@ Proxy나 Redirect가 없는 가장 기본적인 형태의 흐름은 다음과 �
 
 ## C++ SIP stack 구조
 
-![image-20200914103617338](images/image-20200914103617338.png)
+![image-20200914103617338](https://user-images.githubusercontent.com/58545240/93182797-16902080-f775-11ea-98a8-019699edb5f4.png)
 
 - **SipPlatform**
   - C++ SIP stack 에서 사용되는 OS 독립적인 유틸리티 라이브러리
