@@ -10,7 +10,7 @@
 
 **VoIP**와 인터넷 전화기술의 주요장점은 기존 IP네트웍을 그대로 활용해 전화서비스를 통합 구현함으로써 전화 사용자들이 시내전화 요금만으로 인터넷, 인트라넷 환경에서 시외 및 국제전화 서비스를 받을 수 있게 된다는 점이다.
 
-**VoIP**는 공중 인터넷 또는 기업 내부의 인트라넷 상에서 IP를 이용해 음성(소리)와 비디오를 전송하기 위한 표준인 ITU-T H.323의 사용을 장려하기 위해, **VoIP**포럼을 통해 시스코, 보컬텍, 3Com, 넷스피크 등 주요 장비제작회사들이 노력함으로써 이루어졌다. **VoIP**포럼은 또한 디렉토리 서비스 표준을 장려함으로써, 사용자들이 다른 사용자들의 위치를 찾아낼 수 있고, 자동 전화분배와 음성메일을 위한 터치폰 신호의 사용을 가능하게 하였다.
+**VoIP**는 공중 인터넷 또는 기업 내부의 인트라넷 상에서 IP를 이용해 음성(소리)과 비디오를 전송하기 위한 표준인 ITU-T H.323의 사용을 장려하기 위해, **VoIP**포럼을 통해 시스코, 보컬텍, 3Com, 넷스피크 등 주요 장비제작회사들이 노력함으로써 이루어졌다. **VoIP**포럼은 또한 디렉토리 서비스 표준을 장려함으로써, 사용자들이 다른 사용자들의 위치를 찾아낼 수 있고, 자동 전화분배와 음성메일을 위한 터치폰 신호의 사용을 가능하게 하였다.
 
 **VoIP**는 원래의 IP기능에 더하여, 패킷들이 적시에 도착하도록 지원하기 위해 **RTP**를 사용한다. 공중 네트웍을 사용하려면, 현재 서비스 품질(QoS)을 보장하기에 어렵다. 
 
@@ -20,7 +20,7 @@
 
 - 패킷망 사용으로 이용요금이 저렴하다.
 - 멀티미디어를 통합함으로 영상통화, 메시징 등 다양한 기술 구현이 가능하다.
-- 통합망을 구성함으로써 회신 교환망보다 효율적인 망 관리가 가능하다.
+- 통합망을 구성함으로써 회선 교환망보다 효율적인 망 관리가 가능하다.
 - 기존에 구축된 인터넷 장비(Router, Switch) 등을 활용함으로써 구축비용이 상대적으로 저렴하다.
 - 신규 서비스 개발과 수요 창출에 따른 새로운 수익 창출이 가능하다.
 
@@ -910,7 +910,161 @@ Phone A와 Phone B는 각각 Switch에 UTP케이블로 연결이 되어 있고 P
 
 
 
-# :point_up: Ubuntu환경에서 SIP Server 실행하기
+# **VoIP Open Source의 종류**
+
+## :black_nib: LinPhone
+
+**Linphone** ( *[Linux](https://en.wikipedia.org/wiki/Linux) 전화의* 축소 )은 [IP ](https://en.wikipedia.org/wiki/VoIP)[소프트 폰](https://en.wikipedia.org/wiki/Softphone) , [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 클라이언트 및 서비스를 [통한](https://en.wikipedia.org/wiki/VoIP) 무료 [음성](https://en.wikipedia.org/wiki/VoIP) 입니다. 음성 및 영상 직접 [통화](https://en.wikipedia.org/wiki/Telephone_call) 및 [VoIP 소프트 스위치](https://en.wikipedia.org/wiki/Softswitch) 또는 [IP-PBX를](https://en.wikipedia.org/wiki/IP-PBX) 통한 [통화에](https://en.wikipedia.org/wiki/Telephone_call) 사용할 수 있습니다 . 또한 Linphone은 인스턴트 메시지를 교환 할 수있는 가능성을 제공합니다. [GUI](https://en.wikipedia.org/wiki/Graphical_user_interface) 용 [GTK +](https://en.wikipedia.org/wiki/GTK%2B) 를 기반으로하는 간단한 다국어 인터페이스가 있으며 Linux 에서 [콘솔](https://en.wikipedia.org/wiki/System_console) 모드 응용 프로그램으로 실행할 수도 있습니다 .
+
+소프트 폰은 현재 프랑스의 Belledonne Communications에서 개발했습니다. Linphone은 처음에 [Linux](https://en.wikipedia.org/wiki/Linux) 용으로 개발 되었지만 이제는 [Microsoft Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) , [Mac OS X](https://en.wikipedia.org/wiki/Mac_OS_X) , [Windows Phone](https://en.wikipedia.org/wiki/Windows_Phone) ,[iOS ](https://en.wikipedia.org/wiki/IOS)[[12\]](https://en.wikipedia.org/wiki/Linphone#cite_note-12) 또는 [Android를](https://en.wikipedia.org/wiki/Android_(operating_system)) 실행하는 휴대 전화를 비롯한 많은 추가 플랫폼을 지원합니다 . 이 지원 [ZRTP을](https://en.wikipedia.org/wiki/ZRTP) 위한 [엔드 - 투 - 엔드 암호화 된](https://en.wikipedia.org/wiki/End-to-end_encryption) 음성 및 영상 커뮤니케이션.
+
+Linphone은 GPL ( [GNU General Public License)에](https://en.wikipedia.org/wiki/GNU_General_Public_License) 따라 사용이 허가되었으며 [IPv6를](https://en.wikipedia.org/wiki/IPv6) 지원 [합니다](https://en.wikipedia.org/wiki/IPv6) . Linphone은 뒤에 사용할 수있는 [네트워크 주소 변환기](https://en.wikipedia.org/wiki/Network_address_translator) 가 홈 라우터 뒤에 실행할 수있는 의미 (NAT). ITSP ( [인터넷 전화 서비스 공급자)](https://en.wikipedia.org/wiki/Internet_telephony_service_provider) 를 사용하여 전화 통신과 호환됩니다 .
+
+### > 기능
+
+> - Linphone은 웹 사이트에서 무료 SIP 서비스를 호스팅합니다.
+> - Linphone 클라이언트는 다음 기능에 대한 액세스를 제공합니다.
+
+- 다중 계정 작업
+- 모든 SIP 서비스 및 회선 상태 관리에 등록
+- 다른 사용자의 상태가 있는 연락처 목록
+- 전화 회의 시작
+- 메시지 내역 및 통화 세부 정보 조합
+- DTMF 신호 전송
+- 파일 공유
+- 추가 플러그인
+
+### > 지원
+
+#### 프로토콜
+
+- [RFC 3261](https://tools.ietf.org/html/rfc3261) ( [UDP](https://en.wikipedia.org/wiki/User_Datagram_Protocol) , [TCP](https://en.wikipedia.org/wiki/Transmission_Control_Protocol) 및 [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) ) 에 따른 SIP
+- SIP [단순](https://en.wikipedia.org/wiki/SIMPLE_(instant_messaging_protocol))
+- [TURN](https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT) 및 ICE에 의한 [NAT 통과](https://en.wikipedia.org/wiki/NAT_traversal)
+- [RTP](https://en.wikipedia.org/wiki/Real-time_Transport_Protocol) / [RTCP](https://en.wikipedia.org/wiki/RTCP)
+- 미디어 보안 : [SRTP](https://en.wikipedia.org/wiki/Secure_Real-time_Transport_Protocol) 및 [ZRTP](https://en.wikipedia.org/wiki/ZRTP)
+
+#### 오디오 코덱
+
+오디오 코덱 지원 : [Speex](https://en.wikipedia.org/wiki/Speex) (협 대역 및 광대역), [G.711](https://en.wikipedia.org/wiki/G.711) ( [μ-law](https://en.wikipedia.org/wiki/Μ-law) , [A-law](https://en.wikipedia.org/wiki/A-law) ), [GSM](https://en.wikipedia.org/wiki/GSM_06.10) , [Opus](https://en.wikipedia.org/wiki/Opus_(audio_format)) 및 [iLBC](https://en.wikipedia.org/wiki/ILBC) (옵션 플러그인 사용)
+
+#### 비디오 코덱
+
+비디오 코덱 지원 : [MPEG-4](https://en.wikipedia.org/wiki/MPEG-4) , [Theora](https://en.wikipedia.org/wiki/Theora) , [VP8](https://en.wikipedia.org/wiki/VP8) 및 [H.264](https://en.wikipedia.org/wiki/H.264) ( [x264](https://en.wikipedia.org/wiki/X264) 기반 플러그인 포함 ), 네트워크 대역폭과 CPU 전력이 충분하다면 QCIF (176x144)에서 SVGA (800x600)까지의 해상도가 제공됩니다.
+
+## :black_nib: Twinkle
+
+**Twinkle** 은 VoIP ( [Voice over IP](https://en.wikipedia.org/wiki/Voice_over_IP) ) 프로토콜을 [통한](https://en.wikipedia.org/wiki/Voice_over_IP) 음성 통신을위한 [무료 오픈 소스](https://en.wikipedia.org/wiki/Free_and_open-source) 앱입니다 . [Linux](https://en.wikipedia.org/wiki/Linux) 운영 체제 [용](https://en.wikipedia.org/wiki/Linux) 으로 설계되었으며 그래픽 사용자 인터페이스에 [Qt](https://en.wikipedia.org/wiki/Qt_(framework)) 툴킷을 사용합니다 . 호출 신호를 위해 SIP ( [Session Initiation Protocol](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) )를 사용합니다. 또한 직접 IP 대 IP 통화를 제공합니다. 미디어 스트림은 SRTP ( [Secure Real-time Transport Protocol](https://en.wikipedia.org/wiki/Secure_Real-time_Transport_Protocol) ) 및 [ZRTP](https://en.wikipedia.org/wiki/ZRTP) 보안 프로토콜 로 암호화 될 수있는 RTP ( [Real-time Transport Protocol](https://en.wikipedia.org/wiki/Real-time_Transport_Protocol) )를 통해 전송됩니다 .
+
+버전 1.3.2 (2008 년 9 월)부터 Twinkle은 사전 정의 된 통신 파트너의 온라인 상태를 표시하는 프레즌스 알림을위한 메시지 교환 및 *친구 목록* 기능을 지원합니다 (제공자 지원 필요).
+
+## :black_nib: Jami
+
+**Jami** (이전 **GNU Ring** , **SFLphone** )는 [Linux](https://en.wikipedia.org/wiki/Linux) , [Microsoft Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) , [OS X](https://en.wikipedia.org/wiki/OS_X) , [iOS](https://en.wikipedia.org/wiki/IOS) 및 [Android ](https://en.wikipedia.org/wiki/Android_(Operating_System))[용 ](https://en.wikipedia.org/wiki/IOS)[SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 호환 분산 [P2P ](https://en.wikipedia.org/wiki/Peer-to-peer)[소프트 폰](https://en.wikipedia.org/wiki/Softphone) 및 [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 기반 [인스턴트 메신저](https://en.wikipedia.org/wiki/Instant_messaging) 입니다 . 캐나다 회사 인 [Savoir-faire Linux](https://en.wikipedia.org/wiki/Savoir-faire_Linux)에서 , 개발 및 유지 관리하며 사용자 및 기여자의 글로벌 커뮤니티의 도움으로 Jami는 잠재적 인 무료 [Skype](https://en.wikipedia.org/wiki/Skype) 대체품 으로 자리 매김했습니다 .
+
+Jami는 [GNU General Public License에](https://en.wikipedia.org/wiki/GNU_General_Public_License) 따라 출시 된 [무료 오픈 소스 소프트웨어](https://en.wikipedia.org/wiki/Free_and_open-source_software) 입니다. 2016 년 11 월에 [GNU 프로젝트의](https://en.wikipedia.org/wiki/GNU_Project) 일부가되었습니다 .
+
+현재 두 가지 계정 유형을 사용할 수 있으며 각 유형의 대부분을 동시에 구성 할 수 있습니다. 두 유형 모두 메시징, 비디오 및 오디오를 포함한 유사한 기능을 제공합니다. 계정 유형은 [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 및 링입니다. SIP 계정을 사용하면 Jami 소프트 폰을 표준 SIP 서버에 연결할 수 있으며 링 계정은 중앙 서버가 필요없는 분산 Jami 네트워크에 등록 (또는 계정 설정 사용) 할 수 있습니다. 그러나 Jami는 여전히 부트 스트랩 서버를 사용하여 연결해야하므로 진정한 인터넷 무료 통신 플랫폼이 아닙니다.
+
+[분산 해시 테이블](https://en.wikipedia.org/wiki/Distributed_hash_table) 기술 (예 : [BitTorrent](https://en.wikipedia.org/wiki/BitTorrent) 네트워크 내에서 사용됨)을 채택함으로써 Jami는 연결된 모든 시스템에 디렉터리 기능, 인증 및 [암호화](https://en.wikipedia.org/wiki/Encryption) 를 배포 할 수있는 자체 네트워크를 만듭니다.
+
+패키지는 [Debian](https://en.wikipedia.org/wiki/Debian) , [Fedora](https://en.wikipedia.org/wiki/Fedora_(operating_system)) 및 [Ubuntu를](https://en.wikipedia.org/wiki/Ubuntu) 포함한 모든 주요 Linux 배포판에서 사용할 수 있습니다. 별도의 [GNOME](https://en.wikipedia.org/wiki/GNOME) 및 [KDE](https://en.wikipedia.org/wiki/KDE) 버전을 사용할 수 있습니다. 문서는 Ring의 [Tuleap](https://en.wikipedia.org/wiki/Tuleap_(project_management)) wiki에 있습니다.
+
+### > 디자인
+
+Jami는 데몬 (모델)과 클라이언트 (뷰)가 통신 하는 [MVC 모델을](https://en.wikipedia.org/wiki/Model–view–controller) 기반으로합니다 . 데몬은 통신 계층 (SIP / IAX), 오디오 캡처 및 재생 등을 포함한 모든 처리를 처리합니다. 클라이언트는 그래픽 사용자 인터페이스입니다. [D-Bus](https://en.wikipedia.org/wiki/D-Bus) 는 클라이언트와 데몬 간의 통신을 가능하게하는 컨트롤러 역할을 할 수 있습니다.
+
+### > 기능
+
+- OpenDHT 지원과 SIP 호환
+- 무제한 통화
+- 인스턴트 메시징
+- 검색 가능한 통화 내역
+- 통화 녹음
+- 유인 통화 전달
+- 자동 전화 응답
+- 통화 보류
+- 다자간 오디오 및 화상 회의를 통한 오디오 및 비디오 통화
+- 다중 채널 오디오 지원
+- 통화 중 비디오 및 오디오 파일 스트리밍
+- **TLS** 및 **SRTP** 지원
+- 여러 오디오 코덱 지원 : G711u, G711a, GSM, [Speex](https://en.wikipedia.org/wiki/Speex) (8, 16, 32kHz), [Opus](https://en.wikipedia.org/wiki/Opus_(audio_codec)) , [G.722](https://en.wikipedia.org/wiki/G.722) (Speex에서 무음 감지 지원)
+- 계정 별 [STUN](https://en.wikipedia.org/wiki/STUN) 지원 및 SIP 프레즌스 구독으로 여러 SIP 계정 지원
+- [DTMF](https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling) 지원
+- [자동 이득 제어](https://en.wikipedia.org/wiki/Automatic_gain_control)
+- 계정 도우미 마법사
+- 전역 키보드 단축키
+- [Flac](https://en.wikipedia.org/wiki/FLAC) 및 [Vorbis](https://en.wikipedia.org/wiki/Vorbis) 벨소리 지원
+- 데스크톱 알림 : 음성 메일 번호, 수신 전화, 정보 메시지
+- SIP 재 초대
+- GNOME 및 KDE의 주소록 통합
+- [PulseAudio](https://en.wikipedia.org/wiki/PulseAudio) 지원
+- [잭 오디오 연결 키트](https://en.wikipedia.org/wiki/JACK_Audio_Connection_Kit) 지원
+- 로케일 설정 : 프랑스어, 영어, 러시아어, 독일어, 중국어, 스페인어, 이탈리아어, 베트남어
+- 수신 [URL](https://en.wikipedia.org/wiki/Uniform_Resource_Locator) 자동 열기
+- 채팅, 비디오 및 음성에 사용되는 종단 간 암호화
+- 분산 형 (하지만 ISP를 통한 인터넷 연결 필요)
+
+## :black_nib: MicroSIP
+
+**MicroSIP** 는 [Microsoft Windows에서](https://en.wikipedia.org/wiki/Microsoft_Windows) 사용할 수 있는 [PJSIP](https://en.wikipedia.org/w/index.php?title=PJSIP&action=edit&redlink=1) 스택을 기반으로 하는 휴대용 [SIP ](https://en.wikipedia.org/wiki/Session_Initiation_Protocol)[소프트 폰](https://en.wikipedia.org/wiki/Softphone) 입니다. 개방형 SIP 프로토콜을 기반으로 고품질 [VoIP](https://en.wikipedia.org/wiki/VoIP) 통화 ( [p2p](https://en.wikipedia.org/wiki/Peer-to-peer) 또는 일반 전화)를 용이하게 합니다.
+
+MicroSIP는 [무료 및 오픈 소스 소프트웨어](https://en.wikipedia.org/wiki/Free_and_open_source_software) 범주에 속하며 [GNU General Public License에](https://en.wikipedia.org/wiki/GNU_General_Public_License) 따라 릴리스됩니다 .
+
+PJSIP 스택에 의존하고 사용 가능한 기능을 사용합니다
+
+이 소프트웨어의 특징은 다음과 같습니다.
+
+- 경량 백그라운드 애플리케이션의 프로필
+- 작은 메모리 풋 프린트 (<20mb RAM 사용량)
+- SIP 표준에 대한 강력한 준수
+- 다양한 코덱 지원 : [Opus](https://en.wikipedia.org/wiki/Opus_(audio_format)) , [SILK](https://en.wikipedia.org/wiki/SILK) , [G.722](https://en.wikipedia.org/wiki/G.722) , [G.729](https://en.wikipedia.org/wiki/G.729) , [G.723.1](https://en.wikipedia.org/wiki/G.723.1) , [G.711](https://en.wikipedia.org/wiki/G.711) , [Speex](https://en.wikipedia.org/wiki/Speex) , [iLBC](https://en.wikipedia.org/wiki/ILBC) , [GSM](https://en.wikipedia.org/wiki/GSM_06.10) , [AMR](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec) , [AMR-WB](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband) 및 비디오 코덱 [H.264](https://en.wikipedia.org/wiki/H.264) , [H.263 +](https://en.wikipedia.org/wiki/H.263%2B) , [VP8](https://en.wikipedia.org/wiki/VP8) .
+- [STUN](https://en.wikipedia.org/wiki/STUN) 및 [ICE ](https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment)[NAT](https://en.wikipedia.org/wiki/Network_address_translation) 순회
+- SIP [SIMPLE](https://en.wikipedia.org/wiki/SIMPLE_(instant_messaging_protocol)) 현재 상태 및 메시징
+
+비디오가있는 정식 버전과 음성 및 메시징 전용 "Lite"버전의 두 가지 변형이 있습니다.
+
+## :black_nib: QuteCom
+
+**QuteCom** (이전의 **WengoPhone** )은 [GNU General Public License](https://en.wikipedia.org/wiki/GNU_General_Public_License) (GPL) 에 따라 QuteCom (이전 OpenWengo) 커뮤니티에서 개발 한 [무료 소프트웨어 ](https://en.wikipedia.org/wiki/Free-software)[SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 호환 [VoIP](https://en.wikipedia.org/wiki/Voice_over_IP) 클라이언트였습니다 . 사용자가 SIP 호환 VoIP 소프트웨어의 다른 사용자와 무료로 대화 할 수 있습니다. 또한 통화에 사용자 수 있습니다 [유선 전화](https://en.wikipedia.org/wiki/Landline) 및 [휴대 전화](https://en.wikipedia.org/wiki/Mobile_phone) , 전송 [SMS](https://en.wikipedia.org/wiki/SMS) 와 메이크업의 [화상 통화를](https://en.wikipedia.org/wiki/Videotelephony) . 이러한 기능 중 어느 것도 특정 공급자와 연결되어 있지 않으므로 사용자는 SIP 공급자 중에서 선택할 수 있습니다.
+
+PC 간 통화가 [하이파이의](https://en.wikipedia.org/wiki/High_fidelity) 품질을 여러 사용하는 [코덱](https://en.wikipedia.org/wiki/Codec) 과 같은 [에서 iLBC](https://en.wikipedia.org/wiki/Internet_Low_Bit_Rate_Codec) , [G.711](https://en.wikipedia.org/wiki/G.711) ( [PCMA](https://en.wikipedia.org/wiki/A-law_algorithm) 또는 [PCMU](https://en.wikipedia.org/wiki/Μ-law_algorithm) ), [G.722](https://en.wikipedia.org/wiki/G.722) , [AMR을](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_audio_codec) (라이센스 필요), [AMR-WB](https://en.wikipedia.org/wiki/Adaptive_Multi-Rate_Wideband) (라이센스 필요), [G.729](https://en.wikipedia.org/wiki/G.729) ( 라이센스 필요). 동일한 소프트웨어 또는 [Gizmo](https://en.wikipedia.org/wiki/Gizmo5) 와 같은 SIP 호환 소프트웨어를 사용하는 다른 사용자와 대화를 시작할 수 있습니다 . QuteCom은 또한 사용자가 [FFmpeg를](https://en.wikipedia.org/wiki/FFmpeg) 사용하여 화상 통화를 할 수 있도록합니다 . 지원되는 비디오 코덱은 [H.263](https://en.wikipedia.org/wiki/H.263) 입니다. 버전 2.1부터 QuteCom은 다음과의 IM 채팅을 허용합니다.[MSN](https://en.wikipedia.org/wiki/Windows_Live_Messenger) , [YIM](https://en.wikipedia.org/wiki/Yahoo!_Messenger) , [AIM](https://en.wikipedia.org/wiki/AOL_Instant_Messenger) , [ICQ](https://en.wikipedia.org/wiki/ICQ) 및 [XMPP](https://en.wikipedia.org/wiki/Extensible_Messaging_and_Presence_Protocol) 사용자. 이것은 [libpurple](https://en.wikipedia.org/wiki/Pidgin_(software)) 라이브러리 를 사용하여 이루어졌습니다 .
+
+유선 전화 호출에 관한 기본 서버 구성에서 하나 [Wengo](https://en.wikipedia.org/wiki/Wengo) OpenWengo 프로젝트의 주요 스폰서이었다. 버전 2.1이 출시 된 후 QuteCom은 모든 [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 공급자 와 함께 사용할 수 있습니다 . 이는 사용자가 사용하는 소프트웨어가 아닌 분당 청구하는 요금에 따라 SIP 공급자를 선택할 수 있기 때문에 사용자에게 경제적 이점을 제공합니다.
+
+### > 사용자 인터페이스
+
+[GUI](https://en.wikipedia.org/wiki/Graphical_user_interface) 는 [Gizmo5](https://en.wikipedia.org/wiki/Gizmo5) 또는 [Skype](https://en.wikipedia.org/wiki/Skype) 와 같은 다른 VoIP [소프트 폰](https://en.wikipedia.org/wiki/Softphone) 의 [GUI](https://en.wikipedia.org/wiki/Graphical_user_interface) 와 유사합니다 . 기본 GUI에서 [탭](https://en.wikipedia.org/wiki/Tab_(GUI)) 을 통해 연락처 목록, 최근 통화 목록 및 사용자 계정 정보에 액세스 할 수 있습니다. 기술적으로는 [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) 및 [Qt](https://en.wikipedia.org/wiki/Qt_(framework)) / [C ++](https://en.wikipedia.org/wiki/C%2B%2B) 프로그래밍 언어로 작성되었습니다 .
+
+### > 기능
+
+- SIP 준수
+- 공급자 불가지론
+- 사용자가 프랑스로 SMS를 보낼 수 있습니다.
+- NAT 통과
+- [크로스 플랫폼](https://en.wikipedia.org/wiki/Cross-platform)
+- 오디오 [스마일](https://en.wikipedia.org/wiki/Smiley)
+- [Qt](https://en.wikipedia.org/wiki/Qt_(framework)) 기반 GUI
+- MSN, AIM, ICQ, Yahoo 및 XMPP 사용자와 채팅
+- [SRTP](https://en.wikipedia.org/wiki/Secure_Real-time_Transport_Protocol) 를 통한 암호화 , 그러나 표준이 아닌 Everbee 키를 통한 키 교환
+- 표준 [세션 시작 프로토콜 사용](https://en.wikipedia.org/wiki/Session_Initiation_Protocol)
+
+### > 한계
+
+QuteCom의 주요 제한 사항은 다음과 같습니다.
+
+- 암호화와 같은 진정한 개인 정보 보호 기능이 없습니다. [SRTP를](https://en.wikipedia.org/wiki/Secure_Real-time_Transport_Protocol) 사용한 베타 [AES-128](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 암호화 는 QuteCom 2.1 버전부터 제공됩니다.
+- [H.261을](https://en.wikipedia.org/wiki/H.261) 지원하지 않고 잘못된 [H.263](https://en.wikipedia.org/wiki/H.263) 패킷을 전송 하여 다른 비디오 폰과 통신 하지 못함
+- 3 명 이상의 오디오 컨퍼런스를 지원하지 않음
+- 암호화를위한 키 교환은 표준이 아니므로 QuteCom 클라이언트간에 만 작동합니다.
+
+## :black_nib: CounterPath
+
+
+
+# :point_up: Ubuntu환경에서 C++ SIP  개발하기
+
+## 1. 서버실행하기
 
 ~~sudo apt install yum~~
 
