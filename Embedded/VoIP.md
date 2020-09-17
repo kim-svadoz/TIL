@@ -912,6 +912,83 @@ Phone A와 Phone B는 각각 Switch에 UTP케이블로 연결이 되어 있고 P
 
 # **VoIP Open Source의 종류**
 
+## :black_nib: PJSIP
+
+> ***PJSIP*는 설치 공간이 매우 작고 성능이 뛰어난 오픈소스 SIP 프로토콜 스택**
+
+jsip 는 오픈소스로 제작된 멀티미디어 통신 라이브러리이다. pjsip 에서 제공하는 라이브러리를 이용하면 자동 SIP 콜 테스트 프로그램 등을 쉽게 제작할 수 있다.
+
+Library 뿐만 아니라, pjsip 설치시 함께 컴파일되는 모듈 중에 pjsua 라는 모듈이 있는데 이는 CLI(Command line interface) 지원하는 SIP 클라이언트 프로그램이다.
+즉, library 를 제공하는 것 뿐만 아니라 CLI 기반 클라이언트 프로그램도 같이 제공한다.
+
+그리고 Library 모듈 중, Python 모듈은 Python 을 이용한 스크립트 제작을 가능하게 해준다. 즉, Python 으로 동작하는 SIP 자동 테스트 같은 프로그램을 제작할 수 도 있는 것이다.
+
+
+
+지원 OS는 **Windows, Linux, Mac OS, Android, IOS**
+
+
+
+## > Installation
+
+**Ubuntu/Debian**
+
+apt-get을 통한 패키지 설치를 지원하지 않는다. 따라서 소스를 다운받아 컴파일 하는 방식으로 설치해야 한다.
+
+```shell
+$ wget http://www.pjsip.org/release/2.3/pjproject-2.3.tar.bz2
+$ tar xf pjproject-2.3.tar.bz2
+$ cd pjproject-2.3
+$ ./configure
+$ make dep
+$ make
+$ sudo make install
+```
+
+- 실수로 make dep 를 하기 전에 make 를 먼저 했을 경우, 에러가 발생하는 문제가 있었다. 이후에 다시 make dep 를 하고 make 를 해도 같은문제가 발생했다. make distclean & make clean 후, 다시 make dep & make 실행 후 정상적으로 컴파일이 되었다.
+
+
+
+
+
+PJSIP는 여러 수준의 API로 구성되며 각 API는 서로 계층화됩니다. 이로 인해 새로운 독자는 시작할 곳을 찾는 것이 조금 어려울 수 있습니다.
+
+일반적으로 PJSIP 사용에 대한 두 가지 접근 방식을 권장 할 수 있다고 생각합니다.
+
+**1. PJSUA API 사용**
+
+**`PJSUA API-High Level SoftPhone API`**는 모든 SIP 구성 요소와 미디어를 일반적인 SIP 사용자 에이전트 애플리케이션을 만드는 데 적합한 높은 수준의 API로 래핑한다. 다음을 위해 사용하기 쉬운 API를 제공한다.
+
+- 여러 클라이언트 등록(계정)
+- 높은 수준의 SIP 및 미디어 세션(호출)
+- 친구목록, 현재 상태 및 인스턴트 메시징
+- 강력하고 사용하기 쉬운 미디어 조작
+
+일부 유형의 애플리케이션에 필요한 사용자 정의 공간(사용자 정의 SIP 전송, 사용자 정의 SIP 미디어 등)을 유지한다.
+
+**`PJSUA API-High Level SoftPhone API`**는 또한 애플리케이션이 적절한 스레딩 전략 및 메모리 제한(호출 수, 미디어 포트 등)을 신중하게 설정하도록 허용하며 PDA 또는 휴대폰과 같은 장치에서 실행할 수 있도록 하는 것을 목표로 한다.
+
+그러나 **`PJSUA API-High Level SoftPhone API`**는 사용하기 쉬운 API를 지향하기 때문에 일부 유형의 애플리케이션에 가장 적합한 API는 아닐 수 있다. 보다 고급적인 사용을 위해 아래 설명된대로 **PJSIP + PJMEDIA**를 직접 사용하여 애플리케이션을 더 잘 구현할 수 있다.
+
+
+
+**2. PJSIP 및 PJMEDIA 직접 사용**
+
+최고의 유연성과 성능을 위해서는 PJSIP 및 PJMEDIA를 직접 사용하는 것이 좋다. 단점은 물론 더 가파른 학습 곡선이라는 것..
+
+그러나 다음 링크는 몇 가지 유용한 정보를 제공해 줄 것이다.
+
+- [PJSIP 개발자 가이드](https://www.pjsip.org/docs.htm) PDF 문서는 PJSIP 디자인 개념을 이해하기위한 최고의 가이드입니다.
+- [**pjsip-apps / src / samples**](https://www.pjsip.org/cgi-bin/viewcvs.cgi/pjproject/trunk/pjsip-apps/src/samples/) 디렉토리에 몇 가지 샘플이 있습니다 .
+- [PJSUA API-High Level Softphone API](https://www.pjsip.org/pjsip/docs/html/group__PJSUA__LIB.htm) 소스 코드는 PJSIP / PJMEDIA를 사용하여 상위 레벨 API를 구현하는 방법을 확인하는데도 유용 할 수 있습니다.
+- 마지막으로 항상 **소스** 를 사용할 수 있습니다 !
+
+
+
+
+
+
+
 ## :black_nib: LinPhone
 
 **Linphone** ( *[Linux](https://en.wikipedia.org/wiki/Linux) 전화의* 축소 )은 [IP ](https://en.wikipedia.org/wiki/VoIP)[소프트 폰](https://en.wikipedia.org/wiki/Softphone) , [SIP](https://en.wikipedia.org/wiki/Session_Initiation_Protocol) 클라이언트 및 서비스를 [통한](https://en.wikipedia.org/wiki/VoIP) 무료 [음성](https://en.wikipedia.org/wiki/VoIP) 입니다. 음성 및 영상 직접 [통화](https://en.wikipedia.org/wiki/Telephone_call) 및 [VoIP 소프트 스위치](https://en.wikipedia.org/wiki/Softswitch) 또는 [IP-PBX를](https://en.wikipedia.org/wiki/IP-PBX) 통한 [통화에](https://en.wikipedia.org/wiki/Telephone_call) 사용할 수 있습니다 . 또한 Linphone은 인스턴트 메시지를 교환 할 수있는 가능성을 제공합니다. [GUI](https://en.wikipedia.org/wiki/Graphical_user_interface) 용 [GTK +](https://en.wikipedia.org/wiki/GTK%2B) 를 기반으로하는 간단한 다국어 인터페이스가 있으며 Linux 에서 [콘솔](https://en.wikipedia.org/wiki/System_console) 모드 응용 프로그램으로 실행할 수도 있습니다 .
@@ -1163,3 +1240,16 @@ QuteCom의 주요 제한 사항은 다음과 같습니다.
 
 
 다익, 패턴, dfs, DP, 문자열 검색(트라이, KMP), 슬라이딩 윈도우, Hashmap,
+
+
+
+#  MircroSip 이용해서 구현
+
+1.
+
+2.
+
+
+
+
+
