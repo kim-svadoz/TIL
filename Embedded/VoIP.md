@@ -1243,13 +1243,80 @@ QuteCom의 주요 제한 사항은 다음과 같습니다.
 
 
 
-#  MircroSip 이용해서 구현
+# :mag_right: LinPhone 시작하기
 
-1.
+Installing Linux dependencies from 4.1 version of Desktoop
 
-2.
+```shell
+sudo apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64  libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64  libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
+```
+
+```bash
+sudo apt-get install linphone -y
+sudo add-apt-repository ppa:linphone/release
+sudo apt-get update
+sudo apt-get install linphone linphone-plugin-openh264
+```
+
+```bash
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+
+git submodule update --init --recursive
+```
+
+network 상태확인
+
+```bash
+sudo apt install net-tools
+sudo netstat -peanut
+```
+
+Could not start tls transport on port 5060, maybe this port is already used.
+
+```bash
+lsof -i -n -P | grep 5060
+```
+
+```bash
+ksh@ksh:~$ linphonec
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib control.c:1373:(snd_ctl_open_noupdate) Invalid CTL default:0
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:0
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:0
+Warning: Could not start tls transport on port 5060, maybe this port is already used.
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
 
 
+linphonec> ports
+sip port = 5060
+audio rtp port = 7078
+video rtp port = 9078
 
+linphonec> states
+Global liblinphone state
+LinphoneGlobalOn
+Call states
+Id |            Destination              |      State      |    Flags   |
+------------------------------------------------------------------------
+(empty)
+Proxy registration states
+           Identity                      |      State
+------------------------------------------------------------
+sip:ksh0915@sip.linphone.org             | LinphoneRegistrationProgress
+```
 
+**해결방안1**
 
+```bash
+sudo usermod aG plugdev ksh
+```
+
+...안된다..
+
+```bash
+ Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
+ PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
+```
