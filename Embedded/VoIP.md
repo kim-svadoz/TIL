@@ -1320,3 +1320,297 @@ sudo usermod aG plugdev ksh
  Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
  PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
 ```
+
+
+
+
+
++ 20/09/21
+
+옵션에서 **User IPv6 instead of IPv4**를 선택하니까 전화는 걸린다. 이제 상대방?에게 전화가 오는지 확인해야한다.
+
+윈도우는 test call이 되는데, ubuntu에서는 안된다.
+
+
+
+Ubuntu
+
+```bash
+linphonec> call dhkdghehfdl@10.10.81.94:5060
+Terminate or hold on the current call first.
+linphonec> Remote ringing.
+linphonec> Remote ringing...
+linphonec> Call 12 to <sip:dhkdghehfdl@10.10.81.94> ringing.
+Call 12 with <sip:dhkdghehfdl@10.10.81.94> connected.
+Call answered by <sip:dhkdghehfdl@10.10.81.94>.
+linphonec> Media streams established with <sip:dhkdghehfdl@10.10.81.94> for call 12 (audio).
+Friend "dhkdghehfdl" <sip:dhkdghehfdl@10.10.81.94> is Offline
+Registration on <sip:sip.linphone.org> successful.
+linphonec> ortp-error-Subscription closed but no associated op !
+
+```
+
+- call 하고 나서 전화가 오기까지 조금의 대기시간이 요구됨
+- network설정은 현재는 UDP/TLS 어떤것을 해도 다 잘된다?
+- 전화가 끝나고나면 terminate를 한번씩 쳐줘야한다...? -> 확인필요
+
+*여기서 말하는 **oRTP**라는 것은 Real-Time-Transport Protocol(RFC 3550)을 수행하는 라이브러리이며, GNU GPLv2 또는 독점 라이센스로 배포할 수 있다*
+
+
+
+linphone 설정파일
+
+```bash
+cd ~
+ls -a -l
+vi .linphonerc
+```
+
+source list 보기
+
+```bash
+cd /etc/apt
+ls
+vi sources.list , cd sources.list.d vi l~
+```
+
+
+
+## linphone-desktop build 과정
+
+```bash
+# git clone
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+git submodule update --init --recursive
+
+# pip 설치
+sudo apt install pip
+pip install pystache
+
+# doxygen 설치
+sudo apt-get install doxygen
+sudo apt-get install doxygen-gui
+
+# six 설치
+pip install six --user
+
+# nasm 설치
+sudo apt-get install -y nasm
+
+# yasm 설치
+sudo apt-get install -y yasm
+
+# perl 설치
+sudo apt-get install -y perl
+
+# pk-config 설치
+sudo apt-get install -y pkg-config
+
+# libv4l2
+sudo apt-get install libv4l-dev
+sudo apt-get install libglew-dev
+
+# dependency
+sudo apt-get install python-pystache libv4l-dev libpulse-dev libglew-dev doxygen libbsd-dev qt5-default qttools5-dev qttools5-dev-tools libqt5svg5-dev libqt5texttospeech5-dev qtdeclarative5-dev qtdeclarative5-dev-tools qtquickcontrols2-5-dev qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtquick-dialogs  qml-module-qtqml-models2 qml-module-qtquick-templates2 qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings qml-module-qt-labs-platform
+
+sudo apt-get install libpulse-dev pulseaudio apulse
+
+sudo apt-get install libasound2-dev
+
+sudo apt-get install libv4l-dev libvpx-dev libgl1-mesa-dev
+
+sudo apt-get install build-essential linux-headers-`uname -r` alsa-  base alsa-firmware-loaders alsa-oss alsa-source alsa-tools alsa-tools-gui alsa-utils alsamixergui
+
+sudo apt-get install oem-audio-hda-daily-dkms
+
+sudo apt-get install -y v4l-utils
+
+sudo apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64 libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64 libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
+
+sudo apt-get install libpulse-dev pulseaudio libasound2-dev pavucontrol alsa-lib 
+
+# bashrc 환경변수 설정
+Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
+PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
+
+# build
+git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+cd linphone-desktop
+mkdir build
+cd build
+sudo cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_V4L=0 -DENABLE_SOUND=NO
+sudo cmake --build . --target install --parallel 10 --config RelWithDebInfo
+./OUTPUT/bin/linphone --verbose` or `./OUTPUT/Linphone.app/Contents/MacOS/linphone --verbose
+```
+
+지금 alsa-make가 안되는 문제인데 이유는 alsa-lib가 unable to locate package 되어있다...? 해결하러가보자!!
+
+**수정 전**
+
+![image-20200921165010676](images/image-20200921165010676.png)
+
+```bash
+ksh@ksh: sudo passwd root
+ksh@ksh: 0000
+ksh@ksh: 0000
+root@ksh : mount -o rw,remount /
+sudo gedit /etc/apt/sources.list
+```
+
+
+
+**수정 후**
+
+
+
+
+
+<문제>
+
+공화국에 있는 유스타운 시에서는 길을 사이에 두고 전봇대가 아래와 같이 두 줄로 늘어서 있다. 그리고 길 왼편과 길 오른편의 전봇대는 하나의 전선으로 연결되어 있다. 어떤 전봇대도 두 개 이상의 다른 전봇대와 연결되어 있지는 않다.
+
+![img](https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/upload/201004/picpicpicpicpicpicpicp.JPG)
+
+문제는 이 두 전봇대 사이에 있는 전깃줄이 매우 꼬여 있다는 점이다. 꼬여있는 전깃줄은 화재를 유발할 가능성이 있기 때문에 유스타운 시의 시장 임한수는 전격적으로 이 문제를 해결하기로 했다.
+
+임한수는 꼬여 있는 전깃줄 중 몇 개를 적절히 잘라 내어 이 문제를 해결하기로 했다. 하지만 이미 설치해 놓은 전선이 아깝기 때문에 잘라내는 전선을 최소로 하여 꼬여 있는 전선이 하나도 없게 만들려고 한다.
+
+유스타운 시의 시장 임한수를 도와 잘라내야 할 전선의 최소 개수를 구하는 프로그램을 작성하시오.
+
+<입력>
+
+첫 줄에 전봇대의 개수 N(1 ≤ N ≤ 100,000)이 주어지고, 이어서 N보다 작거나 같은 자연수가 N개 주어진다. i번째 줄에 입력되는 자연수는 길 왼쪽에 i번째 전봇대와 연결된 길 오른편의 전봇대가 몇 번 전봇대인지를 나타낸다.
+
+<출력>
+
+전선이 꼬이지 않으려면 최소 몇 개의 전선을 잘라내야 하는 지를 첫째 줄에 출력한다.
+
+```java
+import java.util.*;
+class Main{
+    static int N, map[], d[];
+    static int cnt = 1;
+    public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        map = new int[N];
+        d = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            map[i] = Integer.parseInt(st.nextToken());
+        }
+        d[0] = map[0];
+        for(int i=1; i<N; i++){
+            if(d[cnt-1] < map[i]){
+                d[cnt++] = map[i];
+            }else if(d[0] > map[i]){
+                d[0] = map[i];
+            }else{
+                // Arrays API 내 이분탐색 함수
+                int temp = Arrays.binarySearch(d, 0, cnt, map[i]);
+                d[temp < 0 ? -temp-1 : temp] = map[i];
+            }
+        }
+        bw.write(N-cnt+"\n");
+    }    
+}
+```
+
+
+
+<예제입력>
+
+```
+4
+2 3 4 1
+```
+
+<예제출력>
+
+```
+1
+```
+
+
+
+<문제>
+
+상근이는 영화 DVD 수집가이다. 상근이는 그의 DVD 콜렉션을 쌓아 보관한다.
+
+보고 싶은 영화가 있을 때는, DVD의 위치를 찾은 다음 쌓아놓은 콜렉션이 무너지지 않게 조심스럽게 DVD를 뺀다. 영화를 다 본 이후에는 가장 위에 놓는다.
+
+상근이는 DVD가 매우 많기 때문에, 영화의 위치를 찾는데 시간이 너무 오래 걸린다. 각 DVD의 위치는, 찾으려는 DVD의 위에 있는 영화의 개수만 알면 쉽게 구할 수 있다. 각 영화는 DVD 표지에 붙어있는 숫자로 쉽게 구별할 수 있다.
+
+각 영화의 위치를 기록하는 프로그램을 작성하시오. 상근이가 영화를 한 편 볼 때마다 그 DVD의 위에 몇 개의 DVD가 있었는지를 구해야 한다.
+
+<입력>
+
+첫째 줄에 테스트 케이스의 개수가 주어진다. 테스트 케이스의 개수는 100개를 넘지 않는다.
+
+각 테스트 케이스의 첫째 줄에는 상근이가 가지고 있는 영화의 수 n과 보려고 하는 영화의 수 m이 주어진다. (1 ≤ n, m ≤ 100,000) 둘째 줄에는 보려고 하는 영화의 번호가 순서대로 주어진다.
+
+영화의 번호는 1부터 n까지 이며, 가장 처음에 영화가 쌓여진 순서는 1부터 증가하는 순서이다. 가장 위에 있는 영화의 번호는 1이다. 
+
+<출력>
+
+각 테스트 케이스에 대해서 한 줄에 m개의 정수를 출력해야 한다. i번째 출력하는 수는 i번째로 영화를 볼 때 그 영화의 위에 있었던 DVD의 개수이다. 상근이는 매번 영화를 볼 때마다 본 영화 DVD를 가장 위에 놓는다.
+
+<예제 입력 1 복사>
+
+```
+2
+3 3
+3 1 1
+5 3
+4 4 5
+```
+
+<예제 출력 1 복사>
+
+```
+2 1 0
+3 0 4
+```
+
+
+
+<문제>
+
+서로 다른 N개의 자연수의 합이 S라고 한다. S를 알 때, 자연수 N의 최댓값은 얼마일까?
+
+<입력>
+
+첫째 줄에 자연수 S(1 ≤ S ≤ 4,294,967,295)가 주어진다.
+
+<출력>
+
+첫째 줄에 자연수 N의 최댓값을 출력한다.
+
+```java
+import java.util.*;
+class Main {
+    static int S;
+    public static void main(String[] args){
+        BufferedReader br = new BufferdReader(new InputStreamReader(System.in));
+        S = Integer.parseInt(br.readLine());
+    }
+}
+class SegmentTree{
+    long[] tree;
+    int S;
+}
+```
+
+
+
+<예제 입력 1 복사>
+
+```
+200
+```
+
+<예제 출력 1 복사>
+
+```
+19
+```
