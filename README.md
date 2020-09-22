@@ -34,22 +34,22 @@
 | 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)             |
 | 2056_작업           | [Link](./알고리즘/Baekjoon/Work_2056.java)                   | [문제](https://www.acmicpc.net/problem/2056)                 | 위상정렬, queue              |
 | 4195_친구네트워크   | [Link](./알고리즘/Baekjoon/FriendNetwork_4195.java)          | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap |
-| 1766_문제집         | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                     |
-| 2042_구간합구하기   | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                |
-| 2096_내려가기       | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP     |
-| 1806_부분합         | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘            |
-| 2531_회전초밥       | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우         |
-| 2230_수 고르기      | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬      |
-| 1365_꼬인 전깃줄    | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS           |
-| 1789_수들의 합      | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                            |
+| 1766_문제집         | [Link](./알고리즘/Baekjoon/CollectionOfProblem_1766.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                     |
+| 2042_구간합구하기   | [Link](./알고리즘/Baekjoon/SaveJoint_2042.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                |
+| 2096_내려가기       | [Link](./알고리즘/Baekjoon/GoingDown_2096.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP     |
+| 1806_부분합         | [Link](./알고리즘/Baekjoon/SectionSum_1806.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘            |
+| 2531_회전초밥       | [Link](./알고리즘/Baekjoon/RotatingSushi_2531.java)          | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우         |
+| 2230_수 고르기      | [Link](./알고리즘/Baekjoon/SelectNum_2230.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬      |
+| 1365_꼬인 전깃줄    | [Link](./알고리즘/Baekjoon/TwistedElectricWire_1365.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS           |
+| 1789_수들의 합      | [Link](./알고리즘/Baekjoon/SumOfNumbers_1789.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                            |
 
 ### [Programmers](./알고리즘/Programmers)
 
 | 문제번호               | 솔루션                                                       | 문제 링크                                                    | 비고                         |
 | ---------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
 | 17685_자동완성         | [Link](./알고리즘/Programmers/AutoComplete_17685.java)       | [문제](https://programmers.co.kr/learn/courses/30/lessons/17685) | 문자열비교, sort, Math       |
-| 42746_가장큰수         | [Link](./알고리즘/Programmers/LargestInteger_42746.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42746) | 문자열 정렬 및 숫자 변환     |
-| 12924_숫자의 표현      | [Link](./알고리즘/Programmers/ExpressionOfInteger_12924.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/12924) | 문자열 완전탐색              |
+| 42746_가장큰수         | [Link](./알고리즘/Programmers/LargestInteger_42746.java)     | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42746-%EA%B0%80%EC%9E%A5-%ED%81%B0-%EC%88%98?category=936484) | 문자열 정렬 및 숫자 변환     |
+| 12924_숫자의 표현      | [Link](./알고리즘/Programmers/ExpressionOfInteger_12924.java) | [문제](https://coder-in-war.tistory.com/entry/ProgrammersJAVA12924-%EC%88%AB%EC%9E%90%EC%9D%98%ED%91%9C%ED%98%84?category=936484) | 문자열 완전탐색              |
 | 43165_타겟넘버         | [Link](./알고리즘/Programmers/DFS_TargetNumber_43165.java)   | [문제](https://programmers.co.kr/learn/courses/30/lessons/43165) | DFS                          |
 | 12903_중간값구하기     | [Link](./알고리즘/Programmers/getMiddleNumber_12903.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/12903) | 문자열 처리                  |
 | 1836_리틀프렌즈사천성  | [Link](./알고리즘/Programmers/Little_Friends_Sachunsung_1836.java) | [문제](https://programmers.co.kr/learn/courses/30/lessons/1836) | BFS, DFS                     |
@@ -73,18 +73,18 @@
 | 42579_베스트앨범       | [Link](./알고리즘/Programmers/BestAlbum_42579.java)          | [문제](https://programmers.co.kr/learn/courses/30/lessons/42579) | Hash                         |
 | 43162_네트워크         | [Link](./알고리즘/Programmers/Network_43162.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/43162) | DFS                          |
 | 43163_문자변환         | [Link](./알고리즘/Programmers/ChangeWord_43163.java)         | [문제](https://programmers.co.kr/learn/courses/30/lessons/43163) | BFS                          |
-| 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://programmers.co.kr/learn/courses/30/lessons/60063) | BFS(방향까지 체크(3-D))      |
+| 60063_블록 이동하기    | [Link](./알고리즘/Programmers/BlockMoving_60063.java)        | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA60063-%EB%B8%94%EB%A1%9D-%EC%9D%B4%EB%8F%99%ED%95%98%EA%B8%B0?category=936484) | BFS(방향까지 체크(3-D))      |
 | 12904_가장 긴 팰린드롬 | [Link](./알고리즘/Programmers/LongestPalindrome_12904.java)  | [문제](https://programmers.co.kr/learn/courses/30/lessons/12904) | DP                           |
-| 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://programmers.co.kr/learn/courses/30/lessons/42627) | 우선순위 큐, 정렬            |
-| 49189_가장 먼 노드     | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA49189-%EA%B0%80%EC%9E%A5-%EB%A8%BC-%EB%85%B8%EB%93%9C?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/49189) | Queue, Node, BFS             |
-| 42681_섬 연결하기      | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA42861-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0?category=936484) | [문제](https://programmers.co.kr/learn/courses/30/lessons/42861) | kruskal MTS, Union-Find, BFS |
-| 12899_124나라의숫자    | [Link](./알고리즘/Programmers/IntOf124_12899.java)           | [문제](https://programmers.co.kr/learn/courses/30/lessons/12899) | 숫자 변환                    |
-| 42586_기능개발         | [Link](./알고리즘/Programmers/FunctionDevelop_42586.java)    | [문제](https://programmers.co.kr/learn/courses/30/lessons/42586) | BFS                          |
-| 42587_프린터           | [Link](./알고리즘/Programmers/Printer_42587.java)            | [문제](https://programmers.co.kr/learn/courses/30/lessons/42587) | 우선순위 큐(역방향-내림차순) |
-| 62048_멀쩡한 사각형    | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA62048-%EB%A9%80%EC%A9%A1%ED%95%9C-%EC%82%AC%EA%B0%81%ED%98%95?category=936484) | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA62048-%EB%A9%80%EC%A9%A1%ED%95%9C-%EC%82%AC%EA%B0%81%ED%98%95?category=936484) | 규칙찾기, 최대공약수         |
-| 42584_주식가격         | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA42584-%EC%A3%BC%EC%8B%9D%EA%B0%80%EA%B2%A9?category=936484) | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42584-%EC%A3%BC%EC%8B%9D%EA%B0%80%EA%B2%A9?category=936484) | 단순 생각의 구현             |
-| 42883_큰수만들기       | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA42883-%ED%81%B0-%EC%88%98-%EB%A7%8C%EB%93%A4%EA%B8%B0?category=936484) | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42883-%ED%81%B0-%EC%88%98-%EB%A7%8C%EB%93%A4%EA%B8%B0?category=936484) | stack                        |
-| 12913_땅따먹기         | [Link](https://coder-in-war.tistory.com/entry/Programmers-JAVA12913-%EB%95%85%EB%94%B0%EB%A8%B9%EA%B8%B0) | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA12913-%EB%95%85%EB%94%B0%EB%A8%B9%EA%B8%B0) | DP, 슬라이딩윈도우           |
+| 42627_디스크컨트롤러   | [Link](./알고리즘/Programmers/DiskController_42627.java)     | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42627-%EB%94%94%EC%8A%A4%ED%81%AC%EC%BB%A8%ED%8A%B8%EB%A1%A4%EB%9F%AC?category=936484) | 우선순위 큐, 정렬            |
+| 49189_가장 먼 노드     | [Link](./알고리즘/Programmers/FarsetNode_49189.java)         | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA49189-%EA%B0%80%EC%9E%A5-%EB%A8%BC-%EB%85%B8%EB%93%9C?category=936484) | Queue, Node, BFS             |
+| 42681_섬 연결하기      | [Link](./알고리즘/Programmers/LinkIsland_42681.java)         | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42861-%EC%84%AC-%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0?category=936484) | kruskal MTS, Union-Find, BFS |
+| 12899_124나라의숫자    | [Link](./알고리즘/Programmers/IntOf124_12899.java)           | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA12899-124-%EB%82%98%EB%9D%BC%EC%9D%98-%EC%88%AB%EC%9E%90?category=936484) | 숫자 변환                    |
+| 42586_기능개발         | [Link](./알고리즘/Programmers/FunctionDevelop_42586.java)    | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42586-%EA%B8%B0%EB%8A%A5%EA%B0%9C%EB%B0%9C?category=936484) | BFS                          |
+| 42587_프린터           | [Link](./알고리즘/Programmers/Printer_42587.java)            | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42587-%ED%94%84%EB%A6%B0%ED%84%B0?category=936484) | 우선순위 큐(역방향-내림차순) |
+| 62048_멀쩡한 사각형    | [Link](./알고리즘/Programmers/FineSquare_62048.java)         | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA62048-%EB%A9%80%EC%A9%A1%ED%95%9C-%EC%82%AC%EA%B0%81%ED%98%95?category=936484) | 규칙찾기, 최대공약수         |
+| 42584_주식가격         | [Link](./알고리즘/Programmers/StockPrice_42584.java)         | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42584-%EC%A3%BC%EC%8B%9D%EA%B0%80%EA%B2%A9?category=936484) | 단순 생각의 구현             |
+| 42883_큰수만들기       | [Link](./알고리즘/Programmers/MakeBigNumber_42883.java)      | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42883-%ED%81%B0-%EC%88%98-%EB%A7%8C%EB%93%A4%EA%B8%B0?category=936484) | stack                        |
+| 12913_땅따먹기         | [Link](./알고리즘/Programmers/GroundPicking_12913.java)      | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA12913-%EB%95%85%EB%94%B0%EB%A8%B9%EA%B8%B0) | DP, 슬라이딩윈도우           |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
