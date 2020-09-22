@@ -36,7 +36,7 @@
 | 4195_친구네트워크   | [Link](./알고리즘/Baekjoon/FriendNetwork_4195.java)          | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap |
 | 1766_문제집         | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                     |
 | 2042_구간합구하기   | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                |
-| 2096_내려가기       | [Link][https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483] | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP     |
+| 2096_내려가기       | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP     |
 | 1806_부분합         | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘            |
 | 2531_회전초밥       | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우         |
 | 2230_수 고르기      | [Link](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬      |
@@ -140,7 +140,7 @@
 
 ### 7. [Graph](./알고리즘/Graph.md)
 
-### 8.[TwePointer,SlidingWindow](./알고리즘/TwePointer,SlidingWindow.md)
+### 8. [TwePointer,SlidingWindow](./알고리즘/TwePointer,SlidingWindow.md)
 
 ### 9. [Geometric](./알고리즘/Geometric.md)
 
