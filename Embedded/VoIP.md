@@ -908,9 +908,256 @@ Phone A와 Phone B는 각각 Switch에 UTP케이블로 연결이 되어 있고 P
 
 *IP PBX는 단순한 PBX 대용이 아니다. 새로운 통신의 기반이고, 플랫폼이다!*
 
+# **전송계층(Transport Layer)**
 
+---
+
+먼저 **네트워크란** 데이터를 교환하기 위해 전송 매체를 매개로 서로 연결되어 있는 것이고 **인터넷은** 전세계 컴퓨터들이 서로 연결되어있는 거대한 네트워크를 뜻한다.
+
+ 사람간의 대화에서 같은 언어를 이용해 의사소통 하듯 네트워크 상에서 데이터를 주고받기 위해서 일종의 정해진 규약이 있는데 이것을 **프로토콜**이라고 부른다.
+
+ 네트워크 상에서 정보를 주고받으려면 어느 경로로 보낼지 어떤 방식으로 데이터를 보낼지 등등 고려해야할 사항이 많다. 만약 하나의 규약을 정해놓았다면 문제가 발생 하였을시 전체를 바꾸어야 하고 또 문제가 발생하기도 쉬울 것이다. 그래서 역할을 나누어 네트워크는 **네트워크 계층** 구조를 가지게 되었다. 각각의 계층은 모듈단위로 독립적이지만 서로 상호 유기적인 관계를 가진다.
+
+![image-20200922154358412](https://user-images.githubusercontent.com/58545240/93854893-87918400-fcf1-11ea-999a-1577726abe0f.png)
+
+ TCP/IP 계층을 보면 크게 4개로 나누어져 있고 각각의 계층마다 하는 역할이 다르고 각각의 여러 프로토콜이 존재한다. 이것을 다 알아보는거는 주제에 벗어나는 것 같으므로 **TCP**가 속해있는 Transport Layer 즉 **전송 계층**만 간단히 설명하자면
+
+두 호스트 간에 연결을 맺고 최종적인 통신 목적지까지 데이터를 전달하는 기능을 한다.
+
+## :black_nib: TCP 와 UDP
+
+전송 계층에는 크게 TCP(Transmission Control Protocol) 와 UDP(User Datagram Protocol) 2가지 프로토콜이 있다.
+
+**-TCP** 연결지향적이며 오류제어, 흐름제어, 혼잡제어, 타이머재전송 등의 기능을 하며 연결지향이란말은 데이타를 전송하는 측과 데이타를 전송받는 측에서 전용의 데이타 전송 선로(Session)을 만든다는 의미이다. 데이타의 신뢰도가 중요하다고 판단될때 주로 사용된다.(*가상회선 방식 패킷교환*)
+
+**-UDP** 비연결지향이며, 최소한의 오류제어 기능만 수행한다. 단순히 데이타를 받거나, 던져주기만 하는 프로토콜이다. UDP는 특히 실시간 멀티미디어 정보를 처리하기 위해서 주로 사용한다.(*데이터그램 방식 패킷교환*)
+
+여기서 딱 보이는 둘의 차이는 연결 비연결이 보인다.
+
+서두가 길었다. TCP에서 연결지향적인 특성을 갖게 해주는 과정, 방법이 바로 **3 Way-Handshake** 방식으로 잠시 뒤에 알아보겠다.
+
+## :black_nib: SSL/TLS란?
+
+> **Secure Socket Layer**, **Transport Layer Security**
+
+- 전송 계층 상에서 클라이언트, 서버에 대한 인증 및 데이터 암호화 수행
+  - 클라이언트와 서버 양단 간 응용계층 및 TCP 전송계층 사이에서 안전한 보안 채널을 형성해 주는 역할을 수행하는 보안용 프로토콜
+- 주요 응용
+  - **HTTP(HTTPS)**, **FTP(FTPS)**, **TELEMENT**, **SMTP**, **SIP**, **POP**, **IMAP** 등에서 사용 가능
+  - 주로, **웹 브라우저**와 **웹 서버**사이의 안전한 보안 채널을 제공하기 위해 많이 사용된다
+
+*OpenSSL*
+
+***DTLS**는 TLS프로토콜은 **UDP에 적용가능**하게 해주는 UDP를 위한 프로토콜이다. 그러므로 **UDP**기반의 애플리케이션들은 이 **DTLS**를 사용함으로 도청, 간섭, 메시지 변조 등 네트워크 상에서 발생할 수 있는 공격들을 막을 수 있다. 특히나 UDP를 사용하는 **IoT에 보안성을 추가**해줄 수 있는 프로토콜로 제시되고 있다.*
+
+## :black_nib: SSL/TLS 역사
+
+- 최초 제안 : 넷스케이프 사
+
+  - 버젼 : SSL v1.0(1994.7), SSL v2.0(1994.12), SSL v3.0(1996.11)
+
+    *SSL v3.0은 그 당시 사실상의 웹 보안 표준이었음*
+
+- SSL의 표준화 기여 => TLS 표준
+       - SSL v3.0 을 참고로하여 RFC 2246(1999년)으로 표준화된 것이 TLS 임
+            - 버젼 : TLS 1.0 (RFC 2246,1999) : SSL v3.1에 해당, 
+                TLS 1.1 (RFC 4346, 2006), TLS 1.2 (RFC 5246, 2008)
+
+   *따라서, SSL 및 TLS는 본질적으로 같으며 버전이 다른 정도임*
+
+## :black_nib: SSL/TLS 주요 기능
+
+- 상호 인증
+
+  - 공개키 인증서를 이용하여 서버, 클라이언트의 상호 인증
+  - 즉, 클라이언트/서버 두 응용 간에 상대방에 대한 인증
+
+- 메세지 압축
+
+  - 디폴트는 Null(즉, 무 압축)
+
+    *압축 알고리즘은 미리 정해지지 않고 협상으로 지정 가능*
+
+- 메세지 인증(메세지 무결성)
+
+  - 메세지 인증 코드 `HMAC`에 의한 메세지 무결성 제공(`HMAC MD5`, `HMAC SHA-1` 등)
+
+- 암호화용 세션 키 생성(대칭 키 합의)을 위한 키 교환
+
+  - **RSA** : 두 키(공개 키 및 개인 키)가 하나의 수 체계를 형성(서버 공개 키 사용)
+  - **Diffie-Hellman** : `Diffie-Hellman`프로토콜을 기반으로 한 키 교환 방식
+
+- 생성된 공유 비밀키에 의해 암호화된 종당간 안전한 연결 통로 제공
+
+  - 스트링 암호화 : 40, 128 비트의 RC4
+  - 블록 암호화 : IDEA, 40, 56비트의 DES, 168 비트의 3DES 등
+
+## :black_nib: SSL/TLS 특징
+
+- 클라리언트/서버 기반의 프로토콜
+- 응용 프로그램(어플리케이션) 자체 구현 가능
+  - 대부분의 다른 보안 프로토콜(EAP,IPsec 등)은 운영체제 등에 밀접하게 관련됨
+- 인증 구조          :  X.509
+  - X.509에서 규정된 공개키 인증서 교환에 의해 상대방에 대한 인증 수행
+- 키 교환 방식       :  (협상 선택 가능)
+  - Null, RSA 공개 키 교환, Anonymous Diffie-Hellman 키 교환, 
+    Ephermeral Diffie-Hellman 키 교환, Fixed Diffie-Hellman 키 교환, Fortezza
+- 대칭키 암호화 방식 :  (협상 선택 가능)  
+  - RC2 (40), RC4 (40), RC4 (128), DES, Triple DES, IDEA 등
+- 해쉬 알고리즘      :  (협상 선택 가능)
+  - Null, MD5, SHA-1
+
+ ## :black_nib: SSL/TLS 프로토콜 스택
+
+- 전송계층 TCP 위에서, `보안 소켓/보안 채널/터널링`을 구성
+
+  ![image-20200922151717154](https://user-images.githubusercontent.com/58545240/93854914-8eb89200-fcf1-11ea-8243-252c6c30792e.png)
+
+  - 응용계층에서 생성된 데이터에 대한 보안(인증,무결성,기밀성),압축 등의 서비스 제공
+
+  - SSL/TLS 보안 터널을 위한 TCP/UDP 포트번호
+
+    ex) 보안 `HTTP`를 위한 포트번호 4433 ( HTPS )
+
+  - 한편, UDP 상에서도 가능한 버전으로
+
+    - DTLS (Datagram Transport Layer Security) RFC 6347(2012년)가 있음
+
+  
+
+  *SSL/TLS의 상세 프로토콜 스택 :  ☞  SSL/TLS 구성 프로토콜 참조*
+
+  => 크게, 하위 레코드 계층 프로토콜(단편화,압축,무결성,암호화,인증 기능 제공)과
+  위 핸드세이크 관련 프로토콜들로 구성*
+
+## :black_nib: SSL/TLC 핸드세이크
+
+**초기 협상 단계 => 인증 단계 => 보안 채널 형성 => 상호 암호화 통신 시작**
+
+1. 초기 협상 단계
+   - **클라이언트, 서버** 간에 Client Hello, Server Hello 메세지 교환
+   - 클라이언트가 서버에게 Cipher Suite(사용 가능 암호화, 해싱 방식 등)을 보내고 서버 인증서를 요구
+2. 인증단계
+   - 서버에서 공개키, 서버명, 인증기관 주소 등을 포함한 인증서를 클라이언트에게 전송
+   - 이 때, 서버는 클라이언트가 제시한 것 중 자신이 선택한 암호화 방식 및 인증서를 보냄
+   - 필요히 클라이언트는, 인증서를 발급한 인증기관 서버에 접속하여 서버 인증서의 유효성 확인
+3. 보안채널 형성
+   - 클라이언트는 보안 채널 형성에 필요한 **세션키**를 만들기 위해,
+   - **서버의 공개키**를 이용하여 임의의 수(Pre Master Key)를 **암호화**시켜 **서버**에게 전송하고,
+   - **서버**는 **자신의 비밀키(개인키)**로 이를 해독(역암호화)하게 됨
+   - 이때 임의의 수(Pre Master Key)로부터 Master Key를 유도하고, 
+   - 이 Master Key로부터 양측은 암호화,복호화에 필요한 세션키를 생성함
+4. 상호 암호화 통신 시작
+   - 즉, **보안성**이 확립된 **TLS 터널** 내에서 상호 통신
+
+## :black_nib: 핸드세이크(Handshake)
+
+> **통신의 양측 간에 조건에 합의해 가는 정보 교환 과정**
+
+### - DTE, DCE
+
+> **DTE : Data Terminal Equipment**
+>
+> **DCE : Data Communications Equipment**
+
+- **DTE**
+  - 사용자 - 네트워크 인터페이스의 사용자측에서 데이터발신 장치나 수신 장치, 또는 두 가지 겸용으로 사용되는 장치
+  - DTE는 반드시 모뎀과 같은 DCE 장치를 통해 데이터 네트워크에 연결되며, 일반적으로 DCE에 의해 생성된 클럭처리 신호를 말한다.
+  - DTE에는 컴퓨터, 멀티플렉서, 라우터 등과 같은 장치가 포함된다.
+- **DCE**
+  - 사용자 - 네트워크 인터페이스의 네트워크 측으로 구성되는 통신 네트워크 장비의 연결 수단
+  - DCE는 네트워크로 연결되는 물리적 수단이며, 트래픽을 전송하고, DCE장치와 DTE장치 사이에서 데이터 전송을 동기화 시키는 데 사용되는 클럭신호를 제공
+  - DCE에는 모뎀과 인터페이스 카드가 포함된다.
+
+***`DTE` - `DCE` 간의 데이터 흐름을 제어하기 위한 핸드세이킹!!***
+
+### - TCP 3-way Handshaking
+
+> TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정
+
+간단하게 비유를 들어 설명하자면 a가 b에게 
+
+**1.** b야 내말 잘 들리니? b가 a에게 
+
+**2.** 응 잘들려 a야 너도 내말 잘 들리니? 
+
+**3.** 응 잘들려! 
+
+과 같은 방법으로 서로 의사소통이 할 환경이 잘 구성 되었는지, 즉 연결이 잘 되었는지 확인하는 과정이다. 네트워크 상에서는 서로 패킷을 주고받아 위 과정을 수행한다. 
+
+- Client > Server : `TCP SYN`
+- Server > Client : `TCP SYN ACK`
+- Client > Server : `TCP ACK`
+
+*여기서 **SYN**는 `synchronize sequence numbers`, 그리고 **ACK**는 `acknowledgment`의 약자*
+
+**< 역할 >**
+
+- 양쪽 모두 데이터를 전송할 준비가 되었다는 것을 보장하고, 실제로 데이터 전달이 시작하기 전에 한쪽이 다른 쪽이 준비되었다는 것을 알 수 있도록 한다.
+- 양쪽 모두 상대편에 대한 초기 순차일련번호를 얻을 수 있도록 한다.
+
+![image-20200922153443051](https://user-images.githubusercontent.com/58545240/93854923-94ae7300-fcf1-11ea-99fe-a0b0390703ef.png)
+
+**< 과정 >**
+
+1. A클라이언트는 B서버에 접속을 요청하는 SYN 패킷을 보낸다. 이때 A클라이언트는 SYN 을 보내고 SYN/ACK 응답을 기다리는SYN_SENT 상태가 되는 것이다.
+2. B서버는 SYN요청을 받고 A클라이언트에게 요청을 수락한다는 ACK 와 SYN flag 가 설정된 패킷을 발송하고 A가 다시 ACK으로 응답하기를 기다린다. 이때 B서버는 SYN_RECEIVED 상태가 된다.
+3. A클라이언트는 B서버에게 ACK을 보내고 이후로부터는 연결이 이루어지고 데이터가 오가게 되는것이다. 이때의 B서버 상태가 ESTABLISHED 이다.
+
+*위와 같은 방식으로 통신하는것이 신뢰성 있는 연결을 맺어 준다는 TCP의 3 Way handshake 방식이다.*
+
+
+
+위 방식을 통해 **TCP**는 연결지향적인 특성과 자체적으로 오류를 처리하며 순서가 뒤바뀐 패킷을 교정해주는 기능이 더불어 주로 데이터의 **신뢰도**가 중요하다고 판단되어질 때 쓰인다. 
+
+ **신뢰도 확보**가 중요하거나 용량이 큰 데이터를 전달해야 때, 실시간일 필요는 없을 때 활용 된다.
+
+ 하지만 데이터의 신뢰성 보다 전송 속도가 중요시되는 경우면 어떨까? 스트리밍 서비스 같은 경우 속도가 생명이다. 만약 계속해서 버퍼링이 걸린다면 사용자는 매우 불쾌할 것이다.
+
+ 앞서 말한 UDP 프로토콜은 위와 같은 과정이 없이 단순히 데이터만을 전송하므로 속도가 빠르다. 스트리밍 서비스 같은경우 약간의 화질이나 음질의 손상이 있다 해도 끊기지 않는 서비스가 중요하다. 그래서 **`UDP`**방식을 사용한다.
+
+
+
+*추가로 이러한 3-way handshakinig의 취약점을 이용해 서버를 공격하는 방법이 바로 **`SYN Flodding`**이라고 한다.*
+
+```bash
+3way handshaking 과정중 서버는 2단계 에서 (클라이언트로 부터 요청을받고 응답을 하고난후 다시 클라이언트의 응답을 기다리는 상태)  이 연결을 메모리 공간인 백로그큐(Backlog  Queue) 에 저장을 하고 클라이언트의 응답 즉 3단계를 기다리게 되고 일정 시간 (default 로 UNIX/LINUX : 60초 , Windows : 256초 , Apache : 300 초이며 수정 가능) 동안 응답이 안오면 연결을 초기화한다.
+
+바로 이 점을 이용한 공격법이다.
+
+악의적인 공격자가 실제로 존재하지 않는 클라이언트IP로 응답이 없는 연결을 초기화 하기전에 또 새로운 연결 즉 1단계 요청만 무수히 많이 보내어 백로그 큐를 포화 상태로 만들어 다른 사용자로 부터 더이상에 연결 요청을 못 받게 하는 공격 방법이다.
+
+대응책으로는 연결 타이머 시간을 짧게 하거나 백로그 큐 사이즈를 늘리는법, 정해진 시간동안 들어오는 연결 요구의 수를 제한하는법, 쿠키(cookie)라는 것을 이용해서 전체 연결이 설정되기 전까지는 자원의 할당을 연기하는 법이 있다..
+```
+
+
+
+### - 무선 LAN보안 을 위한 **4-way Handkshaking**
+
+> 3-way handshake는 TCP 연결을 초기화할 때 사용한다면, 4-way handshake는 세션을 종료하기 위해 수행되는 절차이다.
+
+**< 역할 >**
+
+비록 양단간에 사전에 준비된 키가 없더라도 안전하지 못한 채널(비 보안 채널)을 통해서도 같은 **비밀 키(세션 키)**를 공유할 수 있게끔 일련의 **패킷**등을 교환해가며 **대칭 키**를 합의하는 과정
+
+![image-20200922153626051](https://user-images.githubusercontent.com/58545240/93854939-9a0bbd80-fcf1-11ea-9106-5ea09c11c6d4.png)
+
+**< 과정 >** 
+
+1. 클라이언트가 연결을 종료하겠다는 FIN플래그를 전송한다. 서버가 FIN플래그로 응답하기 전까지 연결을 계속 유지한다.
+2. 서버는 일단 확인메시지를 보내고 자신의 통신이 끝날때까지 기다리는데 이 상태가 **TIME_WAIT**상태다. 수신자는 ACK Number 필드를 Sequence Num+1로 지정하고 ACK플래그 비트를 1로 설정한 세그먼트를 전송한다. 그리고 자신이 전송할 데이터가 남아있다면 이어서 계속 전송한다.
+3. 서버가 통신이 끝났으면 연결이 종료되었다고 클라이언트에게 FIN플래그를 전송한다.
+4. 클라이언트는 확인했다는 메시지를 보낸다.
+
+
+
+그런데 만약 Server에서 FIN을 전송하기 전에 전송한 패킷이 Routing 지연이나 패킷 유실로 인한 재전송 등으로 인해 FIN패킷보다 늦게 도착하는 상황"이 발생한다면 어떻게 될까요? 
+
+Client에서 세션을 종료시킨 후 뒤늦게 도착하는 패킷이 있다면 이 패킷은 Drop되고 데이터는 유실될 것입니다. 이러한 현상에 대비하여 Client는 Server로부터 FIN을 수신하더라도 일정시간(디폴트 240초) 동안 세션을 남겨놓고 잉여 패킷을 기다리는 과정을 거치게 되는데 이 과정을 **`TIME_WAIT`** 라고 합니다.
 
 # **VoIP Open Source의 종류**
+
+---
 
 ## :black_nib: PJSIP
 
@@ -1352,7 +1599,7 @@ linphonec> ortp-error-Subscription closed but no associated op !
 
 - call 하고 나서 전화가 오기까지 조금의 대기시간이 요구됨
 - network설정은 현재는 UDP/TLS 어떤것을 해도 다 잘된다?
-- 전화가 끝나고나면 terminate를 한번씩 쳐줘야한다...? -> 확인필요
+- 전화가 끝나고나면 terminate를 한번씩 쳐줘야한다...? -> 기다리면 자동으로 끊어짐
 
 *여기서 말하는 **oRTP**라는 것은 Real-Time-Transport Protocol(RFC 3550)을 수행하는 라이브러리이며, GNU GPLv2 또는 독점 라이센스로 배포할 수 있다*
 
@@ -1382,6 +1629,10 @@ vi sources.list , cd sources.list.d vi l~
 # git clone
 git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
 git submodule update --init --recursive
+
+# 최신 cmake설치
+https://cmake.org/download/
+https://tttsss77.tistory.com/77
 
 # pip 설치
 sudo apt install pip
@@ -1419,7 +1670,7 @@ sudo apt-get install libasound2-dev
 
 sudo apt-get install libv4l-dev libvpx-dev libgl1-mesa-dev
 
-sudo apt-get install build-essential linux-headers-`uname -r` alsa-  base alsa-firmware-loaders alsa-oss alsa-source alsa-tools alsa-tools-gui alsa-utils alsamixergui
+sudo apt-get install build-essential linux-headers-`uname -r` alsa-base alsa-firmware-loaders alsa-oss alsa-source alsa-tools alsa-tools-gui alsa-utils alsamixergui
 
 sudo apt-get install oem-audio-hda-daily-dkms
 
@@ -1427,27 +1678,26 @@ sudo apt-get install -y v4l-utils
 
 sudo apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64 libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64 libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
 
-sudo apt-get install libpulse-dev pulseaudio libasound2-dev pavucontrol alsa-lib 
+sudo apt-get install libpulse-dev pulseaudio libasound2-dev pavucontrol
 
 # bashrc 환경변수 설정
 Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
 PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
+
+# source를 안해줘서 빌드가 안됐었다... soruce 까먹지말자..
+source ~/.bashrc
 
 # build
 git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
 cd linphone-desktop
 mkdir build
 cd build
-sudo cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_V4L=0 -DENABLE_SOUND=NO
-sudo cmake --build . --target install --parallel 10 --config RelWithDebInfo
+sudo cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_BUILD_VERBOSE=ON -DENABLE_V4L=0
+sudo cmake --build . --target install --parallel 10 --config RelWithDebInfo --clean-first
 ./OUTPUT/bin/linphone --verbose` or `./OUTPUT/Linphone.app/Contents/MacOS/linphone --verbose
 ```
 
-지금 alsa-make가 안되는 문제인데 이유는 alsa-lib가 unable to locate package 되어있다...? 해결하러가보자!!
 
-**수정 전**
-
-![image-20200921165010676](images/image-20200921165010676.png)
 
 ```bash
 ksh@ksh: sudo passwd root
@@ -1457,160 +1707,3 @@ root@ksh : mount -o rw,remount /
 sudo gedit /etc/apt/sources.list
 ```
 
-
-
-**수정 후**
-
-
-
-
-
-<문제>
-
-공화국에 있는 유스타운 시에서는 길을 사이에 두고 전봇대가 아래와 같이 두 줄로 늘어서 있다. 그리고 길 왼편과 길 오른편의 전봇대는 하나의 전선으로 연결되어 있다. 어떤 전봇대도 두 개 이상의 다른 전봇대와 연결되어 있지는 않다.
-
-![img](https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/upload/201004/picpicpicpicpicpicpicp.JPG)
-
-문제는 이 두 전봇대 사이에 있는 전깃줄이 매우 꼬여 있다는 점이다. 꼬여있는 전깃줄은 화재를 유발할 가능성이 있기 때문에 유스타운 시의 시장 임한수는 전격적으로 이 문제를 해결하기로 했다.
-
-임한수는 꼬여 있는 전깃줄 중 몇 개를 적절히 잘라 내어 이 문제를 해결하기로 했다. 하지만 이미 설치해 놓은 전선이 아깝기 때문에 잘라내는 전선을 최소로 하여 꼬여 있는 전선이 하나도 없게 만들려고 한다.
-
-유스타운 시의 시장 임한수를 도와 잘라내야 할 전선의 최소 개수를 구하는 프로그램을 작성하시오.
-
-<입력>
-
-첫 줄에 전봇대의 개수 N(1 ≤ N ≤ 100,000)이 주어지고, 이어서 N보다 작거나 같은 자연수가 N개 주어진다. i번째 줄에 입력되는 자연수는 길 왼쪽에 i번째 전봇대와 연결된 길 오른편의 전봇대가 몇 번 전봇대인지를 나타낸다.
-
-<출력>
-
-전선이 꼬이지 않으려면 최소 몇 개의 전선을 잘라내야 하는 지를 첫째 줄에 출력한다.
-
-```java
-import java.util.*;
-class Main{
-    static int N, map[], d[];
-    static int cnt = 1;
-    public static void main(String[] args) throws Exception{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        map = new int[N];
-        d = new int[N];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i=0; i<N; i++){
-            map[i] = Integer.parseInt(st.nextToken());
-        }
-        d[0] = map[0];
-        for(int i=1; i<N; i++){
-            if(d[cnt-1] < map[i]){
-                d[cnt++] = map[i];
-            }else if(d[0] > map[i]){
-                d[0] = map[i];
-            }else{
-                // Arrays API 내 이분탐색 함수
-                int temp = Arrays.binarySearch(d, 0, cnt, map[i]);
-                d[temp < 0 ? -temp-1 : temp] = map[i];
-            }
-        }
-        bw.write(N-cnt+"\n");
-    }    
-}
-```
-
-
-
-<예제입력>
-
-```
-4
-2 3 4 1
-```
-
-<예제출력>
-
-```
-1
-```
-
-
-
-<문제>
-
-상근이는 영화 DVD 수집가이다. 상근이는 그의 DVD 콜렉션을 쌓아 보관한다.
-
-보고 싶은 영화가 있을 때는, DVD의 위치를 찾은 다음 쌓아놓은 콜렉션이 무너지지 않게 조심스럽게 DVD를 뺀다. 영화를 다 본 이후에는 가장 위에 놓는다.
-
-상근이는 DVD가 매우 많기 때문에, 영화의 위치를 찾는데 시간이 너무 오래 걸린다. 각 DVD의 위치는, 찾으려는 DVD의 위에 있는 영화의 개수만 알면 쉽게 구할 수 있다. 각 영화는 DVD 표지에 붙어있는 숫자로 쉽게 구별할 수 있다.
-
-각 영화의 위치를 기록하는 프로그램을 작성하시오. 상근이가 영화를 한 편 볼 때마다 그 DVD의 위에 몇 개의 DVD가 있었는지를 구해야 한다.
-
-<입력>
-
-첫째 줄에 테스트 케이스의 개수가 주어진다. 테스트 케이스의 개수는 100개를 넘지 않는다.
-
-각 테스트 케이스의 첫째 줄에는 상근이가 가지고 있는 영화의 수 n과 보려고 하는 영화의 수 m이 주어진다. (1 ≤ n, m ≤ 100,000) 둘째 줄에는 보려고 하는 영화의 번호가 순서대로 주어진다.
-
-영화의 번호는 1부터 n까지 이며, 가장 처음에 영화가 쌓여진 순서는 1부터 증가하는 순서이다. 가장 위에 있는 영화의 번호는 1이다. 
-
-<출력>
-
-각 테스트 케이스에 대해서 한 줄에 m개의 정수를 출력해야 한다. i번째 출력하는 수는 i번째로 영화를 볼 때 그 영화의 위에 있었던 DVD의 개수이다. 상근이는 매번 영화를 볼 때마다 본 영화 DVD를 가장 위에 놓는다.
-
-<예제 입력 1 복사>
-
-```
-2
-3 3
-3 1 1
-5 3
-4 4 5
-```
-
-<예제 출력 1 복사>
-
-```
-2 1 0
-3 0 4
-```
-
-
-
-<문제>
-
-서로 다른 N개의 자연수의 합이 S라고 한다. S를 알 때, 자연수 N의 최댓값은 얼마일까?
-
-<입력>
-
-첫째 줄에 자연수 S(1 ≤ S ≤ 4,294,967,295)가 주어진다.
-
-<출력>
-
-첫째 줄에 자연수 N의 최댓값을 출력한다.
-
-```java
-import java.util.*;
-class Main {
-    static int S;
-    public static void main(String[] args){
-        BufferedReader br = new BufferdReader(new InputStreamReader(System.in));
-        S = Integer.parseInt(br.readLine());
-    }
-}
-class SegmentTree{
-    long[] tree;
-    int S;
-}
-```
-
-
-
-<예제 입력 1 복사>
-
-```
-200
-```
-
-<예제 출력 1 복사>
-
-```
-19
-```
