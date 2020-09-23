@@ -1382,9 +1382,46 @@ QuteCom의 주요 제한 사항은 다음과 같습니다.
 - 3 명 이상의 오디오 컨퍼런스를 지원하지 않음
 - 암호화를위한 키 교환은 표준이 아니므로 QuteCom 클라이언트간에 만 작동합니다.
 
-## :black_nib: CounterPath
+## :black_nib: Jitsi Meet
 
+> **오픈소스 기반 비디오 컨퍼런스 솔루션**
 
+줌이 대중적으로 사용되고 있기는 하지만 사생활 문제나 보안문제, 암호화 문제 등에 있어서 많은 이슈들이 제기되고 있는 상황이다.
+
+그런데, **짓시미트(Jitsi Meet)**는 기본적으로 무료이면서 사용이 아주 간편한 오픈소스 비디오 채팅 도구를 갖추고 있으며 , 무엇보다 **암호화**되어 있고 데이터를 판매하지 않는다는 점이 많은 주목을 받는 이유이다.
+
+이 서비스는 별도로 계정을 만들 필요도 없으며, 회의를 시작하거나 참가하기 위해 어떤 것도 다운받을 필요가 없다. ~~줌에서 익숙한 타일뷰도 지원해준다!~~
+
+1. **시작하는 법(미팅방 개설)**
+
+   통화연결하는 법은 매우 간단하다. 미팅 관리자가 [Jitsi 미팅 페이지](https://meet.jit.si/)로 이동하여 "새로운 미팅 시작(start a new meeting)"에서 원하는 미팅명을 입력하고 "이동(Go)"를 누른다.
+
+   그러면 바로 통화 연결이 시작되는데, 여기서 중요한 것은 바로 통화에 **비밀번호를 추가**하라는 것이다. 이것은 원하지 않는 참가자들이 컨퍼런스 연결을 끊지 못하도록 하는 장치이다.
+
+   통화를 시작한 직후에 암호를 추가하려면 화면 오른쪽 하단에 있는 "i"아이콘을 클릭하면 된다.
+
+   ![image-20200923112314903](images/image-20200923112314903.png)
+
+   암호 추가를 선택한 다음 빈 필드에 원하는 암호를 입력하고 Enter키를 누르면 이제 Jitsi 호출이 암호로 보호된다.
+
+2. **친구를 초대함**
+
+   이렇게 관리자가 처음 만든 방의 URL을 참가할 사람들에게 알려준다. 이메일이나 문자 등으로 참가자들에게 URL과 비밀번호를 알려주면, 참가자들은 그대로 찾아가서 비밀번호 넣고 로그인하면 통화에 연결된다.![image-20200923112423429](images/image-20200923112423429.png)
+
+   현재 `Jitsi`는 최대 75명의 통화자를 동시에 지원가능하며, 중요한 것은 줌과 달리 통화에 시간 제한이 없다는 것!
+
+3. **몇가지 팁과 요령**
+
+   `Jitsi`는 화면 공유가 가능하고 녹화 기능과 타일 보기 등 다양한 기능으로 유료 비디오 회의 도구와 직접 경쟁하고 있따. 그리고, 언어 설정에서 한국어를 선택하면 한국어로 번역되어 메뉴가 나타난다.
+
+   - 타일보기
+     - 통화를 타일 보기로 전환하려면 통화가 시작되면 오른쪽 아래 모서리에 있는 작은상자4개를 클릭한다.
+   - 블러 배경
+     - `Jitsi`는 자동으로 배경을 흐리게 하는 기능도 있다. 낯선 사람들에게 집안의 내부 모습을 숨길 수 있는 유용한 도구이다
+
+   이 밖에도 Youbue 비디오 공유, 화면 녹화, 손들기 기능 등 꽤 훌륭한 기능들이 무료로 제공되고 있따.
+
+   *`Jitsi`는 줌의 왠만한 기능들을 다 가지고 있으면서도 계정을 만들지 않더라도 컨퍼런스 통화 연결할 때 비밀번호 설정만 잘 해준다면 자신만의 `Jitsi` URL을 만들어 아주 쉽고 간단히 회의를 공유할 수 있는 툴이다.*
 
 # :point_up: Ubuntu환경에서 C++ SIP  개발하기
 
@@ -1697,78 +1734,122 @@ sudo cmake --build . --target install --parallel 10 --config RelWithDebInfo --cl
 ./OUTPUT/bin/linphone --verbose` or `./OUTPUT/Linphone.app/Contents/MacOS/linphone --verbose
 ```
 
-```java
-// BFS로 푸는 것이 에드몬드 카프
-// DFS로 푸는 것이 포드-풀커슨
-class Main{
-    static int N, M;
-    static boolean[] visited;
-    static int[][] edges;
-    static int[] aMatch, bMatch;
-    public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-        edges = new int[N][M];
-        for(int cowNum=0; cowNum<N; cowNum++){
-            st = new StringTokenizer(br.readLine());
-            int barnSize = Integer.parseInt(st.nextToken());
-            for(int i=0; i<barnSize; i++){
-                edges[cowNum][Integer.parseInt(st.nextToken())-1];
-            }
-        }
-        System.out.println(bipartiteMatching());
-    }
-    // 집합 A의 정점 a에서 B의 매칭되지 않은 정점으로 가는 경로를 찾는 함수
-    public static boolean dfs(int a){
-        if(visited[a]) return false;	// 재방문 cut. 매칭 수정 시 이 한줄의 코드가 어떻게 작용하는지 유의
-        visited[a] = true;
-        for(int b=0; b<M; ++b){
-            if(edges[a][b]==1){
-                //b가 아직 매칭되지 않을 때
-                if(bMatch[b] == -1){
-                    aMatch[a] = b;
-                    bMatch[b] = a;
-                    return true;
-                }
-                //b가 이미 매칭되어 있다면 bMatch[b]에서부터 시작해 경로를 찾는다. 찾았을 경우 재귀 호출한 부분에서 경로를 수정한다.
-                if(dfs(bMatch[b])){
-                    //dfs 호출(재귀호출)에서 경로를 수정했으니 b에 연결된 정점이 없으므로 연결해준다.
-                    aMatch[a] = b;
-                    bMatch[b] = a;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    
-    public static int bipartiteMatching(){
-        aMatch = new int[N];
-        bMatch = new int[M];
-        Arrays.fill(aMatch, -1);
-        Arrays.fill(bMatch, -1);
-        
-        int size = 0;
-        for(int start = 0; start < N; start++){
-            visited = new boolean[N];
-            //증가경로, 즉 매칭을 찾은 경우 1의 유량을 증가시킨다.
-            //증가 경로 찾을 때마다 +1?
-            if(dfs(start)) ++size;
-        }
-        return size;
-    }
-}
-```
-
-
-
 ```bash
 ksh@ksh: sudo passwd root
 ksh@ksh: 0000
 ksh@ksh: 0000
 root@ksh : mount -o rw,remount /
 sudo gedit /etc/apt/sources.list
+```
+
+
+
+```java
+import java.io.*;
+import java.util.*;
+class edge {
+    int to;
+    int cap;
+    int flow;
+    edge rever;	// 자신의 역방향을 가리키는 것
+    edge(){
+        to = 0;
+        cap = 0;
+        flow = 0;
+        rever = null;
+    }
+	edge(int to, int cap){
+        this.to = to;
+        this.cap = cap;
+    }
+    edge(int ar_to, int ar_cap, int ar_flow, edge ar_rever){
+        this.to = ar_to;
+        this.cap = ar_cap;
+        this.flow = ar_flow;
+        this.rever = ar_rever;
+    }
+    int residu(){
+        return cap - flow;
+    }
+    void addflow(int ar_flow){	// 자신과 역방향 간선에 ar_flow만큼의 플로우 값을 갱신
+        flow += ar_flow;
+        rever.flow -= ar_flow;
+    }
+}
+
+public class Main {
+    static int atoi(String a) {
+        if(a.charAt(0) <= 'Z') {
+            return a.charAt(0) - 'A';
+        } else {
+            return a.charAt(0) - 'a' + 26;
+        }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int[] prev = new int[52];
+        List[] adj = new ArrayList[52]; // 존재하는 간선만을 인접리스트로 저장
+        int S = atoi("A");
+        int E = atoi("Z");
+        
+        int u=0, v=0, w=0;
+        int total = 0;
+        for(int i=0; i<52; i++) {
+            adj[i] = new ArrayList<edge>();
+        }
+        
+        for(int i=0; i<n; i++){
+            st = new StringTokenizer(br.readLine());
+            u = atoi(st.nextToken());
+            v = atoi(st.nextToken());
+            w = Integer.parseInt(st.nextToken());
+            edge e1 = new edge(v, w);	// 간선
+            edge e2 = new edge(u, 0);	// 역방향 간선
+            e1.rever = e2;
+            e2.rever = e1;
+            adj[u].add(e1);
+            adj[v].add(e2);
+        }
+        
+        while(true) {
+            edge[] path = new edge[52];	// 경로상의 간선들을 저장해두고 나중에 참조
+            Arrays.fill(prev, -1);
+            Queue<Integer> q = new LinkedList<Integer>();
+            q.add(S);
+            
+            while(!q.isEmpty() && prev[E] == -1) {	// 소스에서 흐를 수 있는 유량 찾기
+                int curr = q.poll();
+                int adj_size = adj[curr].size();
+                for(int i=0; i<adj_size; i++) {
+                    edge next = (edge) adj[curr].get(i);
+                    if(next.residu() > 0 && prev[next.to] == -1) {
+                        q.add(next.to);
+                        prev[next.to] = curr;
+                        path[next.to] = next;
+                        if(next.to == E) break;
+                    }
+                }
+            }
+		   if(prev[E] == -1) break;	// 경로를 탐색한 후 싱크로 가는 경로가 없는 경우
+            int flow = Integer.MAX_VALUE;
+		   for(int i=E; i!=S; i=prev[i]) {
+                flow = Math.min(flow, path[i].residu());
+            }
+            for(int i=E; i!=S; i=prev[i]) {
+                path[i].addflow(flow);
+            }                         
+		   total += flow;
+        }
+        //System.out.println(total);
+        bw.write(total+"\n");
+        bw.flush();
+        br.close();
+        bw.close();
+    }
+}
 ```
 
