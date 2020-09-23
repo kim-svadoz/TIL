@@ -42,6 +42,8 @@
 | 2230_수 고르기      | [Link](./알고리즘/Baekjoon/SelectNum_2230.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬      |
 | 1365_꼬인 전깃줄    | [Link](./알고리즘/Baekjoon/TwistedElectricWire_1365.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS           |
 | 1789_수들의 합      | [Link](./알고리즘/Baekjoon/SumOfNumbers_1789.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                            |
+| 2188_축사배정       | [Link](./알고리즘/Baekjoon/BarnAssign_2188.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                     |
+| 6086_최대유량       | [Link](./알고리즘/Baekjoon/MaximumFlow_6086.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘            |
 
 ### [Programmers](./알고리즘/Programmers)
 
