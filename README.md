@@ -44,7 +44,7 @@
 | 1789_수들의 합      | [Link](./알고리즘/Baekjoon/SumOfNumbers_1789.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                              |
 | 2188_축사배정       | [Link](./알고리즘/Baekjoon/BarnAssign_2188.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                       |
 | 6086_최대유량       | [Link](./알고리즘/Baekjoon/MaximumFlow_6086.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘              |
-| 1708_볼록껍질       |                                                              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔 |
+| 1708_볼록껍질       | [Link](./알고리즘/Baekjoon/ConvexHull_1708.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔 |
 
 ### [Programmers](./알고리즘/Programmers)
 
@@ -107,8 +107,8 @@
 | LC63     | [Link](./알고리즘/LeetCode/LC63_UniquePathII.java)           | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                   |
 | LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS              |
 | LC215    | [Link](./알고리즘/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐          |
-| LC31     | [Link]                                                       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트 |
-| LC169    | [Link]                                                       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA169-Majority-Element-%EA%B3%BC%EB%B0%98%EC%88%98%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98) | 과반수알고리즘       |
+| LC31     | [Link](./알고리즘/LeetCode/LC31_NextPermutation.java)        | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트 |
+| LC169    | [Link](./알고리즘/LeetCode/LC169_MajorityElement.java)       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA169-Majority-Element-%EA%B3%BC%EB%B0%98%EC%88%98%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98) | 과반수알고리즘       |
 
 ### 1. [Basic](./알고리즘/Basic.md)
 
