@@ -8,42 +8,43 @@
 
 ### [Baekjoon](./알고리즘/Baekjoon)
 
-| 문제번호            | 솔루션                                                       | 문제 링크                                                    | 비고                         |
-| ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------------- |
-| 1018_체스판         | [Link](./알고리즘/Baekjoon/chespan_1018.java)                | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                     |
-| 2667_단지번호       | [Link](./알고리즘/Baekjoon/danji_2667.java)                  | [문제](https://www.acmicpc.net/problem/2667)                 | DFS                          |
-| 1076_저항           | [Link](./알고리즘/Baekjoon/resistance_1076.java)             | [문제](https://www.acmicpc.net/problem/1076)                 | -                            |
-| 14502_연구소        | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)           | [문제](https://www.acmicpc.net/problem/14502)                | BFS                          |
-| 14503_로봇청소기    | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)         | [문제](https://www.acmicpc.net/problem/14503)                | BFS                          |
-| 13460_구슬탈출      | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java)  | [문제](https://www.acmicpc.net/problem/13460)                | BFS                          |
-| 14891_톱니바퀴      | [Link](./알고리즘/Baekjoon/topni_14891.java)                 | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                   |
-| 1596_영식이         | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)               | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                   |
-| 15686_치킨배달      | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)       | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination             |
-| 16236_아기상어      | [Link](./알고리즘/Baekjoon/SAMSUNG_babyShark_16236.java)     | [문제](https://www.acmicpc.net/problem/16236)                | BFS                          |
-| 17144_미세먼지안녕! | [Link](./알고리즘/Baekjoon/SAMSUNG_misemunji_17144.java)     | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                   |
-| 1946_신입사원       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator           |
-| 1931_회의실배정     | [Link](https://ju-nam2.tistory.com/44)                       | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator           |
-| 2293_동전1          | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)           |
-| 2294_동전2          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)           |
-| 11559_뿌요뿌요      | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559)                | BFS, DFS                     |
-| 17472_다리만들기2   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm       |
-| 1197_최소스패닝트리 | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)                 | Kruscal Algorithm(간선)      |
-| 5545_최고의피자     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                       |
-| 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)                 | BFS, DFS                     |
-| 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)                 | 3차원 BFS                    |
-| 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)             |
-| 2056_작업           | [Link](./알고리즘/Baekjoon/Work_2056.java)                   | [문제](https://www.acmicpc.net/problem/2056)                 | 위상정렬, queue              |
-| 4195_친구네트워크   | [Link](./알고리즘/Baekjoon/FriendNetwork_4195.java)          | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap |
-| 1766_문제집         | [Link](./알고리즘/Baekjoon/CollectionOfProblem_1766.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                     |
-| 2042_구간합구하기   | [Link](./알고리즘/Baekjoon/SaveJoint_2042.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                |
-| 2096_내려가기       | [Link](./알고리즘/Baekjoon/GoingDown_2096.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP     |
-| 1806_부분합         | [Link](./알고리즘/Baekjoon/SectionSum_1806.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘            |
-| 2531_회전초밥       | [Link](./알고리즘/Baekjoon/RotatingSushi_2531.java)          | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우         |
-| 2230_수 고르기      | [Link](./알고리즘/Baekjoon/SelectNum_2230.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬      |
-| 1365_꼬인 전깃줄    | [Link](./알고리즘/Baekjoon/TwistedElectricWire_1365.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS           |
-| 1789_수들의 합      | [Link](./알고리즘/Baekjoon/SumOfNumbers_1789.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                            |
-| 2188_축사배정       | [Link](./알고리즘/Baekjoon/BarnAssign_2188.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                     |
-| 6086_최대유량       | [Link](./알고리즘/Baekjoon/MaximumFlow_6086.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘            |
+| 문제번호            | 솔루션                                                       | 문제 링크                                                    | 비고                           |
+| ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------ |
+| 1018_체스판         | [Link](./알고리즘/Baekjoon/chespan_1018.java)                | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                       |
+| 2667_단지번호       | [Link](./알고리즘/Baekjoon/danji_2667.java)                  | [문제](https://www.acmicpc.net/problem/2667)                 | DFS                            |
+| 1076_저항           | [Link](./알고리즘/Baekjoon/resistance_1076.java)             | [문제](https://www.acmicpc.net/problem/1076)                 | -                              |
+| 14502_연구소        | [Link](./알고리즘/Baekjoon/SAMSUNG_lab_14502.java)           | [문제](https://www.acmicpc.net/problem/14502)                | BFS                            |
+| 14503_로봇청소기    | [Link](./알고리즘/Baekjoon/SAMSUNG_robot_14503.java)         | [문제](https://www.acmicpc.net/problem/14503)                | BFS                            |
+| 13460_구슬탈출      | [Link](./알고리즘/Baekjoon/SAMSUNG_guseulEscape_13460.java)  | [문제](https://www.acmicpc.net/problem/13460)                | BFS                            |
+| 14891_톱니바퀴      | [Link](./알고리즘/Baekjoon/topni_14891.java)                 | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                     |
+| 1596_영식이         | [Link](./알고리즘/Baekjoon/yeongsik_1596.java)               | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                     |
+| 15686_치킨배달      | [Link](./알고리즘/Baekjoon/ChickenDelivery_15686.java)       | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination               |
+| 16236_아기상어      | [Link](./알고리즘/Baekjoon/SAMSUNG_babyShark_16236.java)     | [문제](https://www.acmicpc.net/problem/16236)                | BFS                            |
+| 17144_미세먼지안녕! | [Link](./알고리즘/Baekjoon/SAMSUNG_misemunji_17144.java)     | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                     |
+| 1946_신입사원       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator             |
+| 1931_회의실배정     | [Link](https://ju-nam2.tistory.com/44)                       | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator             |
+| 2293_동전1          | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)             |
+| 2294_동전2          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)             |
+| 11559_뿌요뿌요      | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559)                | BFS, DFS                       |
+| 17472_다리만들기2   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm         |
+| 1197_최소스패닝트리 | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)                 | Kruscal Algorithm(간선)        |
+| 5545_최고의피자     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                         |
+| 4963_섬개수         | [Link](https://ju-nam2.tistory.com/92?category=869217)       | [문제](https://www.acmicpc.net/problem/4963)                 | BFS, DFS                       |
+| 6593_상범빌딩       | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)                 | 3차원 BFS                      |
+| 12865_평범한배낭    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)               |
+| 2056_작업           | [Link](./알고리즘/Baekjoon/Work_2056.java)                   | [문제](https://www.acmicpc.net/problem/2056)                 | 위상정렬, queue                |
+| 4195_친구네트워크   | [Link](./알고리즘/Baekjoon/FriendNetwork_4195.java)          | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap   |
+| 1766_문제집         | [Link](./알고리즘/Baekjoon/CollectionOfProblem_1766.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                       |
+| 2042_구간합구하기   | [Link](./알고리즘/Baekjoon/SaveJoint_2042.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                  |
+| 2096_내려가기       | [Link](./알고리즘/Baekjoon/GoingDown_2096.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP       |
+| 1806_부분합         | [Link](./알고리즘/Baekjoon/SectionSum_1806.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘              |
+| 2531_회전초밥       | [Link](./알고리즘/Baekjoon/RotatingSushi_2531.java)          | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우           |
+| 2230_수 고르기      | [Link](./알고리즘/Baekjoon/SelectNum_2230.java)              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬        |
+| 1365_꼬인 전깃줄    | [Link](./알고리즘/Baekjoon/TwistedElectricWire_1365.java)    | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS             |
+| 1789_수들의 합      | [Link](./알고리즘/Baekjoon/SumOfNumbers_1789.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                              |
+| 2188_축사배정       | [Link](./알고리즘/Baekjoon/BarnAssign_2188.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                       |
+| 6086_최대유량       | [Link](./알고리즘/Baekjoon/MaximumFlow_6086.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘              |
+| 1708_볼록껍질       |                                                              | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔 |
 
 ### [Programmers](./알고리즘/Programmers)
 
@@ -90,43 +91,24 @@
 
 ### [LeetCode](./알고리즘/LeetCode)
 
-| 문제번호 | 솔루션                                                       | 문제 링크                                                    | 비고                |
-| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| LC36     | [Link](./알고리즘/LeetCode/LC36_ValidSudoku_BackTracking.java) | [문제](https://leetcode.com/problems/valid-sudoku/)          | BackTracking        |
-| LC37     | [Link](./알고리즘/LeetCode/LC37_SudokuSolver.java)           | [문제](https://leetcode.com/problems/sudoku-solver/)         | BackTracking        |
-| LC173    | [Link](./알고리즘/LeetCode/LC173_BinarySearchTreeIterator.java) | [문제](https://leetcode.com/problems/binary-search-tree-iterator/) | BST                 |
-| LC200    | [Link](./알고리즘/LeetCode/LC200_NumberOfIsland_DFS.java)    | [문제](https://leetcode.com/problems/number-of-islands/)     | DFS                 |
-| LC260    | [Link](./알고리즘/LeetCode/LC260_SingleNumber_XOR.java)      | [문제](https://leetcode.com/problems/single-number-iii/)     | 비트연산            |
-| LC380    | [Link](./알고리즘/LeetCode/LC380_HashMapandArrayLIst.java)   | [문제](https://leetcode.com/problems/insert-delete-getrandom-o1/) | HashMap , ArrayList |
-| LC938    | [Link](./알고리즘/LeetCode/LC938_RangeSumOfBST.java)         | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                 |
-| LC64     | [Link](./알고리즘/LeetCode/LC64_MinimumPathSum.java)         | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                  |
-| LC53     | [Link](./알고리즘/LeetCode/LC53_MaximumSubarray.java)        | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                  |
-| LC72     | [Link](./알고리즘/LeetCode/LC72_EditDistance.java)           | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리        |
-| LC152    | [Link](./알고리즘/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                  |
-| LC63     | [Link](./알고리즘/LeetCode/LC63_UniquePathII.java)           | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                  |
-| LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS             |
-| LC215    | [Link](./알고리즘/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐         |
-
-### [실전코테](./알고리즘/실전코테)
-
-| 문제번호   | 솔루션                                         | 문제 링크 | 비고                                |
-| ---------- | ---------------------------------------------- | --------- | ----------------------------------- |
-| line01     | [Link](./알고리즘/실전코테/line01.java)        |           | 2020(상)_LINE.01,                   |
-| line03     | [Link](./알고리즘/실전코테/line03.java)        |           | 2020(상)_LINE.03,                   |
-| line05     | [Link](./알고리즘/실전코테/line05.java)        |           | 2020(상)_LINE.05,                   |
-| dev01      | [Link](./알고리즘/실전코테/DevMatch_01.java)   |           | 2020(상)_DevMatch.01,               |
-| dev02      | [Link](./알고리즘/실전코테/DevMatch_02.java)   |           | 2020(상)_DevMatch.02,               |
-| est01      | [Link](./알고리즘/실전코테/EstSoft_01.java)    |           | 2020(상)_EstSoft.01,                |
-| est02      | [Link](./알고리즘/실전코테/EstSoft_02.java)    |           | 2020(상)_EstSoft.02,                |
-| est03      | [Link](./알고리즘/실전코테/EstSoft_03.java)    |           | 2020(상)_EstSoft.03,                |
-| HyunCard01 | [Link](./알고리즘/실전코테/HyundaiCard01.java) |           | 2020(상)_현카.01, ???DATE LIBRARY?? |
-| HyunCard03 | [Link](./알고리즘/실전코테/HyundaiCard03.java) |           | 2020(상)_현카.03, 패턴, 문자열변환  |
-| HyunCard04 | [Link](./알고리즘/실전코테/HyundaiCard04.java) |           | 2020(상)_현카.04, DFS               |
-| KAKAO01    | [Link](./알고리즘/실전코테/KAKAO_INTERN_01)    |           | 2020(상)_카카오인턴.01              |
-| KAKAO02    | [Link](./알고리즘/실전코테/KAKAO_INTERN_02)    |           | 2020(상)_카카오인턴.02              |
-| KAKAO03    | [Link](./알고리즘/실전코테/KAKAO_INTERN_03)    |           | 2020(상)_카카오인턴.03              |
-| KAKAO04    | [Link](./알고리즘/실전코테/KAKAO_INTERN_04)    |           | 2020(상)_카카오인턴.04              |
-| KAKAO05    | [Link](./알고리즘/실전코테/KAKAO_INTERN_05)    |           | 2020(상)_카카오인턴.05              |
+| 문제번호 | 솔루션                                                       | 문제 링크                                                    | 비고                 |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------- |
+| LC36     | [Link](./알고리즘/LeetCode/LC36_ValidSudoku_BackTracking.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA36-Valid-Sudoku%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠 |
+| LC37     | [Link](./알고리즘/LeetCode/LC37_SudokuSolver.java)           | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA37-Sudoku-Solver-%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠 |
+| LC173    | [Link](./알고리즘/LeetCode/LC173_BinarySearchTreeIterator.java) | [문제](https://leetcode.com/problems/binary-search-tree-iterator/) | BST                  |
+| LC200    | [Link](./알고리즘/LeetCode/LC200_NumberOfIsland_DFS.java)    | [문제](https://leetcode.com/problems/number-of-islands/)     | DFS                  |
+| LC260    | [Link](./알고리즘/LeetCode/LC260_SingleNumber_XOR.java)      | [문제](https://leetcode.com/problems/single-number-iii/)     | 비트연산             |
+| LC380    | [Link](./알고리즘/LeetCode/LC380_HashMapandArrayLIst.java)   | [문제](https://leetcode.com/problems/insert-delete-getrandom-o1/) | HashMap , ArrayList  |
+| LC938    | [Link](./알고리즘/LeetCode/LC938_RangeSumOfBST.java)         | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                  |
+| LC64     | [Link](./알고리즘/LeetCode/LC64_MinimumPathSum.java)         | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                   |
+| LC53     | [Link](./알고리즘/LeetCode/LC53_MaximumSubarray.java)        | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                   |
+| LC72     | [Link](./알고리즘/LeetCode/LC72_EditDistance.java)           | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리         |
+| LC152    | [Link](./알고리즘/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                   |
+| LC63     | [Link](./알고리즘/LeetCode/LC63_UniquePathII.java)           | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                   |
+| LC300    | [Link](./알고리즘/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS              |
+| LC215    | [Link](./알고리즘/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐          |
+| LC31     | [Link]                                                       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트 |
+| LC169    | [Link]                                                       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA169-Majority-Element-%EA%B3%BC%EB%B0%98%EC%88%98%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98) | 과반수알고리즘       |
 
 ### 1. [Basic](./알고리즘/Basic.md)
 
