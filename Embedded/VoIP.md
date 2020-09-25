@@ -1746,3 +1746,39 @@ sudo gedit /etc/apt/sources.list
 
 ```
 
++ 20/09/25
+
+work/h22/ambalink_sd_4_9$ vi ambarella/configs/h22_ambalink_ostrich_defconfig 내에서 inphone = y로 바꿔주면된다.
+
+![image-20200925143548550](https://user-images.githubusercontent.com/58545240/94230327-b64f6a80-ff3c-11ea-9377-aca79cb2e7d3.png)
+
+linphone뿐만 아니라
+
+```bash
+vi ambalink_sdk_4_9/buildroot/package/linphone/linphone.mk
+```
+
+로 들어가서 필요한 디펜던시를 확인해서 `h22_ambalink_ostrich_defconfig`에 올리는 작업을 해야한다.
+
++
+
+```bash
+vi ambalink_sdk_4_9/buildroot/package/linphone/Config.in
+```
+
+에서도 확인할 수 있다.
+
+해당 defconfig에서 `BR2_PACKAGE_MEDIASTREAMER`와 `BR2_PACKAGE_LIBINTL`을 disable 시키니까 **Build Success**성공
+
+**`make menuconfig`**는 buildroot에서 이용할 수 있다.
+
+
+
+++ 
+
+build할 때 `--linux` 명령어를 추가하면 RTOS에 추가로  linux 콘솔을 이용할 수 있다.
+
+
+
+
+
