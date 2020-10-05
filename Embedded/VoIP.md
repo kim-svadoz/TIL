@@ -1746,6 +1746,12 @@ sudo gedit /etc/apt/sources.list
 
 ```
 
+
+
+
+
+## BB단말에 linphone 적용하기(feat. ostrich)
+
 + 20/09/25
 
 work/h22/ambalink_sd_4_9$ vi ambarella/configs/h22_ambalink_ostrich_defconfig 내에서 inphone = y로 바꿔주면된다.
@@ -1770,6 +1776,8 @@ vi ambalink_sdk_4_9/buildroot/package/linphone/Config.in
 
 해당 defconfig에서 `BR2_PACKAGE_MEDIASTREAMER`와 `BR2_PACKAGE_LIBINTL`을 disable 시키니까 **Build Success**성공
 
+vi에서 문자열을 검색할 땐 `/문자열`로 이용하면 된다.
+
 **`make menuconfig`**는 buildroot에서 이용할 수 있다.
 
 
@@ -1780,5 +1788,97 @@ build할 때 `--linux` 명령어를 추가하면 RTOS에 추가로  linux 콘솔
 
 
 
+- 20/10/05
+
+```bash
+RTSP Liveview(2nd) stream encode start시 default로 video only로 되어 있습니다.
+(주로 A/V sync 문제가 있을 수 있기 때문에)
+이것을 보신 것 같습니다.
+
+아래 t cmd중 rtsp 관련 cmd를 참조해 보십시오.
+#if defined(CONFIG_APP_AMBA_LINK)
+        "\t vf [on | off | sw] \n"
+        "\t rtsp [on | off | show] \n"
+        "\t rec [av | v | show] \n"
+        "\t ps \n"
+        "\t idr \n"
+        "\t np \n"
+        #endif /* CONFIG_APP_AMBA_LINK */
+```
+
+```bash
+a:\> t app test rtsp show
+UserSetting->VideoPref.StreamType : 1
+```
+
+```bash
+a:\> t app test rec show
+rec mode : AV
+[01164546][CA53_0] [Applib - ExtendEnc] <_ExtendEnc_GetEnableStatus> Enable flag: 1
+text     : enable
+net stream mode :
+   video enable
+   audio disable
+   text  disable
+```
+
+```bash
+a:\> t app test rec av
+[01335687][CA53_0] [Applib - VideoEnc] <PipeChange> Delete pipe fail !
+a:\> [01335741][CA53_0] LINK_CTRL_CMD_GET_MEM_INFO
+[01335741][CA53_0] DONE LINK_CTRL_CMD_GET_MEM_INFO
+[01335741][CA53_0] LINK_CTRL_CMD_GET_MEM_INFO
+[01335741][CA53_0] DONE LINK_CTRL_CMD_GET_MEM_INFO
+[01335760][CA53_0] [AppLibVideoEnc_GetStreamingIdFromCandidate 4539] invalid Stream Candidate
+[01335760][CA53_0] [Applib - VideoEnc] <GetStreamEncodeType> invalid stream id 140
+[01335760][CA53_0] [Applib - VideoStream] <GetCodecHandler> Wrong stream ID 140
+[01335760][CA53_0] [Applib - ExtendEnc] <_ExtendEnc_GetEnableStatus> Enable flag: 1
+[01335760][CA53_0] task:LINK_RPC_SVC_NETFIFO
+[01335763][CA53_0] AmbaFIFO_Create Virtual(2938e7c8) Base(2938dc10) : (62305,62305) NumEntries =      256 Q = 0x2A51F040, QSize = 12288
+[01335763][CA53_0] [App - multivin] <NetFifoEventStart> AMSG_NETFIFO_EVENT_START
+```
+
+```bash
+a:\> t app test rec show
+rec mode : AV
+[01373089][CA53_0] [Applib - ExtendEnc] <_ExtendEnc_GetEnableStatus> Enable flag: 1
+text     : enable
+net stream mode :
+   video enable
+   audio enable
+   text  disable
+```
 
 
+
+**`handler.c`** 파일 내에서
+
+![image-20201005150819052](images/image-20201005150819052.png)
+
+설정 바꾸어 주고 빌드 후 iphone - U1000 연결 하니 BB에서 휴대폰으로 소리가 전달되는 것은 확인하였다!
+
+
+
+RTOS에서 소리를 받아 코덱을 거쳐 LINUX(하나의 task)로 전달해주는 것.
+
+ffmpeg -> cd /tmp 폴더에 in/out을 만들어서 따로 보내는 것?!을 생각해보자.
+
+
+
+**`menuconfig`**이용해서 필요해 보이는 것들 임의로 체크하고 새로 클린 빌드 후 실행하였더니 linux(단말)에서 `linphonec`가 실행되었다. 하지만 **`Network is unreachable`**이라는 오류 발생.
+
+```bash
+call dhkdghehfdl@10.10.81.94:5060
+linphonec help
+linphonec proxy
+linphonec sip:kimsunghyun@sip.linphone.org
+sip:ksh0915@sip.linphone.org
+```
+
+![image-20201005173818769](https://user-images.githubusercontent.com/58545240/95063380-39d93a80-0739-11eb-9ac1-6a986ad90ce6.png)
+
+![image-20201005173939902](https://user-images.githubusercontent.com/58545240/95063387-3ba2fe00-0739-11eb-9f1a-0a6d8d414985.png)
+
+![image-20201005174034059](https://user-images.githubusercontent.com/58545240/95063398-3e055800-0739-11eb-96e4-e6f117e3a5b0.png)
+
+ostrich_defconfig에서 `libeXosip2`, `speex` ON
