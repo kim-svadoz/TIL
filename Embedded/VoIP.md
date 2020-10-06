@@ -1882,3 +1882,29 @@ sip:ksh0915@sip.linphone.org
 ![image-20201005174034059](https://user-images.githubusercontent.com/58545240/95063398-3e055800-0739-11eb-96e4-e6f117e3a5b0.png)
 
 ostrich_defconfig에서 `libeXosip2`, `speex` ON
+
+
+
+- 20/10/06 
+
+일단은 추가로 aac 파일을 sdcard의 root 폴더에 저장하는 것이 첫번째 과제!
+
+동작되는 우분투로 가서 해당 계정을 살펴 보니 이거다.
+
+![image-20201006112341006](https://user-images.githubusercontent.com/58545240/95182313-68b9e400-07ff-11eb-883f-1ca32efe84e3.png)
+
+단말도 이것처럼 설정해주자.
+
+**ipv6 enable**을 사용하니 `Network is unreachable`이 나타남을 확인했다.
+
+```bash
+proxy add
+sip:sip.linphone.org
+sip:kim@sip.linphone.org
+yes
+3600
+yes
+```
+
+
+
