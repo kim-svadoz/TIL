@@ -1400,13 +1400,15 @@ QuteCom의 주요 제한 사항은 다음과 같습니다.
 
    통화를 시작한 직후에 암호를 추가하려면 화면 오른쪽 하단에 있는 "i"아이콘을 클릭하면 된다.
 
-   ![image-20200923112314903](images/image-20200923112314903.png)
+   ![image-20200923112314903](https://user-images.githubusercontent.com/58545240/95279130-db24d580-088c-11eb-8a44-801ff111c3b6.png)
 
    암호 추가를 선택한 다음 빈 필드에 원하는 암호를 입력하고 Enter키를 누르면 이제 Jitsi 호출이 암호로 보호된다.
 
 2. **친구를 초대함**
 
-   이렇게 관리자가 처음 만든 방의 URL을 참가할 사람들에게 알려준다. 이메일이나 문자 등으로 참가자들에게 URL과 비밀번호를 알려주면, 참가자들은 그대로 찾아가서 비밀번호 넣고 로그인하면 통화에 연결된다.![image-20200923112423429](images/image-20200923112423429.png)
+   이렇게 관리자가 처음 만든 방의 URL을 참가할 사람들에게 알려준다. 이메일이나 문자 등으로 참가자들에게 URL과 비밀번호를 알려주면, 참가자들은 그대로 찾아가서 비밀번호 넣고 로그인하면 통화에 연결된다.
+
+   ![image-20200923112423429](https://user-images.githubusercontent.com/58545240/95279134-dc560280-088c-11eb-8d26-eae5a95aec76.png)
 
    현재 `Jitsi`는 최대 75명의 통화자를 동시에 지원가능하며, 중요한 것은 줌과 달리 통화에 시간 제한이 없다는 것!
 
@@ -1904,6 +1906,36 @@ sip:kim@sip.linphone.org
 yes
 3600
 yes
+```
+
+
+
+- 20/10/07
+
+오디오 -> 코덱으로 생성됨
+
+비디오 -> 센서로 input
+
+그러면 이 AV들은 FIFO에 들어간다음(Amba 라이브러리 내 작동) 각자의 AV Pipe(데이터 이동 통로)로 이동해서, 셋팅한대로 가공되고 처리된다.
+
+
+
+++ 새로운방법 추가 
+
+현재 BB에 soundcard가 없기 때문에, 가상으로 dummy sound driver를 만든다!
+
+=> Linux Audio Loopback Device를 이용해서 !
+
+- 참조 사이트
+
+https://hellobird.tistory.com/433
+
+https://niklasjang.github.io/nnstreamer/Installing-Gstreamer/
+
+https://github.com/TheSalarKhan/Linux-Audio-Loopback-Device
+
+```bash
+sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 ```
 
 
