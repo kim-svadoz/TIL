@@ -1934,8 +1934,18 @@ https://niklasjang.github.io/nnstreamer/Installing-Gstreamer/
 
 https://github.com/TheSalarKhan/Linux-Audio-Loopback-Device
 
+https://sysplay.in/blog/linux/2019/06/playing-with-alsa-loopback-devices/
+
 ```bash
 sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+```
+
+```bash
+pkg-config --cflags gstreamer-1.0
+```
+
+```bash
+gcc -o hello hello.c -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0
 ```
 
 
