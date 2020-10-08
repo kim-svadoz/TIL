@@ -1766,6 +1766,8 @@ linphone뿐만 아니라
 vi ambalink_sdk_4_9/buildroot/package/linphone/linphone.mk
 ```
 
+![image-20201008154357388](images/95441476-24604c80-0995-11eb-9d0f-62178bf20669.png)
+
 로 들어가서 필요한 디펜던시를 확인해서 `h22_ambalink_ostrich_defconfig`에 올리는 작업을 해야한다.
 
 +
@@ -1948,5 +1950,191 @@ pkg-config --cflags gstreamer-1.0
 gcc -o hello hello.c -I/usr/include/gstreamer-1.0 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0
 ```
 
+- 20/10/08
+
+```bash
+dpkg -S /lib/modules/5.4.0-48-generic/kernel/sound/drivers/snd-aloop.ko
+sudo apt install linux-generic
+```
+
+## snd-aloop , ALSA Loopback
+
+전날에 했던 것이 에러가 아니라 명령어 하나를 건너뛰었다. 아래와 같이 하면 실행이 된다.
+
+```bash
+# 루프백 모듈 로드
+sudo modprobe snd-aloop
+
+# (사용 가능한 재생 장치 목록 (쓰기 가능한 스피커와 같은 출력 장치))
+aplay -l
+
+**** List of PLAYBACK Hardware Devices ****
+card 0: I82801AAICH [Intel 82801AA-ICH], device 0: Intel ICH [Intel 82801AA-ICH]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: Loopback [Loopback], device 0: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+card 1: Loopback [Loopback], device 1: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  
+# (사용 가능한 입력 장치 목록 (마이크와 같은 장치))
+arecord -l
+
+**** List of CAPTURE Hardware Devices ****
+card 0: I82801AAICH [Intel 82801AA-ICH], device 0: Intel ICH [Intel 82801AA-ICH]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: I82801AAICH [Intel 82801AA-ICH], device 1: Intel ICH - MIC ADC [Intel 82801AA-ICH - MIC ADC]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: Loopback [Loopback], device 0: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+card 1: Loopback [Loopback], device 1: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+```
+
+card0은 하드웨어 장치이고 card1는 루프백이다.
 
 
+
+간단히 말해서, **ALSA**는 두 개의 가상 장치(스피커, 마이크)를 제공한다. 스피커 장치에 쓰면 마이크 장치에서 읽을 수 있는데 이를 마이크와 스피커 쌍이라고 한다. ALSA는 이러한 8개의 쌍을 제공한다.
+
+ALSA랜드에서 단일 오디오 장치는 `hw:x, y, z` 패턴이 있는 장치 이름으로 식별된다.
+
+여기서 `x`는 카드번호, `y`는 장치번호, `z`는 하위 장치이다.
+
+따라서 위의 예에서 루프백 모듈은 카드 card1을 제공하고 두 개의 장치 `device 0`과 `device 1`을 가지고 각 device는 8개의 하위 device 0~7이 있다.
+
+루프백 모듈의 작동 방식으로 돌아가면 연결된 모든 스피커-마이크 쌍은 다음과 같다.
+
+```bash
+'Speaker'   ====> 'Mic'
+'hw:1,1,0'  ====> 'hw:1,0,0'
+'hw:1,1,1'  ====> 'hw:1,0,1'
+'hw:1,1,2'  ====> 'hw:1,0,2'
+'hw:1,1,3'  ====> 'hw:1,0,3'
+'hw:1,1,4'  ====> 'hw:1,0,4'
+'hw:1,1,5'  ====> 'hw:1,0,5'
+'hw:1,1,6'  ====> 'hw:1,0,6'
+'hw:1,1,7'  ====> 'hw:1,0,7'
+```
+
+*`device 0`의 모든 하위 장치는 마이크/Src (읽기 가능)이고 `device 1`에 있는 모든 하위 장치는 스피커/싱크 (쓰기 가능) 이다. 즉, `hw: 1, 1, n`에 쓰여진 모든 것은 `hw: 1, 0, n`에서 읽혀지며 n은 0-7을 포함한다.*
+
+```bash
+# 루프백 스피커에 테스트 스트림 쓰기
+gst-launch-1.0 audiotestsrc ! alsasink device="hw:1,1,3"
+
+# 루프백 마이크에서 테스트 스트림을 읽고 스피커에서 재생
+gst-launch-1.0 alsasrc device="hw:1,0,3" ! alsasink
+```
+
+
+
+**`hw:1,1,4`**에서 오디오 녹음 시작
+
+```bash
+arecord -D hw:1,1,4 -f S16_LE -c 2 -r 48000 recorded.wav
+```
+
+레코딩 시 샘플 형식, 채널 수, 프레임 속도를 제공하면 재생 시 동일한 설정이 적용된다. 이는 가상 루프백 연결에 불과한 실제 하드웨어가 없기 떄문이다.
+
+그리고 병렬로 (다른 shell)에서 audio.wav의 오디오를 **`hw:1,0,4`**로 재생한다.
+
+```bash
+aplay -D hw:1,0,4 audio.wav
+```
+
+루프백이 작동하여 녹음된 오디오에 재생된 오디오가 포함되어 있음을 알 수 있다.
+
+다음과 같이 녹음된 오디오를 재생한다.
+
+```bash
+aplay recorded.wav
+```
+
+이것은 시스템의 기본 스피커에서 재생된다. 또한 오디오 형식이 일치하지 않는 등의 이유로 `audio.wav`파일을 재생하는데 문제가 있을 수 있기 때문에 다음 명령을 사용해서 음성으로 새로운 wav 파일을 녹음하라
+
+```bash
+arecord -f S16_LE -c 2 -r 48000 audio.wav
+```
+
+것은 시스템의 기본 마이크에서 녹음한다.
+
+
+
+흥미롭게도 `alsa-tuils`패키지의 `alsaloop`을 사용하여 사용자 공간에서 오디오 루프백을 달성할 수 도 있다. 다음은 동일한 데모이다.
+
+`aplay -l`의 출력에서 `hw:1,0`은 아날로그 출력(스피커)이다. `hw:1,0`은 `hw:1,0,0`과 동일하다. (시스템에서 동등한 것을 찾으면 된다.) 이제 가상 오디오 캡처 장치 `hw:1,1,4`를 다음과 같이 루프백한다.
+
+```bash
+alsaloop -C hw :1,1,4 -P hw:1,0
+```
+
+다른 셀에서 이전 연주를 수행하라.
+
+```bash
+aplay -D hw:1,0,4 audio.wav
+```
+
+번에는 시스템의 기본 스피커를 통해 직접 `audio.wav`를 들을 수 있어야 한다. 다시 한번 루프백이 작동한다.(두 개의 루프백이 작동)
+
+***audio.wav -> `hw:1,0,4` -> 드라이버 -> `hw:1,1,4` -> alsaloop 앱을 통한 루프백 -> `hw:1,0` -> 스피커에서 들림***
+
+
+
+### 단말 테스트
+
+```bash
+# ubuntu
+ksh@ksh:~/work/h22$ arecord -D hw:1,1,4 -f S16_LE -c 2 -r 48000 recorded.wav
+Recording WAVE 'recorded.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo
+
+```
+
+```bash
+# ostrich
+```
+
+![image-20201008133111128](images/95441479-262a1000-0995-11eb-8e06-281ff35dece7.png)
+
+++ 새롭게 안 사실은 h22 Ambalink에 config 패키지를 추가하기 위해서는 ambalink_sdk_4_9 -> output.oem -> h22~~ 에서 make menuconfig 해서 lib을 추가해줘야 한다. 
+
+++ 적용하기 위해선 해당 위치에서 make -j8을 하고 가줘야한다.
+
+```bash
+ksh@ksh:~/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink$ make -j8
+```
+
+여기를 make하게 되면 .config로 생기는데 이것을 복사해서 내가 사용하고 싶은(h22~ostrich.defconfig)로 복사해야한다!!!
