@@ -1768,9 +1768,9 @@ vi ambalink_sdk_4_9/buildroot/package/linphone/linphone.mk
 
 ![image-20201008154357388](images/95441476-24604c80-0995-11eb-9d0f-62178bf20669.png)
 
-로 들어가서 필요한 디펜던시를 확인해서 `h22_ambalink_ostrich_defconfig`에 올리는 작업을 해야한다.
+로 들어가서 필요한 디펜던시를 확인해서 `h22_ambalink_ostrich_defconfig`에 올리는 작업을 해야한다. 
 
-+
+++
 
 ```bash
 vi ambalink_sdk_4_9/buildroot/package/linphone/Config.in
@@ -2094,7 +2094,7 @@ arecord -f S16_LE -c 2 -r 48000 audio.wav
 
 
 
-흥미롭게도 `alsa-tuils`패키지의 `alsaloop`을 사용하여 사용자 공간에서 오디오 루프백을 달성할 수 도 있다. 다음은 동일한 데모이다.
+흥미롭게도 `alsa-utils`패키지의 `alsaloop`을 사용하여 사용자 공간에서 오디오 루프백을 달성할 수 도 있다. 다음은 동일한 데모이다.
 
 `aplay -l`의 출력에서 `hw:1,0`은 아날로그 출력(스피커)이다. `hw:1,0`은 `hw:1,0,0`과 동일하다. (시스템에서 동등한 것을 찾으면 된다.) 이제 가상 오디오 캡처 장치 `hw:1,1,4`를 다음과 같이 루프백한다.
 
@@ -2138,3 +2138,51 @@ ksh@ksh:~/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink$ make -j8
 ```
 
 여기를 make하게 되면 .config로 생기는데 이것을 복사해서 내가 사용하고 싶은(h22~ostrich.defconfig)로 복사해야한다!!!
+
+
+
+
+
+- 20/10/12
+
+```bash
+>>> tw_link_util 1.0 Syncing from source dir /home/ksh/work/h22/ambalink_sdk_4_9/buildroot/../pkg/tw_link_util
+if [ "TW_LINK_UTIL" == "LINUX" ] && [ "y" == "y" ]; then \
+        mkdir -p /home/ksh/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink/build/tw_link_util-1.0; \
+        rsync -au --chmod=u=rwX,go=rX --exclude .svn --exclude .git --exclude .hg --exclude .bzr --exclude CVS /home/ksh/work/h22/ambalink_sdk_4_9/buildroot/../pkg/tw_link_util/tools /home/ksh/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink/build/tw_link_util-1.0; \
+else \
+        rsync -au --chmod=u=rwX,go=rX --exclude .svn --exclude .git --exclude .hg --exclude .bzr --exclude CVS /home/ksh/work/h22/ambalink_sdk_4_9/buildroot/../pkg/tw_link_util/ /home/ksh/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink/build/tw_link_util-1.0; \
+fi
+>>> tw_link_util 1.0 Configuring
+>>> tw_link_util 1.0 Building
+
+tw_link_hls.h:17:39: fatal error: libavfilter/avfiltergraph.h: No such file or directory
+
+```
+
+***빌드시 위와같은 오류가 계속 발생해서 아예 h22폴더를 날려버리고 새로 시작한다.***
+
+1. 위에서 확인했던 디펜던시를 h22_ostrich_defconfig에 추가한다.	
+
+   ```bash
+   LINPHONE, PKGCONF, libeXosip2, speex, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L
+   ```
+
+2. 단말에 연결하여 linux 포트로 해당 명령어로 dummy soundcard가 올라감을 확인해본다.
+
+   ```bash
+   modprobe snd-dummy
+   ```
+
+   
+
+![image-20201012172106105](images/95728052-fdb45580-0cb5-11eb-8a90-3f258bcfecf2.png)
+
+계속해서 configure: error: Your intltool is too old. You need intltool 0.40 or later. ~~에러가 나서 위와 같은 디펜던시를 추가해준다.~~
+
+```bash
+HOST_GETTEXT, HOST-LIBXML-PARSER-PERL
+```
+
+이걸 추가해줬더니 에러가 나서 다시 빼줬더니 빌드 성공함.
+

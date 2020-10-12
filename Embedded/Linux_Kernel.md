@@ -1258,3 +1258,47 @@ PIC에서는 여러개의 장치들이 인터럽트 요청을 한다. 이때 이
 
 ---
 
+
+
+# **22. 커널 모듈**
+
+---
+
+리눅스 커널에서 **`module`**은 광범위하게 쓰인다.
+
+아마 대다수가 device driver로 동작하는 형태일 것이고 드물게는 network protocol이나 filesystem을 지원하는 데도 쓰일 것이다.
+
+module 형태를 취함으로써 가질 수 있는 이점은 **flexibility**가 좋기도 하고, 뭔가 시스템 내에서 변화를 추구할 떄 쉽게 반영하고 그 결과를 확인할 수 있는 점이다.
+
+module과 관련하여 Linux에서 제공하는 utility는 다음과 같다.
+
+- **lsmod** : load되어 있는 module들을 보여준다.
+
+- **insmod** : Insert module, 말그대로 module을 load시켜준다.
+
+- **rmmod** : remove module, 말그대로 module을 제거해준다.
+
+- **modprobe** : module을 load시키거나 upload시켜준다.
+
+- **depmd** : module과 연관된, 혹은 module과 상관성이 있는 database를 재생성해준다.
+
+  => 여기서 상관이 있다는 것은 module 중에서도 독립적으로 동작하는 module이 있는가 하면 다른 module을 참조하면서 동작하는 것도 있는데 이를 지칭하는 것이다.
+
+- **modinfo** : module에 대한 정보를 출력해준다.
+
+*참고로 이런 utility는 system management와 관련이 있는 실행 binary이므로 보통 /sbin 안에 들어 있을 것임을 유추할 수 있다.*
+
+보통 module의 확장자는 파일이름 뒤에 `.ko`라고 붙는데 이는 **kernel object**를 나타내는 것이고, 현재 시스템에 어떤 module들이 붙어있는 지를 확인하고 싶으면 위의 utility 중 **lsmod**를 해주면 된다.
+
+현재 test 중인 ubuntu에는 다음과 같은 module이 인식되어 있다.
+
+![image-20201012174355800](images/95728078-060c9080-0cb6-11eb-87fc-c7c0327aaec8.png)
+
+만약 이렇게 인식된 파일들의 `ko`파일을 찾고 싶다면 `/lib/module`로 가면된다. 아마 여러 폴더가 있을텐데, 현재 kernel version에 해당하는 폴더로 접근하면 된다!
+
+![image-20201012174430902](images/95728095-0c9b0800-0cb6-11eb-912e-0c01a3b5bd17.png)
+
+**modprobe**는 앞에서 소개했던 insmod와 rmmod를 합친 것이다. 다만 합친다고 완전히 똑같은 것이 아니라 약간의 차이가 있다.
+
+- lsmod에 출력되어 있다고 해서 무조건 rmmod를 통해서 module을 unload 시킬 수 없다. 또한, module이 어떤 process에 의해서 점유되어 있어도 rmmod를 통해서 unload 시킬 수 없다. 이유는 insmod나 rmmod는 해당 module에 대한 dependency를 고려하지 않고 load/unload를 수행하기 때문이다.
+- deependency를 고려해야 할 경우는 insmod나 rmmod보다는 modprobe를 사용하는 것이 효과적이다. modprobe는 dependency를 고려해 먼저 load되어야 할 module이 있는 경우 해당 module에 대한 동작을 처리한 후에 정상적으로 명령을 수행한다.
