@@ -1907,7 +1907,10 @@ sip:sip.linphone.org
 sip:kim@sip.linphone.org
 yes
 3600
+no (route)
 yes
+
+call dhkdghehfdl@10.10.81.94:5060
 ```
 
 
@@ -2165,7 +2168,7 @@ tw_link_hls.h:17:39: fatal error: libavfilter/avfiltergraph.h: No such file or d
 1. 위에서 확인했던 디펜던시를 h22_ostrich_defconfig에 추가한다.	
 
    ```bash
-   LINPHONE, PKGCONF, libeXosip2, speex, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L
+   BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, 
    ```
 
 2. 단말에 연결하여 linux 포트로 해당 명령어로 dummy soundcard가 올라감을 확인해본다.
@@ -2174,7 +2177,16 @@ tw_link_hls.h:17:39: fatal error: libavfilter/avfiltergraph.h: No such file or d
    modprobe snd-dummy
    ```
 
-   
+3. linphonec로 접속하여 linphone에서 사용가능한 soundcard가 있는지 확인한다.
+
+   ```bash
+   linphonec
+   soundcard list
+   ```
+
+
+
+...
 
 ![image-20201012172106105](images/95728052-fdb45580-0cb5-11eb-8a90-3f258bcfecf2.png)
 
@@ -2186,3 +2198,76 @@ HOST_GETTEXT, HOST-LIBXML-PARSER-PERL
 
 이걸 추가해줬더니 에러가 나서 다시 빼줬더니 빌드 성공함.
 
+- 20/10/13
+
+~~어제까지 분명 리눅스 포트가 열리지 않아 이것저것 고생했는데, 신기하게도 주임님이 빌드하니까 됐다. ??????~~
+
+이제 위에서 말한 패키지들을 추가해보자.
+
+```bash
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_HOST_LIBXML, MEDIASTREAMER2
+```
+
+역시나 configure: error: Your intltool is too old. You need intltool 0.40 or later.에러가 뜬다.
+
+구글링 결과 gudev-1.0.을 추가로 install 해주었다.
+
+linphone.mk에서 += LINPHONE_DEPENDENCIES를 주석처리해주었다. => **build success**
+
+리눅스 터미널이 안나오는 에러 때문에 U1000말고 EOS에서 진행했다.
+
+단말 linphonec결과 아래와 같은 에러들이 발생함.
+
+```bash
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
+linphonec> ortp-error-Error in connect: Network is unreachable
+ortp-error-Error in connect: Network is unreachable
+soundcard list
+0: ALSA: default device
+```
+
+```bash
+linphonec
+proxy add
+sip:sip.linphone.org
+sip:kim@sip.linphone.org
+yes
+3600
+no (route)
+yes
+
+call dhkdghehfdl@10.10.81.94:5060
+```
+
+`ipv6 enable`을 치면
+
+```bash
+ortp-error-getaddrinfo() error: Temporary failure in name resolution
+DEBUG: [get_output_if] setsockopt(SOL_SOCKET, SO_BROADCAST: Bad file descriptor
+ortp-error-Could not find default routable ip address !
+```
+
+와 같은 에러가 뜬다.
+
+그래서 BR2_PACKAGE_ORTP=y를 추가함.
+
+ssid -> AP
