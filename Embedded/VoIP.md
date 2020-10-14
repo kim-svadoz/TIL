@@ -2270,4 +2270,6 @@ ortp-error-Could not find default routable ip address !
 
 그래서 BR2_PACKAGE_ORTP=y를 추가함.
 
-ssid -> AP
+- 20/10/14
+
+ios용 voip 서버 app을 핫스팟으로 연결해서 단말기를 같은 핫스팟으로 붙어서 네트워크연결해보기
