@@ -2205,7 +2205,7 @@ HOST_GETTEXT, HOST-LIBXML-PARSER-PERL
 이제 위에서 말한 패키지들을 추가해보자.
 
 ```bash
-BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_HOST_LIBXML, MEDIASTREAMER2
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_ORTP
 ```
 
 역시나 configure: error: Your intltool is too old. You need intltool 0.40 or later.에러가 뜬다.
@@ -2255,7 +2255,8 @@ yes
 no (route)
 yes
 
-call dhkdghehfdl@10.10.81.94:5060
+call dhkdghehfdl@10.10.81.102:5060
+call dhkdghehfd@sip:linphone.org
 ```
 
 `ipv6 enable`을 치면
@@ -2273,3 +2274,200 @@ ortp-error-Could not find default routable ip address !
 - 20/10/14
 
 ios용 voip 서버 app을 핫스팟으로 연결해서 단말기를 같은 핫스팟으로 붙어서 네트워크연결해보기
+
+## U1000 test
+
+- 20/10/15
+
+U1000 wifi로 모바일 앱 연결 & linphonec 연결 후 아래와 같은 메세지가 linux terminal로 나옴
+
+```bash
+cmd server get sock= 10
+_cmd_server_action[#239] from Remote:(26) {"token":1,"msg_id":2051}
+_cmd_server_send_method[#138] to Remote:(24) {"rval":0,"msg_id":2051}
+```
+
+proxy add 해준 뒤 call dhkdghehfd@sip:linphone.org를 했다.
+
+```bash
+linphonec[421]: unhandled level 2 translation fault (11) at 0x00000000, esr 0x92000006
+[  303.821523] pgd = ffffffc03cd48000
+[  303.824989] [00000000] *pgd=000000003cd20003, *pud=000000003cd20003, *pmd=0000000000000000
+[  303.834967]
+[  303.836737] CPU: 0 PID: 421 Comm: linphonec Tainted: G           O    4.9.76 #1
+[  303.844190] Hardware name: Ambarella H22EVK K2 Board (DT)
+[  303.849594] task: ffffffc03c2ed080 task.stack: ffffffc03c398000
+[  303.855558] PC is at 0x7fa44cc29c
+[  303.860054] LR is at 0x7fa4da7354
+[  303.863683] pc : [<0000007fa44cc29c>] lr : [<0000007fa4da7354>] pstate: 40000000
+[  303.871106] sp : 0000007feb289d30
+[  303.874434] x29: 0000007feb289d30 x28: 000000000040b53b
+[  303.879748] x27: 000000000040b538 x26: 0000000000a4ff40
+[  303.885087] x25: 0000000000000001 x24: 0000000000a3c920
+[  303.890446] x23: 0000000000a4f760 x22: 0000000000a3c900
+[  303.897409] x21: 0000000000a4ff90 x20: 0000000000a1dce0
+[  303.902737] x19: 0000000000a3c710 x18: 0000000000000001
+[  303.908042] x17: 0000007fa44cc280 x16: 0000007fa4de2088
+[  303.913358] x15: 0000007fa4e0e000 x14: 00076415a9d91e60
+[  303.918666] x13: 00000003e8000000 x12: 0101010101010101
+[  303.924015] x11: 7f7f7f7f7f7f7f7f x10: 0101010101010101
+[  303.931064] x9 : 0000000000000000 x8 : 0000000000a4f790
+[  303.936551] x7 : 0000000000000000 x6 : 0000000000000000
+[  303.941861] x5 : 0000007fa45979f8 x4 : 00000000ffffffff
+[  303.947163] x3 : 0000000000000000 x2 : 706e696c2e706973
+[  303.952885] x1 : 0000000000000000 x0 : 0000000000a3c908
+[  303.958348]
+Segmentation fault
+```
+
+```bash
+Selected interface 'wlan0'
+bssid / frequency / signal level / flags / ssid
+70:5d:cc:7f:27:78       5745    -50     [WPA2-PSK-CCMP][WPS][ESS]       iptime-unknown
+90:9f:33:65:fa:56       5745    -53     [WPA2-PSK-CCMP][WPS][ESS]       EXC_5G
+20:0a:8e:89:ce:04       2427    -55     [WPA2-PSK-CCMP][ESS]    UNICORN_89CEAD
+6c:41:0e:7c:82:6f       5220    -38     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+6c:41:0e:7c:82:6e       5220    -39     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+88:36:6c:f6:20:49       2462    -46     [WPA2-PSK-CCMP][WPS][ESS][P2P]  jjc
+c4:3a:35:4f:71:84       2447    -47     [WPA2-PSK-CCMP][WPS][ESS]       Thinkware_84
+74:da:88:db:0c:9e       5785    -69     [WPA2-PSK-CCMP][WPS][ESS]       TP-Link_k_5G
+90:9f:33:66:fa:56       2452    -65     [WPA-PSK-CCMP][WPA2-PSK-CCMP][WPS][ESS] EXC_24
+6c:71:0d:fd:e0:ee       5745    -65     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+6c:71:0d:fd:e0:ef       5745    -66     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+6c:41:0e:7c:82:61       2462    -49     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+6c:41:0e:7c:82:60       2462    -50     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+6c:71:0d:fd:e0:e1       2412    -73     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+74:da:88:db:0c:9f       2422    -73     [WPA2-PSK-CCMP][WPS][ESS]       TP-Link_k
+88:36:6c:92:5c:80       5745    -81     [WPA2-PSK-CCMP][WPS][ESS]       iptime5G_YS
+6c:71:0d:fd:e0:e0       2412    -74     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+70:5d:cc:1a:0f:e0       5765    -82     [WPA2-PSK-CCMP][WPS][ESS]       iNaviQA_5G
+88:36:6c:1a:29:78       5745    -84     [WPA2-PSK-CCMP][WPS][ESS]
+88:36:6c:1a:29:7a       2452    -78     [WPA2-PSK-CCMP][WPS][ESS]
+08:5d:dd:e7:35:8d       2462    -77     [WPA2-PSK-CCMP][ESS]    U+Net358F
+4c:ed:fb:36:05:6c       5785    -87     [WPA2-PSK-CCMP][WPS][ESS]       ASUS_68_5G
+9c:5c:8e:49:f9:8c       5745    -88     [WPA2-PSK-CCMP][ESS]    ADPD0_5G
+88:36:6c:d9:3f:a6       5745    -88     [WPA2-PSK-CCMP][WPS][ESS]       LBS_5G
+ec:41:18:e3:f5:be       2457    -81     [WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]       privateKT
+6c:41:0e:7c:79:ce       5320    -85     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+6c:41:0e:7c:79:cf       5320    -85     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+70:5d:cc:2d:c3:82       5200    -91     [WPA2-PSK-CCMP][WPS][ESS]       iNaviMTD_5G
+6c:41:0e:7c:74:6f       5200    -89     [WPA2-PSK-CCMP][ESS]    thinkap_trust
+6c:41:0e:7c:74:6e       5200    -90     [WPA2-PSK-CCMP][ESS]    thinkap_untrust
+70:5d:cc:7f:27:7a       2417    -55     [WPS][ESS]      iptime
+88:36:6c:27:53:9a       5745    -83     [WPS][ESS]      iptime5G
+stop_time=1602740727
+escape_time=46
+sleep5
+Successfully initialized wpa_supplicant
+Selected interface 'wlan0'
+OK
+```
+
+```bash
+failed to detect SSID iPhone, use /usr/local/share/script/wpa_supplicant.conf:
+```
+
+```bash
+/# iwlist
+Usage: iwlist [interface] scanning [essid NNN] [last]
+              [interface] frequency
+              [interface] channel
+              [interface] bitrate
+              [interface] rate
+              [interface] encryption
+              [interface] keys
+              [interface] power
+              [interface] txpower
+              [interface] retry
+              [interface] ap
+              [interface] accesspoints
+              [interface] peers
+              [interface] event
+              [interface] auth
+              [interface] wpakeys
+              [interface] genie
+              [interface] modulation
+/# Oct 15 06:17:43 AmbaLink user.info wpa_supplicant: /tmp/wifi_connected_hook.sh AP-STA-CONNECTED  b2:05:27:3c:2c:0c
+Oct 15 06:17:43 AmbaLink daemon.info dnsmasq-dhcp[903]: DHCPREQUEST(wlan0) 192.168.42.6 b2:05:27:3c:2c:0c
+Oct 15 06:17:43 AmbaLink daemon.info dnsmasq-dhcp[903]: DHCPACK(wlan0) 192.168.42.6 b2:05:27:3c:2c:0c iPhone
+Oct 15 06:17:43 AmbaLink user.info dnsmasq: /tmp/wifi_connected_hook.sh 192.168.42.6 b2:05:27:3c:2c:0c iPhone
+```
+
+```bash
+# hotspot iPhone 연결
+3a:01:76:71:a8:19 2447 -41 [WPA2-PSK-CCMP][ESS] iPhone
+Successfully initialized wpa_supplicant
+udhcpc: started, v1.25.0
+udhcpc: sending discover
+udhcpc: sending discover
+udhcpc: sending select for 172.20.10.7
+udhcpc: lease of 172.20.10.7 obtained, lease time 85536
+deleting routers
+adding dns 172.20.10.1
+
+UDP server start, PORT: 8778!!!
+Product name : QUANTUM_4K , OEM name : EOS
+Start App Connect Thread
+Ping Test Success
+1+0 records in
+1+0 records out
+
+/# linphonec
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+
+call dhkdghehfdl@10.10.81.102:5060
+call dhkdghehfd@sip:linphone.org
+_cmd_server_send_method[#123] No connection (sock= 10) info !
+data_req_get_status_svr[#363] get client sock (0) conn_state= x6
+data_req_close_conn_svr[#480] no client sock 0
+net.core.wmem_max = 491552
+cbControl: cmd=1
+AmbaStreamerLive_StartEncode: no track in mediaInfoAmbaStreamerLive_StartEncode fail
+
+DEBUG: [get_output_if] setsockopt(SOL_SOCKET, SO_BROADCAST: Bad file descriptor
+ortp-error-Could not find default routable ip address !
+
+linphonec
+proxy add
+sip:sip.linphone.org
+sip:ksh0915@sip.linphone.org
+yes
+3600
+no (route)
+yes
+Password for ksh0915 on "sip.linphone.org": a2011287!!
+Registration on <sip:sip.linphone.org> successful.
+
+call dhkdghehfdl@10.10.81.102:5060 or
+call dhkdghehfd@sip:linphone.org:58853
+
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+```
+
+aplay, arecord를 올리기 위해 alsa-util 내 package를 추가해준다.
+
+```bash
+alsaconf, aconnect, alsaloop, amixer, aplay/arecord, aseqdump, speaker-test
+```
+
+패키지만으로 명령어가 올라오지않는다... 아무래도 커널모듈을 먼저 포팅해야 할거 같다.
+
+참고 : https://m.blog.naver.com/PostView.nhn?blogId=jjong_w&logNo=221099378860&proxyReferer=https:%2F%2Fwww.google.com%2F
+
