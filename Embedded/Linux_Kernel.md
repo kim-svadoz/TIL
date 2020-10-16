@@ -1302,3 +1302,167 @@ module과 관련하여 Linux에서 제공하는 utility는 다음과 같다.
 
 - lsmod에 출력되어 있다고 해서 무조건 rmmod를 통해서 module을 unload 시킬 수 없다. 또한, module이 어떤 process에 의해서 점유되어 있어도 rmmod를 통해서 unload 시킬 수 없다. 이유는 insmod나 rmmod는 해당 module에 대한 dependency를 고려하지 않고 load/unload를 수행하기 때문이다.
 - deependency를 고려해야 할 경우는 insmod나 rmmod보다는 modprobe를 사용하는 것이 효과적이다. modprobe는 dependency를 고려해 먼저 load되어야 할 module이 있는 경우 해당 module에 대한 동작을 처리한 후에 정상적으로 명령을 수행한다.
+
+# **23. LINUX에서 WI-FI 연결하기**
+
+> LINUX 터미널이나 서버 모드에서 Wi-Fi 연결하는 방법이다.
+>
+> Ubuntu18.04에서 iptimeA3000UA를 설치할 것이다.
+
+### 1. USB 연결
+
+제품의 USB단자를 PC에 연결한다.
+
+### 2. 드라이버 설치
+
+Windows환경에서는 iptime 공식홈페이지에 이 제품에 제공되는 드라이버가 있어서 바로 설치하기만 하면 된다.
+
+하지만 여기서는 리눅스 전용 드라이버를 제공하지 않는다.
+
+대신 별도로 `Realtek 88 12BU chipset`을 설치하면 된다.
+
+터미널로 들어가서 다음 명령을 실행시켜준다.
+
+- **드라이버 설치명령**
+
+```bash
+sudo apt update 
+sudo apt install dkms bc git 
+git clone https://github.com/cilynx/rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959 
+sudo dkms add ./rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959 
+sudo dkms install -m rtl88x2bu -v 5.3.1 
+sudo modprobe 88x2bu
+```
+
+### 3. WIFI 연결
+
+설치가 끝나면 오른쪽 상단에 무선LAN 아이콘(와이파이 모양)이 뜬다.
+
+패스워드가 있다면 패스워드 입력 후 연결하면 잘 연결된다.
+
+아직까지는 사용하면서 인터넷이 끊겨지는 둥 하는 불편함은 없었다.
+
+### 4. 무선랜 인터페이스 확인
+
+```bash
+$ iw dev
+```
+
+![image-20201016134935514](images/96220627-0661a000-0fc4-11eb-83eb-e67164f6519b.png)
+
+명령어 실행 결과, 무선랜 카드 인터페이스 이름은  wlx88366cf619d8 으로 확인되고 있습니다. 앞으로 이 인터페이스 이름을 이용하여 설정에 사용되게 됩니다.
+
+### 5. 무선랜 인터페이스 활성화
+
+아래의 명령어로 인터페이스를 확인 한다.
+
+```bash
+sudo ip link show wlx88366cf619d8
+```
+
+![image-20201016135046682](images/96220633-082b6380-0fc4-11eb-9f2d-b8edbf1a6f35.png)
+
+현재 무선랜 카드가 활성화 되어있지 않으므로, 다음 명령어를 사용하여 무선랜 카드를 활성화한다.
+
+```bash
+sudo ip link set wlx88366cf619d8 up
+```
+
+그리고 다시 무선랜 카드 정보를 확인하면, 활성화된 무선랜 카드 정보를 확인할 수 있다.
+
+### 6. 연결상태 확인
+
+다음 명령어를 사용하여, 현재 무선랜 카드의 연결상태를 확인한다.
+
+```bash
+iw wlx88366cf619d8 link
+```
+
+![image-20201016135322928](images/96220635-095c9080-0fc4-11eb-86b3-15383de2ad09.png)
+
+현재 WIFI에 연결되어 있지 않다.
+
+### 7. WIFI 스캔
+
+다음 명령어를 사용하여 WiFi 정보를 스캔합니다. 스캔 후 나타나는 WiFi 중에서 비밀번호가 없는 WiFi 와 WPA/WPA2 암호화 방식을 사용하는 WiFi에 대해서 나눠서 설명드리도록 하겠습니다.
+
+#### 공개된 WiFi 일 경우
+
+공개된 WiFi 일 경우 아래와 같은 명령어를 사용하여, SSID를 확인 한 다음 바로 WiFi에 연결 할 수 있습니다.
+
+아래의 명령어는 iptime 이라는 WiFi에 접속하는 명령어 입니다. 그 다음 연결접속 정보를 확인 후 IP를 할당 받으면 됩니다.
+
+```bash
+sudo iw wlx88366cf619d8 scan
+sudo iw dev wlx88366cf619d8 connect iptime
+```
+
+#### 비공개된 WiFi 일 경우 (WPA/WPA2)
+
+WPA/WPA2 암호화 방식을 사용하는 WiFi 정보입니다. 네트워크를 스캔하면 다음과 비슷한 결과가 나타납니다.
+
+```bash
+$ sudo iw wlx88366cf619d8 scan
+// 생략
+BSS 34:cc:28:05:f0:58(on wlx88366cf619d8)
+	TSF: 175628935496 usec (2d, 00:47:08)
+	freq: 2432
+	beacon interval: 100 TUs
+	capability: ESS Privacy ShortSlotTime (0x0411)
+	signal: -69.00 dBm
+	last seen: 800 ms ago
+	Information elements from Probe Response frame:
+	SSID: sw4t
+	WPA:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP CCMP
+		 * Authentication suites: PSK
+	RSN:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP CCMP
+		 * Authentication suites: PSK
+		 * Capabilities: 1-PTKSA-RC 1-GTKSA-RC (0x0000)
+// 생략
+```
+
+위의 스캔된 정보에서 가장 중요한 내용이 SSID 와 암호화 프로토콜입니다. RSN 방식이 WPA2 를 나타냅니다. WiFi의 SSID 이름이 sw4t일 경우 설정 후 접속하는 방법입니다.
+
+아래의 명령어를 실행 후, WiFi 패스워드를 입력하면 설정 파일이 생성되게 됩니다.
+
+```bash
+sudo wpa_passphrase sw4t > wpa_supplicant.conf
+```
+
+이 설정 파일을 이용하여 다음 명령어를 이용하여 Wi-Fi에 접속하면 된다.
+
+```bash
+sudo wpa_supplicant -B -i wlx88366cf619d8 -c wpa_supplicant.conf
+```
+
+![image-20201016153618739](images/96221325-5d1ba980-0fc5-11eb-8540-0abf9d10fd4d.png)
+
+위의 명령어에서 사용된 옵션의 의미는 다음과 같습니다.
+
+- **-B** : 백그라운드 실행
+- **-i wlx88366cf619d8**: 무선랜 인터페이스 이름
+- **-c wpa_supplicant.conf** : WiFi 설정 파일 경로
+
+### 8. WIFI 연결 정보 확인
+
+Wifi에 접속 후 연결 정보를 확인한다.
+
+```bash
+sudo iw wlx88366cf619d8 link
+```
+
+명령어 실행 결과 SSID가 출력되며, 연결정보가 나타난다.
+
+### 9. DHCP 주소 할당
+
+성공적으로 WiFi에 접속되면, 아래의 명령어로 IP 주소를 할당 받는다.
+
+```bash
+sudo dhclient wlx88366cf619d8
+```
+
+위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
