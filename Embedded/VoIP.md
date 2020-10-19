@@ -2510,7 +2510,7 @@ sudo modprobe 88x2bu
 
 패스워드가 있다면 패스워드 입력 후 연결하면 잘 연결된다.
 
-아직까지는 사용하면서 인터넷이 끊겨지는 둥 하는 불편함은 없었다.
+아직까지는 사용하면서 인l터넷이 끊겨지는 둥 하는 불편함은 없었다.
 
 ### 4. 무선랜 인터페이스 확인
 
@@ -2600,7 +2600,7 @@ BSS 34:cc:28:05:f0:58(on wlx88366cf619d8)
 아래의 명령어를 실행 후, WiFi 패스워드를 입력하면 설정 파일이 생성되게 됩니다.
 
 ```bash
-sudo wpa_passphrase sw4t > wpa_supplicant.conf
+sudo wpa_passphrase jjc > wpa_supplicant.conf
 ```
 
 이 설정 파일을 이용하여 다음 명령어를 이용하여 Wi-Fi에 접속하면 된다.
@@ -2636,3 +2636,42 @@ sudo dhclient wlx88366cf619d8
 ```
 
 위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
+
+
+
+- 20/10/19
+
+현재 wifi 연결에 어려움을 겪고 있는 상황.
+
+```bash
+sudo killall wpa_supplicant
+```
+
+/etc/wpa_supplicant에 conf를 만들어준다.
+
+```bash
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=wheel
+update_config=1
+
+network={
+ssid="iPhone"
+psk="123456789"
+}
+
+sudo wpa_passphrase jjc > /etc/wpa_supplicant/wpa_supplicant.conf
+sudo wpa_supplicant -B -i wlx88366cf619d8 -c /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+```bash
+ksh@ksh:~/work/h22$ ps aux | grep wpa
+ksh       2334  0.0  0.0  15716  1048 pts/0    S+   10:37   0:00 grep --color=auto wpa
+```
+
+자꾸 연결이 안된다.. 처음붙너 다시해보자
+
+```bash
+iwlist wlx88366cf619d8 scan
+
+```
+
