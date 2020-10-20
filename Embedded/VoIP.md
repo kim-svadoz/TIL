@@ -2633,6 +2633,7 @@ sudo iw wlx88366cf619d8 link
 
 ```bash
 sudo dhclient wlx88366cf619d8
+sudo dhcpcd wlx88366cf619d8 &
 ```
 
 위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
@@ -2655,8 +2656,8 @@ ctrl_interface_group=wheel
 update_config=1
 
 network={
-ssid="iPhone"
-psk="123456789"
+	ssid="jjc"
+	psk="maae1313"
 }
 
 sudo wpa_passphrase jjc > /etc/wpa_supplicant/wpa_supplicant.conf
@@ -2668,10 +2669,244 @@ ksh@ksh:~/work/h22$ ps aux | grep wpa
 ksh       2334  0.0  0.0  15716  1048 pts/0    S+   10:37   0:00 grep --color=auto wpa
 ```
 
-자꾸 연결이 안된다.. 처음붙너 다시해보자
+자꾸 연결이 안된다.. 처음부터 다시해보자
 
 ```bash
 iwlist wlx88366cf619d8 scan
+```
 
+- 20/10/20
+
+반차쓴 관계로 처음부터 다시.
+
+jjc - maae1313
+
+```bash
+Cell 17 - Address: 88:36:6C:F6:20:49
+                    ESSID:"jjc"
+                    Protocol:IEEE 802.11gn
+                    Mode:Master
+                    Frequency:2.462 GHz (Channel 11)
+                    Encryption key:on
+                    Bit Rates:867 Mb/s
+                    Extra:rsn_ie=30140100000fac040100000fac040100000fac020000
+                    IE: IEEE 802.11i/WPA2 Version 1
+                        Group Cipher : CCMP
+                        Pairwise Ciphers (1) : CCMP
+                        Authentication Suites (1) : PSK
+                    IE: Unknown: DD360050F204104A00011010440001021049000600372A0001201054000800010050F20000001011000E54572D4A4A433430323435333036
+                    Quality=71/100  Signal level=-32 dBm
+                    Extra:fm=0001
+
+```
+
+**Ubuntu <-> iphone linphone test**
+
+```bash
+ctrl_interface=/run/wpa_supplicant 
+ctrl_interface_group=netdev
+update_config=1
+country=US
+
+network={
+	ssid="jjc"
+	psk="maae1313"
+}
+```
+
+```bash
+iwlist wlx88366cf619d8 scan
+sudo lshw -c network				# PC 무선랜 카드 정보 보기
+sudo killall wpa_supplicant				# 1
+sudo service network-manager restart 	# 802.1x supplicant failed ubuntu, 3
+sudo iw wlx88366cf619d8 link
+sudo iwconfig
+sudo wpa_passphrase jjc maae1313
+sudo /etc/init.d/networking restart		# 어댑터에서 ip할당, 2
+sudo wpa_supplicant -B -i wlx88366cf619d8 -c /etc/wpa_supplicant/wpa_supplicant.conf
+sudo dhclient wlx88366cf619d8
+sudo systemctl status networking.service
+```
+
+network device 보기
+
+```bash
+$ nmcli d
+DEVICE           TYPE      STATE         CONNECTION
+enp0s3           ethernet  connected     Wired connection 1
+enp0s8           ethernet  connected     Wired connection 2
+wlx88366cf619d8  wifi      disconnected  --
+lo               loopback  unmanaged     --
+```
+
+```bash
+# wifi 연결 중
+$ nmcli d s
+DEVICE           TYPE      STATE                             CONNECTION
+enp0s3           ethernet  connected                         Wired connection 1
+enp0s8           ethernet  connected                         Wired connection 2
+wlx88366cf619d8  wifi      connecting (need authentication)  jjc
+lo               loopback  unmanaged  
+```
+
+wifi list 보기
+
+```bash
+$ nmcli d wifi list
+IN-USE  SSID               MODE   CHAN  RATE        SIGNAL  BARS  SECURITY
+        jjc                Infra  11    270 Mbit/s  100     ▂▄▆█  WPA2
+```
+
+무선 인터페이스 상태 보기
+
+```bash
+$ nmcli r
+WIFI-HW  WIFI     WWAN-HW  WWAN
+enabled  enabled  enabled  enabled
+```
+
+wifi 연결하기
+
+```bash
+$ nmcli d wifi connect jjc password maae1313
+Error: Failed to add/activate new connection: Not authorized to control networking.
+$ sudo nmcli d wifi connect jjc password maae1313
+Error: Connection activation failed: (7) Secrets were required, but not provided.
+```
+
+연결된 상황 보기
+
+```bash
+$ nmcli c s
+NAME                UUID                                  TYPE      DEVICE
+Wired connection 1  f42086da-132b-391d-a403-8b13c53b3912  ethernet  enp0s3
+Wired connection 2  45a7883f-3a9b-3f6b-bab9-2f9eb3276c3f  ethernet  enp0s8
+iPhone              ef76f76c-6a64-495a-8f85-9ef123a61779  wifi      --
+iptime              c8dc6dfd-99ed-444a-a840-c51aab0b793f  wifi      --
+iptime 1            5eecf996-ce6f-424f-bc57-948712f93c66  wifi      --
+iptime 2            8bb445fa-544d-4172-bf4f-20252b572aed  wifi      --
+iptime 3            067c5982-f065-4a16-84d9-96ffc753fa1d  wifi      --
+jjc                 40454120-2b5e-4365-915d-e4f1b8c2c78d  wifi      --
+jjc 1               e8776fca-7f63-4948-a1f2-6dfa1fe723a3  wifi      --
+jjc 2               21323a4b-a156-459a-bea6-d01763eb5d50  wifi      --
+jjc 3               712e0a86-6b17-443c-8552-c567a4ab566d  wifi      --
+```
+
+```bash
+sudo usermod -aG netdev ksh
+```
+
+아아!!!!!!!!!!!!!!!!!!!!!!!!!!!! systemctl에 서비스가 disable로 되있다. 그래서 해당 서비스들을 enable해주면된다.
+
+```bash
+wpa_supplicant-wired@.service              disabled
+wpa_supplicant@.service                    disabled
+systemd-networkd.service                   disabled
+systemd-networkd-wait-online.service       disabled
+networking.service						 disabled
+ssh.socket                                 disabled
+
+sudo systemectl enable @@@@@@@.service
+```
+
+이래도 안되는 오류들이 있다. 한번 알아보자
+
+```bash
+$ systemctl status networking.service
+● networking.service - Raise network interfaces
+   Loaded: loaded (/lib/systemd/system/networking.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Tue 2020-10-20 16:27:12 KST; 12s ago
+     Docs: man:interfaces(5)
+  Process: 3138 ExecStop=/sbin/ifdown -a --read-environment --exclude=lo (code=exited, status=0/SUCCESS)
+  Process: 3190 ExecStart=/sbin/ifup -a --read-environment (code=exited, status=1/FAILURE)
+  Process: 3187 ExecStartPre=/bin/sh -c [ "$CONFIGURE_INTERFACES" != "no" ] && [ -n "$(ifquery --read-environment --list --exclude=lo)
+ Main PID: 3190 (code=exited, status=1/FAILURE)
+
+10월 20 16:27:12 ksh wpa_supplicant[3211]: ctrl_iface exists and seems to be in use - cannot override it
+10월 20 16:27:12 ksh wpa_supplicant[3211]: Delete '/run/wpa_supplicant/wlx88366cf619d8' manually if it is not used anymore
+10월 20 16:27:12 ksh wpa_supplicant[3211]: Failed to initialize control interface '/run/wpa_supplicant'.
+                                            You may have another wpa_supplicant process already running or the file was
+                                            left by an unclean termination of wpa_supplicant in which case you will need
+                                            to manually remove this file before starting wpa_supplicant again.
+10월 20 16:27:12 ksh wpa_supplicant[3211]: nl80211: deinit ifname=wlx88366cf619d8 disabled_11b_rates=0
+10월 20 16:27:12 ksh ifup[3190]: /etc/network/if-pre-up.d/wpasupplicant: 120: /etc/network/if-pre-up.d/wpasupplicant: cannot create /d
+10월 20 16:27:12 ksh ifup[3190]: run-parts: /etc/network/if-pre-up.d/wpasupplicant exited with return code 1
+10월 20 16:27:12 ksh ifup[3190]: Failed to bring up wlx88366cf619d8.
+10월 20 16:27:12 ksh systemd[1]: networking.service: Main process exited, code=exited, status=1/FAILURE
+10월 20 16:27:12 ksh systemd[1]: networking.service: Failed with result 'exit-code'.
+10월 20 16:27:12 ksh systemd[1]: Failed to start Raise network interfaces.
+```
+
+https://blog.naver.com/PostView.nhn?blogId=kerochuu&logNo=222021931723&parentCategoryNo=6&categoryNo=8&viewDate=&isShowPopularPosts=false&from=postView
+
+```java
+package baekjoon;
+import java.io.*;
+import java.util.*;
+public class Main{
+    private static class Node {
+        int next, cost;
+        Node(int next, int value){
+            this.next = next;
+            this.cost = value;
+        }
+    }
+    static int N;
+    static lon[] size, myFamily, starnger;
+    static ArrayList<Node>[] tree;
+    static StringBuilder sb = new StringBuilder();
+    
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        
+        while(){
+            
+        }
+    }
+    private static void dfs1(int here, int dad) {
+        for(Node n : tree[here]){
+            if(n.next != dad) {
+				
+            }
+        }
+    }
+}
+```
+
+**단말 <-> iphone linphoe test**
+
+```bash
+Successfully initialized wpa_supplicant
+
+/# udhcpc: started, v1.25.0
+udhcpc: sending discover
+
+/# udhcpc: sending discover
+udhcpc: sending select for 192.168.137.19
+udhcpc: lease of 192.168.137.19 obtained, lease time 604800
+deleting routers
+adding dns 192.168.137.1
+
+UDP server start, PORT: 8778!!!
+Product name : QUANTUM_4K , OEM name : EOS
+Start App Connect Thread
+Ping Test Success
+1+0 records in
+1+0 records out
+
+linphonec
+proxy add
+sip:sip.linphone.org
+sip:ksh0915@sip.linphone.org
+yes
+3600
+no (route)
+yes
+Password for ksh0915 on "sip.linphone.org": a2011287!!
+Registration on <sip:sip.linphone.org> successful.
+
+call dhkdghehfdl@10.10.81.102:5060 or
+call dhkdghehfd@sip:linphone.org
 ```
 
