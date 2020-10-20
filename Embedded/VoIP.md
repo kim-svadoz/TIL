@@ -2837,43 +2837,6 @@ $ systemctl status networking.service
 10월 20 16:27:12 ksh systemd[1]: Failed to start Raise network interfaces.
 ```
 
-https://blog.naver.com/PostView.nhn?blogId=kerochuu&logNo=222021931723&parentCategoryNo=6&categoryNo=8&viewDate=&isShowPopularPosts=false&from=postView
-
-```java
-package baekjoon;
-import java.io.*;
-import java.util.*;
-public class Main{
-    private static class Node {
-        int next, cost;
-        Node(int next, int value){
-            this.next = next;
-            this.cost = value;
-        }
-    }
-    static int N;
-    static lon[] size, myFamily, starnger;
-    static ArrayList<Node>[] tree;
-    static StringBuilder sb = new StringBuilder();
-    
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        
-        while(){
-            
-        }
-    }
-    private static void dfs1(int here, int dad) {
-        for(Node n : tree[here]){
-            if(n.next != dad) {
-				
-            }
-        }
-    }
-}
-```
-
 **단말 <-> iphone linphoe test**
 
 ```bash
@@ -2909,4 +2872,3 @@ Registration on <sip:sip.linphone.org> successful.
 call dhkdghehfdl@10.10.81.102:5060 or
 call dhkdghehfd@sip:linphone.org
 ```
-
