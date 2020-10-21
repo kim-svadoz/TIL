@@ -2870,5 +2870,51 @@ Password for ksh0915 on "sip.linphone.org": a2011287!!
 Registration on <sip:sip.linphone.org> successful.
 
 call dhkdghehfdl@10.10.81.102:5060 or
-call dhkdghehfd@sip:linphone.org
+call dhkdghehfd@sip:linphone.org:5060
+=> NULL pointer EXCEPTION 발생
 ```
+
+- 20/10/21
+
+```bash
+iwlist wlx88366cf619d8 scan
+sudo lshw -c network
+sudo killall wpa_supplicant
+sudo service network-manager restart
+sudo rm -r /run/wpa_supplicant
+sudo /etc/init.d/networking restart		# 어댑터에서 ip할당, 2
+
+sudo ifconfig wlx88366cf619d8 up
+sudo iw wlx88366cf619d8 link
+sudo iwconfig
+sudo wpa_supplicant -B -i wlx88366cf619d8 -c /etc/wpa_supplicant/wpa_supplicant.conf
+sudo dhclient wlx88366cf619d8
+sudo systemctl status networking.service
+
+# /etc/dhcp/dhclient.conf 파일에 
+# send dhcp-requested-address 192.168.56.1;
+# 1 line 추가
+sudo dhclient -4 -d -v -cf /etc/dhcp/dhclient.conf wlx88366cf619d8
+
+```
+
+실제 단말에 입출력 장치가 없어 계속되는 NULL_POINTER 에러로 인해 단말에서 추가로 진행하지 않음.
+
+RTOS 코드 상에서 단말에 있는 dummy souncard와 마이크 입출력을 연결하라.
+
+RTOS와 LINUX 연동?
+
+```bash
+private static int slide(){
+	int total = 0, max = 0;
+	for(int i=0; i<k; i++){
+		if(visit[arr[i]] == 0) total++;
+		visit[arr[i]]++;
+	}
+	max = total;
+	for(int i=1; i<N; i++){
+	
+	}
+}
+```
+
