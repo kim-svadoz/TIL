@@ -88,7 +88,7 @@
 | 42584_주식가격           | [Link](./알고리즘/Programmers/StockPrice_42584.java)         | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42584-%EC%A3%BC%EC%8B%9D%EA%B0%80%EA%B2%A9?category=936484) | 단순 생각의 구현             |
 | 42883_큰수만들기         | [Link](./알고리즘/Programmers/MakeBigNumber_42883.java)      | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42883-%ED%81%B0-%EC%88%98-%EB%A7%8C%EB%93%A4%EA%B8%B0?category=936484) | stack                        |
 | 12913_땅따먹기           | [Link](./알고리즘/Programmers/GroundPicking_12913.java)      | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA12913-%EB%95%85%EB%94%B0%EB%A8%B9%EA%B8%B0) | DP, 슬라이딩윈도우           |
-| 42583_다리를 지나는 트럭 | [Link](./알고리즘/Programmers/PathTruck_42583.java)          | [문제]                                                       | Queue                        |
+| 42583_다리를 지나는 트럭 | [Link](./알고리즘/Programmers/PathTruck_42583.java)          | [문제](https://coder-in-war.tistory.com/entry/Programmers-JAVA42583-%EB%8B%A4%EB%A6%AC%EB%A5%BC-%EC%A7%80%EB%82%98%EB%8A%94-%ED%8A%B8%EB%9F%AD) | Queue                        |
 
 ### [LeetCode](./알고리즘/LeetCode)
 
