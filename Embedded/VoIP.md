@@ -3221,3 +3221,48 @@ RTOS와 LINUX 연동?
 
 자꾸 TEST branch와 맞물려서 stash가 헷갈리는 관계로 개발 용도로 VM을 하나 더 추가했다!(ksh_dev)
 
+- 20/10/27
+
+```bash
+# 깔려있는 package를 용량 오름차순으로 보여주는 것
+dpkg-query --show --showformat='${Package;-50}\t${Installed-Size}\n' | sort -k 2 -n
+# 관련된 것 자동 삭제
+sudo apt-get autoremove ~~
+```
+
+
+
+UBUNTU에 SDCARD가 장착된 USB를 인식하였다. 이제
+
+Sound Driver를 직접 만들어 LINUX에서 전송되는 오디오를 /media/ksh/MY에 저장해보도록 하자.
+
+```bash
+sudo apt-get install liblinphone-dev
+sudo apt-get install linphone-dbg
+linphonec
+# PC
+call dhkdghehfdl@10.10.81.102:5060
+# iPhone
+call dhkdghehfd@sip.linphone.org
+```
+
+**다시한번 linphone-desktop 을 build 해본다.**
+
+```bash
+sudo apt-get install qttools5-dev
+sudo wget http://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-linux-x64-5.14.2.run
+```
+
+**Qt5.14.2 다운로드 하고 기존 Qt삭제하기**
+
+참고 : https://webnautes.tistory.com/1413
+
+```bash
+# 가지고 있는 qt들 버전 확인하기
+qtchooser -list-versions
+sudo apt autoremove '.*qt4.$-dev'
+sudo apt-get purge --auto-remove libqt4-dev
+sudo chmod +x qt-opensource-linux-x64-5.14.2.run
+./qt-opensource-linux-x64-5.14.2.run # putty말고 terminal에서 진행
+```
+
