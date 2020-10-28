@@ -1292,11 +1292,11 @@ module과 관련하여 Linux에서 제공하는 utility는 다음과 같다.
 
 현재 test 중인 ubuntu에는 다음과 같은 module이 인식되어 있다.
 
-![image-20201012174355800](images/95728078-060c9080-0cb6-11eb-87fc-c7c0327aaec8.png)
+![image-20201012174355800](https://user-images.githubusercontent.com/58545240/97410267-32750d80-1942-11eb-90aa-a749e92af6e5.png)
 
 만약 이렇게 인식된 파일들의 `ko`파일을 찾고 싶다면 `/lib/module`로 가면된다. 아마 여러 폴더가 있을텐데, 현재 kernel version에 해당하는 폴더로 접근하면 된다!
 
-![image-20201012174430902](images/95728095-0c9b0800-0cb6-11eb-912e-0c01a3b5bd17.png)
+![image-20201012174430902](https://user-images.githubusercontent.com/58545240/97410242-2be69600-1942-11eb-8abc-59318f47c0f3.png)
 
 **modprobe**는 앞에서 소개했던 insmod와 rmmod를 합친 것이다. 다만 합친다고 완전히 똑같은 것이 아니라 약간의 차이가 있다.
 
@@ -1348,7 +1348,7 @@ sudo modprobe 88x2bu
 $ iw dev
 ```
 
-![image-20201016134935514](images/96220627-0661a000-0fc4-11eb-83eb-e67164f6519b.png)
+![image-20201016134935514](https://user-images.githubusercontent.com/58545240/97410229-2426f180-1942-11eb-855a-01726842be50.png)
 
 명령어 실행 결과, 무선랜 카드 인터페이스 이름은  wlx88366cf619d8 으로 확인되고 있습니다. 앞으로 이 인터페이스 이름을 이용하여 설정에 사용되게 됩니다.
 
@@ -1360,7 +1360,7 @@ $ iw dev
 sudo ip link show wlx88366cf619d8
 ```
 
-![image-20201016135046682](images/96220633-082b6380-0fc4-11eb-9f2d-b8edbf1a6f35.png)
+![image-20201016135046682](https://user-images.githubusercontent.com/58545240/97410161-0e193100-1942-11eb-9d72-4ebda3ddb66d.png)
 
 현재 무선랜 카드가 활성화 되어있지 않으므로, 다음 명령어를 사용하여 무선랜 카드를 활성화한다.
 
@@ -1378,7 +1378,7 @@ sudo ip link set wlx88366cf619d8 up
 iw wlx88366cf619d8 link
 ```
 
-![image-20201016135322928](images/96220635-095c9080-0fc4-11eb-86b3-15383de2ad09.png)
+![image-20201016135322928](https://user-images.githubusercontent.com/58545240/97410199-196c5c80-1942-11eb-80d3-d44ff5345e8f.png)
 
 현재 WIFI에 연결되어 있지 않다.
 
@@ -1439,7 +1439,7 @@ sudo wpa_passphrase sw4t > wpa_supplicant.conf
 sudo wpa_supplicant -B -i wlx88366cf619d8 -c wpa_supplicant.conf
 ```
 
-![image-20201016153618739](images/96221325-5d1ba980-0fc5-11eb-8540-0abf9d10fd4d.png)
+![image-20201016153618739](https://user-images.githubusercontent.com/58545240/97410425-618b7f00-1942-11eb-971d-dd7d7f4aaa7d.png)
 
 위의 명령어에서 사용된 옵션의 의미는 다음과 같습니다.
 
@@ -1466,3 +1466,277 @@ sudo dhclient wlx88366cf619d8
 ```
 
 위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
+
+# **24. Device Driver**
+
+---
+
+> **Device** 
+>
+> - 네트워크 어댑터, LCD 디스플레이, 오디오, 터미널, 티보드, 하드디스트, 플로피디스크, 프린터 등과 같은 주변 장치들을 말함
+> - 디바이스 구동에 필요한 프로그램, 즉 디바이스 드라이버가 필수적으료 요구됨
+>
+> **Device Driver**
+>
+> - 실제 장치 부분을 추상화시켜 사용자 프로그램이 정형화된 인터페이스를 통해 디바이스를 접근할 수 있도록 해주는 프로그램
+> - 디바이스 관리에 필요한 정형화된 인터페이스 구현에 요구되는 함수와 자료구조의 집합체
+> - 표준적으로 동일 서비스 제공을 목적으로 커널의 일부분으로 내장
+> - 응용 프로그램이 하드웨어를 제어할 수 있도록 인터페이스 제공
+> - 하드웨어 독립적인 프로그램을 작성할 수 있도록 함.
+
+## 24.1 리눅스 디바이스 드라이버
+
+### - 사용자 관점에서의 디바이스 드라이버
+
+- 사용자는 디바이스 자체에 대한 정보를 알 필요 없음.
+- device는 하나의 파일로 인식됨
+- 파일에 대한 접근을 통하여 real device에 접근 가능함
+
+![image-20201028135315115](https://user-images.githubusercontent.com/58545240/97408497-816d7380-193f-11eb-9281-20dec1ba14a4.png)
+
+### - 리눅스에서의 디바이스
+
+- 리눅스에서 디바이스는 특별한 파일로 취급되고, 액세스가 가능함. 사용자(응용 프로그램)은 file operation을 적용할 수 있다.
+- 각 디바이스는 **Major Number**와 **Minor number**를 가진다.
+  - `Major Number` : 디바이스 장치 구분
+  - `Minor Number` : 같은 종류의 디바이스들을 구분
+
+## 24.2 디바이스 드라이버의 종류
+
+![image-20201028135434082](https://user-images.githubusercontent.com/58545240/97408513-88948180-193f-11eb-8286-2b5e50f335c6.png)
+
+![image-20201028135447261](https://user-images.githubusercontent.com/58545240/97408545-93e7ad00-193f-11eb-82e7-125311441ef5.png)
+
+### - 문자 디바이스
+
+> Char Device
+
+- 자료의 순차성을 지닌 장치
+- 버퍼 캐쉬를 사용하지 않음
+- 장치의 `raw data`를 사용자에게 제공
+- Terminal, Serial/Parallel, Keyboard, Sound Card, Scanner, Printer 등
+
+리눅스에서의 문자 디바이스
+
+![image-20201028135633869](https://user-images.githubusercontent.com/58545240/97408555-9a762480-193f-11eb-92ef-0e3d64558e40.png)
+
+맨앞 `c` => 파일 관련 정보 중 첫 문자인 c는 **`char device`**를 의미한다.
+
+### - 블록 디바이스
+
+> Block Device
+
+- **random access** 가능
+- 블록 단위의 입출력이 가능한 장치
+- 버퍼 캐쉬에 의한 내부 장치 표현
+- 파일 시스템에 의해 mount 되어 관리되는 장치
+- 디스크, RAM Dis, CD-ROM 등
+
+![image-20201028135759397](https://user-images.githubusercontent.com/58545240/97408572-9fd36f00-193f-11eb-9e90-3533af1a2d87.png)
+
+마찬가지로 파일 관련 정보 중 첫 문자이는 b는 **`block device`**를 의미한다.
+
+### - 네트워크 디바이스
+
+> Network Device
+
+- 대응하는 장치파일이 없음
+- 네트워크 통신을 통해 패킷을 송수신 할 수 있는 장치
+- 응용프로그램과의 통신은 표준 파일 시스템 관련 호출 대신에 `socket()`이나 `bind()`등의 시스템 호출
+- Ethernet, PPP, ATM, ISDN 등이 있다.
+
+## 24.3 디바이스 드라이버의 Major & Minor Number
+
+**Major Number(주 번호)**
+
+- 커널에서 디바이스 드라이버를 구분/연겨랗는데 사용
+- 같은 디바이스 종류를 지칭. 1Byte (0~255 사이의 값)
+
+**Minor Number(부 번호)**
+
+- 디바이스 드라이버 내에 장치를 구분하기 위해 사용
+- 각 디바이스의 부가적인 정보를 나타냄. 2Byte(부번호)
+- 하나의 디바이스 드라이버가 여러 개의 디바이스 제어 가능
+
+
+
+*ex) `ls -al /dev/sdb`*
+
+![image-20201028140243569](https://user-images.githubusercontent.com/58545240/97408585-a4982300-193f-11eb-9b7b-4d150ff1aafd.png)
+
+## 24.4 디바이스 드라이버 구조
+
+리눅스 시스템 구조 상의 디바이스 드라이버는 아래와 같다.
+
+![image-20201028140326578](https://user-images.githubusercontent.com/58545240/97408634-b5e12f80-193f-11eb-931a-f43273aaf7d9.png)
+
+위의 `Kernel area` 쪽을 보면 디바이스 인터페이스 위에 디바이스 드라이버들이 있다. 문자 디바이스 드라이버는 버퍼캐시를 사용하지 않기 때문에 (그래서 나중에 ioremap_nocache함수를 사용함) 실습에서 많이 사용한다.
+
+# **25. 모듈 프로그래밍**
+
+---
+
+**커널 모듈(Kernel Module)**
+
+- 시스템 부팅후에 동적으로 `loading`할 수 있는 커널 구성요소를 말한다.
+- 커널을 다시 컴파일하거나 시스템 재부팅 할 필요없이 커널의 일부분을 교체하는 것이 가능하다
+- 디바이스 드라이버, 파일 시스템, 네트워크 프로토콜 등이 모듈로 제공된다.
+
+> 일반 응용프로그램과 뭐가 다른거죠??
+
+커널 모듈은 일반 응용 프로그램과 달리 main함수가 없다.
+
+대신에 커널에 로딩 및 제거될 때 불러지는 함수가 존재하는데, 이는 아래와 같다.
+
+- Loading 시 : `module_init()`로 지정된 함수 호출
+- Unloading 시 : `module_exit()`로 지정된 함수 호출
+
+## 25.1 리눅스 디바이스 드라이버의 특성
+
+1. 커널 코드
+   - 디바이스 드라이버는 커널의 한 부분이므로, 커널의 다른 코드와 마찬가지로 잘못되면 시스템에 치명적인 피해를 줄 수 있다.
+2. 커널 인터페이스
+   - 디바이스 드라이버는 리눅스 커널이나 자신이 속한 서브시스템에 표준 인터페이스를 제공해야 한다.
+3. 커널 매커니즘과 서비스
+   - 디바이스 드라이버는 **메모리 할당**, **인터럽트 전달**, **wait queue**와 같은 표준 커널 서비스를 사용할 수 있다.
+4. Loadable
+   - 대부분의 리눅스 드라이버는 커널 모듈로서, 필요할 때 `Load`하고 더이상 필요하지 않을 때 `Unload`할 수 있다.
+5. 설정 가능(Configurable)
+   - 리눅스 디바이스 드라이버를 커널에 포함하여 컴파일할 수 있다. 어떤 장치를 넣을 것인지는 커널을 컴파일 할 때 설정할 수 있다.
+
+## 25.2 간단한 커널모듈 작성해보기
+
+### 1. hello.c
+
+```c
+//hello.c
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/init.h>
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("BUTTER SHOWER");
+MODULE_DESCRIPTION("module programming - hello module");
+
+static int __init module_begin(void) {
+    printk("Hello, linux kernel module. \n");
+    return 0;
+}
+
+static void __exit module_end(void) {
+    printk("Good Bye!\n");
+}
+module_init(module_begin);
+module_exit(module_end);
+```
+
+1. 필요한 include 파일들 include 시켜주기
+2. module license 지정
+   - 종류 : `GPL, GPL v2, Dual BSD/GPL, Proprietary` 등
+   - 커널 2.6부터 반드시 지정해야 함
+3. `module_init` 함수 작성 및 등록 : `module_init(init_func);`
+4. `module_exit` 함수 작성 및 등록 : `module_exit(exit_func);`
+
+### 2. 커널 모듈 프로그램을 위한 Makefile
+
+```bash
+obj-m += hello.o
+all :
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+clean :
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+```
+
+`Makefile`이라는 이름으로 위의 코드를 붙여 만들어 준후, `make` 명령어를 하면 아래와 같이 실행된다.
+
+![image-20201028141518368](https://user-images.githubusercontent.com/58545240/97408651-bbd71080-193f-11eb-8c1c-1a7cb287aee4.png)
+
+**컴파일 과정**
+
+1. `hello.o` 파일 먼저 생성
+2. `modpost`를 C 소스파일에 적용해 `.ko`에서 요구되는 추가 정보를 부착하여 `hello.mod.c`를 생성한 후 컴파일 -> `hello.mod.o` 생성
+3. 두개의 `.o`파일을 링크하여 `.ko(kernel object)`파일을 생성
+
+### 3. 모듈 적재(loading) 그리고 제거(unloading)
+
+1. 생성된 모듈(hello.ko)을 로딩
+
+   ```bash
+   insmod hello.ko
+   ```
+
+2. 커널에 적재된 모듈 목록보기
+
+   ```bash
+   lsmod
+   ```
+
+3. 모듈 제거
+
+   ```bash
+   rmmod hello # (.ko가 붙지 않는다)
+   ```
+
+4. hello 모듈 동작 확인
+
+   ```bash
+   # 모듈 적재와 제거 시에 메시지들이 출력되는지 확인
+   #dmesg 또는
+   #tail -f /var/log/kern.log (-f 옵션 : 계속적인 변화 출력)
+   ```
+
+## 25.3 디바이스 드라이버 작성 방법
+
+### 1. 디바이스 드라이버 함수 작성
+
+- struct file_operations 정의
+- open, release, read, write, ioctl 함수 구현
+- init, exit 함수 구현
+
+### 2. 커널에 디바이스 드라이버 등록
+
+> Init 함수에서 수행
+
+```c
+int res;
+
+res = register_chardev();	// char driver
+res = register_blkdev();	// block driver
+res = register_netdev();	// network driver
+```
+
+(사실 register_xxxdev() 함수 파라미터에 필요한 값들이 있지만 일단 생략.. 추후 포스팅 예시를 보면 알 것이다)
+
+### 3. 컴파일/로딩
+
+```bash
+# make		... Makefile 작성 후 실행
+# insmod	... 생성된 .ko 파일 load
+```
+
+### 4. 디바이스 파일 생성
+
+```bash
+# mknode [디바이스 파일 이름] [드라이버타입] [주번호] [부번호]
+
+(예시)
+#mknod /dev/LED c 239 0
+```
+
+필요하면 속성을 변경해주면 된다.
+
+```bash
+# chmod ug+w /dev/LED
+```
+
+### 5. 디바이스 파일에 입출력하는 응용프로그램 작성 및 테스트
+
+디바이스 파일에 입출력하는 응용프로그램을 작성하고, 테스트한다.
+
+커널 영역을 침범하는 파일이기 때문에 작성에 유의해야 한다.
+
+## 25.4 디바이스 드라이버 골격
+
+디바이스 드라이버의 골격은 아래와 같다.
+
+![image-20201028142247092](https://user-images.githubusercontent.com/58545240/97408684-ca252c80-193f-11eb-8047-c30f48b61892.png)
