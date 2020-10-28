@@ -2514,7 +2514,7 @@ HOST_GETTEXT, HOST-LIBXML-PARSER-PERL
 이제 위에서 말한 패키지들을 추가해보자.
 
 ```bash
-BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_ORTP
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_ORTP, BR2_PACKAGE_E2FSPROGS
 ```
 
 역시나 configure: error: Your intltool is too old. You need intltool 0.40 or later.에러가 뜬다.
@@ -2819,7 +2819,7 @@ sudo modprobe 88x2bu
 
 패스워드가 있다면 패스워드 입력 후 연결하면 잘 연결된다.
 
-아직까지는 사용하면서 인l터넷이 끊겨지는 둥 하는 불편함은 없었다.
+아직까지는 사용하면서 인터넷이 끊겨지는 둥 하는 불편함은 없었다.
 
 ### 4. 무선랜 인터페이스 확인
 
@@ -2827,7 +2827,7 @@ sudo modprobe 88x2bu
 $ iw dev
 ```
 
-![image-20201016134935514](images/96220627-0661a000-0fc4-11eb-83eb-e67164f6519b.png)
+![image-20201016134935514](images/97410229-2426f180-1942-11eb-855a-01726842be50.png)
 
 명령어 실행 결과, 무선랜 카드 인터페이스 이름은  wlx88366cf619d8 으로 확인되고 있습니다. 앞으로 이 인터페이스 이름을 이용하여 설정에 사용되게 됩니다.
 
@@ -2839,7 +2839,7 @@ $ iw dev
 sudo ip link show wlx88366cf619d8
 ```
 
-![image-20201016135046682](images/96220633-082b6380-0fc4-11eb-9f2d-b8edbf1a6f35.png)
+![image-20201016135046682](images/97410161-0e193100-1942-11eb-9d72-4ebda3ddb66d.png)
 
 현재 무선랜 카드가 활성화 되어있지 않으므로, 다음 명령어를 사용하여 무선랜 카드를 활성화한다.
 
@@ -2857,7 +2857,7 @@ sudo ip link set wlx88366cf619d8 up
 iw wlx88366cf619d8 link
 ```
 
-![image-20201016135322928](images/96220635-095c9080-0fc4-11eb-86b3-15383de2ad09.png)
+![image-20201016135322928](images/97410199-196c5c80-1942-11eb-80d3-d44ff5345e8f.png)
 
 현재 WIFI에 연결되어 있지 않다.
 
@@ -2909,7 +2909,7 @@ BSS 34:cc:28:05:f0:58(on wlx88366cf619d8)
 아래의 명령어를 실행 후, WiFi 패스워드를 입력하면 설정 파일이 생성되게 됩니다.
 
 ```bash
-sudo wpa_passphrase jjc > wpa_supplicant.conf
+sudo wpa_passphrase sw4t > wpa_supplicant.conf
 ```
 
 이 설정 파일을 이용하여 다음 명령어를 이용하여 Wi-Fi에 접속하면 된다.
@@ -2918,7 +2918,7 @@ sudo wpa_passphrase jjc > wpa_supplicant.conf
 sudo wpa_supplicant -B -i wlx88366cf619d8 -c wpa_supplicant.conf
 ```
 
-![image-20201016153618739](images/96221325-5d1ba980-0fc5-11eb-8540-0abf9d10fd4d.png)
+![image-20201016153618739](images/97410425-618b7f00-1942-11eb-971d-dd7d7f4aaa7d.png)
 
 위의 명령어에서 사용된 옵션의 의미는 다음과 같습니다.
 
@@ -2942,7 +2942,6 @@ sudo iw wlx88366cf619d8 link
 
 ```bash
 sudo dhclient wlx88366cf619d8
-sudo dhcpcd wlx88366cf619d8 &
 ```
 
 위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
@@ -3265,4 +3264,45 @@ sudo apt-get purge --auto-remove libqt4-dev
 sudo chmod +x qt-opensource-linux-x64-5.14.2.run
 ./qt-opensource-linux-x64-5.14.2.run # putty말고 terminal에서 진행
 ```
+
+- 20/10/28
+
+에러 디버깅을 위해
+
+```bash
+# linphone-desktop/linphone-app/src/components/file/FileDownloader.cpp
+if(QTest::qWaitFor([&]() {return isOver;}, DefaultTimeout))
+를
+if(QTest::qWait(DefaultTimeout))
+로 변경한다.
+
+# linphone-desktop/linphone-app/src/components/core/CoreManager.cpp
+QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
+를
+QTest::qWait(10000);
+로 변경한다.
+
+cmake --build . --target install --parallel 10 --config RelWithDebInfo
+```
+
+FileDownloader.cpp
+
+```bash
+#include <QTest>
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/Utils.hpp"
+
+#include "FileDownloader.hpp"
+#include </~/Qt5.14.2/5.14.2/android/include/QtCore/qtestsupport_core.h>
+```
+
+
+
+++ 주임님 confirm : 이거는 PC용으로 하기 위해 만든거라 단말에 올리는 것은 무리가 있을 것.
+
+**고로, dummy로 올린 alsa-driver 내에서 파일로 read/write를 할 수 있게 끔 하자!(라이브러리를 이용하던지 등등...)**
+
+
 
