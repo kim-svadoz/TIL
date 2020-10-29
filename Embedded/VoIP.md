@@ -2514,7 +2514,7 @@ HOST_GETTEXT, HOST-LIBXML-PARSER-PERL
 이제 위에서 말한 패키지들을 추가해보자.
 
 ```bash
-BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, BR2_PACKAGE_ORTP, BR2_PACKAGE_E2FSPROGS
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, //BR2_PACKAGE_ORTP, //BR2_PACKAGE_E2FSPROGS, //BR2_PACKAGE_GETTEXT_TOOLS, //BR2_PACKAGE_MEDIASTREAMER
 ```
 
 역시나 configure: error: Your intltool is too old. You need intltool 0.40 or later.에러가 뜬다.
@@ -2779,174 +2779,6 @@ alsaconf, aconnect, alsaloop, amixer, aplay/arecord, aseqdump, speaker-test
 패키지만으로 명령어가 올라오지않는다... 아무래도 커널모듈을 먼저 포팅해야 할거 같다.
 
 참고 : https://m.blog.naver.com/PostView.nhn?blogId=jjong_w&logNo=221099378860&proxyReferer=https:%2F%2Fwww.google.com%2F
-
-- 20/10/16
-
-## UBUNTU에 WIFI 연결하기
-
-> LINUX 터미널이나 서버 모드에서 Wi-Fi 연결하는 방법이다.
->
-> Ubuntu18.04에서 iptimeA3000UA를 설치할 것이다.
-
-### 1. USB 연결
-
-제품의 USB단자를 PC에 연결한다.
-
-### 2. 드라이버 설치
-
-Windows환경에서는 iptime 공식홈페이지에 이 제품에 제공되는 드라이버가 있어서 바로 설치하기만 하면 된다.
-
-하지만 여기서는 리눅스 전용 드라이버를 제공하지 않는다.
-
-대신 별도로 `Realtek 88 12BU chipset`을 설치하면 된다.
-
-터미널로 들어가서 다음 명령을 실행시켜준다.
-
-- **드라이버 설치명령**
-
-```bash
-sudo apt update 
-sudo apt install dkms bc git 
-git clone https://github.com/cilynx/rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959 
-sudo dkms add ./rtl88x2BU_WiFi_linux_v5.3.1_27678.20180430_COEX20180427-5959 
-sudo dkms install -m rtl88x2bu -v 5.3.1 
-sudo modprobe 88x2bu
-```
-
-### 3. WIFI 연결
-
-설치가 끝나면 오른쪽 상단에 무선LAN 아이콘(와이파이 모양)이 뜬다.
-
-패스워드가 있다면 패스워드 입력 후 연결하면 잘 연결된다.
-
-아직까지는 사용하면서 인터넷이 끊겨지는 둥 하는 불편함은 없었다.
-
-### 4. 무선랜 인터페이스 확인
-
-```bash
-$ iw dev
-```
-
-![image-20201016134935514](images/97410229-2426f180-1942-11eb-855a-01726842be50.png)
-
-명령어 실행 결과, 무선랜 카드 인터페이스 이름은  wlx88366cf619d8 으로 확인되고 있습니다. 앞으로 이 인터페이스 이름을 이용하여 설정에 사용되게 됩니다.
-
-### 5. 무선랜 인터페이스 활성화
-
-아래의 명령어로 인터페이스를 확인 한다.
-
-```bash
-sudo ip link show wlx88366cf619d8
-```
-
-![image-20201016135046682](images/97410161-0e193100-1942-11eb-9d72-4ebda3ddb66d.png)
-
-현재 무선랜 카드가 활성화 되어있지 않으므로, 다음 명령어를 사용하여 무선랜 카드를 활성화한다.
-
-```bash
-sudo ip link set wlx88366cf619d8 up
-```
-
-그리고 다시 무선랜 카드 정보를 확인하면, 활성화된 무선랜 카드 정보를 확인할 수 있다.
-
-### 6. 연결상태 확인
-
-다음 명령어를 사용하여, 현재 무선랜 카드의 연결상태를 확인한다.
-
-```bash
-iw wlx88366cf619d8 link
-```
-
-![image-20201016135322928](images/97410199-196c5c80-1942-11eb-80d3-d44ff5345e8f.png)
-
-현재 WIFI에 연결되어 있지 않다.
-
-### 7. WIFI 스캔
-
-다음 명령어를 사용하여 WiFi 정보를 스캔합니다. 스캔 후 나타나는 WiFi 중에서 비밀번호가 없는 WiFi 와 WPA/WPA2 암호화 방식을 사용하는 WiFi에 대해서 나눠서 설명드리도록 하겠습니다.
-
-#### 공개된 WiFi 일 경우
-
-공개된 WiFi 일 경우 아래와 같은 명령어를 사용하여, SSID를 확인 한 다음 바로 WiFi에 연결 할 수 있습니다.
-
-아래의 명령어는 iptime 이라는 WiFi에 접속하는 명령어 입니다. 그 다음 연결접속 정보를 확인 후 IP를 할당 받으면 됩니다.
-
-```bash
-sudo iw wlx88366cf619d8 scan
-sudo iw dev wlx88366cf619d8 connect iptime
-```
-
-#### 비공개된 WiFi 일 경우 (WPA/WPA2)
-
-WPA/WPA2 암호화 방식을 사용하는 WiFi 정보입니다. 네트워크를 스캔하면 다음과 비슷한 결과가 나타납니다.
-
-```bash
-$ sudo iw wlx88366cf619d8 scan
-// 생략
-BSS 34:cc:28:05:f0:58(on wlx88366cf619d8)
-	TSF: 175628935496 usec (2d, 00:47:08)
-	freq: 2432
-	beacon interval: 100 TUs
-	capability: ESS Privacy ShortSlotTime (0x0411)
-	signal: -69.00 dBm
-	last seen: 800 ms ago
-	Information elements from Probe Response frame:
-	SSID: sw4t
-	WPA:	 * Version: 1
-		 * Group cipher: TKIP
-		 * Pairwise ciphers: TKIP CCMP
-		 * Authentication suites: PSK
-	RSN:	 * Version: 1
-		 * Group cipher: TKIP
-		 * Pairwise ciphers: TKIP CCMP
-		 * Authentication suites: PSK
-		 * Capabilities: 1-PTKSA-RC 1-GTKSA-RC (0x0000)
-// 생략
-```
-
-위의 스캔된 정보에서 가장 중요한 내용이 SSID 와 암호화 프로토콜입니다. RSN 방식이 WPA2 를 나타냅니다. WiFi의 SSID 이름이 sw4t일 경우 설정 후 접속하는 방법입니다.
-
-아래의 명령어를 실행 후, WiFi 패스워드를 입력하면 설정 파일이 생성되게 됩니다.
-
-```bash
-sudo wpa_passphrase sw4t > wpa_supplicant.conf
-```
-
-이 설정 파일을 이용하여 다음 명령어를 이용하여 Wi-Fi에 접속하면 된다.
-
-```bash
-sudo wpa_supplicant -B -i wlx88366cf619d8 -c wpa_supplicant.conf
-```
-
-![image-20201016153618739](images/97410425-618b7f00-1942-11eb-971d-dd7d7f4aaa7d.png)
-
-위의 명령어에서 사용된 옵션의 의미는 다음과 같습니다.
-
-- **-B** : 백그라운드 실행
-- **-i wlx88366cf619d8**: 무선랜 인터페이스 이름
-- **-c wpa_supplicant.conf** : WiFi 설정 파일 경로
-
-### 8. WIFI 연결 정보 확인
-
-Wifi에 접속 후 연결 정보를 확인한다.
-
-```bash
-sudo iw wlx88366cf619d8 link
-```
-
-명령어 실행 결과 SSID가 출력되며, 연결정보가 나타난다.
-
-### 9. DHCP 주소 할당
-
-성공적으로 WiFi에 접속되면, 아래의 명령어로 IP 주소를 할당 받는다.
-
-```bash
-sudo dhclient wlx88366cf619d8
-```
-
-위의 명령어 실행결과, 에러 없이 IP 주소가 할당되었을 경우 WIFI 연결이 성공적으로 이뤄진 것이다.
-
-
 
 - 20/10/19
 
@@ -3306,3 +3138,111 @@ FileDownloader.cpp
 
 
 
+**새로 시작한 machine에서 h22_ostrich_defconfig에 새로 추가한 dependencies =>**
+
+```bash
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_XORG7, BR2_PACKAGE_LIBV4L, BR2_PACKAGE_GETTEXT, BR2_INSTALL_LIBSTDCPP, BR2_TOOLCAHIN_HAS_THREADS, BR2_USE_MMU, //BR2_PACKAGE_ORTP, //BR2_PACKAGE_E2FSPROGS, //BR2_PACKAGE_GETTEXT_TOOLS, //BR2_PACKAGE_MEDIASTREAMER
+```
+
+
+
+- 20/10/29
+
+으아... e2fsprogs 에러는 004file.patch를 해당 폴더에 넣어야 한다... 이런걸 까먹다니..
+
+이제 sound driver를 dummy에 붙여야 한다.
+
+OSTRICH가 여전히 안되서 EOS(quantum-4k)에서 붙여보자.
+
+1. `package` 추가
+
+```bash
+BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_SPEEX, BR2_PACKAGE_ALSA_UTILS, BR2_PACKAGE_LIBV4L
+```
+
+2. `linphone.mk` dependencies 주석
+
+=> **Success**
+
+**h22/amabalink_sdk_4_9/buildroot/package/Config.in**
+
+```bash
+# 추가하기
+menu "Audio and video applications"
+        source "package/voip/Config.in"
+```
+
+**h22/amabalink_sdk_4_9/buildroot/package/voip/Config.in**
+
+```bash
+config BR2_PACKAGE_VOIP_KERNEL_MODULE
+        bool "voip_kernel_module"
+        default y
+        depends on BR2_LINUX_KERNEL
+        help
+                VoIP Linux Kernel Module Cheat.
+```
+
+**h22/ambalink_sdk_4_9/buildroot/package/voip/voip.mk**
+
+```bash
+#####################################################
+#
+# VOIP
+#
+#####################################################
+
+VOIP_KERNEL_MODULE_VERSION = 1.0
+VOIP_KERNEL_MODULE_SITE = $(BR2_EXTERNAL_VOIP_KERNEL_MODULE_PATH)
+VOIP_KERNEL_MODULE_STIE_METHOD = local
+$(eval $(kernel-module))
+$(eval $(generic-package))	
+```
+
+Makefile
+
+```bash
+obj-m += $(addsuffix .o, $(notdir $(basename $(wildcard $(BR2_EXTERNAL_VOIP_KERNEL_MODULE_PATH)/*.c))))
+ccflags-y := -DDEBUG -g -std=gnu99 -Wno-declaration-after-statement
+```
+
+voip.c
+
+```bash
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+MODULE_LICENSE("GPL");
+
+static int myinit(void){
+        printk(KERN_INFO "hello init\n");
+        return 0;
+}
+
+static void myexit(void){
+        printk(KERN_INFO "hello exit\n");
+}
+
+module_init(myinit);
+module_exit(myexit);
+```
+
+USAGE
+
+```bash
+cd buildroot
+make BR2_VOIP="$(pwd)/package/voip" qemu_x86_64_defconfig
+echo 'BR2_PACKAGE_VOIP=y' >> .config
+make BR2_JLEVEL="$(($(nproc) -2))" all
+qemu-system-x86_64 -M pc-kernel output/images/bzImage -drive file=output/images/rootfs.ext2,if=virtio,format=raw -append root=/dev/vda -get nic,modle=virtio -net user
+```
+
+QEMU opens up, then run
+
+```bash
+root
+modprobe voip
+modprobe -r voip
+```
+
+https://git.kernel.org/에서 추가할 Kernel SITE를 확인하자.
