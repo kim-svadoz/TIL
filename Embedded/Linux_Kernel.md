@@ -1740,3 +1740,74 @@ res = register_netdev();	// network driver
 디바이스 드라이버의 골격은 아래와 같다.
 
 ![image-20201028142247092](https://user-images.githubusercontent.com/58545240/97408684-ca252c80-193f-11eb-8047-c30f48b61892.png)
+
+# **26. 커널에 모듈 추가하기**
+
+> **Kconfig**
+>
+> => `Kernel`에 새로운 장치를 추가하고, 해당하는 모듈을 추가하기 위해서는 먼저 **Kconfig**라는 파일을 알아야한다~
+
+**Kconfig**를 정리하자면
+
+1. Tree구주로 된 Configuration option들의 집합으로 자신만의 종속성을 가지고 있음
+2. Child Entry는 Parent Entry가 선택되어 볼 수 있게 되었을 때만 보임
+3. Menu entry들은 각각의 config option을 정의하고 있음.
+4. 각각의 config option들은 자신만의 type을 가지며, **tristate, bool** type이 있음
+   - `tristate` : **`<*> <M> <>`**
+   - `bool` : **<*> <>**
+5. 이 type에 따라 어떤 선택을 하느냐에 따라 Kernel에 해당 모듈을 포함하는 여부가 결정된다.( 보통 `make menuconfig`에서 선택한다.)
+6. 사용자에 의해 값이 설정되지 않으면 `default`값이 config option에 설정된다.
+
+*아래는 한 폴더의 sound/drivers/Kconfig 파일의 일부이다.*
+
+![image-20201030162612401](https://user-images.githubusercontent.com/58545240/97673544-4bf79000-1acf-11eb-80c7-a950d0b875a1.png)
+
+- 모듈을 선택할 때 사용하지 않는 기능을 `<*>`로 선택하면 빌드되어 나오는 이미지(Kernel을 full build할 때 나오는 zImage)가 너무 커지며, 필요한 기능을 `< >`으로 선택하면 kernel이 정상동작 하지 않을 수 있으니 주의해서 선택해야 한다.
+- `<M>`으로 선택할 경우 Kernel 빌드시 `***.ko` 파일을 생성하며, Kernel이 부팅하며 초기화 작업을 할 때 **insmod**로 등록하여 사용한다. 해당 모듈을 내릴 때는 **rmmod**를 사용한다.
+
+## Module 추가하기
+
+> **Module**을 추가하기 위해서는 **Makefile**과 **Kconfig**를 수정해야 한다.
+>
+> 여기서는 그중 그나마 만만한 Char Device Driver 쪽에 추가하기로 한다.
+
+1. **Makefile**
+
+   - 먼저 `[Kernel] / drivers / char / Makefile`을 연다.
+   - 모듈이 빌드되도록 내용을 추가한다.
+
+   ![image-20201030163247119](https://user-images.githubusercontent.com/58545240/97673552-5154da80-1acf-11eb-9e2d-fefcb1006371.png)
+
+   - CONFIG_MY_MODULE이라는 이름이 중요한데, 이 이름을 Kconfig 파일과 맞춰야 하기 때문이다.
+
+2. **Kconfig**
+
+   - `[Kernel] / drivers / char / Kconfig` 파일을 연다
+   - Config에 추가되도록 아래 내용을 추가한다.
+
+   ![image-20201030163355759](https://user-images.githubusercontent.com/58545240/97673576-59147f00-1acf-11eb-8db2-bd1777d644b6.png)
+
+   - **DEPEND_ON_ME**를 선택해야 **MY_MODULE**이 보인다.
+   - **MY_MODULE**은 Makefile의 **CONFIG_MY_MODULE**과 CONFIG_ 뒷 부분이 일치해야 한다.
+
+3. **`$ make menuconfig`**
+
+   - **`Device Drivers > Character devices`**로 들어간다.
+   - 아래 그림에서처럼 **Depend on test **항목이 추가됨을 볼 수 있다.
+
+   ![image-20201030163536757](https://user-images.githubusercontent.com/58545240/97673592-603b8d00-1acf-11eb-9aed-d30e37455f12.png)
+
+   - **Depend on test**를 선택한다.
+
+   ![image-20201030163557669](https://user-images.githubusercontent.com/58545240/97673600-6598d780-1acf-11eb-92d4-6a9c8633e333.png)
+
+   - **Add My Module**이 추가 된 것을 볼 수 있다.
+
+   *참고로 menuconfig에서 `[]`형태는 `bool` type이고 `<>`형태는 `tristate` type이다.
+
+   - Kernel이 빌드된 후에 depends on이 사용된 항목들은 **`[kernel] / include / generated / autoconfig.h`**에 define값이 만들어 진다.
+
+   ![image-20201030163720768](https://user-images.githubusercontent.com/58545240/97673617-6d587c00-1acf-11eb-9166-0d25f87c44b4.png)
+
+   - 위의 그림처럼 **CONFIG_MY_MODULE**이 포함됨을 확인할 수 있다.
+
