@@ -3231,10 +3231,15 @@ USAGE
 
 ```bash
 cd buildroot
+
 make BR2_VOIP="$(pwd)/package/voip" qemu_x86_64_defconfig
+
 echo 'BR2_PACKAGE_VOIP=y' >> .config
+# 동시에 두개의 컴파일 프로세스가 시작으로 CPU가 둘 이상인 경우 컴파일 시간이 빨라짐
+# 동시에 작업할 명령 수 지정
 make BR2_JLEVEL="$(($(nproc) -2))" all
-qemu-system-x86_64 -M pc-kernel output/images/bzImage -drive file=output/images/rootfs.ext2,if=virtio,format=raw -append root=/dev/vda -get nic,modle=virtio -net user
+
+qemu-system-x86_64 -M pc-kernel output/images/bzImage -drive file=output/images/rootfs.ext2,if=virtio,format=raw -append root=/dev/vda -net nic,modle=virtio -net user
 ```
 
 QEMU opens up, then run
@@ -3246,3 +3251,62 @@ modprobe -r voip
 ```
 
 https://git.kernel.org/에서 추가할 Kernel SITE를 확인하자.
+
+
+
+- 20/10/30
+
+1. 전체 clean build
+
+2. output.oem/h22_defconfig/`make linux-menuconfig`
+
+   - 원하는 feature 추가하기( ex. dummy, loopback, midi, ...)
+
+3. make -j8
+
+4. "어디선가" `.config` 생성되면 거기서 필요한 CONFIG를 확인( ex. CONFIG_SND_DUMMY )
+
+   *or AMABALINK_SDK_4_9/linux/sound/Kconfig에서 확인*
+
+   *+ AMABALINK_SDK_4_9/linux/sound/drivers/Kconfig에서 확인*
+
+   
+
+5. 실제로 올리기 위해선 linux/arch/arm64/configs/ambarella_h22_eos_ambalink_defconfig 에 `=y`로 추가하기
+
+++ buildroot/pacakge/linphone.mk 에 디펜던시 설정
+
+```bash
+#...................... linux kernel
+linphonec
+soundcardlist
+0: ALSA: default device
+1: ALSA: Dummy
+2: ALSA: Loopback 
+```
+
+단말 리눅스 확인해보니 modules.builtin 에는 snd-dummy와 snd-aloop가 올라가 있지만 modules.dep에는 올라가지 않았다. 어떻게 해야 올릴 수 있을까?
+
+그래서 linux-menuconfig에서 dummy와 aloop 부분을 `<M>` 으로 모듈화해보았다.
+
+=> 변함없음.
+
+```bash
+linphonec
+proxy add
+sip:sip.linphone.org
+sip:ksh0915@sip.linphone.org
+yes
+3600
+no (route)
+yes
+Password for ksh0915 on "sip.linphone.org": a2011287!!
+Registration on <sip:sip.linphone.org> successful.
+
+call dhkdghehfdl@10.10.81.102:5060 or
+call dhkdghehfd@sip:linphone.org:59750
+```
+
+
+
+++git에서 비슷한 프로젝트를 발견해서 `amba/linux/sound/drivers/`에 추가로 **`.c`파일과 함께 Kconfig, Makefile도 수정해주었다.**
