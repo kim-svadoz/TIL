@@ -1,5 +1,7 @@
 
 
+
+
 # **Embedded_Basic**
 
 # **0. 무엇을 배워야 임베디드 리눅스 개발을 잘할 수 있을까?**
@@ -560,6 +562,44 @@ Linux에서는 gcc, glibc, binutils (오픈 소스) / Windows에서는 Visual St
   3. 기술 지원이 반드시 필요한 경우에는 가급적 상용 Tool-Chain 을 사용하는 것이 좋다.
      - 공개용 Tool-Chain의 장점은 별도의 구매 비용이 발생하지 않는다. 그로 인해 별도의 기술 지원 역시 받을 수 없다.
   4. 특별한 기준이 없을 때는 가급적 사용자가 많이 선택한 Tool-Chain을 사용하라.
+
+# **6. 임베디드 리눅스 구성요소(BSP)**
+
+---
+
+## - BSP란?
+
+BSP(Board Support Package)란 말은 본래 RTOS에서 나온 용어로, "보드를 떠받치는(지원하는)" 소프트웨어 패키지란 뜻으로, "보드(하드웨어)를 동작 시키기 위해 필요한 (임베디드) 소프트웨어 묶음" 이다.
+
+![image-20201030130709524](https://user-images.githubusercontent.com/58545240/97673384-0d61d580-1acf-11eb-9e47-50b60e743d5e.png)
+
+위 그림은 Firmware와 RTOS로 구동되는 시스템과 Non-RTOS로 구동되는 시스템의 차이를 보여주고 있다.
+
+WindRiver 사의 `VxWorks`와 같은 일부 상용 RTOS를 제외하고 대부분의 RTOS와 자체 Firmware에는 Non-RTOS와 같은 파일 시스템(File System)이 없다. 즉 소스들이 아무리 많다 하더라도 결국 컴파일이 끝나면 최종적으로 (CPU에 종속적인) 바이널 실행 코드 하나만 생성된다.
+
+따라서 Firmware와 RTOS의 BSP는 **제품의 기능**이라 할 수 있는 코드(이를 "User Application"라고 표현했다)와 그러한 제품의 기능을 실제 구현하기 위해 **하드웨어를 직접적으로 제어**하는 코드("Firmware"라고 표현)가 하나의 파일로 묶여 **`BSP`**를 구성하고 있다.
+
+그러나 Linux나 Windows CE와 같은 Non-RTOS들은 3가지 실행 코드들로 구성된다.
+
+![image-20201030130946738](https://user-images.githubusercontent.com/58545240/97673390-12bf2000-1acf-11eb-8853-02ace7cbb94d.png)
+
+![image-20201030130953897](https://user-images.githubusercontent.com/58545240/97673402-1783d400-1acf-11eb-93bd-22831baea739.png)
+
+## - 임베디드 리눅스 BSP
+
+Embedded Linx BSP에서 가장 중요한 부분이라면 당연히 OS 부분인 **Linux Kernel**이다.
+
+Linux는 오픈 소스로 진행되는 공개 OS이므로, Linux란 OS의 부트 로더 인터페이스와 파일 시스템 인터페이스 규격만 알고 있다면, 부트 로더와 파일 시스템을 개발할 수도 있다는 뜻이다.
+
+ARM 프로세서 기반의 Embedded LInux에서 사용 가능한 Boot Loader는 크게 세 가지 종류이다.
+
+![image-20201030131111734](https://user-images.githubusercontent.com/58545240/97673424-1c488800-1acf-11eb-8d0e-a1e08e803b44.png)
+
+**Embedded Linux File System 종류별 비교**
+
+![image-20201030131133493](https://user-images.githubusercontent.com/58545240/97673444-210d3c00-1acf-11eb-8d67-ee4c73048685.png)
+
+
 
 # **메모리**
 
