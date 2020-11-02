@@ -3309,4 +3309,32 @@ call dhkdghehfd@sip:linphone.org:59750
 
 
 
-++git에서 비슷한 프로젝트를 발견해서 `amba/linux/sound/drivers/`에 추가로 **`.c`파일과 함께 Kconfig, Makefile도 수정해주었다.**
+++git에서 비슷한 프로젝트를 발견해서 `amba/linux/sound/drivers/`에 추가로 **`voip.c`파일과 함께 Kconfig, Makefile도 수정해주었다.**
+
+- 20/11/02
+
+## VOIP.ko 생성하기
+
+> ALSA_SOUND_GEN
+
+```bash
+++
+#include <linux/hrtimer.h>
+=> 암바렐라 리눅스의 커널 버전이 낮아서 실패함.
+
+#include <linux/timer.h> 	// include/linux/timer.h // latest.ver
+#include <linux/list.h>		// include/linux/list.h // latest.ver
+# change <linux/page_writeback.c>
+# change <workqueue.c>
+
+#include <linux/sched/isolation.h>	// new file
+#include <linux/sched/signal.h>		// new file
+#include <linux/signal_type.h>		// new file
+
+전부다 롤백..
+```
+
+
+
+**암바링크의 커널 버전은 `4.9.76`**
+
