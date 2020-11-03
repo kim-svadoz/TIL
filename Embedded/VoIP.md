@@ -3304,7 +3304,7 @@ Password for ksh0915 on "sip.linphone.org": a2011287!!
 Registration on <sip:sip.linphone.org> successful.
 
 call dhkdghehfdl@10.10.81.102:5060 or
-call dhkdghehfd@sip:linphone.org:59750
+call dhkdghehfd@sip:linphone.org:5060
 ```
 
 
@@ -3337,4 +3337,134 @@ call dhkdghehfd@sip:linphone.org:59750
 
 
 **암바링크의 커널 버전은 `4.9.76`**
+
+- 20/11/03
+
+voip.c로 커널 모듈을 생성하고 그 안에서 platform_device driver를 생성
+
+기존에 빌트인으로 추가했던 aloop, dummy, voip를 모듈로 변환 
+
+**`linux/arch/arm64/configs/ambarella_h22_eos_ambalink_defconfig`**
+
+![image-20201103165033255](images/image-20201103165033255.png)
+
+=> 이렇게 해주니 단말에서 `aloop, dummy, voip` **`modprobe`**가 가능했고, lsmod로 확인할 수 있었다.
+
+추가로 `.c` 파일에 **printk(KERN_ERR, " COMMENT ")** 시 단말로그를 확인할 수 있었다.
+
+하지만 아직 린폰 콜링은 안됨.
+
+```bash
+# linux-kernel
+$ modprobe snd-voip
+[   65.177374] Sound Generator platform device registered
+[   65.183252] snd_soundgen snd_soundgen.0: sound gen driver probed
+
+[  140.787668] Sound Generator platform device registered
+[  140.793831] snd_soundgen snd_soundgen.0: sound gen driver probed
+[  140.799972] snd_soundgen snd_soundgen.0: cannot find the slot for index 0 (range 0-1), error: -16
+[  140.808897] snd_soundgen snd_soundgen.0: Failed to create new soundcard
+[  140.815586] snd_soundgen: probe of snd_soundgen.0 failed with error -16
+
+$ modprobe snd-dummy
+[   53.099371] alsa_card_dummy_init
+[   53.102933] alloc_fake_buffer
+[   53.106342] snd_dummy_probe
+[   53.109228] snd_card_dummy_pcm
+[   53.113240] snd_card_dummy_new_mixer
+
+$ linphonec
+[   84.189798] dummy_pcm_open
+[   84.198723] dummy_pcm_close
+[   84.203559] dummy_pcm_open
+[   84.206816] dummy_pcm_close
+
+$ lsmod
+Module                  Size  Used by    Tainted: G
+snd_dummy              10896  0
+snd_pcm                80369  1 snd_dummy
+snd_timer              19102  1 snd_pcm
+wlan                 5175094  0
+snd_voip                1600  0
+
+$ modprobe snd-aloop
+```
+
+```bash
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: Loopback [Loopback], device 0: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+card 0: Loopback [Loopback], device 1: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+$ arecord -l
+**** List of CAPTURE Hardware Devices ****
+card 0: Loopback [Loopback], device 0: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+card 0: Loopback [Loopback], device 1: Loopback PCM [Loopback PCM]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+
+$ arecord -D hw:0,1,4 -f S16_LE -c 2 -r 48000 recorded.wav
+Recording WAVE 'recorded.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo
+recorded.wav: Read-only file system
+
+$ aplay -D hw:0,0,4 audio.wav
+
+$ aplay recorded.wav
+
+$ arecord -f S16_LE -c 2 -r 48000 audio.wav
+
+# 이건 된다!!?
+$ alsaloop -C hw :0,1,4 -P hw:0,0
+$ aplay -D hw:0,0,4 audio.wav
+```
+
+
+
+## dtb
+
+> Device Tree Blob
+
+**linux/arch/arm64/boot/dts/amabarella/ `~~.dtsi`** 에 가면 dtb를 설정할 수 있다.
+
+- `compatible` :  platform driver 's name
+
+- `status` :
+
+  - ok : 해당 드라이버를 LINUX에서 사용하겠다
+  - disabled : 해당 드라이버를 LINUX에서 사용하지 않겠다.
+
+  *등등...*
 
