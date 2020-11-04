@@ -179,13 +179,15 @@
 
 ### 5. [Linux_Kernel](./Embedded/Linux_Kernel.md)
 
-### 6. [Nandflash](./Embedded/Nandflash.md)
+### 6. [Network](./Embedded/Network.md)
 
-### 7. [I2C](./Embedded/I2C.md)
+### 7. [Nandflash](./Embedded/Nandflash.md)
 
-### 8. [CAN](./Embedded/CAN.md)
+### 8. [I2C](./Embedded/I2C.md)
 
-### 9. [VoIP](./Embedded/VoIP.md)
+### 9. [CAN](./Embedded/CAN.md)
+
+### 10. [VoIP](./Embedded/VoIP.md)
 
 ---
 
