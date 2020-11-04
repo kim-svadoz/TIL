@@ -908,562 +908,6 @@ Phone A와 Phone B는 각각 Switch에 UTP케이블로 연결이 되어 있고 P
 
 *IP PBX는 단순한 PBX 대용이 아니다. 새로운 통신의 기반이고, 플랫폼이다!*
 
-# **OSI 7계층**
-
----
-
-> 네트워크에서 통신이 일어나는 과정을 7단계로 나눈 것.
-
-계층을 나눈 이유는 통신이 일어나는 과정을 단계별로 파악할 수 있기 때문이다.
-
-**흐름을 한눈에 알아보기 쉽고, 사람들이 이해하기 쉽고, 7단계 중 특정한 곳에 이상이 생기면 다른 단계의 장비 및 소프트웨어를 건들이지 않고도 이상이 생긴 단계만 고칠 수 있기 때문이다!**
-
-그럼 예를 들어서,
-
-```bash
-PC방에서 오버워치를 하는데 연결이 끊겼다. 어디에 문제가 있는지 확인해보자
-
-1. 모든 PC에 문제가 있다면
-라우터의 문제(3계층 네트워크 계층)이거나 광랜을 제공하는 회사의 회선문제(1계층 물리 계층)
-
-2. 한 PC만 문제가 있고 오버워치 소프트웨어에 문제가 있다면(7계층 어플리케이션 계층), 오버워치 소프트웨어에 문제가 없고 스위치게 문제가 있으면(2계층 데이터링크 계층)
-
-이런 식으로 판단하여 다른 계층에 있는 장비나 소프트웨어를 건들이지 않는 것이다.
-```
-
-## 1계층 - 물리계층
-
-> **Pysical Layer**
-
-이 계층에서는 주로 전기적, 기계적, 기능적인 특성을 이용해서 통신 케이블로 데이터를 전송하게 된다.
-
-이 계층에서 사용되는 통신 단위는 비트이며 이것은 1과 0으로 나타내어지는, 즉 전기적으로 ON, OFF 상태라고 생각하면 된다.
-
-이 계층에서는 단지 데이터를 전달만 할 뿐 전송하려는(또는 받으려는) **데이터가 무엇인지, 어떤 에러가 있는지 등에는 전혀 신경 쓰지 않는다.**
-
-단지 데이터 전기적인 신호로 변환해서 주고받는 기능만 할 뿐이다. 이 계층에 속하는 대표적인 장비는 **통신케이블, 리피터, 허브** 등이 있다.
-
-=> ***케이블, 리피터, 허브를 통해 데이터를 전송한다.***
-
-![96852152-c4d56700-1493-11eb-9356-ca602790e80d](images/96957492-be97c700-1535-11eb-8d4c-d9bdc438490a.png)
-
-## 2계층 - 데이터 링크계층
-
-> **DataLink Layer**
-
-물리 계층을 통해 송수신 되는 정보의 오류와 흐름을 관리하여 안전한 **정보의 전달을 수행**할 수 있도록 도와주는 역하을 한다.
-
-따라서 통신에서의 오류도 찾아주고 재전송도 하는 기능을 가지고 있는 것이다.
-
-이 계층에서는 **맥 주소를 가지고 통신**하게 된다.
-
-이 계층에서 전송되는 단위를 프레임이라고 하고, 대표적인 장비로는 **브릿지, 스위치** 등이 있다.(여기서 `MAC`주소를 사용한다)
-
-=> **브릿지나 스위치를 통해 맥주소를 가지고 물리계층에서 받은 정보를 전달함.**
-
-데이터 링크 계층(Data link layer)은 포인트 투 포인트(Point to Point) 간 신뢰성 있는 전송을 보장하기 위한 계층으로 `CRC`기반의 **오류 제어**와 **흐름제어**가 필요하다. 네트워크 위의 개체들 간 데이터를 전달하고, 물리 계층에서 발생할 수 있는 오류를 찾아 내고, 수정하는 데 필요한 기능적, 절차적 수단을 제공한다.
-
-주소 값은 물리적으로 할당 받는데 ,이는 네트워크 카드가 만들어질 때부터 맥 주소(MAC address)가 정해져 있다는 뜻이다.
-
-주소 체계는 계층이 없는 단일 구조이다. 데이터 링크 계층의 가장 잘 알려진 예는 **이더넷**이다.
-
-이 이외에도 `HDLC`나 `ADCCP` 같은 포인트 투 포인트(point-to-point) 프로토콜이나 패킷 스위칭 네트워크나 `LLC`, `ALOHA` 같은 근거리 네트워크용 프로토콜이 있다.
-
-네트워크 브릿지나 스위치 등이 이 계층에서 동작하며, 직접 이어진 곳에만 연결할 수 있다.
-
-=> ***프레임에 주소 부여(MAC - 물리적 주소), 에러검출/재전송/흐름제어***
-
-![96852160-c6069400-1493-11eb-90dd-82abc07bd622](images/96957510-cb1c1f80-1535-11eb-9e5e-33c552ac0c99.png)
-
-## 3계층 - 네트워크계층
-
-> **Network Layer**
-
-이 계층에서 가장 중요한 기능은 **데이터를 목적지까지 가장 안전하고 빠르게 전다랗는 기능(라우팅)**이다.
-
-여기에 사용되는 프로토콜의 종류도 다양하고, 라우팅하는 기술도 다양하다
-
-이 계층은 경로를 선택하고 주소를 정하고 경로에 따라 패킷을 전달해주는 것이 이 계층의 역할이다.
-
-이 계층의 대표적인 장비는 라우터이며, 요즘은 2계층의 장비 중 스위치라는 장비에 라우팅 기능을 장착한 Layer 3 스위치도 있다.(여기서 IP주소를 사용한다.)
-
-네트워크 계층(Network Layer)은 여러개의 노드를 거칠 때마다 경로를 찾아주는 역할을 하는 계층으로 다양한 길이의 데이터를 네트워크들을 통해 전달하고, 그 과정에서 전송 계층이 요구하는 서비스 품질(QoS)을 제공하기 위한 기능적, 절차적 수단을 제공한다.
-
-네트워크 계층은 라우팅, 흐름제어, 세그멘테이션(segmentation/desegmentation), 오류 제어, 인터네트워킹(Internetworking) 등을 수행한다.
-
-라우터가 이 계층에서 동작하고 이 계층에서 동작하는 스위치도 있다.
-
-데이터를 연결하는 다른 네트워크를 통해 전달함으로써 인터넷이 가능하게 만드는 계층이다.
-
-논리적인 주소 구조(IP), 곧 네트워크 관리자가 직접 주소를 할당하는 구조를 가지며 계층적(Hierarchical)이다.
-
-서브네트의 최상위 계층으로 경로를 설정하고, 청구 정보를 관리한다. 개방형 시스템들의 사이에서 네트워크 연결을 설정, 유지, 해제하는 기능을 부여하고, 전송 계층 사이에 네트워크 서비스 데이터 유닛(NSDU : Network Service Data Unit)을 교환하는 기능을 제공한다.
-
-=> ***주소부여(IP), 경로설정(Route)***
-
-### - IP 계층
-
-> TCP/IP 상에서 IP 계층이란 네트워크의 주소(IP 주소)를 정의하고 **IP패킷의 전달 및 라우팅을 담당하는 계층**
-
-OSI 7계층 모델의 관점에서 보면 IP계층은 네트워크 계층에 해당. 즉, 패킷을 목적지까지 전달하는 역할 및 그에 수반되는 기타 역할을 함
-
-- **IP 계층의 주요 역할**
-  - IP 계층에서는 그 하위 계층인 데이터 링크 계층의 하드웨어적인 특성에(즉, ATM 이든 Frame Relay든 상관없이) 관계없이 독립적인 역할을 수행
-- **IP 계층 상에 있는 주요 프로토콜**
-  - 패킷의 전달을 책임지는 IP
-  - 패킷 전달 에러의 보고 및 진단을 위한 ICMP
-  - 복잡한 네트워크에서 인터네트워킹을 위한 경로를 찾게해주는 라우팅 프로토콜
-
-### - IP 프로토콜
-
->  TCP/IP 기반의 인터넷 망을 통하여 데이터그럼의 전달을 담당하는 프로토콜
-
-- **주요 기능**
-
-  - IP 계층에서 IP 패킷의 라우팅 대상이 됨(Routing)
-  - IP 주소 지정(Addressing)
-
-- **주요 특징**
-
-  - '신뢰성(에러제어)' 및 '흐름 제어' 기능이 전혀 없음 -> **Best-Effort Service**
-
-    *신뢰성을 확보하려면 IP 계층 위의 TCP와 같은 상위 트랜스포트 계층에 의존*
-
-  - 비연결성 데이터그램 방식으로 전달되는 프로토콜 -> **Connectionless**
-
-  - 패킷의 완전한 전달(소실, 중복, 지연, 순서바뀜 등이 없게함)을 보장 않음 -> **Unreliable**
-
-  - IP 패킷 헤더 내 수신 및 발신 주소를 포함 -> **IPv4 헤더, IPv6 헤더, IP주소**
-
-  - IP 헤더 내 바이트 전달 순서 : 최상위 바이트 (MSB)를 먼저 보냄 -> Big-endian
-
-  - 경우에 따라 단편화가 필요하다
-
-  - TCP, UDP, ICMP, IGMP 등이 IP 데이타그램에 실려서 전송
-
-## 4계층 - 전송계층
-
-> **Transport Layer**
-
-통신을 활성화하기 위한 계층이다. 보통 TCP프로토콜을 이용하며, 포트를 열어서 응용프로그램들이 전송을 할 수 있게 한다.
-
-만약 데이터가 왔다면 4계층에서 해당 데이터를 하나로 합쳐서 5계층에 던져준다.
-
-**단대단 오류제어 및 흐름제어** 이 계층 까지는 물리적인 계층에 속한다.(TCP/UDP 프로토콜을 사용한다)
-
-전송계층(Transport layer)은 양 끝단(End to End)의 사용자들이 신뢰성있는 데이터를 주고 받을 수 있도록 해 주어, 상위 계층들이 데이터 전달의 유효성이나 효율성을 생각하지 않도록 해준다.
-
-시퀀스 넘버 기반의 오류 제어 방식을 사용한다.
-
-전송계층은 특정 연결의 유효성을 제어하고, 일부 프로토콜은 상태 개념이 있고(stateful), **연결 기반(connection oriented)**이다.
-
-이는 **전송 계층이 패킷들의 전송이 유효한지 확인하고 전송 실패한 패큿들을 다시 전송한다는 것**을 뜻한다.
-
-가장 잘 알려진 전송 계층의 예는 TCP이다.
-
-종단간(end-to-end) 통신을 다루는 최하위 계층으로 종단간 신뢰성 있고 효율적인 데이터를 전송하며, 기능은 **오류검출 및 복구와 흐름제어, 중복검사** 등을 수행한다.
-
-=> **패킷 생성(Assembly/Sequencing/Deassembly/Error detection/Request repeat/Flow control) 및 전송**
-
-### - TCP 프로토콜
-
-> Transmission Control Protocl
-
-OSI 계층 모델의 관점에서 전송 계층(4계층)에 해당
-
-- 양종당 호스트 내 프로세스 상호 간에 신뢰적인 연결지향성 서비스를 제공
-
-  -  IP의 비신뢰적인 최선형 서비스에다가 신뢰적인 연결지향성 서비스를 제공하게 됨
-
-    ***신뢰적인 전송을 보장함으로써, 어플리케이션 구현이 한층 쉬워지게 됨***
-
-1. **신뢰성 있음(Reliable)**
-
-   패킷 손실, 중복, 순서바뀜 등이 없도록 보장
-
-   TCP 하위 계층인 IP 계층의 신뢰성 없는 서비스에 대해 다방면으로 신뢰성을 제공
-
-2. **연결지향적(Connection-oriented)** -> **TCP 연결**
-
-   - 같은 전송계층의 UDP가 비연결성(connectionless)인 것과는 달리, TCP는 연결지향적 임
-   - 이 경우, 느슨한 연결(Loosly Connected)을 갖으므로 강한 연결을 의미하는 가상회선이라는 표현보다는 오히려 연결지향적이라고 말한다.
-   - 연결 관리를 위한 연결설정 및 연결해제가 필요 -> **TCP연결설정, TCP연결종료**
-   - 양단간 어플리케이션/프로세스는 TCP가 제공하는 연결성 회선을 통하여 서로 통신
-
-### - UDP 프로토콜
-
-> User Datagram Protocol
-
-전송 계층의 통신 프로토콜의 하나(TCP에 대비됨)
-
-- **신뢰성이 낮은 프로토콜**로써 완전성을 보증하지 않으나,
-- 가상회선을 굳이 확립할 필요가 없고 유연하며 효율적 응용의 데이터 전송에 사용
-
-1. **비연결성이고, 신뢰성이 없으며, 순서화되지 않은 Datagram 서비스 제공**
-
-   - 메시지가 제대로 도착했는지 확인하지 않음 (확인응답 없음)
-
-   - 수신된 메세지의 순서를 맞추지 않음 (순서제어 없음)
-
-   - 흐름제어를 위한 피드백을 제공하지 않음 (흐름제어 없음)
-
-   - 검사합을 제외한 특별한 오류 검출 및 제어 없음 (오류제어 거의 없음). 
-
-     *UDP를 사용하는 프로그램 쪽에서 오류제어 기능을 스스로 갖춰야함*
-
-   - 데이터그램 지향의 전송계층용 프로토콜(논리적인 가상회선 연결이 필요없음)
-
-     *비연결접속상태 하에서 통신*
-
-2. **실시간 응용 및 멀티태스킹 가능**
-
-   - 빠른 요청과 응답이 필요한 실시간 응용에 적합
-   - 여러 다수 지점에 전송 가능 (1:多)
-
-3. **헤더가 단순함**
-
-   - UDP는 TCP처럼 16비트의 포트 번호를 사용하나,
-
-   - 헤더는 고정크기의 8비트 (TCP는 20바이트) 만 사용
-
-     *즉, 헤더 처리에 많은 시간과 노력을 요하지 않음*
-
-## 5계층 - 세션계층
-
-> **Session Layer**
-
-**데이터가 통신하기 위한 논리적인 연결**을 말한다. 통신을 하기 위한 대문이라고 보면 된다.
-
-하지만 4계층에서도 연결을 맺고 종료할 수 있기 때문에 우리가 어느 계층에서 통신이 끊어졌나 판단하기에는 한계가 있다.
-
-그러므로 세션 계층은 4 계층과 무관하게 응용 프로그램 관점에서봐야 한다.
-
-세션 설정, 유지, 종료, 전송 중단시 복구 등의 기능이 있다.
-
-세션 계층(Session layer)은 양 끝단의 응용 프로세스가 통신을 관리하기 위한 방법을 제공한다.
-
-**동시 송수신 방식(duplex), 반이중 방식(half-duplex), 전이중 방식(Full Duplex)**의 통신과 함께, 체크 포인팅과 유휴, 종료, 다시 시작 과정 등을 수행한다.
-
-이 계층은 **TCP/IP 세션을 만들고 없애는 책임**을 진다.
-
-=> **통신하는 사용자들을 동기화하고 오류 복구 명령들을 일괄적으로 다룬다.**
-
-=> **통신을 하기 위한 세션을 확립/유지/중단 (운영체제가 해줌)**
-
-## 6계층 - 표현계층
-
-> **Presentation Layer**
-
-데이터 표현이 상이한 응용 프로세스의 독립성을 제공하고, 암호화 한다
-
-표현 계층은(Presentation Layer)은 코드 간의 번역을 담당하여 사용자 시스템에서 데이터의 형식상 차이를 다루는 부담을 응용 계층으로부터 덜어준다.
-
-**MIME 인코딩이나 암호화** 등의 동작이 이 계층에서 이루어진다.
-
-예를 들면, EBCDIC로 인코딩된 문서 파일을 ASCII로 인코딩된 파일로 바꿔 주는 것, 해당 데이터가 TEXT인지, 그림인지, GIF인지, JPG인지의 구분 등이 표현계층의 몫이다.
-
-=> **사용자의 명령어를 완성 및 결과 표현. 포장/압축/암호화**
-
-## 7계층 - 응용계층
-
-> **Application Layer**
-
-최종 목적지로서 HTTP, FTP, SMTP, POP3, IMAP, Telnet 등과 같은 프로토콜이 있다.
-
-해당 통신 패큿들은 방금 나열한 프로토콜에 의해 모두 처리되며 우리가 사용하는 브라우저나, 메일 프로그램은 프로토콜을 보다 쉽게 사용하게 해주는 응용프로그램이다.
-
-한마디로 모든 통신의 양 끝단은 HTTP와 같은 프로토콜이지 응용프로그램이 아니다.
-
-응용계층(Application Layer)은 응용 프로세스와 직접 관계하여 일반적인 **응용 서비스를 수행**한다.
-
-일반적인 응용서비스는 관련된 응용 프로세스들 사이의 전환을 제공한다.
-
-응용 서비스의 예로, 가상 터미널(예를 들어, 텔넷), "Job transfer and Manipulation protocol"(JTM, 표준 ISO/IEC 8832) 등이 있다.
-
-=> **네트워크 소프트웨어 UI부분, 사용자의 입출력(I/O) 부분**
-
-### - HTTP 프로토콜
-
-> HypterText Transfer Protocol
-
-웹 상에서 웹 서버 및 웹브라우저 상호 간의 데이터 전송을 위한 응용계층 프로토콜
-
-처음에는, WWW 상의 하이퍼텍스트형태의 문서를 전달하는 데 주로 이용
-
-현재는, 이미지, 비디오, 음성 등 거의 모든 형식의 데이터 전송 가능
-
-1. **요청 및 응답의 구조**
-   - 동작 형태가 클라이언트/서버 모델로 동작
-2. **메세지 교환 형태의 프로토콜**
-   - 클라이언트와 서버간에 'HTTP 메세지'를 주고받으며 통신(SMTP 전자메일 프로토콜과 유사)
-   - HTTP의 응답 및 요청 메세지 구성
-   - HTTP 메세지 내 헤더 항목들
-3. **트랜잭션 중심의 비연결성 프로토콜**
-   - 종단간 연결이 없음 (Connectionless)
-   - 이전의 상태를 유지하지 않음 (Stateless)
-4. **전송계층 프로토콜 및 사용 포트 번호**
-   - 전송계층 프로토콜 : TCP
-   - 사용 포트 번호 : 80번
-5. **http 표준**
-   - `HTTP 1.0` : RFC 1945 (~1997년)
-     - 유용한 초기 개념들 도입
-     - HTTP 헤더, HTTP 메서드, HTTP 응답 코드, 리다이렉트, 비지속 연결 등
-   - `HTTP 1.1` : RFC 2068 -> RFC 2616 -> RFC7230~7235 (1998년)
-     - HTTP 1.0으로부터 기능 향상
-     - HTTP 헤더 내 Host 필드를 필수 항목으로 함 (1개 IP 주소에 다수의 가상 호스팅 가능)
-     - HTTP 헤더 내 Accept 필드에 의한 컨텐츠 협상
-     - 잘 정의된 캐시 컨트롤
-     - 블록 단위 인코딩 전송
-     - 지속 연결 회선(**킵얼라이브 커넥션**)을 통한 재사용 가능
-     - 요청 파이프라인을 이용한 병렬 커넥션 처리(실제 사용 거의 없음) 등
-
-# **전송계층(Transport Layer)**
-
----
-
-먼저 **네트워크란** 데이터를 교환하기 위해 전송 매체를 매개로 서로 연결되어 있는 것이고 **인터넷은** 전세계 컴퓨터들이 서로 연결되어있는 거대한 네트워크를 뜻한다.
-
- 사람간의 대화에서 같은 언어를 이용해 의사소통 하듯 네트워크 상에서 데이터를 주고받기 위해서 일종의 정해진 규약이 있는데 이것을 **프로토콜**이라고 부른다.
-
- 네트워크 상에서 정보를 주고받으려면 어느 경로로 보낼지 어떤 방식으로 데이터를 보낼지 등등 고려해야할 사항이 많다. 만약 하나의 규약을 정해놓았다면 문제가 발생 하였을시 전체를 바꾸어야 하고 또 문제가 발생하기도 쉬울 것이다. 그래서 역할을 나누어 네트워크는 **네트워크 계층** 구조를 가지게 되었다. 각각의 계층은 모듈단위로 독립적이지만 서로 상호 유기적인 관계를 가진다.
-
-![image-20200922154358412](https://user-images.githubusercontent.com/58545240/93854893-87918400-fcf1-11ea-999a-1577726abe0f.png)
-
- TCP/IP 계층을 보면 크게 4개로 나누어져 있고 각각의 계층마다 하는 역할이 다르고 각각의 여러 프로토콜이 존재한다. 이것을 다 알아보는거는 주제에 벗어나는 것 같으므로 **TCP**가 속해있는 Transport Layer 즉 **전송 계층**만 간단히 설명하자면
-
-두 호스트 간에 연결을 맺고 최종적인 통신 목적지까지 데이터를 전달하는 기능을 한다.
-
-## :black_nib: TCP 와 UDP
-
-전송 계층에는 크게 TCP(Transmission Control Protocol) 와 UDP(User Datagram Protocol) 2가지 프로토콜이 있다.
-
-**-TCP** 연결지향적이며 오류제어, 흐름제어, 혼잡제어, 타이머재전송 등의 기능을 하며 연결지향이란말은 데이타를 전송하는 측과 데이타를 전송받는 측에서 전용의 데이타 전송 선로(Session)을 만든다는 의미이다. 데이타의 신뢰도가 중요하다고 판단될때 주로 사용된다.(*가상회선 방식 패킷교환*)
-
-**-UDP** 비연결지향이며, 최소한의 오류제어 기능만 수행한다. 단순히 데이타를 받거나, 던져주기만 하는 프로토콜이다. UDP는 특히 실시간 멀티미디어 정보를 처리하기 위해서 주로 사용한다.(*데이터그램 방식 패킷교환*)
-
-여기서 딱 보이는 둘의 차이는 연결 비연결이 보인다.
-
-서두가 길었다. TCP에서 연결지향적인 특성을 갖게 해주는 과정, 방법이 바로 **3 Way-Handshake** 방식으로 잠시 뒤에 알아보겠다.
-
-## :black_nib: SSL/TLS란?
-
-> **Secure Socket Layer**, **Transport Layer Security**
-
-- 전송 계층 상에서 클라이언트, 서버에 대한 인증 및 데이터 암호화 수행
-  - 클라이언트와 서버 양단 간 응용계층 및 TCP 전송계층 사이에서 안전한 보안 채널을 형성해 주는 역할을 수행하는 보안용 프로토콜
-- 주요 응용
-  - **HTTP(HTTPS)**, **FTP(FTPS)**, **TELEMENT**, **SMTP**, **SIP**, **POP**, **IMAP** 등에서 사용 가능
-  - 주로, **웹 브라우저**와 **웹 서버**사이의 안전한 보안 채널을 제공하기 위해 많이 사용된다
-
-*OpenSSL*
-
-***DTLS**는 TLS프로토콜은 **UDP에 적용가능**하게 해주는 UDP를 위한 프로토콜이다. 그러므로 **UDP**기반의 애플리케이션들은 이 **DTLS**를 사용함으로 도청, 간섭, 메시지 변조 등 네트워크 상에서 발생할 수 있는 공격들을 막을 수 있다. 특히나 UDP를 사용하는 **IoT에 보안성을 추가**해줄 수 있는 프로토콜로 제시되고 있다.*
-
-## :black_nib: SSL/TLS 역사
-
-- 최초 제안 : 넷스케이프 사
-
-  - 버젼 : SSL v1.0(1994.7), SSL v2.0(1994.12), SSL v3.0(1996.11)
-
-    *SSL v3.0은 그 당시 사실상의 웹 보안 표준이었음*
-
-- SSL의 표준화 기여 => TLS 표준
-       - SSL v3.0 을 참고로하여 RFC 2246(1999년)으로 표준화된 것이 TLS 임
-            - 버젼 : TLS 1.0 (RFC 2246,1999) : SSL v3.1에 해당, 
-                TLS 1.1 (RFC 4346, 2006), TLS 1.2 (RFC 5246, 2008)
-
-   *따라서, SSL 및 TLS는 본질적으로 같으며 버전이 다른 정도임*
-
-## :black_nib: SSL/TLS 주요 기능
-
-- 상호 인증
-
-  - 공개키 인증서를 이용하여 서버, 클라이언트의 상호 인증
-  - 즉, 클라이언트/서버 두 응용 간에 상대방에 대한 인증
-
-- 메세지 압축
-
-  - 디폴트는 Null(즉, 무 압축)
-
-    *압축 알고리즘은 미리 정해지지 않고 협상으로 지정 가능*
-
-- 메세지 인증(메세지 무결성)
-
-  - 메세지 인증 코드 `HMAC`에 의한 메세지 무결성 제공(`HMAC MD5`, `HMAC SHA-1` 등)
-
-- 암호화용 세션 키 생성(대칭 키 합의)을 위한 키 교환
-
-  - **RSA** : 두 키(공개 키 및 개인 키)가 하나의 수 체계를 형성(서버 공개 키 사용)
-  - **Diffie-Hellman** : `Diffie-Hellman`프로토콜을 기반으로 한 키 교환 방식
-
-- 생성된 공유 비밀키에 의해 암호화된 종당간 안전한 연결 통로 제공
-
-  - 스트링 암호화 : 40, 128 비트의 RC4
-  - 블록 암호화 : IDEA, 40, 56비트의 DES, 168 비트의 3DES 등
-
-## :black_nib: SSL/TLS 특징
-
-- 클라리언트/서버 기반의 프로토콜
-- 응용 프로그램(어플리케이션) 자체 구현 가능
-  - 대부분의 다른 보안 프로토콜(EAP,IPsec 등)은 운영체제 등에 밀접하게 관련됨
-- 인증 구조          :  X.509
-  - X.509에서 규정된 공개키 인증서 교환에 의해 상대방에 대한 인증 수행
-- 키 교환 방식       :  (협상 선택 가능)
-  - Null, RSA 공개 키 교환, Anonymous Diffie-Hellman 키 교환, 
-    Ephermeral Diffie-Hellman 키 교환, Fixed Diffie-Hellman 키 교환, Fortezza
-- 대칭키 암호화 방식 :  (협상 선택 가능)  
-  - RC2 (40), RC4 (40), RC4 (128), DES, Triple DES, IDEA 등
-- 해쉬 알고리즘      :  (협상 선택 가능)
-  - Null, MD5, SHA-1
-
- ## :black_nib: SSL/TLS 프로토콜 스택
-
-- 전송계층 TCP 위에서, `보안 소켓/보안 채널/터널링`을 구성
-
-  ![image-20200922151717154](https://user-images.githubusercontent.com/58545240/93854914-8eb89200-fcf1-11ea-8243-252c6c30792e.png)
-
-  - 응용계층에서 생성된 데이터에 대한 보안(인증,무결성,기밀성),압축 등의 서비스 제공
-
-  - SSL/TLS 보안 터널을 위한 TCP/UDP 포트번호
-
-    ex) 보안 `HTTP`를 위한 포트번호 4433 ( HTPS )
-
-  - 한편, UDP 상에서도 가능한 버전으로
-
-    - DTLS (Datagram Transport Layer Security) RFC 6347(2012년)가 있음
-
-  
-
-  *SSL/TLS의 상세 프로토콜 스택 :  ☞  SSL/TLS 구성 프로토콜 참조*
-
-  => 크게, 하위 레코드 계층 프로토콜(단편화,압축,무결성,암호화,인증 기능 제공)과
-  위 핸드세이크 관련 프로토콜들로 구성*
-
-## :black_nib: SSL/TLC 핸드세이크
-
-**초기 협상 단계 => 인증 단계 => 보안 채널 형성 => 상호 암호화 통신 시작**
-
-1. 초기 협상 단계
-   - **클라이언트, 서버** 간에 Client Hello, Server Hello 메세지 교환
-   - 클라이언트가 서버에게 Cipher Suite(사용 가능 암호화, 해싱 방식 등)을 보내고 서버 인증서를 요구
-2. 인증단계
-   - 서버에서 공개키, 서버명, 인증기관 주소 등을 포함한 인증서를 클라이언트에게 전송
-   - 이 때, 서버는 클라이언트가 제시한 것 중 자신이 선택한 암호화 방식 및 인증서를 보냄
-   - 필요히 클라이언트는, 인증서를 발급한 인증기관 서버에 접속하여 서버 인증서의 유효성 확인
-3. 보안채널 형성
-   - 클라이언트는 보안 채널 형성에 필요한 **세션키**를 만들기 위해,
-   - **서버의 공개키**를 이용하여 임의의 수(Pre Master Key)를 **암호화**시켜 **서버**에게 전송하고,
-   - **서버**는 **자신의 비밀키(개인키)**로 이를 해독(역암호화)하게 됨
-   - 이때 임의의 수(Pre Master Key)로부터 Master Key를 유도하고, 
-   - 이 Master Key로부터 양측은 암호화,복호화에 필요한 세션키를 생성함
-4. 상호 암호화 통신 시작
-   - 즉, **보안성**이 확립된 **TLS 터널** 내에서 상호 통신
-
-## :black_nib: 핸드세이크(Handshake)
-
-> **통신의 양측 간에 조건에 합의해 가는 정보 교환 과정**
-
-### - DTE, DCE
-
-> **DTE : Data Terminal Equipment**
->
-> **DCE : Data Communications Equipment**
-
-- **DTE**
-  - 사용자 - 네트워크 인터페이스의 사용자측에서 데이터발신 장치나 수신 장치, 또는 두 가지 겸용으로 사용되는 장치
-  - DTE는 반드시 모뎀과 같은 DCE 장치를 통해 데이터 네트워크에 연결되며, 일반적으로 DCE에 의해 생성된 클럭처리 신호를 말한다.
-  - DTE에는 컴퓨터, 멀티플렉서, 라우터 등과 같은 장치가 포함된다.
-- **DCE**
-  - 사용자 - 네트워크 인터페이스의 네트워크 측으로 구성되는 통신 네트워크 장비의 연결 수단
-  - DCE는 네트워크로 연결되는 물리적 수단이며, 트래픽을 전송하고, DCE장치와 DTE장치 사이에서 데이터 전송을 동기화 시키는 데 사용되는 클럭신호를 제공
-  - DCE에는 모뎀과 인터페이스 카드가 포함된다.
-
-***`DTE` - `DCE` 간의 데이터 흐름을 제어하기 위한 핸드세이킹!!***
-
-### - TCP 3-way Handshaking
-
-> TCP/IP 프로토콜을 이용해서 통신을 하는 응용프로그램이 데이터를 전송하기 전에 먼저 정확한 전송을 보장하기 위해 상대방 컴퓨터와 사전에 세션을 수립하는 과정
-
-간단하게 비유를 들어 설명하자면 a가 b에게 
-
-**1.** b야 내말 잘 들리니? b가 a에게 
-
-**2.** 응 잘들려 a야 너도 내말 잘 들리니? 
-
-**3.** 응 잘들려! 
-
-과 같은 방법으로 서로 의사소통이 할 환경이 잘 구성 되었는지, 즉 연결이 잘 되었는지 확인하는 과정이다. 네트워크 상에서는 서로 패킷을 주고받아 위 과정을 수행한다. 
-
-- Client > Server : `TCP SYN`
-- Server > Client : `TCP SYN ACK`
-- Client > Server : `TCP ACK`
-
-*여기서 **SYN**는 `synchronize sequence numbers`, 그리고 **ACK**는 `acknowledgment`의 약자*
-
-**< 역할 >**
-
-- 양쪽 모두 데이터를 전송할 준비가 되었다는 것을 보장하고, 실제로 데이터 전달이 시작하기 전에 한쪽이 다른 쪽이 준비되었다는 것을 알 수 있도록 한다.
-- 양쪽 모두 상대편에 대한 초기 순차일련번호를 얻을 수 있도록 한다.
-
-![image-20200922153443051](https://user-images.githubusercontent.com/58545240/93854923-94ae7300-fcf1-11ea-99fe-a0b0390703ef.png)
-
-**< 과정 >**
-
-1. A클라이언트는 B서버에 접속을 요청하는 SYN 패킷을 보낸다. 이때 A클라이언트는 SYN 을 보내고 SYN/ACK 응답을 기다리는SYN_SENT 상태가 되는 것이다.
-2. B서버는 SYN요청을 받고 A클라이언트에게 요청을 수락한다는 ACK 와 SYN flag 가 설정된 패킷을 발송하고 A가 다시 ACK으로 응답하기를 기다린다. 이때 B서버는 SYN_RECEIVED 상태가 된다.
-3. A클라이언트는 B서버에게 ACK을 보내고 이후로부터는 연결이 이루어지고 데이터가 오가게 되는것이다. 이때의 B서버 상태가 ESTABLISHED 이다.
-
-*위와 같은 방식으로 통신하는것이 신뢰성 있는 연결을 맺어 준다는 TCP의 3 Way handshake 방식이다.*
-
-
-
-위 방식을 통해 **TCP**는 연결지향적인 특성과 자체적으로 오류를 처리하며 순서가 뒤바뀐 패킷을 교정해주는 기능이 더불어 주로 데이터의 **신뢰도**가 중요하다고 판단되어질 때 쓰인다. 
-
- **신뢰도 확보**가 중요하거나 용량이 큰 데이터를 전달해야 때, 실시간일 필요는 없을 때 활용 된다.
-
- 하지만 데이터의 신뢰성 보다 전송 속도가 중요시되는 경우면 어떨까? 스트리밍 서비스 같은 경우 속도가 생명이다. 만약 계속해서 버퍼링이 걸린다면 사용자는 매우 불쾌할 것이다.
-
- 앞서 말한 UDP 프로토콜은 위와 같은 과정이 없이 단순히 데이터만을 전송하므로 속도가 빠르다. 스트리밍 서비스 같은경우 약간의 화질이나 음질의 손상이 있다 해도 끊기지 않는 서비스가 중요하다. 그래서 **`UDP`**방식을 사용한다.
-
-
-
-*추가로 이러한 3-way handshakinig의 취약점을 이용해 서버를 공격하는 방법이 바로 **`SYN Flodding`**이라고 한다.*
-
-```bash
-3way handshaking 과정중 서버는 2단계 에서 (클라이언트로 부터 요청을받고 응답을 하고난후 다시 클라이언트의 응답을 기다리는 상태)  이 연결을 메모리 공간인 백로그큐(Backlog  Queue) 에 저장을 하고 클라이언트의 응답 즉 3단계를 기다리게 되고 일정 시간 (default 로 UNIX/LINUX : 60초 , Windows : 256초 , Apache : 300 초이며 수정 가능) 동안 응답이 안오면 연결을 초기화한다.
-
-바로 이 점을 이용한 공격법이다.
-
-악의적인 공격자가 실제로 존재하지 않는 클라이언트IP로 응답이 없는 연결을 초기화 하기전에 또 새로운 연결 즉 1단계 요청만 무수히 많이 보내어 백로그 큐를 포화 상태로 만들어 다른 사용자로 부터 더이상에 연결 요청을 못 받게 하는 공격 방법이다.
-
-대응책으로는 연결 타이머 시간을 짧게 하거나 백로그 큐 사이즈를 늘리는법, 정해진 시간동안 들어오는 연결 요구의 수를 제한하는법, 쿠키(cookie)라는 것을 이용해서 전체 연결이 설정되기 전까지는 자원의 할당을 연기하는 법이 있다..
-```
-
-
-
-### - 무선 LAN보안 을 위한 **4-way Handkshaking**
-
-> 3-way handshake는 TCP 연결을 초기화할 때 사용한다면, 4-way handshake는 세션을 종료하기 위해 수행되는 절차이다.
-
-**< 역할 >**
-
-비록 양단간에 사전에 준비된 키가 없더라도 안전하지 못한 채널(비 보안 채널)을 통해서도 같은 **비밀 키(세션 키)**를 공유할 수 있게끔 일련의 **패킷**등을 교환해가며 **대칭 키**를 합의하는 과정
-
-![image-20200922153626051](https://user-images.githubusercontent.com/58545240/93854939-9a0bbd80-fcf1-11ea-9106-5ea09c11c6d4.png)
-
-**< 과정 >** 
-
-1. 클라이언트가 연결을 종료하겠다는 FIN플래그를 전송한다. 서버가 FIN플래그로 응답하기 전까지 연결을 계속 유지한다.
-2. 서버는 일단 확인메시지를 보내고 자신의 통신이 끝날때까지 기다리는데 이 상태가 **TIME_WAIT**상태다. 수신자는 ACK Number 필드를 Sequence Num+1로 지정하고 ACK플래그 비트를 1로 설정한 세그먼트를 전송한다. 그리고 자신이 전송할 데이터가 남아있다면 이어서 계속 전송한다.
-3. 서버가 통신이 끝났으면 연결이 종료되었다고 클라이언트에게 FIN플래그를 전송한다.
-4. 클라이언트는 확인했다는 메시지를 보낸다.
-
-
-
-그런데 만약 Server에서 FIN을 전송하기 전에 전송한 패킷이 Routing 지연이나 패킷 유실로 인한 재전송 등으로 인해 FIN패킷보다 늦게 도착하는 상황"이 발생한다면 어떻게 될까요? 
-
-Client에서 세션을 종료시킨 후 뒤늦게 도착하는 패킷이 있다면 이 패킷은 Drop되고 데이터는 유실될 것입니다. 이러한 현상에 대비하여 Client는 Server로부터 FIN을 수신하더라도 일정시간(디폴트 240초) 동안 세션을 남겨놓고 잉여 패킷을 기다리는 과정을 거치게 되는데 이 과정을 **`TIME_WAIT`** 라고 합니다.
-
 # **VoIP Open Source의 종류**
 
 ---
@@ -3304,7 +2748,7 @@ Password for ksh0915 on "sip.linphone.org": a2011287!!
 Registration on <sip:sip.linphone.org> successful.
 
 call dhkdghehfdl@10.10.81.102:5060 or
-call dhkdghehfd@sip:linphone.org:5060
+call dhkdghehfd@sip:linphone.org:49456
 ```
 
 
@@ -3346,7 +2790,7 @@ voip.c로 커널 모듈을 생성하고 그 안에서 platform_device driver를 
 
 **`linux/arch/arm64/configs/ambarella_h22_eos_ambalink_defconfig`**
 
-![image-20201103165033255](images/image-20201103165033255.png)
+![image-20201103165033255](https://user-images.githubusercontent.com/58545240/98086672-6f9d4a80-1ec2-11eb-991b-f296bb8042fc.png)
 
 => 이렇게 해주니 단말에서 `aloop, dummy, voip` **`modprobe`**가 가능했고, lsmod로 확인할 수 있었다.
 
@@ -3467,4 +2911,521 @@ $ aplay -D hw:0,0,4 audio.wav
   - disabled : 해당 드라이버를 LINUX에서 사용하지 않겠다.
 
   *등등...*
+
+- 20/11/04
+
+linphone.. 사실상 사운드 카드만 있으면 되잖아?
+
+파일 입출력을 해야하나?
+
+그런데도 전화가 안된다? 우분투의 린폰과는 무슨차이지?
+
+```bash
+# UBUNTU $ vi .linphonerc
+[rtp]
+download_ptime=0
+audio_rtp_port=7078
+video_rtp_port=9078
+audio_jitt_comp=60
+video_jitt_comp=60
+nortp_timeout=30
+audio_adaptive_jitt_comp_enabled=1
+video_adaptive_jitt_comp_enabled=1
+
+[sip]
+media_encryption=none
+default_proxy=-1
+sip_port=5060
+sip_tcp_port=0
+sip_tls_port=0
+use_info=0
+guess_hostname=1
+contact=sip:ksh@unknown-host
+inc_timeout=30
+in_call_timeout=0
+delayed_timeout=4
+use_ipv6=0
+register_only_when_network_is_up=1
+register_only_when_upnp_is_ok=1
+
+[video]
+display=0
+capture=0
+automatically_initiate=0
+automatically_accept=0
+show_local=0
+self_view=0
+size=cif
+
+[net]
+download_bw=0
+upload_bw=0
+adaptive_rate_control=1
+mtu=1300
+
+[GtkUi]
+videoselfview=0
+uri0=sip:dhkdghehfdl@10.10.81.94:5060
+advanced_ui=1
+uri1="MyWindow" <sip:dhkdghehfdl@10.10.81.94:5060>
+uri2="robot" <sip:robot@127.0.0.1:5060>
+uri3="robot" <sip:robot@127.0.0.1:5064>
+uri4="robot" <sip:robot@127.0.0.1>
+uri5=<sip:dhkdghehfdl@10.10.81.94>
+
+[auth_info_0]
+username=ksh0915
+userid=ksh0915
+passwd=a2011287!!
+realm="sip.linphone.org"
+
+[sound]
+playback_dev_id=ALSA: USB PnP Sound Device
+ringer_dev_id=ALSA: USB PnP Sound Device
+capture_dev_id=ALSA: USB PnP Sound Device
+echocancellation=1
+remote_ring=/usr/share/sounds/linphone/ringback.wav
+playback_gain_db=0.000000
+mic_gain_db=0.000000
+local_ring=/usr/share/sounds/linphone/rings/tapping.wav
+
+[audio_codec_0]
+mime=opus
+rate=48000
+channels=1
+enabled=1
+
+[audio_codec_1]
+mime=speex
+rate=16000
+channels=1
+enabled=1
+
+[audio_codec_2]
+mime=speex
+rate=8000
+channels=1
+enabled=1
+
+[audio_codec_3]
+mime=PCMU
+rate=8000
+channels=1
+enabled=1
+
+[audio_codec_4]
+mime=PCMA
+rate=8000
+channels=1
+enabled=1
+
+[audio_codec_5]
+mime=AAL2-G726-40
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_6]
+mime=AAL2-G726-32
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_7]
+mime=AAL2-G726-24
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_8]
+mime=AAL2-G726-16
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_9]
+mime=G726-40
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_10]
+mime=speex
+rate=32000
+channels=1
+enabled=0
+
+[audio_codec_11]
+mime=G726-32
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_12]
+mime=G726-24
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_13]
+mime=G726-16
+rate=8000
+channels=1
+enabled=0
+
+[audio_codec_14]
+mime=L16
+rate=44100
+channels=1
+enabled=0
+
+[audio_codec_15]
+mime=L16
+rate=44100
+channels=2
+enabled=0
+
+[audio_codec_16]
+mime=G722
+rate=8000
+channels=1
+enabled=0
+
+[video_codec_0]
+mime=VP8
+rate=90000
+enabled=1
+
+[video_codec_1]
+mime=MP4V-ES
+rate=90000
+enabled=1
+recv_fmtp=profile-level-id=3
+
+[video_codec_2]
+mime=H263-1998
+rate=90000
+enabled=0
+recv_fmtp=CIF=1;QCIF=1
+
+[video_codec_3]
+mime=theora
+rate=90000
+enabled=0
+
+[video_codec_4]
+mime=H263
+rate=90000
+enabled=0
+
+[call_log_0]
+dir=0
+status=0
+from=<sip:ksh0915@sip.linphone.org>
+to=<sip:dhkdghehfd@sip.linphone.org>
+start_date_time=1603779670
+duration=45
+quality=3.819485
+video_enabled=0
+call_id=2006214316
+
+[call_log_1]
+dir=0
+status=3
+from=<sip:ksh@10.0.2.15>
+to=<sip:dhkdghehfdl@10.10.81.102:5060>
+start_date_time=1603779601
+duration=10
+quality=-1.000000
+video_enabled=0
+call_id=234547298
+...
+# linphonec
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib control.c:1373:(snd_ctl_open_noupdate) Invalid CTL default:0
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:0
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 0
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:0
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 1
+ALSA lib control.c:1373:(snd_ctl_open_noupdate) Invalid CTL default:1
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 1
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:1
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 1
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:1
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 2
+ALSA lib control.c:1373:(snd_ctl_open_noupdate) Invalid CTL default:2
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 2
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:2
+ALSA lib conf.c:4974:(snd_config_expand) Unknown parameters 2
+ALSA lib pcm.c:2495:(snd_pcm_open_noupdate) Unknown PCM default:2
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
+
+# proxy add
+...
+linphonec> Registration on <sip:sip.linphone.org> successful
+# call dhkdghehfd@sip:linphone.org:5060
+
+```
+
+```bash
+proxy add
+sip:sip.linphone.org;transport=tls;
+sip:ksh0915@sip.linphone.org
+yes
+600
+no (route)
+yes
+Password for ksh0915 on "sip.linphone.org": a2011287!!
+call dhkdghehfd@sip.linphone.org:5060
+call dhkdghehfdl@10.10.81.102:5060
+```
+
+```bash
+# modprobe X -> linphonec
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib confmisc.c:767:(parse_card) cannot find card '0'
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_card_driver returned error: No such file or directory
+ALSA lib confmisc.c:392:(snd_func_concat) error evaluating strings
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1246:(snd_func_refer) error evaluating name
+ALSA lib conf.c:4371:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:4850:(snd_config_expand) Evaluate error: No such file or directory
+ALSA lib pcm.c:2450:(snd_pcm_open_noupdate) Unknown PCM default
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+
+# modprobe snd-aloop -> linphonec
+ALSA lib conf.c:4817:(snd_config_expand) Unknown parameters 0
+ALSA lib control.c:1352:(snd_ctl_open_noupdate) Invalid CTL default:0
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
+
+# modprobe snd-voip -> linphonec
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+ALSA lib pcm_hw.c:1712:(_snd_pcm_hw_open) Invalid value for card
+ALSA lib conf.c:4817:(snd_config_expand) Unknown parameters 0
+ALSA lib control.c:1352:(snd_ctl_open_noupdate) Invalid CTL default:0
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
+
+# modprobe snd-dummy -> linphonec
+ALSA lib conf.c:4817:(snd_config_expand) Unknown parameters 0
+ALSA lib control.c:1352:(snd_ctl_open_noupdate) Invalid CTL default:0
+Ready
+Warning: video is disabled in linphonec, use -V or -C or -D to enable.
+```
+
+**`~/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink/build/linphone-3.6.1`**
+
+```bash
+libreadline 	# for convenient command line in linphonec
+libsoup			# for wizard - account creation assistant
+libsqlite3		# for a local history of chat message
+sudo apt-get install libreadline-dev libsoup2.4-dev libsqlit3-dev
+
+## 소스트리 설명
+# << oRTP >>
+is a poweful implementation of the RTP protocol. See the oRTP/README for more details.
+It is used by the mediastreamer to send and receive streams to the network.
+
+# << mediastreamer2 >>
+is one of the important part of linphone. 
+It is a framework library for audio and video processing. 
+It contains several objects for grabing audio and video and outputing it (through rtp, to file).
+It contains also codec objects to compress audio and video streams.
+The mediastream.h files contain routines to easyly setup audio streams.
+
+# << coreapi >>
+is the central point of linphone, which handles relationship between sip signalisation and media streaming. 
+It contains an easy to use api to create a sip phone.
+
+# << gtk >>
+is the directory that contains the gui frontend of linphone. It uses all libraries descibed above.
+ 
+# << console >>
+linphonec.c // the main file for the console version of linphone.
+
+sipomatic.c // sipomatic.h contains the code for sipomatic, the test program that auto-answer to linphone calls.
+
+shell.c (program name: linphonecsh) // is a small utilities to send interactive commands to a running linphonec daemon.
+
+# << share >>
+contains translation, documentation, rings and hello sound files.
+```
+
+eos_defconfig에 추가로 ~~MEDIASTREAMER~~, ~~LIBSOUP~~, ORTP를 enable했다.
+
+**애를 먹었던 INTLTOOL 버전 문제 해결 시도**
+
+=> `~/work/h22/ambalink_sdk_4_9/output.oem/h22_ambalink/build/linphone-3.6.1/configure.ac`에서 **`IT_PROG_INTLTOOL`** 부분을 주석처리했다.
+
+=> 안된다 ㅋㅋ~~
+
+## half success
+
+**아!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Proxy 설정안하니까 된다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 같은 네트워크 아니어도 OK!!!!!!!!!!!!!!!!!!!!**
+
+**현재 단말 핫스팟은 jjc에 붙어있는 상태**
+
+- `modprobe snd-aloop`, `modrobe snd-dummy`
+
+  - 일반 PC/iphone 모두 linphone 전화연결 가능
+
+  ```bash
+  call dhkdghehfdl@10.10.81.102:5060	# PC
+  call dhkdghehfdl@10.10.81.102	    # PC
+  call dhkdghehfd@sip.linphone.org	# iPhone
+  ```
+
+- **printK 테스트**
+
+  - `modprobe snd-dummy` : 전화연결 도중 에러 발생
+
+  - `modprobe snd-aloop` : 30초 경과 후 통화 종료
+
+    => `ACK`를 얻지 못했다는 것은 구성에 있어 라우팅 문제가 있는 것이다? 
+
+    NAT 통과가 제대로 되지 않은듯?
+
+    루프백이라서 안된다...???
+
+  ```bash
+  # modprobe snd-aloop
+  [   71.797636] alsa_card_loopback_init
+  [   71.802708] loopback_probe
+  [   71.805804] loopback_pcm_new
+  [   71.809622] loopback_pcm_new
+  [   71.813394] loopback_mixer_new
+  [   71.816978] loopback_proc_new
+  [   71.820044] loopback_proc_new
+  
+  # linphonec
+  [  111.935963] rule_channels
+  [  111.939061] rule_format
+  [  111.941622] rule_channels
+  [  111.944347] rule_channels
+  [  111.947051] rule_rate
+  [  111.949432] rule_rate
+  [  111.951859] rule_format
+  [  111.954454] rule_rate
+  [  111.956825] rule_channels
+  [  111.959527] loopback_hw_params
+  [  111.963059] loopback_prepare
+  [  111.966203] params_change
+  [  111.968909] params_change_substream
+  [  111.972479] params_change_substream
+  [  111.976067] loopback_trigger
+  [  111.979014] loopback_check_format
+  [  111.982394] loopback_timer_start
+  [  111.985686] get_rate_shift
+  [  111.988461] frac_pos
+  [  111.992973] loopback_trigger
+  [  111.995949] loopback_timer_stop
+  [  111.999294] loopback_hw_free
+  [  112.002378] loopback_close
+  [  112.005184] get_cable_index
+  [  112.008048] loopback_timer_stop
+  [  112.011286] loopback_runtime_free
+  [  112.017970] loopback_open
+  [  112.020757] get_cable_index
+  [  112.023650] get_notify
+  [  112.026445] rule_format
+  [  112.029049] rule_rate
+  [  112.031395] rule_channels
+  [  112.034153] rule_format
+  [  112.036776] rule_channels
+  [  112.039495] rule_channels
+  [  112.042228] rule_rate
+  [  112.044604] rule_rate
+  [  112.047026] rule_format
+  [  112.049567] rule_rate
+  [  112.051912] rule_channels
+  [  112.054665] loopback_hw_params
+  [  112.058255] loopback_prepare
+  [  112.061308] params_change
+  [  112.064003] params_change_substream
+  [  112.067577] params_change_substream
+  [  112.071207] loopback_trigger
+  [  112.074158] loopback_check_format
+  [  112.077538] loopback_timer_start
+  [  112.080830] get_rate_shift
+  [  112.083603] frac_pos
+  [  112.085864] loopback_active_notify
+  [  112.094105] loopback_trigger
+  [  112.097096] loopback_timer_stop
+  [  112.100307] loopback_active_notify
+  [  112.104905] loopback_hw_free
+  [  112.107956] loopback_close
+  [  112.110838] get_cable_index
+  [  112.113759] loopback_timer_stop
+  [  112.117036] loopback_runtime_free
+  Ready
+  
+  # call ~
+  [  161.539107] loopback_open 
+  [  161.542987] get_cable_index 
+  [  161.547188] get_notify 
+  [  161.550108] rule_format 
+  [  161.552663] rule_rate 
+  [  161.555014] rule_channels 
+  [  161.557848] rule_format 
+  [  161.560495] rule_channels 
+  [  161.563215] rule_channels 
+  [  161.565978] rule_rate 
+  [  161.568350] rule_rate 
+  [  161.570830] rule_format 
+  [  161.573446] rule_rate 
+  [  161.575803] rule_channels 
+  Call 1 with <sip:dhkdghehfdl@10.10.81.102:5060> 
+  [  161.578519] loopback_hw_params 
+  connected.
+  Call answered by <sip:dhkdghehfdl@10.10.81.102:5060>.
+  [  161.586044] loopback_prepare 
+  linphonec> [  161.594506] params_change 
+  [  161.598185] params_change_substream 
+  [  161.601761] params_change_substream 
+  [  161.605400] loopback_trigger 
+  [  161.608351] loopback_check_format 
+  [  161.611731] loopback_timer_start 
+  [  161.615023] get_rate_shift 
+  [  161.617797] frac_pos 
+  [  161.620060] loopback_active_notify 
+  [  161.626390] loopback_pointer 
+  [  161.629367] loopback_pos_update 
+  [  161.632574] bytepos_delta 
+  [  161.635260] byte_pos 
+  [  161.637513] byte_pos 
+  [  161.639767] bytepos_finish 
+  [  161.644342] loopback_timer_function 
+  [  161.647909] loopback_pos_update 
+  [  161.651114] bytepos_delta 
+  ...
+  무한루프
+  ```
+
+  
+
+**:ballot_box_with_check: todo list**
+
+1. snd-aloop으로 통화 시 내부 함수들이 동작 흐름 파악하기
+2. 해당 단말의 linphone을 관제에서 알아보기 쉽도록 설정하기
+3. aloop 사운드 카드를 커스터마이징 할 수 있는지? 혹은 그 필요성에 대하여 고민
+4. 단말기의 mic 입력과 speaker 출력은 어떻게 할것인가?
+
+
+
+
+
+
+
+
 
