@@ -1811,3 +1811,769 @@ res = register_netdev();	// network driver
 
    - 위의 그림처럼 **CONFIG_MY_MODULE**이 포함됨을 확인할 수 있다.
 
+# **27. Platform Device & Driver**
+
+---
+
+> 플랫폼디바이스는 하드웨어에 내장되어 있기 때문에 `hot-pluggable`이 아니다.
+>
+> 이 장치를 위한 드라이버는 장치의 존재를 확인할 필요가 없고 그냥 작동시키고(전원을 켜고) 장치가 작동하게 할 수 있도록 필요한 것을 작업한다.
+>
+> 만약 장치가 발견되지 않으면 드라이버는 가볍게 무시된다.
+
+플랫폼 디바이스는 리눅스 커널이 `USB`나 `PCI`와 같은 버스를 통해 동적으로 감지할 수 없는 `SoC(System-on-Chip)`에 내장된 시스템 장치이다.
+
+커널은 플롯폼 디바이스 메커니즘을 제공함으로써 실제로 존재하는 하드웨어에 대해 알 수 있다. 이 글에서는 플랫폼 디바이스의 커널 인터페이스에 대해 설명하며 디바이스 트리와 통합을 하기 위한 내용을 설명하겠다.
+
+## Platform Drivers
+
+플랫폼 디바이스는 `struct platform_device`로 정의되며 `<linux/platform_device.h>`에서 찾을 수 있다. 
+
+이 장치들은 가상 "플랫폼 버스"에 연결된 것으로 간주된다. 
+
+따라서 플랫폼 디바이스의 드라이버는 플랫폼 버스에 등록해야 한다. 이 등록은 `platform_driver` 구조체를 통해 수행된다.
+
+![image-20201105104020008](https://user-images.githubusercontent.com/58545240/98198238-dd518100-1f6b-11eb-87e1-52f0a82ad430.png)
+
+최소한 `probe()` 및 `remove()` **콜백**을 제공해야 하며, 다른 콜백은 전원 관리와 관련이 있으며 필요시 제공하면 된다.
+
+- `(*probe)`
+  - HW 디바이스 존재 유무를 판단하기 위해 호출되고 해당 디바이스를 사용하기 위해 디바이스 드라이버와 바인드한다.
+  - 디바이스 리소스를 사용하여 `irq`, 레지스터 맵핑 등을 할 수 있다.
+- `(*remove)`
+  - 디바이스의 사용을 완료시킨 경우 호출된다.
+- `(*shutdown)`
+  - 디바이스의 전원을 끄려고할 때 호출된다.
+- `(*suspend)`
+  - 디바이스가 절전 모드로 진입할 때 호출된다.
+- `(*resume)`
+  - 디바이스가 절전모드로부터 정상모드로 돌아올 때 호출된다.
+- `driver`
+  - 디바이스 드라이버 구조체가 임베드된다.
+- `*id_table` : *아래 설명 참조*
+- `prevent_deffered_probe`
+  - probe 유예금지
+
+드라이버가 제공해야하는 다른 것은 버스 코드가 실제 장치를 드라이버에 **바인딩(binding)**하는 방법이다.
+
+사용할 수 있는 두 가지 메커니즘이 있는데 그 중 하나는 **id_table**이다. `id_table`의 구조체는 다음과 같다.
+
+![image-20201105104336761](https://user-images.githubusercontent.com/58545240/98198298-06721180-1f6c-11eb-9b9a-dd4fffa58406.png)
+
+`id_table`이 있으면 플랫폼 버스는 새 플랫폼 디바이스의 드라이버를 찾을 때마다 이를 스캔한다. 장치 이름이 `id_table`항목의 이름와 일치하면 장치는 관리를 위해 드라이버에게 제공되며 일치하는 `id_table` 항목에 대한 포인터도 드라이버에서 사용할 수 있다.
+
+`id_table`을 제공하지 않을 경우 driver 필드에 드라이버 이름을 제공해야 한다. 예를 들어 `soundgen`드라이버는 다음과 같은 `platform_device`로 설정된다.
+
+![image-20201105104649332](https://user-images.githubusercontent.com/58545240/98198347-1be73b80-1f6c-11eb-8ca5-24554c266cc2.png)
+
+이 설정을 통해 **"snd_soundgen"**으로 식별되는 모든 장치가 이 드라이버에 바인딩된다.
+
+플랫폼 드라이버는 다음을 통해 반드시 자신을 커널에 알려야 한다.
+
+![image-20201105104846594](https://user-images.githubusercontent.com/58545240/98198312-0c67f280-1f6c-11eb-87c4-375f5d00a3db.png)
+
+이 호출이 성공하면 드라이버의 `probe()` 함수가 호출 될 수 있다. 이 함수는 인스턴스화 할 장치를 설명하는 `platform_device` 포인터를 가져온다.
+
+![image-20201105105136020](https://user-images.githubusercontent.com/58545240/98198377-29042a80-1f6c-11eb-9ad0-ec9c8f2cb517.png)
+
+`dev` 필드는 필요한 상황(ex. DMA 매핑 API)에서 사용할 수 있다.
+
+장치가 `id_table`항목을 사용하여 일치하면 `id_entry`는 일치하는 항목을 가리킨다.
+
+`resource`배열은 메모리 매핑된 I/O 레지스터 및 인터럽트를 포함한 다양한 리소스를 찾는 데 사용할 수 있다. 리소스 배열에서 데이터를 가져오기 위한 여러가지 도우미 함수가 있는데 몇가지 함수의 예를 보자.
+
+![image-20201105105517088](https://user-images.githubusercontent.com/58545240/98198390-2f92a200-1f6c-11eb-8a96-e384652fc369.png)
+
+마지막 매개변수는 `index`를 나타내며 0은 첫 번째 리소스이다. 예를 들어 드라이버는 다음을 통해 두번째 `MMIO` 영역을 찾을 수 있다.
+
+```c
+r = platfrom_get_resource(pdev, IORESOUCRE_MEM, 1);
+```
+
+
+
+**이 드라이버를 OS에 등록해야 한다. 디바이스가 당연히 시스템에 존재한다는 것을 알기 때문에 `platform_driver_register()` 대신 `platform_driver_probe()`를 사용해야 한다.**
+
+이 두 기능의 차이점은 `register()`는 OS가 시스템에 들어오고 나올 때 드라이버를 일치시키기 위해 유지하는 드라이버 목록에 이 드라이버를 넣으라는 것이다.
+
+플랫폼장치는 항상 시스템에 존재하므로(핫 플러그 불가능) 플랫폼 드라이버를 OS 드라이버 목록에 넣을 필요가 없다.
+
+`probe()`는 우리가 OS가 플랫폼 장치가 일치하는 이름으로 존재하는지 확인하도록 요청하는 것이다. 장치가 있으면 해당 `probe()`기능이 호출되고 존재하지 않으면 드라이버는 무시된다.
+
+
+
+## Platform Device
+
+처음에 언급했듯이 플랫폼 디바이스는 본질적으로 검색 할 수 없으므로 커널에 장치의 존재를 알리는 다른 방법이 있어야 한다.
+
+이는 일반적으로 관련 드라이버를 찾는 데 사용되는 정적 `struct platform_device` 구조체를 작성하여 수행된다. 예를 들어 간단한 장치는 다음과 같이 설정될 수 있다.
+
+![image-20201105110521877](https://user-images.githubusercontent.com/58545240/98198414-420cdb80-1f6c-11eb-92af-359b6beb856a.png)
+
+이 선언은 1페이지 `MMIO` 영역이 `0x10000000`에서 시작하고 `IRQ 20`을 사용하는 "foomatic"장치를 설명한다. 장치는 다음을 통해 시스템에 알린다.
+
+![image-20201105110842707](https://user-images.githubusercontent.com/58545240/98198419-46d18f80-1f6c-11eb-97cc-2d3d7f308a58.png)
+
+- `device_initailize(&pdev->dev)` : 플랫폼 디바이스 내부의 디바이스 구조체의 멤버들을 초기화
+- `arch_setup_pdev_archdata(pdev)` : 플랫폼 디바이스의 `archdata` 조작이 필요한 경우 호출
+- `return platform_device_add(pdev)` : 플랫폼 디바이스 추가
+
+```c
+int platform_device_register(struct platform_device *pdev);
+```
+
+이를 `platform_device_simple_register`로 사용할 수도 있다.
+
+![image-20201105111020446](https://user-images.githubusercontent.com/58545240/98198427-4cc77080-1f6c-11eb-85ab-7c124620d3d3.png)
+
+```c
+struct platform_device *device;
+device = platform_device_register_simple(SND_SOUNDGEN_DRIVER, 0, NULL, 0);
+```
+
+
+
+이렇게 플랫폼 디바이스와 관련 드라이버가 모두 등록되면 드라이버의 `probe()`함수가 호출되고 장치가 인스턴스화된다.
+
+플랫폼 디바이스를 제거하려면 `platform_device_unregister()`함수를 사용한다.
+
+## - 드라이버 모듈 진입부
+
+**플랫폼 드라이버 모듈의 마지막에 다음과 같은 매크로함수 중 하나를 사용하여 플랫폼 드라이버의 등록부 코드를 준비한다.**
+
+- 모든 디바이스 및 드라이버 공통 진입부
+  - device_initcall(foo_init)
+    - 커널에 임베드하여 빌드한 경우 부트업 시 동작하며 모든 디바이스 및 드라이버의 진입부에 사용된다.
+    - 커널에 임베드하지 않고 모듈로 빌드한 경우 module_init()과 동일하게 동작한다.
+  - module_init(foo_init) & module_exit(foo_exit)
+    - insmod를 사용한 모듈 방식으로 모든 디바이스 및 드라이버의 진입부에 사용된다.
+- 플랫폼 드라이버용 진입부
+  - builtin_platform_driver(foo_driver)
+    - 커널에 임베드하여 빌드한 경우 부트업 시 동작하며 플랫폼 드라이버 진입부에 사용된다.
+    - 커널에 임베드하지 않고 모듈로 빌드한 경우 module_platform_driver()와 동일하게 동작한다.
+  - module_platform_driver(foo_driver)
+    - insmod를 사용한 모듈 방식으로 플랫폼 드라이버용 진입부에 사용된다.
+- 플랫폼 디바이스 생성 및 플랫폼 드라이버용 진입부
+  - builtin_platform_driver_probe(foo_driver, foo_probe)
+    - 커널에 임베드하여 빌드한 경우 부트업 시 동작하며 플랫폼 디바이스를 생성하면서 플랫폼 드라이버 진입에 사용된다.
+    - 커널에 임베드하지 않고 모듈로 빌드한 경우 module_platform_driver_probe()와 동일하게 동작한다.
+  - module_platform_driver_probe(foo_driver, foo_probe)
+    - insmod를 사용한 모듈 방식으로 플랫폼 디바이스를 생성하면서 플랫폼 드라이버 진입에 사용된다.
+
+**플랫폼 드라이버를 등록하기 위해 다음을 준비한다.**
+
+- probe() 함수
+- platform_device_id 구조체
+- platform_driver 구조체
+
+1. **`device_initcall()`** 매크로 함수 사용 시
+
+   *device_initcall() 함수의 동작은 다음과 같이 내부적으로 두 가지 상황으로 처리된다.*
+
+   - 이 드라이버가 커널에 임베드되어(커널의 menuconfig에서 ‘*’ 선택) 로드하는 경우
+     - 커널의 부트업 시 initcall 호출 과정에서 foo_driver를 등록한다.
+     - 그리고 이에 대한 디바이스도 이미 로드되어 매치 가능한 경우 bind하여 곧바로 foo_probe() 함수를 probe한다.
+   - 커널에 임베드되지 않고 모듈 형태로 빌드한(커널의 menuconfig에서 ‘m’ 선택) 후 사용자 영역에서 insmod 명령에 의해 로드하는 경우
+     - insmod 명령에 의해 드라이버 모듈을 로드하고 foo_init() 함수를 호출하여 foo_driver를 등록한다.
+     - 역시 이에 대한 디바이스도 이미 로드되어 매치 가능한 경우 bind하여 곧바로 foo_probe() 함수를 probe한다.
+
+   ```c
+   static int __init foo_init(void) {
+       return platform_driver_register(&foo_driver);
+   }
+   device_initcall(foo_init);
+   ```
+
+2. **`module_init() & module_exit()`** 매크로 함수 사용 시
+
+   *드라이버를 항상 모듈로 만들어 insmod에 의해서만 드라이버를 로드하려면 device_initcall() 대신 module_init()을 사용한다.*
+
+   ```c
+   static int __init foo_init(void) {
+       return platform_drvier_register(&foo_driver);
+   }
+   static void __exit foo_exit(void) {
+       platform_driver_unregister(&foo_driver);
+   }
+   module_init(foo_init);
+   module_exit(foo_exit);
+   ```
+
+3. **`builtin_platform_driver()`** 매크로 함수 사용시
+
+   *커널 부트업 시 사용할 드라이버를 등록한다. device_initcall()보다 더 심플하게 코딩할 수 있다.*
+
+   ```C
+   builtin_platform_driver(&foo_driver);
+   ```
+
+   ![image-20201105113153816](https://user-images.githubusercontent.com/58545240/98198490-69fc3f00-1f6c-11eb-8ae4-38da229ee155.png)
+
+   ![image-20201105131126045](https://user-images.githubusercontent.com/58545240/98198536-826c5980-1f6c-11eb-9704-281ad8ce18c3.png)
+
+   
+
+4. **`moudle_platform_driver()`** 매크로 함수 사용 시
+
+   위의 `module_init()` 및 `module_exit()` 함수를 아래 매크로로 유사하게 만들어 사용하는 방법으로 매우 심플하게 코딩할 수 있따.
+
+   ```c
+   module_platform_driver(&foo_driver);
+   ```
+
+   
+
+   ![image-20201105131020416](https://user-images.githubusercontent.com/58545240/98198499-6ec0f300-1f6c-11eb-90a6-9c2f38e4dcaa.png)
+
+   ![image-20201105131052830](https://user-images.githubusercontent.com/58545240/98198520-7b454b80-1f6c-11eb-8c11-6b2f65ed189e.png)
+
+   
+
+5. **`builtin_platform_driver_probe()`** 매크로 함수 사용 시
+
+   builtin_platform_driver() 매크로 함수와 유사한 방식이다. device_driver 구조체에서 probe 함수 및 id_table을 지정하지 않은 것이 다른 점이다. 역시 아래와 같이 매우 심플하게 코딩할 수 있다.
+
+   ```c
+   static struct platform_driver foo_driver = {
+           .remove = __exit_p(foo_remove),
+           .driver = {
+               .name = "foo",
+           },
+   };
+   builtin_platform_driver_probe(foo_driver, foo_probe);
+   ```
+
+   ![image-20201105131425113](https://user-images.githubusercontent.com/58545240/98198623-b6477f00-1f6c-11eb-917b-6983f26d7755.png)
+
+6. **`module_platform_driver_probe()`** 매크로 함수 사용 시
+
+   module_platform_driver() 매크로 함수와 유사한 방식이다. device_driver 구조체에서 probe 함수 및 id_table을 지정하지 않은 것이 다른 점이다. 역시 아래와 같이 매우 심플하게 코딩할 수 있다.
+
+   ```c
+   static struct platform_driver foo_driver = {
+           .remove = __exit_p(foo_remove),
+           .driver = {
+               .name = "foo",
+           },
+   };
+   module_platform_driver_probe(foo_driver, foo_probe);
+   ```
+
+   ![image-20201105131543392](https://user-images.githubusercontent.com/58545240/98198630-bb0c3300-1f6c-11eb-8a14-eb9c0493a639.png)
+
+## 전체소스
+
+*해당 소스는 ALSA Sound Card - Dummy의 일부와 동일하다*
+
+```c
+#include <linux/init.h>
+#include <linux/err.h>
+#include <linux/platform_device.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/jiffies.h>
+#include <linux/slab.h>
+#include <linux/time.h>
+#include <linux/wait.h>
+#include <sound/asound.h>
+#include <sound/memalloc.h>
+#include <sound/pcm.h>
+#include <sound/core.h>
+#include <sound/control.h>
+#include <sound/info.h>
+#include <sound/initval.h>
+
+MODULE_AUTHOR("KIM SUNG HYUN <dhkdghehfdl@gmail.com>");
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("THIS IS VOIP soundcard");
+MODULE_VERSION("1.0");
+
+/* defaults */
+#define USE_FORMATS     (SNDRV_PCM_FMTBIT_U8 | SNDRV_PCMFMTBIT_S16_LE)
+
+struct soundgen_timer_ops {
+    int (*create)(struct snd_pcm_substream *);
+    void (*free)(struct snd_pcm_substream *);
+	int (*prepare)(struct snd_pcm_substream *);
+	int (*start)(struct snd_pcm_substream *);
+	int (*stop)(struct snd_pcm_substream *);
+	snd_pcm_uframes_t (*pointer)(struct snd_pcm_substream *);
+};
+
+#define get_soundgen_ops(substream) \
+    (*(const struct soundgen_timer_ops **)(substream)->runtime->private_data)
+
+/*
+플랫폼 장치를 만든 후 ALSA 하위 시스템에 장치를 등록해야한다.
+이것은 사운드 카드를 생성하여 수행된다.
+*/
+struct snd_card_soundgen {
+    struct snd_card *card;
+
+    /*
+    사운드 카드가 있어도 실제 오디오 데이터를 사용자에게 제공할 방법이 없다. 따라서 ALSA는 사용자 공간에 전달할 여러 형식 및 
+    오디오 스트림을 지원하는 데 가장 일반적인 것이 "PCM"이다.
+    최종 드라이버는 일부 외부 라인에서 8비트 PCM 샘플을 검색하므로 PCM 레이어에만 집중할 것이다. (MIDI support도 가능하다.)
+    */
+    struct snd_pcm *pcm;
+    struct snd_pcm_hardware pcm_hw;
+    spinlock_t mixer_lock;
+};
+
+struct soundgen_systimer_pcm {
+    /* ops must be the first item */
+    const struct soundgen_timer_ops *timer_ops;
+    spinlock_t lock;
+    struct timer_list timer;
+    unsigned long base_time;
+    unsigned int frac_pos;  /* fractional sample position (based HZ)  */
+    unsigned int frac_period_rest;
+    unsigned int frac_buffer_size;  /* buffer_size * HZ */
+    unsigned int frac_period_size;  /* period_size * HZ */
+    unsigned int rate;
+    int elapsed;
+    struct snd_pcm_substream *substream;
+};
+
+static void soundgen_systimer_rearm(struct soundgen_systimer_pcm *dpcm)
+{
+    mod_timer(&dpcm->timer, jiffies + 
+        (dpcm->frac_period_rest + dpcm->rate -1) / dpcm->rate);
+}
+
+static void soundgen_systimer_update(struct soundgen_systimer_pcm *dpcm)
+{
+    unsigned long delta;
+
+    delta = jiffies - dpcm->base_time;
+    if(!delta)
+        return;
+    dpcm->base_time += delta;
+    delta *= dpcm->rate;
+    dpcm->frac_pos += delta;
+    while (dpcm->frac_pos >= dpcm->frac_buffer_size)
+        dpcm->frac_pos == dpcm->frac_buffer_size;
+    while (dpcm->frac_period_rest <= delta) {
+        dpcm->elapsed++;
+        dpcm->frac_period_rest += dpcm->frac_period_size;
+    }
+    dpcm->frac_period_rest -= delta;
+}
+
+static int soundgen_systimer_start(struct snd_pcm_substream *substream)
+{
+    struct soundgen_systimer_pcm *dpcm = substream->runtime->private_data;
+    spin_lock(&dpcm->lock);
+    dpcm->base_time = jiffies;
+    soundgen_systimer_rearm(dpcm);
+    spin_unlock(&dpcm->lock);
+    return 0;
+}
+
+static int soundgen_systimer_stop(struct snd_pcm_substream *substream)
+{
+    struct soundgen_systimer_pcm *dpcm = substream->runtime->private_data;
+    spin_lock(&dpcm->lock);
+    del_timer(&dpcm->timer);
+    spin_unlock(&dpcm->lock);
+    return 0;
+}
+
+/*
+PCM 설정을 준비할 때 호출한다.
+형식, 속도를 설정하거나 타이머를 설정한다.
+hw_params와의 차이점은 snd_pcm_prepare를 호출할 때마다 이 함수가 호출된다는 것이다.
+*/
+static int soundgen_systimer_prepare(struct snd_pcm_substream *substream)
+{
+    struct snd_pcm_runtime *runtime = substream->runtime;
+	struct soundgen_systimer_pcm *dpcm = runtime->private_data;
+
+	dpcm->frac_pos = 0;
+	dpcm->rate = runtime->rate;
+	dpcm->frac_buffer_size = runtime->buffer_size * HZ;
+	dpcm->frac_period_size = runtime->period_size * HZ;
+	dpcm->frac_period_rest = dpcm->frac_period_size;
+	dpcm->elapsed = 0;
+
+	return 0;
+}
+
+/*
+초기 드라이버의 마지막 부분은 전체 드라이버를 구동하는 인터럽트이다.
+일반적으로 이것은 하드웨어에 의해 구동되는 인터럽트이다.
+말했듯이 타이머를 사용하여 인터럽트를 생성하기 전에 하드웨어 인터럽트는 없다.
+다음 코드는 타이머를 재 설정하고 위치를 계산하는 데 사용하는 카운터를 업데이트하며 기간이 경과하면 경과된
+기간을 CPM 중간 계층에 알린다. 
+여기서 데이터를 업데이트 할 수도 있다.
+*/
+static void soundgen_systimer_callback(unsigned long data)
+{
+    pr_info("Systimer callback\n");
+    struct soundgen_systimer_pcm *dpcm = (struct soundgen_systimer_pcm *)data;
+    unsigned long flags;
+    int elapsed = 0;
+
+    spin_lock_irqsave(&dpcm->lock, flags);
+    soundgen_systimer_update(dpcm);
+    soundgen_systimer_rearm(dpcm);
+    elapsed = dpcm->elapsed;
+    dpcm->elapsed = 0;
+    spin_unlock_irqrestore(&dpcm->lock, flags);
+    if(elapsed)
+        snd_pcm_period_elapsed(dpcm->substream);
+}
+
+static snd_pcm_uframes_t soundgen_systimer_pointer(struct snd_pcm_substream *substream)
+{
+    struct soundgen_systimer_pcm *dpcm = substream->runtime->private_data;
+    snd_pcm_uframes_t pos;
+
+    spin_lock(&dpcm->lock);
+    soundgen_systimer_update(dpcm);
+    pos = dpcm->frac_pos / HZ;
+    spin_unlock(&dpcm->lock);
+    return pos;
+}
+
+static int soundgen_systimer_create(struct snd_pcm_substream *substream)
+{
+    struct soundgen_systimer_pcm *dpcm;
+
+    dpcm = kzalloc(sizeof(*dpcm), GFP_KERNEL);
+    if (!dpcm)
+        return -ENOMEM;
+    substream->runtime->private_data = dpcm;
+    setup_timer(&dpcm->timer, soundgen_systimer_callback, (unsigned long) dpcm);
+    spin_lock_init(&dpcm->lock);
+    dpcm->substream = substream;
+    return 0;
+}
+
+static void soundgen_systimer_free(struct snd_pcm_substream *substream)
+{
+    kfree(substream->runtime->private_data);
+}
+
+static const struct soundgen_timer_ops soundgen_systimer_ops = {
+    .create =   soundgen_systimer_create,
+    .free =     soundgen_systimer_free,
+    .prepare =  soundgen_systimer_prepare,
+    .start =    soundgen_systimer_start,
+    .stop =     soundgen_systimer_stop,
+    .pointer =  soundgen_systimer_pointer,
+};
+
+// 스트림이 시작되거나 중지되면 트리거 콜백을 통해 수행된다. 필요할 경우 일시정지 및 재개도 처리할 수 있다.
+static int soundgen_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
+{
+    pr_info("PCM Trigger\n");
+    pr_debug("Command: %d\n", cmd);
+    switch(cmd) {
+        case SNDRV_PCM_TRIGGER_START:
+            /* do something to start the PCM engine */
+            return get_soundgen_ops(substream)->start(substream);
+        case SNDRV_PCM_TRIGGER_STOP:
+            return get_soundgen_ops(substream)->stop(substream);
+    }
+    return -EINVAL;
+}
+
+static int soundgen_pcm_prepare(struct snd_pcm_substream *substream)
+{
+    return get_soundgen_ops(substream)->prepare(substream);
+}
+
+/*
+snd_pcm_period_elpased가 호출될 때 실행된다.
+일반적으로 snd_pcm_period_elpased는 일종의 인터럽트에 의해 호출된다.
+현재 하드웨어 인터럽ㅌ크가 없으므로 타이머를 사용하여 생성한다. 포인터 오프셋도 타이머의 경과시간에 따라 계산된다.
+*/
+static snd_pcm_uframes_t soundgen_pcm_pointer(struct snd_pcm_substream *substream)
+{
+    pr_info("PCM Pointer\n");
+    return get_soundgen_ops(substream)->pointer(substream);
+}
+
+static const struct snd_pcm_hardware snd_soundgen_hw = {
+    .info =     (SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_INTERLEAVED | 
+                SNDRV_PCM_INFO_BLOCK_TRANSFER | SNDRV_PCM_INFO_MMAP_VALID),
+    .formats =  SNDRV_PCM_FMTBIT_S8,
+    .rates =    SNDRV_PCM_RATE_8000,
+    .rate_min = 8000,
+    .rate_max = 8000,
+    .channels_min = 2,
+    .channels_max = 2,
+    .buffer_bytes_max = 32768,
+    .period_bytes_min = 64,
+    .period_bytes_max = 32768,
+    .periods_min = 1,
+    .periods_max = 1024,
+    .fifo_size = 0,
+};
+
+/*
+모든 매개 변수가 하드웨어에 의해 설정되는 동안 이 함수는 여러번 호출 된다.
+snd_pcm_hw_params 구조체에서 정보를 검색하는 데 사용할 수 있는 여러 매크로가 있고 필요한 경우
+여기에서 하드웨어를 올바르게 구성하는 것이 중요하다.
+*/
+static int soundgen_pcm_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_params *params)
+{
+    pr_info("HW Params\n");
+    pr_debug("Buffer size %d\n", params_buffer_bytes(params));
+    /*
+    snd_pcm_lib_malloc_pages() 함수를 이용해 약간의 메모리를 할당한다.
+    일부 버퍼가 이미 사전 할당된 경우에만 작동한다. 우리의 경우 우리는
+    snd_pcm_lib_malloc_pages_all()을 도는 동안 snd_card_pcm_new 일부 메모리를 미리 할당하는 기능을 사용한다.
+    (이 함수는 초기화 중에 여러번 호출 될 수 있으므로 사용자 지정 메모리 할당을 사용하는 경우 많은 메모리에 할당하지 않도록 주의)
+    */
+    return snd_pcm_lib_malloc_pages(substream, params_buffer_bytes(params));
+}
+
+// hw_params 함수에 의해 할당 된 데이터를 해제
+static int soundgen_pcm_hw_free(struct snd_pcm_substream *substream)
+{
+    pr_info("HW free\n");
+    return snd_pcm_lib_free_pages(substream);
+}
+
+/*
+PCM 열기 함수는 서브 스트림이 열릴 때마다 호출된다. ( 녹음 또는 재생이 시작될 때 )
+이 기능을 수행하는 동안 하드웨어를 올바르게 설정하는 것이 중요하다.
+snd_pcm_hardware 구조체를 runtime -. hw/chip -> pcm_hw 구조체에 복사한다.
+여기에 일부 장치별 개인 데이터를 할당 할 수 도 있다.
+우리의 경우 장치에 따라 다르기 때문에 여기에 타이머를 할당한다.
+*/
+static int soundgen_pcm_open(struct snd_pcm_substream *substream)
+{
+    int err;
+    struct snd_card_soundgen *chip = snd_pcm_substream_chip(substream);
+    if (!chip) {
+        pr_info("Faiuled to retreiver chipo\n");
+        return -1;
+    }
+    struct snd_pcm_runtime *runtime = substream->runtime;
+    pr_info("Opening PCM\n");
+    const struct soundgen_timer_ops *ops;
+    ops = &soundgen_systimer_ops;
+
+    get_soundgen_ops(substream) = ops;
+    
+    runtime->hw = snd_soundgen_hw;
+    chip->pcm_hw = runtime->hw;
+
+    if(substream->pcm->device & 1) {
+        runtime->hw.info &= ~SNDRV_PCM_INFO_INTERLEAVED;
+        runtime->hw.info |= SNDRV_PCM_INFO_NONINTERLEAVED;
+    }
+    if(substream->pcm->device & 2) {
+        runtime->hw.info &= ~(SNDRV_PCM_INFO_MMAP || SNDRV_PCM_INFO_MMAP_VALID);
+    }
+
+    return 0;
+}
+// 서브스트림을 닫을 때 호출. open함수에 할당된 개인 데이터를 정리한다.
+static int soundgen_pcm_close(struct snd_pcm_substream *substream)
+{
+    pr_info("CLosing PCM\n");
+    get_soundgen_ops(substream)->free(substream);
+    return 0;
+}
+
+/*
+snd_pcm_ops구조체
+*/
+
+/*
+주로 사용할 snd_pcm_ops 구조체
+열기 함수는 서브 스트림이 열릴 때마다 호출된다.
+예를 들어 녹음 또는 재생이 시작될 때. 이 그능을 수행하는 동안 하드웨어를 올바르게 설정하는 것이 중요하다.
+*/
+static struct snd_pcm_ops soundgen_pcm_ops = {
+    .open = soundgen_pcm_open,
+    .close = soundgen_pcm_close,
+#ifdef DEBUG
+    .ioctl = soundgen_pcm_ioctl_wrap,
+#else
+    .ioctl = snd_pcm_lib_ioctl,
+#endif
+    .hw_params = soundgen_pcm_hw_params,
+    .hw_free = soundgen_pcm_hw_free,
+    .prepare = soundgen_pcm_prepare,
+    .trigger = soundgen_pcm_trigger,
+    .pointer = soundgen_pcm_pointer
+};
+
+
+
+/*
+PCM 장치를 만드는 것은 커널의 다른 모든 장치와 동일하다.
+새 장치를 만들고 함수 포인터를 포함하는 구조체를 채우고 어떻게든 이를 새 장치에 연결한다.
+*/
+static int snd_soundgen_new_pcm(struct snd_card_soundgen *soundgen_card)
+{
+    // PCM의 주요 구조는 snd_pcm 구조체이다.
+    struct snd_pcm *pcm;
+    struct snd_pcm_ops *ops;
+
+    int err;
+
+    /*
+    사운드 카드와 마찬가지로 일부 매개 변수를 사용하는 snd_pcm_new라는 내장 ALSA함수 중 하나를 사용한다.
+    첫 번째 매개변수는 sndc_card 구조형태의 PCM 장치에 대한 상위이다.
+    두 번째와 세 번째 매개변수는 다시 ID이다. 하나는 문자열 형식이고 다른 하나는 정수이다.
+    다음으로 재생 및 녹화 서브 스트림의 수를 나타내는 2개의 정수가 있다.
+    현재는 단지 1개의 레코딩(녹화) 서브 스트림이다.
+    마지막으로 모든 것이 잘 풀리면 할당된 PCM을 보유할 pcm 장치의 주소에 대한 포인터이다.
+    */
+    err = snd_pcm_new(soundgen_card->card, "Soundgen PCM", 0, 0, 1, &pcm);
+
+    if (err < 0) {
+        return err;
+    }
+
+    /*
+    사운드 카드와 마찬가지로 일부 함수가 PCM레이어를 통해 호출되더라도 사운드 카드에 액세스 할 수 있기를 원하므로
+    사운드 카드와 PCM 장치를 연결해야 한다.
+    PCM 장치를 추적하기 위해 struct snd_pcm을 struct snd_card_soundgen 구조에 추가하였다.
+    */
+    pcm->private_data = soundgen_card;
+    strcpy(pcm->name, "Soundgen PCM");
+    soundgen_card->pcm = pcm;
+
+    ops = &soundgen_pcm_ops;
+
+    // 레코딩 서브 스트림에 대해 snd_pcm_ops를 설정한다.
+    snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, ops);
+
+    /*
+    마지막으로 PCM 데이터를 저장할 메모리가 필요하다. 전용 하드웨어 DMA 또는 메모리가 없으므로 커널이 나중에
+    사용할 수 있는 일부 메모리를 미리 할당한다.
+    snd_pcm_lib_preallocate_pages_for_all을 사용해 주어진 메모리 크기를 미리 할당하고 이 메모리 블록이 증가할 수 있는 크기로 제한한다.
+    이 크기는 마지막 2개의 매개변수로 제어된다.
+    따라서 이 경우 아직 메모리를 미리 할당하지 않았지만 버퍼가 64Kb만큼 거질 수 있는 것이다.
+    */
+    snd_pcm_lib_preallocate_pages_for_all(pcm, SNDRV_DMA_TYPE_CONTINUOUS,
+        snd_dma_continuous_data(GFP_KERNEL), 0, (64*1024));
+    return 0;
+}
+
+/*
+<<플랫폼 디바이스 프로브>>
+장치거가 검색될 때마다 사운드 카드를 등록한다.
+*/
+static int snd_soundgen_driver_probe(struct platform_device *devptr)
+{
+    int err;
+    struct snd_card *card;
+    struct snd_card_soundgen *soundgen;
+
+    dev_info(&devptr->dev, "sound gen driver probed\n");
+    /*
+    먼저 새 사운드 카드를 만들고 첫번 째 매개 변수는 사운드 카운드에 연결된 장치이다.
+    두 번째와 세 번째 매개변수는 id이며, 하나는 정수형식이고, 다른하나는 문자열이다.
+    (만약 이 장치가 여러 장치를 지원한다면 이 값을 동적으로 반복해야 한다.)
+    네 번째 매개변수는 사운드 카드를 모듈에 연결하는 데 사용한다.
+    다섯 번째 매개변수는 snd_card 구조체 내부에 추가 private_date를 할당하는 데 사용하는 size이다.
+    이 매개변수는 자체 구조체를 저장하는 데 사용할 수 있다.
+    마지막으로는 할당된 snd_card 구조체를 반환하는 데 사용되는 snd_card의 주소에 대한 포인터이다.
+    */
+    err = snd_card_new(&devptr->dev, 0, NULL, THIS_MODULE, 
+                    sizeof(struct snd_card_soundgen), &card);
+
+    if (err < 0) {
+        dev_err(&devptr->dev, "Failed to create new soundcard\n");
+        return err;
+    }
+
+    soundgen = card->private_data;
+    soundgen->card = card;
+    
+    /* 
+    자체 구조체를 연결하며 사용자 공간에서 볼 수 있고 다른 카드를 구별하는 데 사용되는 이름을 설정한다.
+    */
+    strcpy(card->driver, "VoIP");
+    strcpy(card->shortname, "VoIP");
+    sprintf(card->longname, "VoIP with Linphone");
+    
+    /*
+    ALSA 하위 시스템에 사운드 카드를 등록한다. 플랫폼 디바이스와 마찬가지로 snd_card_register 함수로 사용한다.
+    */
+    err = snd_card_register(card);
+    if(err < 0) {
+        dev_err(&devptr->dev, "Failed to register soundcard\n");
+        goto error;
+    }
+    /*
+    장치 인터페이스를 통해 데이터를 검색하거나 카드를 작성할 수 있는지 확인한다.
+    장치의 drvdata를 설정하여 이를 수행한다.
+    */
+    platform_set_drvdata(devptr, card);
+    return 0;
+
+error:
+    snd_card_free(card);
+    return err;
+}
+/*
+플랫폼 디바이스 삭제
+카드를 제거하면 모든 데이터를 올바르게 정리해야 한다.
+그렇지 않으면 모듈을 두 번 로드 할 수 없거나 시간이 진마에 따라 손상이 발생할 수 있다.
+=> 여기서 우리는 drvdata를 설정하는 것이 왜 중요한지 알 수 있다.
+remove함수는 드라이버 인터페이스를 통해 호출되지만 사운드 카드를 정리해야 한다.
+*/
+static int snd_soundgen_driver_remove(struct platform_device *devptr)
+{
+    dev_info(&devptr->dev, "Sound gen driver removed\n");
+    snd_card_free(platform_get_drvdata(devptr));
+    return 0;
+}
+
+/*
+플랫폼 드라이버와 드라이버에 등록할 장치와 정의 프로브 및 제거
+*/
+#define SND_SOUNDGEN_DRIVER "snd_soundgen"
+static struct platform_driver snd_soundgen_driver = {
+    .probe = snd_soundgen_driver_probe,
+    .remove = snd_soundgen_driver_remove,
+    .driver = {
+        .name = SND_SOUNDGEN_DRIVER,
+    },
+};
+
+/*
+1. 플랫폼 드라이버와 그 드라이버에에 등록할 디바이스 정의
+2. 플랫폼 드라이버 정의 프로브 및 제거.
+*/
+static int __init alsa_soundgen_card_init(void)
+{
+    int err;
+
+    err = platform_driver_register(&snd_soundgen_driver);
+    if(err < 0) {
+        pr_err("Failed to register platform driver\n");
+        return err;
+    }
+
+    pr_info("Sound Generator platform device registered\n");
+    struct platform_device *device;
+    device = platform_device_register_simple(SND_SOUNDGEN_DRIVER, 0, NULL, 0);
+
+    if(IS_ERR(device)) {
+        pr_err("Failed to register platform device\n");
+        platform_driver_unregister(&snd_soundgen_driver);
+        return PTR_ERR(device);
+    }
+
+    return 0;
+}
+
+static void __exit alsa_soundgen_card_exit(void)
+{
+    platform_driver_unregister(&snd_soundgen_driver);
+}
+
+module_init(alsa_soundgen_card_init);
+module_exit(alsa_soundgen_card_exit);
+```
+
