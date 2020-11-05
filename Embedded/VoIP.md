@@ -2590,6 +2590,8 @@ BR2_PACKAGE_LINPHONE, BR2_PACKAGE_PKGCONF, BR2_PACKAGE_LIBEXOSIP2, BR2_PACKAGE_S
 
 
 
+## latest version
+
 - 20/10/29
 
 으아... e2fsprogs 에러는 004file.patch를 해당 폴더에 넣어야 한다... 이런걸 까먹다니..
