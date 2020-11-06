@@ -3425,9 +3425,449 @@ eos_defconfig에 추가로 ~~MEDIASTREAMER~~, ~~LIBSOUP~~, ORTP를 enable했다.
 
 
 
+- 20/11/06
+
+# **LINUX Audio Programming**
+
+## OSS(Open Sound System)
+
+리눅스 커널에서는 기본적으로 사운드 디바이스 드라이버를 제공한다. 하지만, 리눅스 커널에 기본적으로 포함되어 있는 드라이버는 수가 적어 다양한 사운드 디바이스를 사용할 수 없다. 따라서, 몇가지의 대안이 존재한다.
+
+리눅스의 커널에 기본적으로 포함된 사운드 디바이스 드라이버를 [OSS/Free](http://www.opensound.com/ossfree/index.html)라고 한다. OSS/Free는 [4Front Technologies](http://www.4front-tech.com/.)에서 개발한 [OSS](http://www.opensound.com/.)를 따르는 공개 드라이버로 4Front Technologies의 OSS 개발자가 대부분을 개발하였다. 그러나 다양한 드라이버가 OSS/Free에는 존재하지 않고, 그 외의 많은 드라이버는 4Front Technologies에 의해 상용으로 개발된다. 따라서, 리눅스 진영에서 무료로 사용할 수 있는 드라이버는 그리 많지 않게 된다. 이러한 현실을 극복하기 위해서 [SuSE](http://www.suse.com/.) 커뮤니티로 부터 [ALSA(Advanced Linux Sound Architecture) Project](http://www.alsa-project.org/.)가 시작되었다. ALSA는 오픈소스 프로젝트로 수 많은 드라이버들이 계속 개발되고 무료로 공개되고 있다. 기본적으로 리눅스에서의 오디오 프로그래밍은 위 세가지 종류의 디바이스 드라이버에 의존적이다. 하지만, [OSS/Free](http://www.opensound.com/ossfree/index.html.)와 [OSS](http://www.opensound.com)는 동일한 [OSS API](http://www.opensound.com/pguide/oss.pdf)를 사용하고, [ALSA](http://www.alsa-project.org/.) 또한 [OSS API를 에뮬레이션](http://www.alsa-project.org/~iwai/OSS-Emulation.html) 하기 때문에 리눅스의 오디오 프로그래밍은 OSS API만으로 충분히 구현 가능하다. 물론, 보다 진보된 기능을 사용하고 싶다면 [ALSA Library API](http://www.alsa-project.org/alsa-doc/alsa-lib/)를 사용하여야 할 것이다.
+
+OSS 드라이버의 설치 또는 ALSA 드라이버의 설치는 본 문서의 범위를 벗어나기 때문에 필요하다면 [Installing Open Sound System](http://www.4front-tech.com/install_gzipped.html.) 또는 [ALSA Sound Card Matrix & INSTALL documentation](http://www.alsa-project.org/alsa-doc/.)을 참조하기 바란다.
+
+## Devices
+
+OSS[3]에는 다양한 디바이스가 존재한다. 기본적으로 유닉스 기반의 시스템은 모든 디바이스를 파일과 동일하게 처리하기 때문에, OSS에 있어서도 예외는 아니다. OSS에 의해서 지원되는 디바이스 파일은 다음과 같다.
+
+- `/dev/mixer`
+   사운드 카드의 믹서에 접근하기 위한 디바이스 파일
+- `/dev/sequencer`
+   전자 음악(Electronic Music)을 목적으로 하는 디바이스 파일
+- `/dev/midi`
+   Raw 모드로 동작하는 MIDI버스 포트의 인터페이스로 TTY(캐릭터 터미널)과 유사하게 동작하는 디바이스 파일
+- `/dev/dsp`
+   디지탈 오디오 어플리케이션(Audio Application)의 주요 디바이스 파일로 기본적으로 8-비트의 부호없는(unsigned) 선형(linear) 인코딩을 사용한다.
+- `/dev/audio`
+   /dev/dsp와 동일한 디바이스 파일이지만, 기본 인코딩은 Mu-Law 인코딩 이다.
+- `/dev/dspW`
+   /dev/dsp와 동일한 디바이스 파일이지만, 기본 인코딩은 16-비트의 부호있는(signed) 리틀-엔디안(little-endian)을 사용한다.
+- `/dev/sndstat`
+   다른 디바이스 파일과 달리 사운드 카드의 진단(Diagnostic)을 위한 디바이스 파일로 사람이 읽을 수 있는(Human readable format) 정보를 제공한다. 따라서, 'cat /dev/sndstat'과 같은 명령으로 정보를 볼 수 있다.
+- `/dev/dmfm`
+   FM 신디사이저(Synthesizers)를 위한 Raw 인터페이스(Interface) 이다.
+- `/dev/music`
+   /dev/sequencer와 매우 유사한 디바이스 파일로 MIDI 디바이스와 신디사이저(Synthesizers)를 동일한 방법으로 다룬다.
+
+위와 같이 OSS에서는 다양한 사운드 디바이스를 지원하지만, 본 문서에서 실제로 사용될 디바이스는 /dev/mixer와 /dev/dsp(또는 /dev/audio나 /dev/dspW)와 같다. /dev/mixer는 각 채널별 음량(Volume)이나 녹음(Recording)의 대상이 되는 디바이스를 설정할 수 있으며, /dev/dsp는 설정된 녹음 디바이스로 부터 데이타를 읽거나 오디오를 출력하기 위해 사용된다.
+
+OSS에서 대부분의 디바이스는 하나 이상 존재하는 것이 가능하다. 따라서 위의 디바이스 파일뒤에 숫자를 붙여 구분하게 되며, /dev/mixer 또는 /dev/dsp와 같은 파일은 심볼릭 링크(Symbolic Links)로 존재한다. 기본적으로 각 심볼릭 링크는 첫번째 디바이스를 가리킨다(그러나 이를 보장할 수는 없다).
+
+또한 리눅스의 경우 OSS는 모든 디바이스의 메이져 번호(Major Number)를 14로 고정하고, 0에서 8 사이의 번호를 마이너 번호(Minor Number)의 하위 4-비트에 위치시켜 디바이스의 종류를 구분한다. 또한 마이너 번호에서 분류 번호 다음의 4-비트에 디바이스의 번호를 더하여 최종 디바이스의 마이너 번호가 결정된다(예: /dev/dsp1의 마이너 번호는 19(16+3:00010011)). 따라서, 실제로 다음과 같은 디바이스 파일이 존재하게 된다:
+
+Major   Minor 												  Name
+\-----------------------------------------------------------------------
+14 		   0   											  /dev/mixer0
+14 		   1  										   /dev/sequencer
+14   		 2   											  /dev/midi00
+14  		  3   												  /dev/dsp0
+14  		  4  											   /dev/audio0
+14   		 5 											    /dev/dspW0
+14   		 6											     /dev/sndstat
+14  		  7   											  /dev/dmfm0
+14  		  8  											   /dev/music
+14 		   16   											 /dev/mixer1
+14		    19 												   /dev/dsp1
+14		    35												    /dev/dsp2
+
+본 문서에는 /dev/mixer와 /dev/dsp(또는 /dev/audio나 /dev/dspW) 이외의 디바이스에 대한 내용은 다루지 않는다. 자세한 내용이 알고 싶다면 `OSS API`을 참조하기 바란다.
+
+## Header Files
+
+리눅스에서 OSS API[6]를 이용한 오디오 프로그래밍을 하기 위해서는 우선 오디오 디바이스와의 통신을 위해 필요한 다양한 함수와 구조체, 상수등을 담고 있는 헤더 파일(Header File)을 include하여야 한다. OSS API에서는 단지 하나의 C언어 헤더 파일 <sys/soundcard.h>만이 요구된다(<linux/soundcard.h>를 사용할 수 있지만, 이는 표준이 아니다). 그러나, OSS API를 사용하기 위한 ioctl, read, 또는 write와 같은 표준 함수나 시스템 콜(System Call)을 사용하기 때문에 다음의 헤더
+파일(Header Files)들을 필요로 한다.
+
+```c
+#include <stdio.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/soundcard.h>
+```
+
+## Mixer Programming
+
+믹서(Mixer) 프로그래밍은 각종 사운드 채널(Channel)의 음량(Volume)을 설정하고, 녹음(Recording)을 위한 디바이스를 선택하는 방법을 제공한다. 이와 같은 프로그램은 기본적으로 다음과 같은 순서에 따라 실행된다
+
+1. OSS 믹서 디바이스 열기
+2. 사용 가능한 믹서 채널 얻기 (옵션)
+3. 사용 가능한 레코딩 디바이스 얻기 (옵션)
+4. 레코딩 소스 선택하기
+5. 현재의 레코딩 소스 얻기 (옵션)
+6. 음량 설정하기
+7. 음량 구하기 (옵션)
+8. OSS 믹서 디바이스 닫기
+
+이제 위의 각 단계에 대해 자세히 살펴 보겠다.
+
+### 1. Open the OSS Mixer Device
+
+첫번째 단계는 매우 비교적 매우 간단하다. open 함수를 이용하여 믹서(Mixer) 디바이스를 열고 파일 기술자(File Descriptor)를 얻어오면 된다. open 함수를 이용한 코드는 다음과 같다
+
+```c
+int mixer;
+char *device = "/dev/mixer";
+if ( (mixer = open(device, O_RDWR)) < 0 )
+{
+  // Could not open device
+}
+```
+
+디바이스 이름 `device`는 기본적으로 `/dev/mixer` 또는 사용자 입력을 사용하는 것이 좋다. 이는 프로그램의 **이식성(Portability)**를 높이기 위한 방법으로 프로그래머가 `/dev/mixer0`과 같은 장치로 값을 고정한다면, 프로그램은 특정 하드웨어에서만 작동하거나 오동작을 할 수 있다. `/dev/mixer`를 사용할 경우는 심볼릭 링크로 사용자가 변경할 수 있기 때문에 큰 문제가 되지 않는다. open 호출은 성공하였을 경우 디바이스의 파일 기술자를 mixer로 반환하고, 실패하였을 경우 -1로 설정한다.
+
+### 2. Get Available Mixer Channels (optional)
+
+이번 단계는 생략이 가능하다. 하지만, 모든 사운드 디바이스에서 사용할 수 있는 채널이 같은 것은 아니다. 예를 들어 USB 카메라(Camera)에 내장된 마이크(Mic.)와 같은 사운드 디바이스는 오직 mic만이 가능한 채널이지만, 보편적인 사운드 카드는 보다 많은 채널을 지원한다. 따라서, 범용적인 프로그램의 작성을 위해서는 현재 디바이스의 채널을 알아보아야 할 것이다. 이를 위해 ioctl을 통한 쿼리를 이용하게 된다. 다음의 코드는 사용가능한 믹서 채널을 알아보기 위해 쿼리를 보낸다:
+
+```c
+int devmask = 0;
+if ( -1 == ioctl(mixer, SOUND_MIXER_READ_DEVMASK, &devmask) )
+{
+  // Query failed
+}
+```
+
+ioctl 호출은 성공하였을 경우 0이 아닌 수를 반환하며, 실패하였을 경우 -1을 반환한다. 위에서 사용된 SOUND_MIXER_READ_DEVMASK ioctl 호출은 성공하였을 경우 devmask에 사용가능한 채널들의 마스크(Mask)를 담는다. 기본적으로 각 채널은 고유의 상수를 갖는다. 각 상수는 0부터 상수 SOUND_MIXER_NRDEVICES 사이의 정수이다. 따라서, 마스크에 특정 채널의 비트를 확인하기 위해서는 다음의 식을 사용하여야 한다:
+
+```c
+if ( (1 << SOUND_MIXER_MIC) & devmask )
+{
+  // SOUND_MIXER_MIC is available.
+}
+else
+{
+  // SOUND_MIXER_MIC is not available.
+}
+```
+
+각 채널에 해당하는 상수는 헤더 파일 `<sys/soundcard.h>`와 OSS API를 참조하기 바란다.
+
+### 3. Get Available Recording Devices (optional)
+
+이번 단계 또한 생략할 수 있지만, 위의 믹서(Mixer) 채널(Channels)과 동일한 이유로 이식성(Portability)을 위해 사용하는 것이 좋다. 이번 단계에서는 녹음(Recording)을 위해 사용될 수 있는 디바이스를 알아보기 위해 사용된다. 이 또한 ioctl 호출을 이용하여 쿼리를 보내게 되는데 이는 다음의 코드를 사용한다:
+
+```c
+int recmask = 0;
+if ( -1 == ioctl(mixer, SOUND_MIXER_READ_RECMASK, &recmask) )
+{
+  // Query failed
+}
+```
+
+`SOUND_MIXER_READ_RECMASK` ioctl도 recmask에 마스크(Mask)를 담는다. 따라서 위와 동일한 방법으로 다음과 같이 테스트 할 수 있다.
+
+```c
+if ( (1 << SOUND_MIXER_MIC) & recmask )
+{
+  // SOUND_MIXER_MIC is available.
+}
+else
+{
+  // SOUND_MIXER_MIC is not available.
+}
+```
+
+### 4. Select Recording Source
+
+녹음(Recording)에 사용되는 소스(Sources)는 디바이스에 따라 다르지만, 보편적으로 한가지만 사용 가능하다. 녹음을 위한 소스를 선택하기 위해서는 다음의 ioctl 호출을 사용한다:
+
+```c
+int srcmask = 0;
+int src = SOUND_MIXER_MIC;
+srcmask = srcmask | (1 << src);
+if ( -1 == ioctl(mixer, SOUND_MIXER_WRITE_RECSRC, &srcmask) )
+{
+  // Set failed
+}
+```
+
+위의 호출에서 주의할 점은 여러가지 소스를 선택하는 것 또한 가능하기 때문에, srcmask는 마스크(Mask)가 되어야 한다는 것이다. 따라서, srcmask에 선택된 소스의 비트를 추가하기 위해 srcmask = srcmask | (1 << src) 와 같은 식이 사용된다. 기본적으로 사용자가 각 소스에 해당하는 상수를 인지하기는 어렵다. 따라서, 각 소스에 할당된 고유의 이름이 존재하는데 이는 제공되는 배열 SOUND_DEVICE_LABELS를 통해 다음과 같이 구할 수 있다:
+
+```c
+int index;
+char *src = "mic";
+char *names[SOUND_MIXER_NRDEVICES] = SOUND_DEVICE_LABELS;
+for (index = 0; index < SOUND_MIXER_NRDEVICES; index++)
+{
+  if ( 0 == strcmp(names[index], src) )
+    srcmask = srcmask | (1 << index);
+}
+```
+
+### 5. Get Currently Active Recording Sources (optional)
+
+이번 단계에서는 앞서 설정한 녹음(Recording) 소스를 확인하기 위한 방법을 설명한다. 이번 단계 또한 생략이 가능하지만, 정확한 설정이 이루어졌는지 확인하기 위해서 사용하는 것이 좋다. 이번 단계 또한 다음의 ioctl 호출을 사용하여 수행하며, 현재 녹음(Recording) 소스(Source)의 마스크(Mask)를 반환하게 된다:
+
+```c
+int index;
+int recsrc = 0;
+if ( -1 == ioctl(mixer, SOUND_MIXER_READ_RECSRC, &recsrc) )
+{
+  // Query failed
+}
+for (index = 0; index < SOUND_MIXER_NRDEVICES; index++)
+{
+  if ( (1 << index) & recsrc )
+    // Current recording source
+}
+```
+
+### 6. Set Volume
+
+이번 단계는 음량을 조절하기 위한 단계이다. 이번 단계에서 음량을 조절하기 위해서는 사운드 카드가 확실하게 지원하는 **채널(Channels)**을 사용하여야 한다. 채널을 바꾸는 동작 역시 **ioctl 호출**을 사용하며, `MIXER_WRITE()` 매크로(Macro)를 사용하여 음량을 조절할 채널을 선택하고 ioctl의 파라미터(Parameter)로 0과 100사이의 음량을 지정하면 된다. 
+
+단, 음량은 0과 100사이에서 요구한 볼륨이 정확하게 설정되지 않을 수 있다. 따라서 실제로 설정된 음량이 호출이 완료된 후 파라미터를 통해 반환된다. 만일 채널이 스테레오(Stereo)를 지원할 경우에는 왼쪽과 오른쪽의 음량을 각각 설정할 수 있는데 이 경우에 왼쪽의 음량은 하위 8비트에 오른쪽의 음량은 그 위의 8비트에 저장되게 된다. 또한 모노(Mono)의 경우에는 왼쪽의 음량만을 설정한 채 나머지는 0으로 채우게 된다. 따라서 음량을 설정하기 위해서는 다음의 코드를 이용여야 한다:
+
+```c
+int stereomask = 0;
+int volume = 70;
+if ( -1 == ioctl(mixer, SOUND_MIXER_READ_STEREODEVS, &stereomask) )
+{
+  // Query failed
+}
+
+if ( (1 << SOUND_MIXER_VOLUME) & stereomask )
+  volume = volume | (volume << 8);
+
+if ( -1 == ioctl(mixer, MIXER_WRITE(SOUND_MIXER_VOLUME), &volume) )
+{
+  // Set failed
+}
+// Print actual volume
+```
+
+### 7. Get Volume (optional)
+
+이번 단계는 앞서 설정한 음량이 올바르게 설정되었는지 확인하기 위해서, 사용되는 단계로 생략이 가능하지만, 올바르게 음량이 설정되었는지 또는 현재 설정된 음량을 확인하기 위하여 사용한다. 사용법은 앞의 4.6 Set Volume장에서와 비슷하며, 다음과 같다:
+
+```c
+if ( -1 == ioctl(mixer, MIXER_READ(SOUND_MIXER_VOLUME), &volume) )
+{
+  // Query failed
+}
+if ( (1 << SOUND_MIXER_VOLUME) & stereomask )
+{
+  printf("Current left master volume level is %d\n", (0xFF & volume) );
+  printf("Current right master volume level is %d\n", (0x00FF & volume) );
+}
+else
+{
+  printf("Current master volume level is %d\n", (0xFF & volume) );
+}
+```
+
+### 8. Close the Mixer Device
+
+마지막 단계는 매우 간단하다. 단순히 앞서 open한 믹서(Mixer) 디바이스를 다음의 호출로 닫아주면 된다.
+
+```c
+close(mixer);
+```
+
+## Audio Programming
+
+선택된 녹음(Recording) 디바이스로부터 데이터를 읽어와 저장하고, 저장된 데이터를 출력하기 위한 방법을 제공한다. 이와 같은 프로그램은 기본적으로 다음과 같은 순서에 따라 실행된다.
+
+1. OSS 오디오 디바이스 열기
+2. 오디오 포맷(비트 수) 설정
+3. 채널의 수(모노/스트레오) 설정
+4. 샘플링 레이트(Sampling Rate) 설정
+5. 녹음(Recording) 및 재생(Playing)
+6. 동기화(Synchronize)
+7. OSS 오디오 디바이스 닫기
+
+오디오 프로그래밍에 있어서 위 단계를 지키는 것이 매우 중요하다. 순서가 뒤바뀔 경우 프로그래머가 원하지 않은 동작을 할 수 있다. 따라서 반드시 위의 순서에 따라 프로그램을 작성해야 한다. 자세한 이유는 **OSS API**을 참조한다.
+
+*Jeff Tranter, Open Sound System Programmer's Guide, 4 Front Technologies, http://www.opensound.com/pguide/oss.pdf, 2000.*
+
+이제 위의 각 단계에 따라 자세히 살펴 보겠다.
+
+### 1. Open the OSS Audio Device
+
+오디오(Audio) 프로그래밍의 첫번째 단계는 단지 디바이스의 이름이 변경되는 것을 제외하면 믹서(Mixer) 프로그래밍의 첫번째 단계와 동일하다. 또한, 같은 이유로 특정한 디바이스 파일 보다는 /dev/dsp와 같은 보편적인 이름을 사용하거나 사용자 입력을 사용할 것을 추천한다.
+
+또한 녹음(Recording)을 위해 디바이스를 사용하려 한다면 O_RDONLY로, 재생(Playing)을 위해서라면 O_WRONLY로 열어야 한다. 물론 디바이스에 따라 O_RDWR로 디바이스 파일을 오픈할 수 있지만, 이는 Full Duplex를 지원하는 디바이스로 제한되고 별도의 설정을 필요로
+한다. 
+
+따라서, Full Duplex와 관련된 내용은 본 문서에서 다루지 않으며, 보다 보편적인 Half Duplex를 기준으로 설명하겠다. Full Duplex와 관련된 자세한 내용은 OSS API[6]을 참조하기 바란다.
+
+```c
+int audio;
+char *device = "/dev/dsp";
+if((audio == open(device, O_RDONLY)) < 0) or 
+if((audio == open(device, O_WRONLY)) < 0){
+    // Could not open device
+}
+```
+
+### 2. Select Audio Format (Number of Bits)
+
+이번 단계는 오디오 포멧을 설정하는 단계이다. 오디오 포멧은 사운드 데이타의 최소 단위인 샘플(Sample)을 표현하기 위한 방법을 말한다. 오디오 포멧 각각의 포멧에 대응하는 상수가 존재하며, 다음과 같은 오디오 포멧이 OSS에서 제공된다
+
+Name     										  Description
+\-----------------------------------------------------------------------
+AFMT_QUERY  			  현재의 오디오 포멧을 쿼리한다.
+AFMT_MU_LAW 			  Mu-Law
+AFMT_A_LAW				    A-Law
+AFMT_IMA_ADPCM		 16-비트 오디오 시퀀스(Sequence)를 A 4:1로 압축
+AFMT_U8  					   부호없는(unsigned) 8-비트
+AFMT_S16_LE  			 부호있는(signed) 16-비트 리틀-엔디안(Little-Endian)
+AFMT_S16_BE			   부호있는(signed) 16-비트 빅-엔디안(Big-Endian)
+AFMT_S16_NE  			 부호있는(signed) 16-비트 (시스템 의존적)
+AFMT_S8    					 부호있는(signed) 8-비트
+AFMT_S32_LE			   부호있는(signed) 32-비트 리틀-엔디안(Little-Endian)
+AFMT_S32_BE			   부호있는(signed) 32-비트 빅-엔디안(Big-Endian)
+AFMT_U16_LE 			  부호없는(unsigned) 16-비트 리틀-엔디안(Little-Endian)
+AFMT_U16_BE 			  부호없는(unsigned) 16-비트 빅-엔디안(Big-Endian)
+AFMT_MPEG				    MPEG MP2/MP3 포멧 (현재 지원되지 않음)
+
+대부분의 사운드 카드는 AFMT_U8 포멧을 지원하며, 요즘 대부분의 사운드 카드에서는 AFMT_S16_LE 포멧을 사용하고 있다. 하지만 부호있는(signed) 16-비트의 경우에는 시스템에 따라 정확한 작동을 보장하지 못할 수 있다. 
+
+이에 관한 자세한 정보는 OSS API[6]을 참조하기 바란다. 본 문서에서는 리틀-엔디안 방식의 시스템을 사용한다는 가정아래 가장 보편적인 AFMT_S16_LE를 사용하도록 하겠다. 오디오 포멧을 설정하기 위해서는 다음의 ioctl 호출을 사용한다:
+
+```c
+int format = AFMT_S16_LE;
+if (-1 == ioctl(audio, SNDCTL_DSP_SETFMT, &format))
+{
+	// Set failed
+}
+if (AFMT_S16_LE != format)
+{
+    // Not support
+}
+```
+
+오디오 포멧의 설정 또한 믹서(Mixer) 프로그래밍에서의 음량(Volume) 설정과 같이 요청한 오디오 포멧을 지원하지 않는다면, 근접한 오디오 포멧으로 설정하고 파라미터(Parameter)를 통해 그 값을 반환한다. 
+
+따라서, 설정 후 적용된 값을 검사하여야 할 필요가 있다.
+
+### 3. Select the Number of Channels (Mono/Stereo)
+
+이번 단계는 우리가 녹음(Recording)하기 위해 선택한 소스의 채널의 수를 설정하는 단계이다. **반드시 이번 단계는 샘플링 레이트(Sampling Rate)의 설정보다 앞서 이루어져야 한다.** 자세한 이유는 OSS API[6]를 참조하기 바란다. 채널의 설정 또한 지원하지 않는 채널의 수라면 근사치로 설정하게 되므로 ioctl의 파라미터(Parameter)를 통한 반환된 값을 확인하여야 한다. 
+
+채널을 설정하기 위한 ioctl 호출은 다음과 같다:
+
+```c
+int channels = 2;
+if ( -1 == ioctl(audio, SNDCTL_DSP_CHANNELS, &channels) )
+{
+ // Set Failed
+}
+if (2 != channels)
+{
+ // Not Support
+}
+```
+
+### 4. Select Sampling Rate (Speed)
+
+이번 단계는 샘플링 레이트(Sampling Rate)를 결정하는 단계이다. 샘플링 레이트는 소리의 질을 결정하는 중요한 요소 중 하나이다. 
+
+OSS API[6]는 1Hz에서 2GHz의 대역폭을 지원한다. 기본적으로 지원되는 샘플링 레이트는 8kHz로 전화기 수준의 음질을 뜻하며, CD 수준은 44.1kHz, DVD 수준은 96kHz의 값을 갖는다. 우리는 기본적인 8kHz의 값으로 설정 할 것이며, 디바이스에 따라 지원하는 샘플링 레이트의 값이 서로 다르다. 
+
+따라서, 샘플링 레이트의 값 또한 요청한 값에 근사한 값으로 설정될 수 있다. 그러므로, 역시 ioctl 호출 후의 파라미터(Parameter)를 조사하여야 한다. 샘플링 레이트를 설정하기 위한 ioctl 호출은 다음과 같다:
+
+```c
+int speed = 8000;
+if ( -1 == ioctl(audio, SNDCTL_DSP_SPEED, &speed) )
+{
+  // Set Failed
+}
+if (8000 != speed)
+{
+  // Not Support
+}
+```
+
+### 5. Record or Play
+
+이제 주요 작업인 녹음(Recording)와 재생(Playing)을 하는 단계 이다. 이 단계에서는 우선 오디오(Audio) 데이타를 저장할 버퍼(Buffer)를 생성하여야 하는데, 버퍼의 자료형(Data Type)은 오디오 포멧에 의존적으로 결정된다. 예를 들면, 리틀 엔디안(Little-Endian) 형태의 데이타를 빅 엔디안(Big-Endian) 머신(Machine)에서 사용할 경우 별도의 처리를 위해 데이타 타입이 요구될 수 있다. 또한, 버퍼의 크기는 샘플의 크기의 배수로 설정 되어야 한다.
+
+만약 앞에서 디바이스 파일을 읽기전용으로 열었다면, 프로그래머는 데이타를 읽어 저장하기 위한 녹음(Recording)을 수행하여야 한다. 녹음은 단순히 디바이스 데이타에서 read 호출을 사용하여 정해진 바이트 만큼을 읽어와 파일로 저장하는 작업을 뜻한다. 단, 오디오 디바이스로 부터의 read는 EOF(End of File)가 존재하지 않기 때문에 프로그래머가 정확한 녹음의 끝을 알려야 한다. **read** 호출을 이용하여 오디오 데이타를 저장하는 방법은 다음과 같다:
+
+```c
+int index;
+int length = 640;
+int count = 640;
+char *file = "file_name";
+FILE *fin;
+int flength;
+unsigned char buffer[2048];
+if ( NULL == (fin = fopen(file, "w")) )
+{
+  // Could not open device
+}
+for (index = 0; (index < 1000) && (length > 0) && (flength > 0); index++)
+{
+  if ( -1 == (length = read(audio, buffer, count)))
+  {
+    // Read failed
+  }
+  flength = fwrite(buffer, 1, count, fin);
+}
+fclose(fin);
+```
+
+녹음된 사운드를 재생(Playing)하는 방법은 위와 거의 비슷한 방법으로 write 호출을 사용한다. **write** 호출의 사용은 다음과 같다
+
+```c
+int index;
+int length = 640;
+int count = 640;
+char *file = "file_name";
+FILE *fout;
+int flength;
+unsigned char buffer[2048];
+if ( NULL == (fout = fopen(file, "r")) )
+{
+  // Could not open device
+}
+flength = fread(buffer, 1, count, fout);
+while ( (flength > 0) && (length > 0) )
+{
+  if ( -1 == (length = write(audio, buffer, count)))
+  {
+    // Write failed
+  }
+  flength = fread(buffer, 1, count, fout);
+}
+fclose(fout);
+```
+
+### 6. Synchronize
+
+이번 단계는 녹음(Recording) 또는 재생(Playing)을 완료한 후 현재 버퍼(Buffer)에 남아있는 내용을 모두 출력 또는 입력하기 위해서 동기화를 시도하는 단계이다. 이 또한 ioctl 호출에 의해서 이루어지는데, 다음의 호출이 버퍼의 내용이 모두 비워질 때까지 프로그램의 동작을
+지연(Delay)시키게 된다:
+
+```c
+if ( -1 == ioctl(audio, SNDCTL_DSP_SYNC, 0) )
+{
+  // Sync failed
+}
+```
+
+### 7. Close the OSS Audio Device
+
+마지막으로 믹서(Mixer) 프로그래밍의 경우와 같이 open된 디바이스 파일을 닫기 위해 다음의 코드를 수행하여야 한다:
+
+```c
+close(audio);
+```
 
 
 
+- 20/11/09
 
-
-
+해야할 것 : aloop.c참고해서 voip.c로 복사 후 동작하는 함수에 loopback이 되지않고 파일로 저장할 수 있도록 혹은 계속 pcm을 받을 수 있도록 구현하기!
