@@ -3871,3 +3871,141 @@ close(audio);
 - 20/11/09
 
 해야할 것 : aloop.c참고해서 voip.c로 복사 후 동작하는 함수에 loopback이 되지않고 파일로 저장할 수 있도록 혹은 계속 pcm을 받을 수 있도록 구현하기!
+
+**`ac97.c`와 `voip.c`(aloop.c) 비교하기**
+
+```bash
+# ac97.c
+dma_playback/capture_period_done
+prepare_dma
+playback/capture_open
+playback/capture_close
+plyback/capture_hw_params
+playback/capture_hw_free
+playback/capture_prepare
+capture_prepare
+playback/capture_trigger
+playback/capture_pointer
+playback/capture_ops
+interrupt
+pc_defs
+pcm_new
+mixer_new
+write
+read
+filter
+rest
+remove
+driver
+# module_platform_driver
+```
+
+```bash
+# voip.c
+module_param_array
+MODULE_PARM_DESC
+byte_pos
+frac_pos
+get_setup
+get_notify
+get_rate_shift
+timer_start
+timer_stop
+check_format
+active_notify
+trigger
+params_change_substream
+parmas_change
+prepare
+clear_caputre_buf
+copy_play_buf
+bytepos_delta
+bytepos_finish
+pos_update
+timer_function
+pointer
+pcm_hardware
+runtime_free
+hw_params
+hw_free
+get_cable_index
+rule_format
+rule_rate
+rule_channels
+open
+close
+playback/capture_ops
+pcm_new
+rate_shift_info
+rate_shift_put
+notify_get
+notify_put
+active_get
+format_info
+format_get
+rate_info
+rate_get
+channels_info
+channels_get
+mixer_new
+print_dpcm_info
+print_substream_info
+print_cable_info
+proc_new
+probe
+remove
+unregister_all
+# init
+# exit
+```
+
+
+
+# voip.c
+
+voip.c를 builtin으로 설정
+
+```bash
+call dhkdghehfdl@10.10.81.102:5060	# PC
+call dhkdghehfdl@10.10.81.102	    # PC
+call dhkdghehfd@sip.linphone.org	# iPhone
+```
+
+```bash
+# linphonec
+[  217.009829] voip_open
+[  217.012206] get_cable_index
+[  217.015169] get_notify
+[  217.018471] voip_close
+[  217.021092] get_cable_index
+[  217.023957] voip_timer_stop
+[  217.026844] voip_runtime_free
+[  217.030978] voip_open
+[  217.033415] get_cable_index
+[  217.036297] get_notify
+[  217.039148] voip_close
+[  217.041704] get_cable_index
+[  217.044609] voip_timer_stop
+[  217.047481] voip_runtime_free
+[  217.053271] voip_open
+[  217.059732] get_cable_index
+[  217.063956] get_notify
+[  217.068118] voip_close
+[  217.071639] get_cable_index
+[  217.075851] voip_timer_stop
+[  217.078971] voip_runtime_free
+[  217.083655] voip_open
+[  217.086143] get_cable_index
+[  217.089026] get_notify
+[  217.091613] voip_close
+[  217.094071] get_cable_index
+[  217.096956] voip_timer_stop
+[  217.099832] voip_runtime_free
+Ready
+# call
+
+[Mon Nov 09 16:13:56.163 2020] [  205.028629] ambarella-sd e001f000.sdmmc2: pending mrq: data[53]
+[Mon Nov 09 16:13:56.168 2020] [  205.028679] AR6000: SDIO bus operation failed! MMC stack returned : -110 
+[Mon Nov 09 16:13:56.168 2020] [  205.028686] __HIFReadWrite, addr:0X012E7E, len:00000512, Write, Async
+```
+
