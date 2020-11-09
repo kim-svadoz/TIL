@@ -2577,3 +2577,73 @@ module_init(alsa_soundgen_card_init);
 module_exit(alsa_soundgen_card_exit);
 ```
 
+# **28. 커널 프로그래밍에서 쉘 명령을 실행하는 방법**
+
+유저레벨에서 커널에 있는 API 를 동작시키는 인터페이스는 시스템 콜로써 항상 사용되는 것이다.
+
+하지만 커널 레벨에서 사용자 공간의 어플리케이션을 실행하는 것은 그다지 알려져 있지 않다.
+
+
+
+하지만 가만히 생각해 보면 핫플러그인과 같이 USB 가 꼽히면 자동으로 마운트되는 것을 우리는 알고 있다.
+
+과연 어플리케이션에서 주기적으로 USB 꼽힌 것을 체크해서 마운트 하는 것일까?
+
+그렇지 않다.
+
+커널 레벨에서 USB가 인식되면 종류에 따라 마운트를 시켜주는 함수가 실행되게 된다.
+
+혹은 모듈이 필요하면 모듈까지도 로딩을 시켜준다.
+
+이런 인터페이스가 가능한 커널 함수를 소개한다.
+
+
+
+그 인터페이스의 이름은 `usermodehelper` API 이다.
+
+그 API를 한번 살펴보면
+
+```bash
+# usermod 헬퍼 API 핵심함수
+call_usermodehelper_setup		사용자 지역 호출을 위한 핸들러 준비	
+call_usermodehelper_setkeys		헬퍼의 세션 키 설정
+call_usermodehelper_setcleanup	헬퍼의 정리 함수 설정
+call_usermodehelper_stdinpipe		헬퍼의 stdin 파이프 작성
+call_usermodehelper_exec		사용자 지역 호출 호출
+```
+
+자료구조를 살펴보면(`kmod.h`)
+
+![image-20201109180023689](https://user-images.githubusercontent.com/58545240/98521330-9d193800-22b6-11eb-8940-fdebfb410497.png)
+
+의외로 아주 간단한 구조를 가지고 있다.
+
+이제 사용자 모드 헬퍼 API의 내부 구조를 살펴보면
+
+`kernel_execve` 를 사용하여 커널 공간 커널모듈 로더로 사용하는 구현을 한다.
+
+`kernel_execve` 는 부팅시 init 프로세스를 시작하는데 사용되는 함수이며 사용자 모드 헬퍼 API는 사용하지 않는다.
+
+**`#include <linux/kmod.h>` 추가 -> `call_usermodhelper()` 함수 사용가능!!**
+
+=> *`call_usermodhelper()` : 커널에서 유저레벨 응용프로그램 실행하게 해준다.*
+
+```bash
+# call_usermodehelper()
+- 디바이스 드라이버(커널)에서 응용 프로그램을 수행할 수 있도록 지원하는 함수
+- static inline int call_usermodehelper(char *path, char **argv, char **envp, int wait);
+- Argument :
+    . path : 수행하고자하는 응용 프로그램을 지정
+    . argv : 응용 프로그램의 인자를 지정
+    . envp : 응용 프로그램의 동작 환경 변수를 설정
+    . wait : call_usermodehelper() 함수를 종료할 때 응용 프로그램의 수행 결과를 기다릴 필요가 있는지를 설정
+- Return value :
+    . 함수가 성공적으로 수행되었다면 0을 반환.
+    . 응용 프로그램을 발견하지 못했거나 응용 프로그램이 0이외의 값을 반환하면 0이외의 값 반환.
+- 기타
+    . call_usermodehelper() 함수에 의해 수행될 때 출력 함수 printf()로 출력된는 값은 메인 콘솔로 나타나므로 주의 바람.
+    . keventd 의 자식프로세스로 수행하고, root 권한을 가진채로 수행된다.
+    . keventd 는 자식프로세스가 exit 할때 결과를 받는다.
+    . 반드시 프로세스 context 에서 호출되어야 하고, 성공시 0, 실패는 - 에러코드를 리턴한다.
+```
+
