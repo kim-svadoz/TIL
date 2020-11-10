@@ -4009,3 +4009,6 @@ Ready
 [Mon Nov 09 16:13:56.168 2020] [  205.028686] __HIFReadWrite, addr:0X012E7E, len:00000512, Write, Async
 ```
 
+- 20/11/10
+
+UBUNTU랑 차이를 비교해보니,,, MIC가 없다. 따라서,, LINPHONE을 통해서 입력받을 수 있는 MIC를 연결해줘야할 거같다!?
