@@ -4012,3 +4012,113 @@ Ready
 - 20/11/10
 
 UBUNTU랑 차이를 비교해보니,,, MIC가 없다. 따라서,, LINPHONE을 통해서 입력받을 수 있는 MIC를 연결해줘야할 거같다!?
+
+- 20/11/11
+
+LINPHONE 통화 시, MIC 입력이 있어야 linphone 내에서 ACK를 주고 받을 수 있는데, 실제로 들어오는 MIC 경로를 어떻게 연결해줘야 할지 모르겠다. RTOS에서 라이브 뷰 시 AUDIO_PATH 를 뚫어서 단말기의 마이크에서 음성 입력을 하면, 휴대폰에 있는 라이브뷰로 소리가 전달되는 것은 확인하였음.
+
+**alsa.conf**
+
+![image-20201111111231013](images/image-20201111111231013.png)
+
+![image-20201111111247477](images/image-20201111111247477.png)
+
+을 확인하고 linux kernel에서 `amixer info` 명령어를 수행한 결과 default가 자꾸 **`VOIP`**로 올라왔다. 그래서 **linux_..._h22_eos_defconfig** 에서 dummy와 soundcard를 MODULE로 하였더니 가장 먼저 올라온 **`dummy`**가 디폴트가 되는 것을 확인할 수 있었다.
+
+그 후 linphone call 후 휴대폰에서 잠깐의 찌지직 소리가 발생함.
+
+```bash
+# linux kernel
+# linphonec
+# soundcard use (dummy.num)
+# call dhkdghehfd@sip.linphone.org
+...
+dummy_pcm_copy[  165.103970] dummy_pcm_pointer
+dummy_pcm_copy[  165.117221] dummy_pcm_pointer
+...
+dummy_pcm_pointer[  165.867255] dummy_pcm_copy
+dummy_pcm_pointer[  165.871440] dummy_pcm_copy
+dummy_pcm_pointer[  165.896819] dummy_pcm_trigger
+ortp-error-snd_pcm_avail_update: Broken pipe
+ortp-error-*** alsa_candummy_pcm_prepare_read fixup, trying to recover
+ALSA lib pcm.c:8251:(snd_pcm_recover) overrun occurred
+...
+```
+
+이제는 aloop을 default로 해서 calling 해보자.
+
+```bash
+# linux kernel
+# linphonec
+# soundcard use (aloop.num)
+# call dhkdghehfd@sip.linphone.org
+
+이전 실행 결과와 동일하다
+```
+
+
+
+=> 확인결과.. 오히려 dummy가 결과와 더 가깝다?!
+
+1. `dummy.c`의 `fake_buffer=1` -> **`fake_buffer=0`**으로 변경
+2. `dummy.c`의 **`bool hirtimer = 1`**로 변경
+3. ~~`output.oem.../mediastream2/src/audio~/alsa.c`에서 `ALSA_PERIOD_SIZE`를 **256 -> 2048**로 변경~~
+
+
+
+`dummy_timer_ops` -> `substream` -> `runtime` -> `private_data` -> `free(substream)`
+
+`dummy_hrtimer_pointer!!`와 `dummy_pcm_pointer`가 계속 무한루프한다.
+
+```bash
+# RTOS Kernel
+[01587][E][AmbaFIFO_WriteEntry] Send msg AMBA_FIFO_EVENT_REMOVE_ON_WRITE fail!
+[AmbaBitsMgr_AudioEnc_WriteEntry][0368][ERROR] AmbaFIFO_Write Entry failed
+[Error]BitsMgr_DspEnc_ObtainBitstream:454 AmbaFIFO_WriteEntry() failed!
+```
+
+```bash
+# LINUX Kernel
+...
+[  214.990246] dummy_hrtimer_pointer!!
+[  214.993735] dummy_pcm_pointer
+[  214.996680] dummy_hrtimer_pointer!!
+[  215.000170] dummy_pcm_pointer
+...
+[  215.005122] ambarella-sd e001f000.sdmmc2: pending mrq: data[53]
+[  215.005271] AR6000: SDIO bus operation failed! MMC stack returned : -110
+[  215.005279] __HIFReadWrite, addr:0X012F9A, len:00000256, Write, Async
+...
+```
+
+```c
+static snd_pcm_uframes_t dummy_pcm_pointer(struct snd_pcm_substream *substream)
+{
+	printk(KERN_ERR "dummy_pcm_pointer\n");
+	return get_dummy_ops(substream)->pointer(substream);
+}
+
+static snd_pcm_uframes_t dummy_hrtimer_pointer(struct snd_pcm_substream *substream)
+{
+	printk(KERN_ERR "dummy_hrtimer_pointer!!\n");
+	struct snd_pcm_runtime *runtime = substream->runtime;
+	struct dummy_hrtimer_pcm *dpcm = runtime->private_data;
+	u64 delta;
+	u32 pos;
+
+	delta = ktime_us_delta(hrtimer_cb_get_time(&dpcm->timer),
+			       dpcm->base_time);
+	delta = div_u64(delta * runtime->rate + 999999, 1000000);
+	div_u64_rem(delta, runtime->buffer_size, &pos);
+	return pos;
+}
+```
+
+
+
+- **`rtos/tw_trip_report.c`** : tw_운행정보데이터 sqlite 저장 소스코드!!
+
+**"AmbaNetFIfo.h"**
+
+- **`ambalink_sdk_4_9/pkg/live555_server`** : AMBA IPC 관련 오픈소스
+- **`ambalink_sdk_4_9/pkg/amba_examples`** : AMBA IPC 각종 예제들
