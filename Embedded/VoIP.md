@@ -2914,6 +2914,16 @@ $ aplay -D hw:0,0,4 audio.wav
 
   *등등...*
 
+예를들어 alc5633 driver를 활용하기 위해선,
+
+1. `ambalink/linux/sound/soc/codecs/`에 ALC5633(rt5633) driver 추가
+2. KConfig에서 driver 등록
+3. **linux/arch/arm64/boot/dts/amabarella/ `~~.dtsi`**에서 i2c0 과 i2s0을 가지고
+4. **`~~~.dts`**에서 ALC5633 코덱 추가
+5. 현재 사용하려는 플랫폼과 호환이 되는지 테스트하기.
+
+
+
 - 20/11/04
 
 linphone.. 사실상 사운드 카드만 있으면 되잖아?
@@ -4019,9 +4029,9 @@ LINPHONE 통화 시, MIC 입력이 있어야 linphone 내에서 ACK를 주고 �
 
 **alsa.conf**
 
-![image-20201111111231013](images/image-20201111111231013.png)
+![image-20201111111231013](https://user-images.githubusercontent.com/58545240/98913639-f5e10e80-250a-11eb-9b03-e801c459ae35.png)
 
-![image-20201111111247477](images/image-20201111111247477.png)
+![image-20201111111247477](https://user-images.githubusercontent.com/58545240/98913648-fb3e5900-250a-11eb-9e1d-bcad060cef80.png)
 
 을 확인하고 linux kernel에서 `amixer info` 명령어를 수행한 결과 default가 자꾸 **`VOIP`**로 올라왔다. 그래서 **linux_..._h22_eos_defconfig** 에서 dummy와 soundcard를 MODULE로 하였더니 가장 먼저 올라온 **`dummy`**가 디폴트가 되는 것을 확인할 수 있었다.
 
@@ -4122,3 +4132,65 @@ static snd_pcm_uframes_t dummy_hrtimer_pointer(struct snd_pcm_substream *substre
 
 - **`ambalink_sdk_4_9/pkg/live555_server`** : AMBA IPC 관련 오픈소스
 - **`ambalink_sdk_4_9/pkg/amba_examples`** : AMBA IPC 각종 예제들
+
+
+
+- 20/11/12
+
+**"amba_rtsp"**
+
+**`amba_rtsp_server.c / main() / AmbaStream_init()`**
+
+- `ambastream.c / AmbaStream_init / AmbaNetFifo_init()`
+
+- `ambastream.c / AmbaStream_init / AmbaNetFifo_Reg_cbFifoEvent`
+- `ambastream.c / AmbaStream_init / AmbaNetFifo_Reg_cbControlEvent`
+- `ambastream.c / AmbaStream_init / AmbaStreamerLiveStartEncode()`
+
+**`amba_rtsp_server.c / main() / rtsp_server_create()`**
+
+- `rtsp_server.c / rtsp_server_create / lookup_media_session()`
+  - `rtsp_server.c / lookup_meida_session / init_liveview_session()`
+    - `rtsp_server.c / init_liveview_session / AmbaStreamerLive_GetMediaID()`
+    - `rtsp_server.c / init_liveview_session / media_session_create`
+    - `rtsp_server.c / init_liveview_session / amba_aac_subsession_create()`
+      - `amba_aac_subession.c / amba_aac_subsession_create / media_subsession_init()`
+        - `media_subsession.c / media_subsession_init / audio_frame_reader_create()`
+          - `audio_frame_reader.c / audio_frame_reader_create / frame_reader_init()`
+            - `frame_reader.c / frame_reader_init()`
+      - `amba_aac_subession.c / amba_aac_subsession_create / media_subsession_release()`
+        - `amba_aac_subsession.c / amba_aac/subsesssion/release / media_subsession_deinit()`
+          - `media_subsession.c / media_subsession_deinit / audio_frame_reader_release()`
+            - `audio_frame_reader.c / audio_frame_reader_release / frame_reader_deinit()`
+              - `frame_reader.c / frame_reader_deinit / framer_reader_stop()`
+                - `frame_reader.c / frame_reader_stop / AmbaStreamer_disable()`
+                - `frame_reader.c / frame_reader_stop / AmbaStreamer_RegisterFrameReadyCallback()`
+              - `frame_reader.c / frame_reader_deinit / AmbaStream_stop_waiting_encode()`
+              - `frame_reader.c / frame_reader_deinit / framed_buf_release()`
+                - `frame_reader.c / framed_buf/release / frame_info_queue_release()`
+      - `rtsp_server.c / init_liveview_session / add_media_subsession()`
+- `rtsp_server.c / rtsp_server_create / ev_io_init() / rtsp_incoming_handler()`
+  - `rtsp_server.c / rtsp_incoming_handler / rtsp_client_session_create()`
+    - `rtsp_client_session.c / rtsp_client_session_create() / ev_io_init() / rtsp_client_session_incomming_handler()`
+      - `rtsp_client_session.c / rtsp_client_session_incomming_handler / rtsp_client_session_reset_buf(session)`
+      - `rtsp_client_session.c / rtsp_client_session_incomming_handler / handle_cmd_within_session()`
+        - `rtsp_client_session.c / handle_cmd_within_session / handle_cmd_PLAY()`
+          - `rtsp_client_session.c / handcle_cmd_PLAY / (live streaming) start_stream()`
+          - `rtsp_client_session.c / handcle_cmd_PLAY / AmbaStream_send_PbCmd()`
+    - `rtsp_client_session.c / rtsp_client_session_create() / ev_io_start()`
+    - `rtsp_client_session.c / rtsp_client_session_create() / ev_io_init() / timer_cb()`
+- `rtsp_server.c / rtsp_server_create / ev_async_init()`
+
+**`amba_rtsp_server.c / main() / rtsp_server_release()`**
+
+- `rtsp_server.c / rtsp_server_release / media_session_release()`
+- `rtsp_server.c / rtsp_server_release / media_session_ev_async_stop()`
+- `rtsp_server.c / rtsp_server_release / media_session_ev_io_stop()`
+- `rtsp_server.c / rtsp_server_release / media_session_ev_break()`
+
+**`amba_rtsp_server.c / main() / AmbaStream_release()`**
+
+- `ambastream.c / AmbaStream_release / AmbaNetFifo_StopEventProcess()`
+- `ambastream.c / AmbaStream_release / AmbaStreamerLive_StopEncode()`
+- `ambastream.c / AmbaStream_release / AmbaStream_Pb_release()`
+- `ambastream.c / AmbaStream_release / AmbaNetFifo_release()`
