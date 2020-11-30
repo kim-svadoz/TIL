@@ -2827,6 +2827,303 @@ int main(){
 }
 ```
 
+# **[ 연결리스트 구조체 ]**
+
+---
+
+프로그래밍에서 빼놓을 수 없는 자료구조인 연결 리스트(**linked list**)에 대해 구현해보겠다.
+
+연결리스트는 데이터가 담긴 노드(메모리 공간)을 일렬로 연결해놓았다고 해서 연결리스트라고 부르며 특징은 다음과 같다.
+
+- 리스트의 중간 지점에 노드를 손쉽게 추가하거나 삭제할 수 있다.
+- 특정 노드를 찾으려면 노드를 모두 검색해야 한다.
+- 크기가 고정되어 있지 않다.
+
+다음은 다른 노드를 가리키는 포인터가 하나씩만 있는 **단일 연결 리스트(singly linked list)**이다.
+
+![image-20201127171547542](https://user-images.githubusercontent.com/58545240/100557825-c5f97f80-32ee-11eb-9207-3199d4b61dff.png)
+
+지금부터는 구조체, 포인터, 함수, 메모리 할당을 사용하여 단일 연결리스트를 구현하는 방법을 알아보겠다. 참고로 연결리스트는 기본적인 자료구조 이지만 포인터를 사용하다 보니 많은 사람들이 어려워하는 부분이니 너무 걱정하지 말자!
+
+## 연결리스트 구조체 만들고 사용하기
+
+먼저 연결리스트의 구조체를 정의해야 한다. 연결리스트는 노드들의 집합이므로 실제로는 노드의 구조체만 정의하면 된다.
+
+![image-20201127171804942](https://user-images.githubusercontent.com/58545240/100557828-cbef6080-32ee-11eb-9590-f52bfdac0e7b.png)
+
+```c
+struct NODE {		// 연결 리스트의 노드 구조체
+    struct NODE *next;	// 다음 노드의 주소를 저장할 포인터
+    int data;		   // 데이터를 저장할 멤버
+};
+```
+
+**`NODE`** 구조체에서 가장 중요한 부분은 **`struct NODE *next`**이다. 얼핏 보면 구조체 자기 자신의 포인터를 멤버로 가지고 있는데 전혀 어렵지 않다!
+
+`next`에는 `NODE` 구조체로 만든 다른 노드의 메모리 주소를 저장한다. 즉, 자기 자신이 아닌 다른 노드의 메모리 주소를 저장한다는 점을 기억하라.
+
+`NODE`구조체에서 데이터는 `int`형 하나만 저장했다. 실제로 사용할 때는 용도에 따라서 다양한 자료형으로 된 멤버 여러개를 넣으면 된다.
+
+이제 단일 연결리스트에서 노드의 종류를 알아볼 것이다. **노드는 역할에 따라서 두 가지로 나뉘어 진다.**
+
+- **머리 노드(head node)** : 단일 연결리스트의 기준점이며 헤드(head)라고도 불린다. 머리 노드는 첫번째 노드를 가리키는 용도이므로 데이터를 저장하지 않는다.
+- **노드(node)** : 단일 연결리스트에서 데이터가 저장되는 실제 노드이다.
+
+이 두 종류의 노드를 역할만 다를 뿐 모두 `NODE` 구조체를 사용한다.
+
+이제 `NODE` 구조체로 머리 노드를 만든 뒤 노드가 2개인 연결 리스트를 만들어 보겠다. 그림으로 표현하면 다음과 같이 **`head -> node1 -> node2 -> NULL`**과 같은 모양이다.
+
+![image-20201127172227026](https://user-images.githubusercontent.com/58545240/100557830-d27dd800-32ee-11eb-9008-3a6148f8cc34.png)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>		// malloc, free
+
+struct NODE {
+    struct NODE *next;
+    int data;
+};
+
+int main()
+{
+    struct NODE *head = malloc(sizeof(struct NODE));		// 머리 노드 생성 (데이터를 저장하지 안흥ㅁ)
+    
+    struct NODE *node1 = malloc(sizeof(struct NODE));		// 첫 번째 노드 생성
+    head->next = node1;									// 머리 노드 다음은 첫 번째 노드
+    node1->data = 10;									// 첫 번째 노드에 10 저장
+    
+    struct NODE * node2 = malloc(sizeof(struct NODE));		// 두 번째 노드 생성
+    node1->next = node2;								// 첫 번째 노드 다음은 두 번째 노드
+    node2->data = 20;									// 두 번째 노드에 20 저장
+    
+    node2->next = NULL;									// 두 번째 노드 다음은 노드가 없음(NULL)
+    
+    struct NODE *curr = head->next;						// 연결리스트 순회용 포인터에 첫 번째 노드의 주소 저장
+    while (curr != NULL)					// 포인터가 NULL이 아닐 때 계속 반복
+    {
+        printf("%d\n", curr->data);			// 현재 노드의 데이터 출력
+        curr = curr->next;					// 포인터에 다음 노드의 주소 저장
+    }
+    
+    free(node2);		// 노드 메모리 해제
+    free(node1);		// 노드 메모리 해제
+    free(head);			// 머리 노드 메모리 해제
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+10
+20
+```
+
+
+
+*연결리스트에서 노드를 추가하는 규칙은 간단하다!*
+
+1. 노드에 메모리 할당
+2. `next` 멤버에 다음 노드의 메모리 주소 저장
+3. `data` 멤버에 데이터 저장
+4. 마지막 노드라면 `next` 멤버에 `NULL` 저장
+
+이렇게 생성한 연결리스트를 그림으로 표현하면 다음과 같은 모양이 된다.
+
+![image-20201127172835582](https://user-images.githubusercontent.com/58545240/100557835-d873b900-32ee-11eb-935a-031264307eb6.png)
+
+## 노드 추가 함수 만들기
+
+연결 리스트의 노드를 생성해서 일일이 연결해주는 것은 아무래도 비효율적입니다. 이번에는 연결 리스트에 노드를 추가하는 함수를 만들어보겠습니다. 노드 추가는 두 노드 사이에 새 노드를 집어넣는 방식입니다.
+
+![image-20201127173006556](https://user-images.githubusercontent.com/58545240/100557839-ddd10380-32ee-11eb-8f6a-65522c49c85e.png)
+
+다음 내용을 소스 코드 편집 창에 입력한 뒤 실행해보라.
+
+```c
+#include <stdio.h>
+#include <stdlib.h> 		// malloc, free
+
+struct NODE {
+    struct NODE *next;
+    int data;
+};
+
+void addFirst(struct NODE *target, int data)			// 기준 노드 뒤에 노드를 추가하는 함수
+{
+    struct NODE *newNode = malloc(sizeof(struct NODE));		// 새 노드 생성
+    newNode->next = target->next;					// 새 노드 다음 노드에 기준 노드의 다음 노드를 지정
+    newNode->data = data;							// 데이터 저장
+    
+    target->next = newNode;							// 기준 노드의 다음 노드에 새 노드를 지정
+}              
+
+int main(){
+    struct NODE *head = malloc(sizeof(struct NODE));		// 머리 노드 생성 (데이터 저장 X)
+    
+    head->next = NULL;
+    
+    addFirst(head, 10);
+    addFirst(head, 20);
+    addFirst(head, 30);
+    
+    struct NODE *curr = head->next;				// 연겨릴스트 순회용 포인터에 첫 번째 노드의 주소 저장
+    while (curr != NULL)
+    {
+        printf("%d\n", curr->data);				// 현재 노드의 데이터 출력
+        curr = curr->next;						// 포인터에 다음 노드의 주소 저장
+    }
+    
+    curr = head->next;						// 연결리스트 순회용 포인터에 첫 번째 노드의 주소 저장
+    while (curr != NULL)
+    {
+        struct NODE *next = curr->next;			// 현재 노드의 다음 노드 주소를 임시로 저장
+        free(curr);								// 현재 노드 메모리 해제
+        curr = next;							// 포인터에 다음 노드의 주소 저장
+    }
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+30
+20
+10
+```
+
+즉, 새 노드의 다음 노드에 기준 노드를 지정하고, 기준 노드의 다음노드에 새 노드를 지정하면 새 노드가 추가된다. 어렵게 생각할 필요 없이 머릿속에 그림으로 떠올려서 코딩을 하면 쉽다. 기차의 중간을 떼어내서 새 기차를 집어넣는 모양이죠.
+
+![image-20201127173623822](https://user-images.githubusercontent.com/58545240/100557843-e45f7b00-32ee-11eb-85c8-ffe4192a0c03.png)
+
+`addFirst(head, N)`함수에 머리 노드 head와 저장할 데이터를 넣어서 머리 노드 뒤에 새 노드를 추가한다.
+
+즉, 다음과 같이 머리 노드 뒤에 새 노드가 계속 추가되므로 결과적으로 연결 리스트의 첫 부분에 노드가 계속 추가되는 것이다.
+
+![image-20201127173741893](https://user-images.githubusercontent.com/58545240/100557847-e9bcc580-32ee-11eb-8d9b-4468f7f1962d.png)
+
+연결 리스트의 사용이 끝났다면 `free` 함수로 각 노드를 해제해야 하는 데 머리 노드 포인터 `head`만 있고, 이후 추가한 노드의 포인터는 따로 저장해놓지 않았다. 따라서 연결리스트를 처음부터 순회하면서 각 노드를 해제해주면 된다. 여기서 주의할 부분은 `curr->next`인데 `curr`을 먼저 해제해버리면 `curr->next`에 접근할 수 없게 된다.
+
+그래서 `curr->next`를 다른 포인터에 임시로 저장해놓은 뒤 curr을 해제한다.
+
+## 노드 삭제 함수 만들기
+
+이번에는 연결 리스트의 첫 노드를 삭제하는 함수를 만들어 보겠다. 노드 삭제는 특정 노드를 삭제하고 남은 노드를 서로 연결해주는 방식이다.
+
+![image-20201127174408991](https://user-images.githubusercontent.com/58545240/100557849-efb2a680-32ee-11eb-88e5-00a3e47771b7.png)
+
+다음 내용을 소스 코드 편집창에 입력한뒤 실행해보라.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct NODE {
+    struct NODE *next;
+    int data;
+};
+
+void addFirst(struct NODE *target, int data)
+{
+    struct NODE *newNode = malloc(sizeof(struct NODE));
+    newNode->next = target->next;
+    newNode->data = data;
+    
+    target->next = newNode;
+}
+
+void removeFirst(struct NODE *target)				// 기준 노드의 다음 노드를 삭제하는 함수
+{
+    struct NODE *removeNode = target->next;			// 기준 노드의 다음 노드 주소를 저장
+    target->next = removeNode->next;				// r기준 노드의 다음 노드에 삭제할 노드의 다음 노드를 지정
+    
+    free(removeNode);			// 노드 메모리 해제
+}
+
+int main()
+{
+    struct NODE *head = malloc(sizeof(struct NODE));	
+    
+    head->next = NULL;
+    
+    addFirst(head, 10);
+    addFirst(head, 20);
+    addFirst(head, 30);
+    
+    removeFirst(head);		// 머리 노드 뒤에 있는 노드를 삭제
+    
+    struct NODE *curr = head->next;
+    // 연결 리스트 순회용 포인터에 첫 번째 노드의 주소 저장
+    while (curr != NULL)
+    {
+        printf("%d\n", curr->data);
+        curr = curr->next;
+    }
+    
+    curr = head->next;
+    while (curr != NULL)
+    {
+        struct NODE *next = curr->next;
+        free(curr);
+        curr = next;		// 포인터에 다음 노드의 주소 저장
+    }
+    free(head);		// 머리노드 메모리 해제
+    
+    return 0;
+}
+```
+
+```bash
+# 실행 결과
+20
+10
+```
+
+노드를 삭제하는 함수는 기준 노드의 포인터를 매개변수로 받는다. 하지만 삭제하는 노드는 기준 노드가 아닌 기준 노드의 다음 노드이다. 따라거 시준 노드의 다음 노드 `target->next`에 삭제할 노드의 다음노드 `removeNode->next`를 지정한다. 노드간 연결을 정리했다면 free함수로 삭제할 노드 `removeNode` 메모리 해제를 해준다.
+
+![image-20201127174940088](images/100557855-f6411e00-32ee-11eb-98a9-8e50b7967de6.png)
+
+지금까지 노드 추가, 삭제 함수를 만들어보았는데 머리 노드 생성과 연결리스트 해제 함수는 직접 만들어 보세요!
+
+## 노드가 NULL인지 검사
+
+연결리스트 함수를 구현할 때는 노드가 `NULL`인지 검사해야 한다.
+
+**예제에서는 코드를 간단하게 만들기 위해 `NULL` 검사 부분을 생략했지만 실무에서는 반드시 검사해야 한다.**
+
+```c
+void addFirst(struct NODE *target, int data)
+{
+    if (target == NULL)					// 기준 노드가 NULL 이면
+        return;							// 함수 종료
+    
+    struct NODE *newNode = malloc(sizeof(struct NODE));
+    if (newNode == NULL)				// 메모리 할당에 실패하면
+        return;							// 함수 종료
+    
+    newNode->next = target->next;		// 새 노드의 다음 노드에 기준 노드의 다음 노드를 지정
+    newNode->data = data;				// 데이터 저장
+    
+    target->next = newNode;				// 기준 노드의 다음 노드에 새 노드를 지정
+}
+
+void removeFirst(struct NODE *target)
+{
+    if (target == NULL)					// 기준 노드가 NULL 이면
+        return;							// 함수 종료
+    
+    struct NODE *removeNode = target->next;	// 기준 노드의 다음 노드 주소를 저장
+    if (removdNode == NULL)				// 삭제할 노드가 NULL 이면
+        return;							// 함수 종료
+    
+    target->next = removeNode->next;		// 기준 노드의 다음 노드에 삭제할 노드의 다음 노드를 지정
+    
+    free(removeNode);					// 노드 메모리 해제
+}
+```
+
+지금까지 단일 연결 리스트에 대해 배웠는데 포인터 처리 방법이 상당히 헷갈리고 어렵습니다. 연결리스트 구현은 초보자뿐만 아니라 경력자들도 까다로워하는 부분입니다. 그러다 보니 회사 면접 문제로 자주 나오는데 SW분야로 취업하고자 하길 원한다면 연결 리스트를 완벽히 익혀둡시다!
+
 #  **[ goto에 관해 ]**
 
 ---
