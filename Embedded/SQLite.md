@@ -723,3 +723,189 @@ SQLite 는 아말감화 버전을 이용하면 별도의 라이브러리 설치�
 글의 첫 부분에 언급했다시피 이 글은 2: 심화 편에서 이어집니다. 1편 내용만으로도 SQLite 데이터베이스를 사용하는데는 아무런 문제가 없습니다. 심화 편에서는 텍스트, 정수가 아닌 이미지 같은 blob 데이터를 다루는 법, 메타 데이터, 트랜잭션 같은 심화적인 내용을 다룹니다.
 
 # **==========심화==========**
+
+# SQLITE VIEW
+
+모바일을 위한 요구사항을 만족시키기 위한 데이터베이스 솔루션으로 대표적인 것이 SQLite이다. SQLite는 구글의 안드로이드나 애플의 아이폰 등에서 사용되는 솔루션으로 사용자 측면과 관리자 측면에서 모두 뛰어난 접근성을 가지고 있는 데이터베이스 관리 시스템이다. SQLite에 대해서 지금까지 세 가지 이야기를 공유하였다. 본 네 번째 이야기에서는 SQLite에서 제공하는 SQL문들에 대해서 소개하도록 한다.
+
+뷰(View)는 질의에 대한 결과 세트로 구성된 가상 테이블에 접근할 수 있는 저장 질의로 구성되어 있다. 뷰는 다른 테이블들에서 유도되었으며, 관계형 데이터베이스의 일반적인 기본 테이블과 달리 뷰는 물리적인 스키마의 형태를 가지지 않는다. 이는 데이터베이스 내의 데이터들로부터 계산되거나 병합된 가상 테이블의 형태를 가지고 있으며, 동적인 특성을 가지고 있다. 테이블 내에서 데이터가 변경되면, 뷰에서도 변경이 이루어진다.
+뷰는 테이블에 비해서 다음과 같은 특성을 가지고 있다.
+
+● 뷰는 하나 이상의 기본 테이블로부터 유도되어 생성되는 가상 테이블이다. 따라서, 뷰위에 다른 뷰를 정의할 수 있고, 정의된 기본 테이블이 삭제되면, 뷰도 자동으로 삭제된다.
+● 뷰는 테이블이 포함하고 있는 데이터의 서브 세트를 나타낼 수 있다.
+● 뷰는 여러 개의 테이블들이 하나의 가상 테이블로 Join될 수 있다.
+● 뷰는 집합 테이블로서 동작할 수 있고, 데이터베이스 엔진은 데이터를 모으고 연산된 결과 값을 나타낼 수 있다.
+● 뷰는 데이터의 복잡성을 감출 수 있다.
+● 뷰는 논리적인 독립성을 제공한다.
+● 뷰는 데이터 접근 제어를 통해서 외부에 대한 보안을 제공할 수 있다.
+● 뷰는 테이블이 외부에 보여지는 정도를 제한할 수 있다.
+● 뷰의 정의는 ALTER문을 이용하여 변경이 불가능하다.
+
+뷰는 함수와 같은 추상성을 제공할 수 있기 때문에, 데이터베이스 사용자들은 뷰를 사용해서 추상화를 진행할 수 있다. 질의를 위해서 뷰는 다음과 같은 두 가지 방법을 사용할 수 있다.
+
+## 쿼리
+
+- **질의를 위한 뷰 명령어의 일반적인 형태**
+
+```sqlite
+CREATE [TEMP|TEMPORARY] VIEW [IF NOT EXISTS] [database.] view-name AS select-stmt
+```
+
+CREATE VIEW 명령어를 사용하여 사용자는 SELECT 문에 이름을 할당할 수 있다. 만약에 "CREATE" 와 "VIEW" 사이에 "TEMP" 또는 "TEMPORARY" 키워드가 존재하면 뷰는 데이터베이스가 오픈되었을 때 같이 오픈되고, 데이터베이스가 종료될 때 같이 종료된다. 만약에 데이터베이스 이름이 지정되면, 뷰는 그 이름을 가지고 생성된다. 만약에 데이터베이스 이름이 지정되지 않고, TEMP 키워드가 존재하지 않으면, VIEW는 주 데이터베이스로 생성된다. 사용자는 뷰를 삭제, 추가, 업데이트할 수 없다. 뷰는 SQLite에서는 읽기 전용이며, 삭제, 추가, 업데이트를 수행하기 위해서는 뷰에서 INSTEAD OF 트리거를 사용하도록 한다. 뷰의 삭제는 DROP VIEW 명령어를 사용하여 가능하다.
+
+- **가상 테이블 명령어의 일반적인 형태**
+
+```sqlite
+CREATE VIRTUAL TABLE [database-name.] table-name USING module-name [ module-argument]
+```
+
+가상 테이블은 외부 저장매체 또는 연산엔진에 대한 인터페이스이며, 실제로 데이터베이스 파일에 정보를 저장하지는 않는다. 가상 테이블에 인덱스를 생성하거나 트리거를 생성할 수 없는 것을 제외하고 일반 테이블에서 할 수 있는 것들을 그대로 적용 가능하다. 가상 테이블은 읽기 전용이다.
+CREATE VIRTUAL TABLE의 모듈명은 가상 테이블의 오브젝트의 이름이 사용되며, CREATE VIRTUAL TABLE의 문이 수행되기 이전에 sqlite3_create_module() 또는 sqlite3_create_module_v2()을 이용하여 SQLite 데이터베이스 연결을 통해서 등록되어 있어야만 한다. SQLite에서 가상 테이블은 DROP VIRTUAL TABLE이 아닌 일반 DROP TABLE문을 사용하여 삭제된다.
+
+DELETE 명령어는 테이블에서 레코드들을 삭제하기 위해서 사용된다. DELETE FROM 키워드로 구성된 명령어는 삭제될 레코드의 테이블 이름을 가져야 한다. WHERE 절 없이 테이블의 모든 행은 삭제될 수 있다. 만약에 WHERE 절이 사용되면 표현식에 해당하는 행들만이 삭제된다.
+
+- **DELETE**
+
+```sqlite
+DELETE FROM [database-name.] table-name [INDEXED BY index-name]|[NOT INDEXED] [WHERE expr]
+```
+
+DELETE문에서의 추가적인 문법 제약은 CREATE TRIGGER문을 통해서 이루어진다. 테이블 이름에서 database-name.prefix는 트리거 내에서는 허용되지 않는다. 삭제될 테이블은 트리거가 ATTACH된 테이블과 동일한 데이터베이스에 존재해야 한다. INDEXED BY와 NOT INDEXED 절은 트리거 내의 DELETE문에서는 허용되지 않으며, LIMIT 절도 트리거에서는 지원되지 않는다. WHERE가 DELETE문에서 생략되고, 삭제될 테이블이 트리거를 가지지 않으면, SQLite는 전체 테이블의 내용을 삭제하기 위해서 테이블의 각 행을 각각 살펴보지 않고 삭제 최적화를 수행한다. 버전 3.6.5 이전에서는 Truncate 동작의 최적화는 sqlite3_changes() 와 sqlite3_total_changes() 인터페이스를 의미하며, count_changes pragma는 삭제된 행들의 개수를 실제로 반환하지 않는다. 이러한 현상은 버전 3.6.5부터 수정되었다. Truncate 동작의 최적화를 비활성화하기 위해서는 컴파일 할 때는 SQLITE_OMIT_TRUNCATE_OPTIMIZATION 옵션을 사용하면 되고, 런타임 시에는 sqlite3_set_authorizer() 인터페이스를 사용하여 비활성화될 수 있다. LIMIT를 활성화하기 위해서는 컴파일 시에 SQLITE_ENABLE_UPDATE_DELETE_LIMIT를 사용하면 되며, DELETE문에 대한 문법은 ORDER BY와 LIMIT절을 사용하여 확장될 수 있다.
+
+- **DELETE + LIMIT**
+
+```sqlite
+DELETE FROM qualified-table-name [WHERE expr] [ORDER BY ordering-term LIMIT integer [OFFSET integer]]
+```
+
+LIMIT 절은 삭제될 행의 수와 트랜잭션 수를 제한하기 위해서 사용된다.
+
+DETACH DATABASE문은 ATTACH 문을 사용하여 형성된 추가 데이터베이스 연결을 분리하기 이위해서 사용된다. 다른 이름으로 동일한 데이터베이스 파일의 여러 번 연결할 수 있고 그 연결을 반대로 분리도 가능하다. 이 DETACH DATABASE문은 다음과 같이 사용된다.
+DETACH [DATABASE] database-name
+
+이 문장은 만약에 트랜잭션 중간에서 사용되면 실패하게 되므로 주의하도록 한다.
+
+DROP INDEX는 CREATE INDEX문에 의해서 추가된 인덱스를 제거하기 위해서 사용된다. DROP INDEX가 사용된 이후에 인덱스는 디스크로부터 삭제되며, 복구할 수 있는 유일한 방법은 CREATE INDEX 명령어를 다시 사용하는 것이다. DROP INDEX문은 다음과 같이 사용된다.
+
+- **DROP INDEX**
+
+```sqlite
+DROP INDEX [IF EXISTS] [database-name.] index-name
+```
+
+- **DROP TABLE**
+
+```sqlite
+DROP TABLE [IF EXISTS] [database-name.] index-name
+```
+
+DROP TABLE은 CREATE TABLE문으로 추가된 테이블을 삭제하는데 사용된다. 테이블 이름이 인자로 주어져야 한다. 삭제된 테이블은 데이터베이스 스키마와 디스크 파일에서 완전히 삭제되고 복구되지 않는다. 테이블과 관련된 모든 인덱스들과 트리거들도 역시 삭제된다. 만약에 외래 키 조건이 활성화되어 있다면, DROP TABLE 명령은 테이블이 데이터베이스 스키마에서 삭제되기 이전에 DELETE FROM 명령어를 수행한다. 테이블의 트리거는 DELETE FROM 이 수행되기 이전에 데이터베이스 스키마에서 삭제되기 때문에 트리거 동작은 안 일어난다.
+DROP TRIGGER문은 다음과 같다.
+
+- **DROP TRIGGER**
+
+```sqlite
+DROP TRIGGER [IF EXISTS] [database-name.] trigger-name
+```
+
+DROP TRIGGER문은 CREATE TRIGGER문에 의해서 생성된 트리거를 삭제한다. 트리거는 데이터베이스 스키마에서 삭제된다. 트리거는 관련된 테이블이 삭제되면 그에 따라서 같이 삭제된다.
+
+DROP VIEW문은 다음과 같다.
+
+- **DROP VIEW**
+
+```sqlite
+DROP VIEW [IF EXISTS] [database-name.] view-name
+```
+
+DROP VIEW문은 CREATE VIEW문에 의해서 생성된 뷰를 삭제한다. 뷰는 데이터베이스 스키마에서 삭제되지만, 테이블안의 실제 데이터는 삭제되지 않는다.
+
+INDEXED BY는 DELETE, SELECT 또는 UPDATE 문에서 인덱스들이 제대로 사용되는지를 확인하기위해서 사용된다. INDEXED BY절은 SQLite가 읽는 테이블의 이름을 사용하며, 다음과 같은 형태로 사용된다.
+
+- **INDEXED BY**
+
+```sqlite
+DELETE [database-name.] table-name [INDEXED BY index-name]|[NOT INDEXED]
+SELECT [database-name.] table-name [INDEXED BY index-name]|[NOT INDEXED]
+UPDATE [database-name.] table-name [INDEXED BY index-name]|[NOT INDEXED]
+```
+
+"INDEXED BY index-name"에서 만약에 인덱스 이름이 존재하지 않거나 질의에 의해서 사용될 수 없다면 SQL 문에서 prepare는 실패하게 된다. "NOT INDEXED"에 의해서 UNIQUE와 PRIMARY KEY 조건에 의해서 생성되는 인덱스들을 포함하여 테이블에 액세스하는 인덱스가 없음을 나타낼 수 있다. 그렇지만, "NOT INDEXED"가 지정되어 있더라도 INTEGER PRIMARY KEY에 의해서 개체들을 검색하는 것은 가능하다.
+INSERT는 행을 하나 추가하기 위해서 사용된다. 이 명령어의 일반적인 형태는 다음과 같다.
+
+- **SELECT**
+
+```sqlite
+INSERT [OR [ROLLBACK|ABORT|REPLACE|FAIL|IGNORE]]}|REPLACE INTO database-name.table-name {(column-name) VALUE (expr)}|{DEFAULT VALUE}
+```
+
+INSERT문은 다음과 같은 3가지 형태를 가진다.
+
+1. `VALUES` 키워드를 가지고 테이블 내에 새로운 행을 하나 생성하는 형태이다. 만약에 column-list가 지정되지 않으면, 테이블 내의 칼럼 수와 동일한 값을 가지며, column-list가 지정되었다면 지정된 칼럼의 수와 일치하는 지를 확인한다.
+2. `INSERT`문은 SELECT문에서 데이터를 취하는 형태이다. SELECT 결과의 칼럼 수는 테이블의 칼럼수와 일치해야 한다. 새로운 개체의 생성은 SELECT 결과로 얻어지는 각 행이 속하는 테이블에 이루어진다.
+3. `DEFAULT VALUES`을 가지는 형태이다. 'INSERT ... DEFAULT VALUES'문은 테이블에 새로운 행을 하나 생성하고 기본 값으로 채운다.
+
+테이블 명에서 선택사양으로 사용되는 "database-name." 접두어는 탑 레벨의 INSERT문에서만 사용된다. 테이블 이름은 CREATE TRIGGER 문의 INSERT문에는 사용되지 않는다. 이와 마찬가지로 INSERT문의 "DEFAULT VALUES"도 탑 레벨의 INSERT문에서는 지원되지만, 트리거 내의 INSERT에서는 적용되지 않는다.
+ON CONFLICT절은 독립적인 SQL 명령어가 아니며, 표준도 아니다. ON CONFLICT 절에 대한 문법은 CREATE TABLE 명령어와 같이 사용되며, INSERT와 UPDATE 명령어에서 "ON CONFLICT"는 "OR" 대신에 사용될 수 있다. 즉, "INSERT ON CONFLICT IGNORE" 대신에 "INSERT OR IGNORE"가 사용될 수 있다. ON CONFLICT는 조건 충돌을 해소하기 위해서 사용되는 알고리즘이다. 여기서는 5가지 충돌에 대한 해결 알고리즘을 나타내었다. 기본 충돌 해결 알고리즘은 ABORT이다.
+
+> - **`ROLLBACK`**
+>
+> 제약조건 위반이 발생하면, 즉각 ROLLBACK이 발생하고, 현재 트랜잭션이 종료되고, 수행하던 명령도 SQLITE_CONSTRAINT 반환 값을 가지고 중단된다. 만약에 트랜잭션이 수행되는 것이 아니라면, 이 알고리즘은 ABORT와 동일하다.
+>
+> - **`ABORT`**
+>
+> 제약조건 위반이 발생하면, 수행 명령어는 이전의 변경사항들을 모두 취소하고 SQLITE_CONSTRAINT 반환 값을 가지고 중단한다. ROLLBACK이 이루어지지 않기 때문에 트랜잭션 내에서 이전 명령어로 수행된 변경사항들은 그대로 유지된다.
+>
+> - **`FAIL`**
+>
+> 제약조건 위반이 발생하면, 수행 명령어는 SQLITE_CONSTRAINT 반환 값을 가지고 중단한다. 조건 위반이 일어나기 이전에 수행되었던 명령어의 변경사항들은 되돌려지지 않는다.
+>
+> - **`IGNORE`**
+>
+> 제약조건 위반이 발생하면, 조건위반을 포함하는 행은 추가되지 않고, 변경되지도 않는다. 그러나 명령어는 계속 진행된다. 조건 위반을 포함하는 행의 앞/뒤로 위치하는 다른 행들은 정상적으로 추가되거나 업데이트된다. IGNORE 충돌 해결 알고리즘이 사용되면, 에러는 발생하지 않는다
+>
+> - **`REPLACE`**
+>
+> UNIQUE 조건 위반이 발생하면, 이전에 존재하는 위반의 원인이 되는 행들은 현재 행을 추가하거나 업데이트하기 이전에 삭제된다. 따라서 삽입이나 업데이트는 항상 발생한다. REPLACE에 의해서 반환되는 에러는 없다. 만약에 NOT NULL 조건 위반이 발생하면, NULL 값이 칼럼 기본 값을 대치한다. 만약에 칼럼이 기본 값이 없다면, ABORT 알고리즘이 사용된다. 만약에 CHECK 조건 위반이 발생하면, IGNORE 알고리즘이 사용된다. 이 알고리즘은 INSERT 또는 UPDATE의 OR 절에서 지정되며, CREATE TABLE에서 지정된 알고리즘을 대체할 수 있다.
+
+SELECT문은 데이터베이스에 질의하기 위해서 사용된다. SELECT의 결과는 하나 이상의 행 데이터이며, 각 행은 고정된 길이의 칼럼을 가진다. 결과 내에서 칼럼의 수는 SELECT와 FROM 키워드 사이의 표현식에 의해서 지정될 수 있다. 결과를 얻기 위해서 사용자는 자신이 원하는 표현식을 넣으면 된다. 만약에 표현식이 ‘*’이라면, 모든 테이블의 모든 칼럼이 해당하고, 테이블과 ‘.*’이 사용되면 한 테이블의 모든 칼럼을 의미한다. DISTRICT 키워드는 결과 행들의 서브 세트가 반환되며, 각 결과 행은 각기 다른 값을 가진다. NULL 값은 여러 개가 존재하더라도 각각 다른 독립적인 값으로 여겨지지 않는다. SELECT 문장에서 FROM절에서는 대상 테이블이, WHERE절에는 조인과 셀렉션 조건이 기술된다. SELECT문은 다음과 같은 형태로 사용된다. SELECT문의 가장 중요한 역할을 담당하??이 정의될 수 있다.
+
+- **SELECT**
+
+```sqlite
+SELECT [DISTINCT|ALL] result-colum [FROM join-source]|[WHERE expr]|[GROUP BY ordering-term HAVING expr] [ORDER BY ordering-term]|[LIMIT integer OFFSET integer]
+```
+
+SELECT문에서는 다음과 같은 절들이 사용된다.
+
+> - **`FROM`** : 데이터를 가지고 올 테이블의 이름 지정
+> - **`WHERE`** : 행수준의 필터링 수행하여 원하는 값만 추출
+> - **`GROUP BY`** : 그룹 지정
+> - **`HAVING`** : 그룹 수준의 필터링
+> - **`ORDER BY`** : 결과 정렬
+
+SELECT 명령어를 사용하여 질의할 때, FROM 키워드 뒤에 하나 이상의 테이블을 사용할 수 있다. 만약에 콤마에 의해서 여러 개의 테이블 이름으로 구분되면, 질의는 여러 가지 테이블의 크로스 조인에 의해서 이루어진다. 크로스 조인은 곱집합을 결과로 반환하는 조인을 의미한다. FROM절의 테이블 이름 위치를 대신하여 괄호를 사용한 서브 쿼리(질의)가 이루어질 수 있다. 이 절에서는 추출하고자 하는 데이터가 저장되어 있는 테이블을 설정할 수 있다. WHERE절은 질의가 수행될 때 행의 수를 제한하기 위해서 사용될 수 있다. 그리고, WHERE절에 SELECT절이 포함된 서브 쿼리를 사용한 검색을 수행할 수 있고, 최종 검색 속성이 하나의 테이블에서 나올 수 있다.
+
+`GROUP BY`절은 대상 테이블에 지정된 열의 이름 값에 따라서 행을 그룹으로 나눌 수 있다. 그렇지만, 그 결과가 그룹 순서대로 되지는 않는다. 또한, 이는 결과가 집단 함수를 포함하고 있을 때 유용하다.
+
+`HAVING`절은 각 그룹에 대한 조건을 나타낸다. HAVING절은 GROUP BY절과 같이 존재한다. HAVING절은 WHERE절과 유사하지만, 앞서서 언급한 내용 이외에 다음과 같은 차이가 있다. WHERE절은 데이터가 그룹화되기 이전에 필터링되지만, HAVING절은 데이터가 그룹화한 이후에 필터링된다. WHERE절에 의해서 필터링된 행은 그룹에 포함되지 않는다. 따라서, WHERE절을 사용하여 대상을 설정하고, GROUP BY절로 그룹화시킨 이후에 HAVING절로 필터링할 수 있다. 
+
+`ORDER BY`절은 최종 검색 결과의 정렬을 수행한다. 선택하지 않은 열을 포함하여 모든 열을 사용하며, 이 절이 반드시 필요한 것은 아니다. ORDER BY절은 정렬을 위해서 사용하는 키를 인자로서 사용한다. 만약에 ORDER BY 표현식이 정수형 K이면, K번째 칼럼에 의해서 결과는 정렬되고, 동일한 이름을 가지는 출력 칼럼의 하나이며 구분자가 표현식으로 사용되면 출력은 구분 칼럼에 의해서 정렬된다. 그 외의 경우에는 출력은 표현식 값에 의해서 정렬된다. SELECT절과 FROM절 안에 SELECT절과 FROM절이 또 다시 존재할 수 있기 때문에 중첩조회가 가능하고, WHERE절에 또 다른 SELECT절과 FROM절이 존재할 수 있다. 이 두 절은 조회를 수행하기 위해서는 반드시 필요한 절들이다.
+
+- **UPDATE**
+
+UPDATE문은 테이블의 선택된 행들에서 칼럼 값을 변경하기 위해서 사용한다. UPDATE문에 있는 WHERE절은 수정할 행을 선택한다. 기본 키 값이 변경되었을 때 데이터의 정의어에서 참조 무결성 조건 내에 참조 트리거 동작이 명시되어 있으면, 다른 테이블에 있는 행의 외래 키 값도 변경된다. UPDATE문에서 ‘=’의 왼쪽은 칼럼의 이름이 들어가고 오른쪽은 표현식이 사용된다. WHERE 절은 행들이 업데이트될 때의 조건을 제약하기 위해서 사용된다.
+UPDATE 문은 다음과 같다.
+
+```sqlite
+UPDATE [OR ROLLBACK|ABORT|REPLACE|FAIL|IGNORE] qualified-table-name SET column-name=expr WHERE expr
+```
+
+여기서 사용되는 qualified-table-name는 다음과 같이 정의된다.
+
+```sqlite
+database.table-name [INDEXED BY index-name]|[NOT INDEXED]
+```
+
+UPDATE문에는 추가적인 문법 제약이 CREATE TRIGGER문을 통해서 이루어질 수 있다. UPDATE의 테이블 이름에서 database-name. 접두어는 트리거 내에서는 허용되지 않는다. 업데이트될 테이블은 트리거가 사용되는 테이블과 동일한 데이터베이스 내에 존재해야 한다. INDEXED BY와 NOT INDEXED절은 트리거 내의 UPDATE 문에서는 허용되지 않으며, LIMIT절은 트리거 내에서는 지원되지 않는다. 그리고, 단일 UPDATE 명령을 사용하여 여러 개의 행을 수정할 수도 있다. 칼럼의 새로운 값으로 NULL 값이나 기본 값을 명시할 수 있다. 만약에 여러 개의 테이블을 업데이트할려면 그 수만큼 UPDATE 명령이 수행되어야 한다.
+지금까지 SQLite에서 지원하는 SQL문들에 대해서 간략히 살펴보았다. 이를 통해서 SQL문을 사용하는데 있어서 도움이 되길 바란다.
