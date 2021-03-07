@@ -1,4 +1,3 @@
-package baekjoon;
 import java.util.*;
 import java.io.*;
 
@@ -11,8 +10,8 @@ class SaveJoint_2042 {
         
     public static void main(String[] args) throws Exception{
         st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken()); // Á¤Á¡ °¹¼ö
-        M = Integer.parseInt(st.nextToken()); // ¹®Á¦ ºñ±³ÇÏ´Â °¹¼ö
+        N = Integer.parseInt(st.nextToken()); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        M = Integer.parseInt(st.nextToken()); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
         indegree = new int[N+1];
         array = new ArrayList<List<Integer>>();
         
@@ -34,7 +33,7 @@ class SaveJoint_2042 {
     public static void topologicalSort(int[] indegree, List<List<Integer>> graph){
         PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
         
-        // Å¥¿¡ indegree°¡ 0ÀÎ ³ëµå ´ã±â
+        // Å¥ï¿½ï¿½ indegreeï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         for(int i=1; i<=N; i++){
             if(indegree[i]==0){
                 pq.offer(i);
@@ -42,9 +41,9 @@ class SaveJoint_2042 {
         }
         
         /*
-        1. Å¥¿¡¼­ °ªÀ» ²¨³»¸ç ÇØ´ç ³ëµå°¡ °¡¸®Å°´Â(c2) ³ëµåÀÇ indegree¸¦ 1¾¿ °¨¼Ò
-        2. ¸¸¾à indegree°¡ 0ÀÌ µÈ´Ù¸é q¿¡ ³Ö±â
-        3. Å¥°¡ ºô ¶§±îÁö ¹Ýº¹
+        1. Å¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½(c2) ï¿½ï¿½ï¿½ï¿½ï¿½ indegreeï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        2. ï¿½ï¿½ï¿½ï¿½ indegreeï¿½ï¿½ 0ï¿½ï¿½ ï¿½È´Ù¸ï¿½ qï¿½ï¿½ ï¿½Ö±ï¿½
+        3. Å¥ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½
         */
         while(!pq.isEmpty()){
             int node = pq.poll();

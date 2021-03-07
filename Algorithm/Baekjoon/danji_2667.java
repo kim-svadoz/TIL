@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -59,4 +57,4 @@ public class danji_2667 {
 		return cnt;
 	}	
 }
-///�̾߾�dddddddd
+///�̾߾�dddddddd

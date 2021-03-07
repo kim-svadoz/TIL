@@ -1,12 +1,10 @@
-package baekjoon;
-
 import java.util.*;
 import java.io.*;
  
 class Main {    
     static int stoi(String s) { return Integer.parseInt(s);}
  
-    // Åé´Ï¹ÙÄû [¹øÈ£][¹æÇâ]
+    // ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ [ï¿½ï¿½È£][ï¿½ï¿½ï¿½ï¿½]
     static int[][] arr = new int[4][8];
  
     public static void main(String[] args) throws Exception {
@@ -21,17 +19,17 @@ class Main {
  
         int k = stoi(br.readLine());
  
-        // Åé´Ï¹ÙÄû È¸Àüddd
+        // ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ddd
         for(int i=0; i<k; i++) {
             st = new StringTokenizer(br.readLine());
             int idx = stoi(st.nextToken());
             int dir = stoi(st.nextToken());
  
-            // Åé´Ï¹ÙÄû ¹øÈ£´Â 1~4, ÀÎµ¦½º´Â 0~3
+            // ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ 1~4, ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ 0~3
             solution(idx-1, dir);
         }
  
-        // Á¡¼ö °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         int score = 0;
         for(int i=0; i<4; i++)
             score += arr[i][0] * (1<<i);
@@ -39,14 +37,14 @@ class Main {
         System.out.println(score);
     }
  
-    // 9½Ã ¹æÇâÀº 2, 3½Ã ¹æÇâÀº 6
+    // 9ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2, 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 6
     static void solution(int idx, int dir) {
         left(idx-1, -dir);
         right(idx+1, -dir);
         rotate(idx, dir);
     }
     
-    // ¿ÞÂÊ¿¡ ÀÖ´ø Åé´Ï¹ÙÄû È¸Àü ¿©ºÎ °áÁ¤
+    // ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     static void left(int idx, int dir) {
         if(idx < 0)
             return;
@@ -57,7 +55,7 @@ class Main {
         }
     }
  
-    // ¿À¸¥ÂÊ¿¡ ÀÖ´ø Åé´Ï¹ÙÄû È¸Àü ¿©ºÎ °áÁ¤¤¾¤¾
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ï¹ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     static void right(int idx, int dir) {
         if(idx > 3)
             return;
@@ -68,7 +66,7 @@ class Main {
         }
     }
  
-    // dir = 1 ½Ã°è¹æÇâ, dir = -1 ¹Ý½Ã°è¹æÇâ
+    // dir = 1 ï¿½Ã°ï¿½ï¿½ï¿½ï¿½, dir = -1 ï¿½Ý½Ã°ï¿½ï¿½ï¿½ï¿½
     static void rotate(int idx, int dir) {
  
         if(dir == 1) {

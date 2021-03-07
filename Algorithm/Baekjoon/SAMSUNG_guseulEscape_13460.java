@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.*;
 import java.util.*;
  
@@ -62,15 +60,15 @@ public class SAMSUNG_guseulEscape_13460 {
             if (map[p.rx][p.ry] == 3) return p.cnt;
  
             for (int i = 0; i < 4; i++) {
-                //»¡°£ ±¸½½ »óÇÏÁÂ¿ì ³¡±îÁö ÀÌµ¿
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
                 int next_rx = p.rx, next_ry = p.ry;
                 while (true) {
-                    //´ÙÀ½ ÁöÁ¡ÀÌ º®ÀÌ¶û ±¸¸ÛÀÌ ¾Æ´Ï¸é
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½
                     if (map[next_rx][next_ry] != -1 && map[next_rx][next_ry] != 3) {
                         next_rx += dx[i];
                         next_ry += dy[i];
                     } else {
-                        //´ÙÀ½ ÁöÁ¡ÀÌ º®ÀÌ¸é
+                        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½
                         if (map[next_rx][next_ry] == -1) {
                             next_rx -= dx[i];
                             next_ry -= dy[i];
@@ -79,15 +77,15 @@ public class SAMSUNG_guseulEscape_13460 {
                     }
                 }
  
-                //ÆÄ¶õ ±¸½½ »óÇÏÁÂ¿ì ³¡±îÁö ÀÌµ¿
+                //ï¿½Ä¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
                 int next_bx = p.bx, next_by = p.by;
                 while (true) {
-                    //´ÙÀ½ ÁöÁ¡ÀÌ º®ÀÌ¶û ±¸¸ÛÀÌ ¾Æ´Ï¸é
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½
                     if (map[next_bx][next_by] != -1 && map[next_bx][next_by] != 3) {
                         next_bx += dx[i];
                         next_by += dy[i];
                     } else {
-                        //´ÙÀ½ ÁöÁ¡ÀÌ º®ÀÌ¸é
+                        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½
                         if (map[next_bx][next_by] == -1) {
                             next_bx -= dx[i];
                             next_by -= dy[i];
@@ -96,8 +94,8 @@ public class SAMSUNG_guseulEscape_13460 {
                     }
                 }
  
-                //±¸ÇÑ Red, Blue ÀÇ Á¡ÀÌ ¼­·Î °°Àºµ¥ 'O'°¡ ¾Æ´Ñ °æ¿ì
-                //´õ ¿òÁ÷ÀÎ ±¸½½ÀÇ dx[i], dy[i]¸¦ »©ÁØ´Ù
+                //ï¿½ï¿½ï¿½ï¿½ Red, Blue ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 'O'ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
+                //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dx[i], dy[i]ï¿½ï¿½ ï¿½ï¿½ï¿½Ø´ï¿½
                 if (next_rx == next_bx && next_ry == next_by) {
                     if (map[next_rx][next_ry] != 3) {
                         int red_cost = Math.abs(next_rx - p.rx) + Math.abs(next_ry - p.ry);
@@ -112,7 +110,7 @@ public class SAMSUNG_guseulEscape_13460 {
                     }
                 }
  
-                //next Á¡ÀÌ ¹æ¹®ÇÑÀû ¾ø´Ù¸é Å¥¿¡ Ãß°¡
+                //next ï¿½ï¿½ï¿½ï¿½ ï¿½æ¹®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ Å¥ï¿½ï¿½ ï¿½ß°ï¿½
                 if (!visited[next_rx][next_ry][next_bx][next_by]) {
                     visited[next_rx][next_ry][next_bx][next_by] = true;
                     q.add(new Pair(next_rx, next_ry, next_bx, next_by, p.cnt + 1));

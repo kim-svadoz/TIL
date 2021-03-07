@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -18,12 +16,12 @@ public class GoingDown_2096 {
 			map[i][1] = Integer.parseInt(st.nextToken());
 			map[i][2] = Integer.parseInt(st.nextToken());
 		}
-		// ¸Þ¸ðÀÌÁ¦ÀÌ¼Ç 0¹øÂ°
+		// ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ 0ï¿½ï¿½Â°
 		d[1][0] = map[1][0];
 		d[1][1] = map[1][1];
 		d[1][2] = map[1][2];
 		
-		// max Á¡È­½Ä
+		// max ï¿½ï¿½È­ï¿½ï¿½
 		for(int i=2; i<=N; i++) {
 			d[i][0] = map[i][0] + Math.max(d[i-1][0], d[i-1][1]);
 			d[i][1] = map[i][1] + Math.max(d[i-1][0], Math.max(d[i-1][1], d[i-1][2]));
@@ -32,7 +30,7 @@ public class GoingDown_2096 {
 		
 		int max = Math.max(d[N][0], Math.max(d[N][1], d[N][2]));
 		
-		// min Á¡È­½Ä
+		// min ï¿½ï¿½È­ï¿½ï¿½
 		for(int i=2; i<=N; i++) {
 			d[i][0] = map[i][0] + Math.min(d[i-1][0], d[i-1][1]);
 			d[i][1] = map[i][1] + Math.min(d[i-1][0], Math.min(d[i-1][1], d[i-1][2]));

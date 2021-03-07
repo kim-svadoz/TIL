@@ -1,5 +1,3 @@
-package programmers;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ public class ChickenDelivery_15686 {
    public static int N, M;
    public static int answer = Integer.MAX_VALUE;
    public static int[] dx = {-1, 0, 1, 0};
-   public static int[] dy = {0, 1, 0, -1};  // ºÏ µ¿ ³² ¼­
+   public static int[] dy = {0, 1, 0, -1};  // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
    public static ArrayList<City> storeList;
    public static ArrayList<City> personList;
    public static class City{
@@ -49,14 +47,14 @@ public class ChickenDelivery_15686 {
    }	
    
    public static void dfs(int start, int depth, ArrayList<City> answerList, boolean[] check) {
-	   // M°³ÀÇ Ä¡Å²ÁýÀ» ´Ù °í¸£¸é ( ±âÀú»ç·Ê )
+	   // Mï¿½ï¿½ï¿½ï¿½ Ä¡Å²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
 	   if(depth==M) {
 		   int sum = calAnswer(answerList);
 		   answer = Math.min(answer, sum);
 		   return;
 	   }
 	   for(int i=start; i<storeList.size(); i++) {
-		   if(check[i]) continue; // ÀÌ¹Ì Ã¼Å©µÇ¾î ÀÖÀ¸¸é ´ÙÀ½ i Áõ°¡
+		   if(check[i]) continue; // ï¿½Ì¹ï¿½ Ã¼Å©ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ i ï¿½ï¿½ï¿½ï¿½
 		   check[i] = true;
 		   answerList.add(storeList.get(i));
 		   dfs(i+1, depth+1, answerList, check);

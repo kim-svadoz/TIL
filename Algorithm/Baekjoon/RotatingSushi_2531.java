@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -12,10 +10,10 @@ public class RotatingSushi_2531 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());	// 8, Á¢½ÃÀÇ ¼ö
-		d = Integer.parseInt(st.nextToken());	// 30, ÃÊ¹ä °¡Áö¼ö
-		k = Integer.parseInt(st.nextToken());	// 4, ¿¬¼ÓÇØ¼­ ¸Ô´Â Á¢½Ã ¼ö
-		c = Integer.parseInt(st.nextToken());	// 30, ÄíÆù ¹øÈ£
+		N = Integer.parseInt(st.nextToken());	// 8, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		d = Integer.parseInt(st.nextToken());	// 30, ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		k = Integer.parseInt(st.nextToken());	// 4, ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ô´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		c = Integer.parseInt(st.nextToken());	// 30, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		
 		/*
 		 * 7 9 7 30 2 7 9 25
@@ -30,9 +28,9 @@ public class RotatingSushi_2531 {
 	}
 	
 	private static int slide() {
-		// sliding window ±¸Çö
+		// sliding window ï¿½ï¿½ï¿½ï¿½
 		int total = 0, max = 0;
-		// Ã³À½ ÃÊ±â 4Á¢½Ã ¸ÔÀº°Å ÃÊ±âÈ­ ÀÛ¾÷
+		// Ã³ï¿½ï¿½ ï¿½Ê±ï¿½ 4ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½
 		for(int i=0; i<k; i++) {
 			if(visit[arr[i]] == 0) total ++;
 			visit[arr[i]]++;
@@ -40,18 +38,18 @@ public class RotatingSushi_2531 {
 		max = total; // 3
 		for(int i=1; i<N; i++) {
 			if(max <= total) {
-				// ³»°¡¸ÔÀº°Å Áß¿¡ ÄíÆùÀÌ ¾ø´Ù¸é +1 Ãß°¡ÇØÁÖ°í
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ +1 ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö°ï¿½
 				if(visit[c]==0) max = total + 1;
-				// ÄíÆùÀ½½ÄÀ» ÀÌ¹Ì ¸Ô¾ú´Ù¸é ±×´ë·Î
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½Ô¾ï¿½ï¿½Ù¸ï¿½ ï¿½×´ï¿½ï¿½
 				else max = total;
 			}
 			
-			// ¸Ç ¿ÞÂÊ¿¡¼­ ¸ÔÀº°Å ÇÏ³ª »©°í
+			// ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½
 			visit[arr[i-1]]--;
-			// ±×·¯´Ï ÀüÃ¼ ¸ÔÀº °³¼öµµ »©°í
+			// ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if(visit[arr[i-1]] == 0) total--;
 			
-			// ±×´ÙÀ½ ÀüÁøÇÒ ¹æÇâ ¸ÔÀº °³¼ö¶û ¸Ô¾ú´Ù°í Ãß°¡ÇØÁÖ°í
+			// ï¿½×´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¾ï¿½ï¿½Ù°ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö°ï¿½
 			if(visit[arr[(i+k-1) % N]] == 0) total++;
 			visit[arr[(i+k-1) % N]]++;
 		}

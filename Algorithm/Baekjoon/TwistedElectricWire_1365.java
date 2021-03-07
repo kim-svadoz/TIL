@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -27,7 +25,7 @@ public class TwistedElectricWire_1365 {
             }else if(d[0] > map[i]){
                 d[0] = map[i];
             }else{
-                // Arrays API ³» ÀÌºÐÅ½»ö ÇÔ¼ö
+                // Arrays API ï¿½ï¿½ ï¿½Ìºï¿½Å½ï¿½ï¿½ ï¿½Ô¼ï¿½
                 int temp = Arrays.binarySearch(d, 0, cnt, map[i]);
                 d[temp < 0 ? -temp-1 : temp] = map[i];
             }

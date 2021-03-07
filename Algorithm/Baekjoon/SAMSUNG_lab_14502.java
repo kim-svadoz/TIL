@@ -1,6 +1,4 @@
-package baekjoon;
-
-//а╤гу, queue, bfs
+//О©╫О©╫О©╫О©╫, queue, bfs
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;

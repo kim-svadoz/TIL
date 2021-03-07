@@ -1,10 +1,8 @@
-package baekjoon;
-
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class resistance_1076 {
-//´Ü¼ø HashMapÀ» ÀÌ¿ëÇÑ put, get »ç¿ë¹ý
+//ï¿½Ü¼ï¿½ HashMapï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ put, get ï¿½ï¿½ï¿½ï¿½
 	public static void main(String[] args) {
 		
 		Scanner key = new Scanner(System.in);

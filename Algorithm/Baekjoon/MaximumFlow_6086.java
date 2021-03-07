@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.util.*;
 import java.io.*;
 
@@ -53,16 +51,16 @@ public class MaximumFlow_6086 {
                 }
             }
 
-            // ´õÀÌ»ó Áõ°¡ °æ·Î°¡ ¾øÀ¸¸é Á¾·áÇÑ´Ù.
+            // ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
             if (parent[sink] == -1) break;
 
-            // Áõ°¡ °æ·Î¸¦ Ã£¾ÒÀ¸¸é À¯·®À» °áÁ¤ÇÑ´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
             int amount = Integer.MAX_VALUE;
             for(int i = sink; i!=source; i=parent[i]) {
                 amount = Math.min(capacity[parent[i]][i] - flow[parent[i]][i], amount);
             }
 
-            // Áõ°¡ °æ·Î¸¦ ÅëÇØ À¯·®À» º¸³½´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
             for(int i = sink; i!=source; i=parent[i]) {
                 flow[parent[i]][i] += amount;
                 flow[i][parent[i]] -= amount;

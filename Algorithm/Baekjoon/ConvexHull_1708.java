@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -12,7 +10,7 @@ import java.util.StringTokenizer;
 
 public class ConvexHull_1708{
     static int n;
-    // x, y Àý´ë°ªÀº Àý´ë 40,000À» ³ÑÁö ¾ÊÀ½
+    // x, y ï¿½ï¿½ï¿½ë°ªï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 40,000ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     static Point first = new Point(40001, 40001);
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,7 +22,7 @@ public class ConvexHull_1708{
             points.add(new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
         
-        // Á¡µé Áß, xÁÂÇ¥°ªÀÌ³ª, yÁÂÇ¥°ªÀÌ °¡Àå ÀÛÀº Á¡À» ±âÁØÁ¡À¸·Î Àâ´Â´Ù
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, xï¿½ï¿½Ç¥ï¿½ï¿½ï¿½Ì³ï¿½, yï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´ï¿½
         for(int i=0; i<points.size(); i++){
             if(points.get(i).y < first.y){
 	            first = points.get(i);    
@@ -33,23 +31,23 @@ public class ConvexHull_1708{
                     first = points.get(i);
             }
         }
-        // ±âÁØÁ¡°ú ³ª¸ÓÁö Á¡µéÀÌ ccw·Î ¹Ý½Ã°è¹æÇâ(ÁÂÈ¸Àü)ÀÌ µÇµµ·Ï Á¤·ÄÀ» ½ÃÅ°°í, ¸¸¾à ÀÏÁ÷¼±»ó¿¡ ÀÖÀ¸¸é °Å¸®°¡ Áõ°¡ÇÏ°Ô²û Á¤·ÄÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ccwï¿½ï¿½ ï¿½Ý½Ã°ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½È¸ï¿½ï¿½)ï¿½ï¿½ ï¿½Çµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         points.sort(new Comparator<Point>(){
-            /* µÎ °ªÀ» Ã³¸®ÇÑ ¸®ÅÏ °á°ú°¡ À½¼ö,0,¾ç¼ö ÀÌ³Ä¿¡ µû¶ó Ã¹¹ø Â° ÀÎÀÚÀÇ Á¤·Ä¼øÀ§°¡ ³·À½, °°À½,³ôÀ½À¸·Î Á¤ÀÇµÈ´Ù.
+            /* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,0,ï¿½ï¿½ï¿½ ï¿½Ì³Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¹ï¿½ï¿½ Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÇµÈ´ï¿½.
             compare(Product o1, Product o2)
-            ex) o1(1), 02(99)ÀÏ °æ¿ì
-            return o2-o1ÀÏ ¶§ return °á°ú°¡ ¾ç¼öÀÓÀ¸·Î o1ÀÇ ¿ì¼±¼øÀ§°¡ ´õ ³ô´Ù(³»¸²Â÷¼ø)
+            ex) o1(1), 02(99)ï¿½ï¿½ ï¿½ï¿½ï¿½
+            return o2-o1ï¿½ï¿½ ï¿½ï¿½ return ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ o1ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
             
-            ex) o1(1), o2(99)ÀÏ °æ¿ì
-            reutrn o1-o2ÀÏ ¶§´Â return °á°ú°¡ À½¼öÀÌ¹Ç·Î o1ÀÇ ¿ì¼±¼øÀ§°¡ ´õ ³·´Ù(¿À¸§Â÷¼ø)
+            ex) o1(1), o2(99)ï¿½ï¿½ ï¿½ï¿½ï¿½
+            reutrn o1-o2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ return ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ o1ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
             
             */
             public int compare(Point second, Point third){
                 int ccwR = ccw(first, second, third);
-                if(ccwR > 0) // ¹Ý½Ã°è
-                    return -1; // ¿À¸§Â÷¼ø
+                if(ccwR > 0) // ï¿½Ý½Ã°ï¿½
+                    return -1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 else if (ccwR < 0)
-                    return 1; // ³»¸²Â÷¼ø
+                    return 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 else if (ccwR == 0){
                     long distR1 = dist(first, second);
                     long distR2 = dist(first, third);
@@ -60,11 +58,11 @@ public class ConvexHull_1708{
             }
         });
         
-        // ±×¶óÇÔ ½ºÄµ ¾Ë°í¸®Áò
+        // ï¿½×¶ï¿½ï¿½ï¿½ ï¿½ï¿½Äµ ï¿½Ë°ï¿½ï¿½ï¿½ï¿½ï¿½
         Stack<Point> stack = new Stack<Point>();
         stack.add(first);
         for(int i=1; i<points.size(); i++){
-            // ½Ã°è¹æÇâÀÌ¸é Á¦°ÅÇÑ´Ù.
+            // ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
             while(stack.size() > 1 && ccw(stack.get(stack.size()-2), stack.get(stack.size()-1), points.get(i)) <= 0){
                 stack.pop();
             }
@@ -77,7 +75,7 @@ public class ConvexHull_1708{
         br.close();
         bw.close();
     }
-    // ccw¾Ë°í¸®Áò => ½Ã°è¹æÇâ:-1, ÀÏÁ÷¼±:0, ¹Ý½Ã°è:1
+    // ccwï¿½Ë°ï¿½ï¿½ï¿½ï¿½ï¿½ => ï¿½Ã°ï¿½ï¿½ï¿½ï¿½:-1, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:0, ï¿½Ý½Ã°ï¿½:1
     static int ccw(Point a, Point b, Point c){
         long ccwR = (a.x*b.y + b.x*c.y + c.x*a.y) - (b.x*a.y + c.x*b.y + a.x*c.y);
         if(ccwR > 0)

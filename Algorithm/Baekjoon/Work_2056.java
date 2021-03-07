@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,7 +58,7 @@ public class Work_2056 {
         for (int i = 1; i <= N; i++) {
  
             if (q.isEmpty()) {
-                System.out.println("»çÀÌÅ¬ ¹ß»ý");
+                System.out.println("ï¿½ï¿½ï¿½ï¿½Å¬ ï¿½ß»ï¿½");
                 return;
             }
  

@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -15,8 +13,8 @@ public class SelectNum_2230 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		N = Integer.parseInt(st.nextToken());	// ¼ö¿­ÀÇ ¿ø¼ÒÀÇ ¼ö
-		M = Integer.parseInt(st.nextToken());	// µÎ ¼ö¸¦ °ñ¶úÀ» ¶§, ¸¸Á·ÇØ¾ß ÇÏ´Â Â÷ÀÌÀÇ ÃÖ¼Ú°ª
+		N = Integer.parseInt(st.nextToken());	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		M = Integer.parseInt(st.nextToken());	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ú°ï¿½
 		arr = new int[N];
 		for(int i=0; i<N; i++) {
 			arr[i] = Integer.parseInt(br.readLine()); // 1 5 3, 1 2 3 4 5 (M=3)

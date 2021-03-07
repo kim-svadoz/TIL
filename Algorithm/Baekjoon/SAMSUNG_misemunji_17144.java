@@ -1,5 +1,3 @@
-package baekjoon;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -13,9 +11,9 @@ public class SAMSUNG_misemunji_17144 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		R = Integer.parseInt(st.nextToken()); // Çà
-		C = Integer.parseInt(st.nextToken()); // ¿­
-		T = Integer.parseInt(st.nextToken()); // TÃÊ°¡ Áö³­ ÈÄ ?
+		R = Integer.parseInt(st.nextToken()); // ï¿½ï¿½
+		C = Integer.parseInt(st.nextToken()); // ï¿½ï¿½
+		T = Integer.parseInt(st.nextToken()); // Tï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ?
 		map = new int[R][C];
 		copymap = new int[R][C];
 		copymap2 = new int[R][C];
@@ -60,7 +58,7 @@ public class SAMSUNG_misemunji_17144 {
 			copymap[x][y] = map[x][y] - cnt*(map[x][y]/5);
 		}
 	}
-	public static int antiClock(int x, int y) { // ¹Ý½Ã°è
+	public static int antiClock(int x, int y) { // ï¿½Ý½Ã°ï¿½
 		/*if(x==mR && y==1) {
 			copymap2[x][y] =0;
 			int num=0;
@@ -87,7 +85,7 @@ public class SAMSUNG_misemunji_17144 {
 		
 		return 0;
 	}
-	public static int Clock(int x, int y) { // ½Ã°è
+	public static int Clock(int x, int y) { // ï¿½Ã°ï¿½
 		/*if(x==mR+1 && y==1) {
 			copymap2[x][y] =0;
 			int num=0;
