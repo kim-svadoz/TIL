@@ -13,7 +13,7 @@ public class p1929 {
         for (int i = 2; i <= b; i++) {
             if (prime[i]) continue;
             
-            if (i >= b) sb.append(i).append('\n');
+            if (i >= a) sb.append(i).append('\n');
             
             for (int j = i + i; j <= b; j += i) {
                 prime[j] = true;
