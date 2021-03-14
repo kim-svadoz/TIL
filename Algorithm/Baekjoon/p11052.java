@@ -24,6 +24,7 @@ public class p11052 {
     static int recur(int n) {
         if (n == 1) return cost[n];
         // memo해놓은 값이 있다면 그대로 사용
+
         if (dp[n] == 0) {
             for (int i = 1; i <= n; i++) {
                 dp[n] = Math.max(recur(n - i) + cost[i], dp[n]);
