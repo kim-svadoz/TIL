@@ -113,6 +113,7 @@
 | 1373_2진수 8진수                | [Link](./Algorithm/Baekjoon/p1373.java)                      | [문제](https://www.acmicpc.net/problem/1373)                 | 문자열, 진수변환               |
 | 1463_1로 만들기                 | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                             |
 | 1476_날짜계산                   | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                       |
+| 1517_버블 소트                  | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort          |
 | 1596_영식이                     | [Link](./Algorithm/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                     |
 | 1654_랜선자르기                 | [Link](./Algorithm/Baekjoon/p1654.java)                      | [문제](https://www.acmicpc.net/problem/1654)                 | Binary Serach                  |
 | 1676_팩토리얼 0의 개수          | [Link](./Algorithm/Baekjoon/p1676.java)                      | [문제](https://www.acmicpc.net/problem/1676)                 | 수학, 큰 수 연산               |
@@ -145,6 +146,7 @@
 | 2193_이친수                     | [Link](./Algorithm/Baekjoon/p2193.java)                      | [문제](https://www.acmicpc.net/problem/2193)                 | DP                             |
 | 2213_트리의 독립 집합           | [Link](./Algorithm/Baekjoon/p2213.java)                      | [문제](https://www.acmicpc.net/problem/2213)                 | Tree DP, DFS, 인접리스트       |
 | 2230_수 고르기                  | [Link](./Algorithm/Baekjoon/SelectNum_2230.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2230-%EC%88%98-%EA%B3%A0%EB%A5%B4%EA%B8%B0) | 투포인터 알고리즘, 정렬        |
+| 2261_가장 가까운 두 점          | [Link](./Algorithm/Baekjoon/p2261.java)                      | [문제](https://www.acmicpc.net/problem/2261)                 | Sweeping, Set.subSet, 분할정복 |
 | 2293_동전1                      | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)             |
 | 2294_동전2                      | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)             |
 | 2331_반복수열                   | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                       |
