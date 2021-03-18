@@ -106,6 +106,7 @@
 | 1158_요세푸스 문제 1            | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐      |
 | 1167_트리의 지름                | [Link](./Algorithm/Baekjoon/p1167.java)                      | [문제](https://www.acmicpc.net/problem/1167)                 | 트리 지름, 그래프, BFS 2번하기 |
 | 1168_요세푸스 문제 2            | [Link](./Algorithm/Baekjoon/p1168.java)                      | [문제](https://www.acmicpc.net/problem/1168)                 | 순열, 요세푸스의 순열2, 큐     |
+| 1238_파티                       | [Link](./Algorithm/Baekjoon/p1238.java)                      | [문제](https://www.acmicpc.net/problem/1238)                 | 다익스트라 (단방향 간선)       |
 | 1991_트리 순회                  | [Link](./Algorithm/Baekjoon/p1991.java)                      | [문제](https://www.acmicpc.net/problem/1991)                 | 트리, 재귀                     |
 | 1197_최소스패닝트리             | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)                 | Kruscal Algorithm(간선)        |
 | 1260_DFS와 BFS                  | [Link](./Algorithm/Baekjoon/p1260.java)                      | [문제](https://www.acmicpc.net/problem/1260)                 | DFS, BFS                       |
@@ -128,6 +129,7 @@
 | 1806_부분합                     | [Link](./Algorithm/Baekjoon/SectionSum_1806.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘              |
 | 1850_최대공약수                 | [Link](./Algorithm/Baekjoon/p1850.java)                      | [문제](https://www.acmicpc.net/problem/1850)                 |                                |
 | 1912_연속합                     | [Link](./Algorithm/Baekjoon/p1912.java)                      | [문제](https://www.acmicpc.net/problem/1912)                 | DP                             |
+| 1916_최소 비용 구하기           | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라             |
 | 1929_소수 구하기                | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체      |
 | 1931_회의실배정                 | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator             |
 | 1934_최소공배수                 | [Link](./Algorithm/Baekjoon/p1934.java)                      | [문제](https://www.acmicpc.net/problem/1934)                 |                                |
@@ -221,6 +223,7 @@
 | 16236_아기상어                  | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS                            |
 | 17144_미세먼지안녕!             | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                     |
 | 17472_다리만들기2               | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm         |
+| 20542_받아쓰기                  | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘          |
 
 ### [Programmers](./Algorithm/Programmers)
 
