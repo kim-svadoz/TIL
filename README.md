@@ -165,7 +165,9 @@
 | 2805_나무 자르기                | [Link](./Algorithm/Baekjoon/p2805.java)                      | [문제](https://www.acmicpc.net/problem/2805)                 | Binary Search                  |
 | 2875_대회or인턴                 | [Link](./Algorithm/Baekjoon/p2875.java)                      | [문제](https://www.acmicpc.net/problem/2875)                 | Greedy                         |
 | 4195_친구네트워크               | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap   |
-| 4963_섬의 개수                  | [Link](./Algorithm/Baekjoon/p496.java)                       | [문제](https://www.acmicpc.net/problem/4963)                 | BFS                            |
+| 4568_LRU Caching                | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열            |
+| 4963_섬의 개수                  | [Link](./Algorithm/Baekjoon/p4963.java)                      | [문제](https://www.acmicpc.net/problem/4963)                 | BFS                            |
+| 5397_키로거                     | [Link](./Algorithm/Baekjoon/p5397.java)                      | [문제](https://www.acmicpc.net/problem/5397)                 | Stack, 구현                    |
 | 5545_최고의피자                 | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                         |
 | 6086_최대유량                   | [Link](./Algorithm/Baekjoon/MaximumFlow_6086.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘              |
 | 6593_상범빌딩                   | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)                 | 3차원 BFS                      |
@@ -271,6 +273,7 @@
 | 42898_등굣길             | [Link](./Algorithm/Programmers/p42898.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/42898) | DP                           |
 | 43105_정수삼각형         | [Link](./Algorithm/Programmers/p43105.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105) | DP                           |
 | 70129_이진변환 반복하기  | [Link](./Algorithm/Programmers/p70129.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/70129) | 이진변환, 구현               |
+| 43238_입국심사           | [Link](./Algorithm/Programmers/p43238.java)                  | https://programmers.co.kr/learn/courses/30/lessons/43238     | Binary Search                |
 
 ### [LeetCode](./Algorithm/LeetCode)
 
