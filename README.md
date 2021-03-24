@@ -148,6 +148,7 @@
 | 2146_다리 만들기                | [Link](./Algorithm/Baekjoon/p2146.java)                      | [문제](https://www.acmicpc.net/problem/2146)                 | 그래프, BFS, 맵 라벨링              |
 | 2156_포도주 시식                | [Link](./Algorithm/Baekjoon/p2156.java)                      | [문제](https://www.acmicpc.net/problem/2156)                 | DP                                  |
 | 2178_미로 탐색                  | [Link](./Algorithm/Baekjoon/p2178.java)                      | [문제](https://www.acmicpc.net/problem/2178)                 | BFS                                 |
+| 2186_문자판                     | [Link](./Algorithm/Baekjoon/p2186.java)                      | [문제](https://www.acmicpc.net/problem/2186)                 | DFS + DP(3차원), 구현               |
 | 2188_축사배정                   | [Link](./Algorithm/Baekjoon/BarnAssign_2188.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                            |
 | 2193_이친수                     | [Link](./Algorithm/Baekjoon/p2193.java)                      | [문제](https://www.acmicpc.net/problem/2193)                 | DP                                  |
 | 2213_트리의 독립 집합           | [Link](./Algorithm/Baekjoon/p2213.java)                      | [문제](https://www.acmicpc.net/problem/2213)                 | Tree DP, DFS, 인접리스트            |
