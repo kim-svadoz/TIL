@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.StringTokenizer;
 
-public class p2850 {
+public class p2580 {
 	static int[][] board = new int[9][9];
 	static boolean flag = false;
 	
