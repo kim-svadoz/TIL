@@ -1382,3 +1382,189 @@ y축에 평행한 수직선을 2차원 평면에 훑으면서 스위핑해 봅�
 ## todo!
 
 # **> LCS**
+
+> **Longest Common Subsequence** 
+>
+> **최장 공통 부분 수열**
+
+여기서 **substring**은 연속된 부분 문자열이고, **subsequence**는 연속적이지 않은 부분 수열이다.
+
+예로, "`iamstudent`" 라는 문자열에서 연속된 부분 문자열 `mstu`은 **substring**이 되고 연속적으로 이어지지는 않지만 순서는 맞는 `mtue`는 **subsequence**가 된다.
+
+그렇다면 공통 부분 수열이란, 두 문자열이 공통으로 가지고 있는 부분 수열이다.
+
+에를 들어 "`CDABE`" 와 "`CDEGT`"가 있다면 공통부분 수열은 
+
+`{}, {C}, {D}, {E}, {C, D}, {D, E}, {C, E}, {C, D, E}` 일 것이다.
+
+**최장 공통 부분 수열**이란 공통 부분 수열 중에서 길이가 가장 긴 부분 수열을 뜻한다. 대표적으로 쓰이는 곳은 `염기서열 유사성 분석` 및 `음파 단어 검색 및 교정` 등에 쓰인다.
+
+## 1. LCS의 길이 구하기
+
+위 예제에서 **LCS**는 `{C, D ,E}`이고, 길이가 `3`이다.
+
+보통 DP(Dynamic Programming)으로 특정 범위까지의 값을 구하고 다른 범위까지의 값을 구할때 이전에 구해 둔 값을 이용하여 효율적으로 문제를 해결한다.
+
+CS는 2개의 String을 비교하여 최장 공통 부분 문자열을 구해야한다. substring을 구하는 것과 다르게 연속적이지 않아도 되기 때문에 같은 길이의 다른 해가 나타날 수 있다.
+
+예시를 가지고 생각해 보자. 문자열 'ACAYKP'와 'CAPCAK'가 있다고 가정해보자.
+
+우선 하나의 String을 기준 String, 다른 String을 비교 String으로 둔다. 
+
+![image-20210329161905909](https://user-images.githubusercontent.com/58545240/112806607-efb28f80-90b1-11eb-99b0-4cbeb1cff45c.png)
+
+위 표를 보면 문자열 맨 앞에 0을 추가해 첫번째 행과 열이 모두 0이다. 두번째 열인 C열의 값을 집어 넣어 보자. 각 위치의 값은 LSC의 길이의 값이 들어간다.
+
+![image-20210329161920671](https://user-images.githubusercontent.com/58545240/112806619-f50fda00-90b1-11eb-8d4b-68e0be7af811.png)
+
+값을 다 집어 넣으면 위 표와 같이 된다. 표를 읽는 법을 다시 설명하면 [C,C]의 1은 'C'와 'AC' 사이의 LCS의 길이이다. 마찬가지로 [C,Y]의 1은 'C'와 'ACAY'의 LCS의 길이를 나타낸 것이다.
+
+몇 번더 반복해 보자
+
+![image-20210329161933800](https://user-images.githubusercontent.com/58545240/112806650-fb9e5180-90b1-11eb-9e0c-995449f1d613.png)
+
+위 두표를 보면 알 수 있듯이 가로줄, **즉 행은 이전 행의 값을 기반으로 해서 계산된다.** 위의 두 표 중 1번째 표는 'CA'와 '`ACAYKP`'의 subsequence를 구한것이고, 2번째 표는 '`CAP`'와 '`ACAYKP`'의 subsequence를 구한 것이다.
+
+ 우리는 여기에서 표의 값을 구할 때 **같은 문자가 나오면** 이전까지의 LCS의 길이에 +1을 하는 것을 알 수 있다. 여기에서 이전까지의 LCS의 길이란 왼쪽값이 아니라 대각선(왼쪽 위)값을 말한다. 이는 두 문자열에서 해당 두 문자를 비교하기 전의 LCS의 길이에 +1을 하기 위해서 이다.
+
+ 또한 **비교한 문자가 다르다면**, 비교한 문자가 포함되어 있는 직전 LCS, 즉 표에서는 위와 왼쪽 값중 큰 값이 오게된다. 예를 들면 위의 2번째 표에서 [P,Y]의 값은 '`CAP`'와 '`ACAY`'를 비교한 값이 오게 되고, 'P'와 'Y'는 다르기 때문에 'CA'와 '`ACAY`'의 LCS의 길이와 '`CAP`'와 '`ACA`'의 LCS의 길이중 큰 값이 오게된다. 
+
+**즉 표의 값을 구하는 규칙은 다음과 같다.**
+
+1. String1[n], String2[k]가 같다면 : `[n, k] == [n-1, k-1] + 1`
+2. String1[n], String2[k]가 다르면 : `[n, k] == [n-1, k]와 [n, k-1] 중 큰 값`
+
+```java
+// Top-Dwon (Recur)
+public class Main {
+ 
+	static char[] str1;
+	static char[] str2;
+ 
+	static Integer[][] dp;
+	
+	public static void main(String[] args) throws IOException {
+    
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		str1 = br.readLine().toCharArray();
+		str2 = br.readLine().toCharArray();
+ 
+		dp = new Integer[str1.length][str2.length];
+		
+		System.out.println(LCS(str1.length - 1, str2.length - 1));
+	}
+	
+	static int LCS(int x, int y) {
+		// 인덱스 밖 (공집합)일 경우 0 반환
+		if(x == -1 || y == -1) {
+			return 0;
+		}
+ 
+		// 만약 탐색하지 않은 인덱스라면?
+		if(dp[x][y] == null) {
+			dp[x][y] = 0;
+ 
+			// str1의 x번째 문자와 str2의 y번째 문자가 같은지 검사
+			if(str1[x] == str2[y]) {
+				dp[x][y] = LCS(x - 1, y - 1) + 1;
+			}
+			// 같지 않다면 LCS(dp)[x-1][y]와 LCS(dp)[x,y-1] 중 큰 값으로 초기화
+			else {
+				dp[x][y] = Math.max(LCS(x - 1, y), LCS(x, y - 1));
+			}
+		}
+		return dp[x][y];
+	}
+}
+```
+
+```java
+// Bottom-Up 효율면에서 조금 더 좋다.
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+ 
+public class Main {
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		char[] str1 = br.readLine().toCharArray();
+		char[] str2 = br.readLine().toCharArray();
+		
+		int length_1 = str1.length;
+		int length_2 = str2.length;
+		
+		// 공집합 표현을 위해 인덱스가 한 줄씩 추가 됨 
+		int[][] dp = new int[length_1 + 1][length_2 + 1];
+		
+		// 1부터 시작 (index 0 은 공집합이므로 0의 값을 갖고있음) 
+		for(int i = 1; i <= length_1; i++) {
+			for(int j = 1; j <= length_2; j++) {
+				
+				// (i-1)과 (j-1) 번째 문자가 서로 같다면  
+				if(str1[i - 1] == str2[j - 1]) {
+					// 대각선 위 (i-1, j-1)의 dp에 +1 한 값으로 갱신 
+					dp[i][j] = dp[i - 1][j - 1] + 1;	
+				}
+				// 같지 않다면 이전 열(i-1)과 이전 행(j-1)의 값 중 큰 것으로 갱신  
+				else {
+					dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+				}
+			}
+		}
+		System.out.println(dp[length_1][length_2]);
+	}
+}
+```
+
+
+
+## 2. LCS 구하기
+
+문자열 '`ACAYKP`'와 '`CAPCAK`'를 이용해서 작성한 Table은 다음과 같다.
+
+![image-20210329162213414](https://user-images.githubusercontent.com/58545240/112806677-02c55f80-90b2-11eb-970d-2a53f1815bc4.png)
+
+우선 가장 큰 숫자가 시작 된 곳을 체크한다. 이후 이전 숫자를 찾아 가며 체크를 하되, 각각의 행과 열에는 하나의 체크만이 있어야 한다.또한 앞서 말했듯이 substring을 구하는 것과 다르게 연속적이지 않아도 되기 때문에 같은 길이의 다른 해가 나타날 수 있다.
+
+![image-20210329162229155](https://user-images.githubusercontent.com/58545240/112806693-0822aa00-90b2-11eb-8884-3fc3c5d35dcd.png)
+
+문자열 '`ACAYKP`'와 '`CAPCAK`'의 LCS는 '`ACAK`'이다.
+
+**`Ai = Bj`**일 때 `LCS(i, j) = LCS(i - 1, j - 1) + 1` 이었으니 이를 고려해 역추적해 나가면된다.
+
+다만 또 고려할 것이 있는데 `LCS(i, j) = Math.max(LCS(i - 1), j), LCS(i, j - 1))`의 경우이다.
+
+**`Ai != Bj`**일 지라도 `LCS(i, j) = Math.max(LCS(i - 1), j), LCS(i, j - 1))`을 통해 `LCS(i - 1, j - 1) + 1`가 도출될 수 있다.
+
+따라서 `LCS(i - 1, j), LCS(i, j - 1)` 둘다 `LCS(i, j)`보다 작으면서, `LCS(i - 1, j - 1)`이 `LCS(i, j)`보다 작은 경우가 `Ai == Bj`일 때이다.
+
+즉, `LCS[i][j] > LCS[i - 1][j - 1] && LCS[i][j] > LCS[i][j - 1] && LCS[i][j] > LCS[i - 1][j]`를 조건으로 코드를 구현해야한다.!!!
+
+```java
+// Top-Down
+String output = "";
+void backTracking(int m, int n) {
+    if (m == 0 || n == 0) return;
+    if (dp[m][n] > dp[m - 1][n - 1] && dp[m][n] > dp[m][n - 1] && dp[m][n] > dp[m -1][n]) {
+        // 문자열 인덱스는 dp 인덱스보다 1씩 더 작다.
+        output = input[n - 1] + output;
+    } else if (dp[m][n] > dp[m - 1][n] && dp[m][n] == dp[m][n - 1]) {
+        backTracking(m, n - 1);
+    } else {
+        backTracking(m - 1, n);
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
