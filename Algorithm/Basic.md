@@ -1377,11 +1377,126 @@ y축에 평행한 수직선을 2차원 평면에 훑으면서 스위핑해 봅�
 
 그럼 가로변끼리 겹치는 놈들은 어떻게 합치죠? 사실... 해답은 의외로 간단합니다. **스위핑을 2번 하는 겁니다. 세로변에 대해 한 번, 가로변에 대해 한 번.** 이렇게 스위핑을 2번 하면 합쳐질 놈들끼리는 다 합쳐지게 됩니다.
 
-# **> 편집 거리 알고리즘**
+# **> Levenshtein 알고리즘**
 
-## todo!
+---
+
+> **편집 거리 알고리즘 (edit distance)**
+
+Levenshtein distance 는 string 간 형태적 유사도를 정의하는 척도입니다. 만약 우리가 단어 사전을 가지고 있고, 사전에 등록되지 않은 단어가 발생한다면 Levenshtein distance 가 가장 가까운 단어로 치환함으로써 오탈자를 교정할 수 있습니다. 그러나 Levenshtein distance 는 계산 비용이 비쌉니다. 이 때 간단한 inverted index 를 이용하여 비슷할 가능성이 있는 단어 후보만을 추린 뒤 몇 번의 Levenshtein distance 를 계산함으로써 효율적으로 오탈자를 교정할 수 있습니다.
+
+String 간의 형태적 유사도를 정의하는 척도를 string distance 라 합니다. Edit distance 라는 별명을 지닌 Levenshtein distance 는 대표적인 string distance 입니다.
+
+Levenshtein distance 는 한 string `s1s1` 을 `s2s2` 로 변환하는 최소 횟수를 두 string 간의 거리로 정의합니다. `s1s1 = ‘꿈을꾸는아이’` 에서 `s2s2 = ‘아이오아이’` 로 바뀌기 위해서는 `(꿈을꾸 -> 아이오)` 로 바뀌고, 네번째 글자 ‘는’ 이 제거되면 됩니다. Levenshtein distance 에서는 이처럼 string 을 변화하기 위한 edit 방법을 세 가지로 분류합니다
+
+1. `delete`: ‘점심**을**먹자 →→ 점심먹자’ 로 바꾸기 위해서는 **을** 을 삭제해야 합니다.
+2. `insert`: ‘점심먹자 →→ 점심**을**먹자’ 로 바꾸기 위해서는 반대로 **을** 을 삽입해야 합니다.
+3. `substitution`: ‘점심먹**자** →→ 점심먹**장**’ 로 바꾸기 위해서는 **자**를 **장** 으로 치환해야 합니다.
+
+이를 위해 동적 프로그래밍 (dynamic programming) 이 이용됩니다. d[0,0] 은 s1,s2s1,s2 의 첫 글자가 같으면 0, 아니면 1로 초기화 합니다. 글자가 다르면 **substitution cost** 가 발생한다는 의미입니다. 그리고 그 외의 d[0,j]에 대해서는 d[0,j] = d[0,j-1] + 1 의 비용으로 초기화 합니다. 한글자씩 insertion 이 일어났다는 의미입니다. 이후에는 좌측, 상단, 좌상단의 값을 이용하여 거리 행렬 d 를 업데이트 합니다. 그 규칙은 아래와 같습니다.
+
+![image-20210330101437113](https://user-images.githubusercontent.com/58545240/112936241-6312da80-9160-11eb-99c8-11c0980cf63a.png)
+
+```java
+d[i,j] = Math.min(d[i-1,j] + deletion cost, Math.min(d[i,j-1] + insertion cost, d[i-1,j-1] + substitution cost)
+```
+
+예를 들어 "`FLOMAX`"와 "`VOLMAX`" 사이의 Levenshtein 거리는 **3**입니다. 세 가지 편집이 하나씩 이루어지고 그 미만으로 편집할 수 있는 방법이 없기 때문입니다.
+
+"`GILY`"와 "`GELLY`"사이의 Levenshtein 거리는 **2**입니다.
+
+![image-20210330101839455](https://user-images.githubusercontent.com/58545240/112936248-6908bb80-9160-11eb-972b-c68f4bdb774e.png)
+
+"`HONDA`"와 "`HYUNDAI`" 사이의 Levenshtein 거리는 **3**입니다.
+
+![image-20210330101933813](https://user-images.githubusercontent.com/58545240/112936259-6dcd6f80-9160-11eb-9933-3dcb09829198.png)
+
+## Dynamic Programming으로 접근
+
+이 **Levenshtein** 알고리즘은 다른 문자열을 얻기 위해 한 문자열을 수정하는 데 필요한 최소 편집 작업 수를 계산합니다. 이를 계산하는 가장 일반적인 방법은 동적 프로그래밍 방식입니다.
+
+1. 행렬은 (m, n) 셀에서 하나의 m- 문자 접두사와 다른 단어의 n- 접두사 사이의 Levenshtein 거리를 측정하여 초기화됩니다.
+2. 매트릭스는 왼쪽 상단에서 오른쪽 하단 모서리까지 채울 수 있습니다.
+3. 각각의 수평 또는 수직 점프는 각각 삽입 또는 삭제에 해당합니다.
+4. 비용은 일반적으로 각 작업에 대해 1로 설정됩니다.
+5. 행과 열의 두 문자가 일치하면 0과 일치하지 않으면 대각선 점프는 하나의 비용이 발생할 수 있습니다. 각 셀은 항상 로컬 비용을 최소화합니다.
+6. 이렇게하면 오른쪽 아래 모서리에있는 숫자가 두 단어 사이의 Levenshtein 거리입니다.
+
+"`HONDA`"와 "`HYUNDAI`"를 비교 해보겠습니다.
+
+![image-20210330102142723](https://user-images.githubusercontent.com/58545240/112936274-732aba00-9160-11eb-9ebf-2600ef6783d1.png)
+
+이제 Levenshtein 알고리즘을 자바코드로 구현해봅시다.
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static BufferedReader br;
+    static StringTokenizer st;
+    static int n, m = 0;
+    static long dist[][];
+    public static void main(String[] args) throws IOException {
+        br = new BufferedReader(new InputStreamReader(System.in));
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        
+        dist = new long[n + 1][m + 1];
+
+        String input = br.readLine();
+        String answer = br.readLine();
+
+        long cnt = levenshtein(input, answer);
+        System.out.println(cnt);
+    }
+
+    static long levenshtein(String origin, String pattern) {
+        for (int i = 1; i <= origin.length(); ++i) {
+            dist[i][0] = i;
+        }
+        for (int j = 1; j <= pattern.length(); ++j) {
+            dist[0][j] = j;
+        }
+
+        for (int j = 1; j <= pattern.length(); ++j) {
+            for (int i = 1; i <= origin.length(); ++i) {
+                if (origin.charAt(i - 1) == pattern.charAt(j - 1)) {
+                    dist[i][j] = dist[i - 1][j - 1];
+                } else {
+                    dist[i][j] = Math.min(dist[i - 1][j - 1] + 1, Math.min(dist[i][j - 1] + 1, dist[i - 1][j] + 1));
+                }
+            }
+        }
+        return dist[origin.length()][pattern.length()];
+    }
+}
+```
+
+## 사용 사례
+
+대부분의 문자열 매칭에서 우리의 목표는 적은 수의 차이가 예상되는 상황에서 긴 텍스트에서 짧은 문자열에 대한 일치여부를 찾는 것입니다. 예를 들어 문자열 중 하나는 일반적으로 짧고 다른 하나는 임의로 깁니다. 여기에는 맞춤법 검사기, 광학 문자 인식을위한 수정 시스템 및 번역 메모리를 기반으로 한 자연어 번역을 지원하는 소프트웨어와 같은 광범위한 응용 프로그램이 있습니다.
+
+Levenshtein 거리는 두 개의 긴 문자열 사이에서도 계산할 수 있습니다. 그러나 이를 계산하는 데 드는 비용은 두 문자열 길이의 곱에 거의 비례하므로 비효율적이며 비현실적입니다. 따라서 Levenshtein이 사용되는 경우 비교 속도를 높이기 위해 일반적으로 비교 하는 문자열이 짧다는 것이 특징입니다.
+
+하지만 Inverted index 를 이용하면 최소한 비슷할 수 있는 단어들만을 후보로 추린 뒤, 소수의 후보에 대해서만 계산 비용이 비싼 Levenshtein distance 를 계산함으로써, 효율적인 오탈자 교정을 할 수 있습니다.
+
+### - BOJ[20542] : 받아쓰기
+
+https://www.acmicpc.net/problem/20542
+
+
+
+**참조**
+
+https://lovit.github.io/nlp/2018/09/04/levenshtein_inverted_index/
+
+https://www.cuelogic.com/blog/the-levenshtein-algorithm
 
 # **> LCS**
+
+---
 
 > **Longest Common Subsequence** 
 >
@@ -1558,9 +1673,367 @@ void backTracking(int m, int n) {
 }
 ```
 
+# **> LIS**
+
+---
+
+> **Longest Increasing Subsequence)**
+>
+> 최장 증가 부분 수열
+
+임의의 수열이 주어졌을 때, 이 수열에서 몇 개의 수 들을 선택해 부분수열을 만들 수 있는데, 이 때 만들어진 부분수열 중 오름차순으로 정렬 된 가장 긴 수열을 **최장 증가 수열**이라고 한다.
+
+여기서의 부분 수열은 반드시 연속적이거나 유일하지 않아도 된다.
+
+예를 들어 `arr[ ] = {10, 20, 10, 30, 20, 50}`의 수열이 있다고 할 때 여기서의 LIS는 `{10, 20, 30, 50}`이고 길이는 **4**일 것이다. 
+
+이제 이를 O(N<sup>2</sup>)과 O(nlogn)의 시간복잡도를 가지는 두 가지 방법을 알아보자.
+
+## 1. DP
+
+풀이 과정은 아래와 같다.
+
+1. i번째 인덱스에서 끝나는 최장 증가 부분 수열의 마지막에 arr[k]를 추가했을 때의 LIS 길이와
+2. 추가하지 않고 기존의 length[k] 값
+3. **둘 중에 더 큰 값으로 length[k] 값을 업데이트**합니다.
+
+이 방법은 가장 간편한 방법으로 O(N<sup>2</sup>)의 시간 복잡도를 가진다.
+
+```java
+for (int k = 0; k < n; k++){
+	length[k] = 1;
+    for (int i = 0; i < k; i++){
+        if(arr[i] < arr[k]){
+            length[k] = Math.max(length[k], length[i] + 1);
+        }        
+    }
+}
+```
+
+### - BOJ[2565] : 전깃줄
+
+https://www.acmicpc.net/problem/2565
+
+```java
+import java.io.*;
+import java.util.*;
+public class Main {
+    static int n;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
+        int[][] wire = new int[n + 1][2];
+        Integer[] dp = new Integer[n + 1];
+        
+        for (int i = 1; i < wire.length; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            
+            wire[i][0] = u;
+            wire[i][1] = v;
+        }
+        
+        Arrays.sort(wire, new Comparator<int[]>() {
+           public int compare(int[] o1, int[] o2) {
+               return o1[0] - o2[0];
+           }
+        });
+        
+        for (int i = 1; i < dp.length; i++) {
+            dp[i] = 1;
+            /*
+		   * i번째 전봇대를 기준으로 이전의 전봇대들의 전선을 연결하기 위한 탐색
+		   * 즉, i번째 전봇대에 연결된 B전봇대는 탐색할 j번째 전봇대에 연결된 B전봇대보다 값이 커야함 
+		   */
+            for (int j = 1; j < i; j++) {
+                if (wire[i][1] > wire[j][1]) {
+	                dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        
+        int max = 0;
+        /*
+		*  i번째 A전봇를 기준으로 연결가능한 개수 탐색
+		*  및 최댓값 찾기
+		*/
+        for (int i = 1; i <= n; i++) {
+            max = Math.max(dp[i], max);
+        }
+        // 최소 철거 개수 = 전체 개수 - 설치 가능한 전깃줄
+        System.out.println(n - max);
+    }
+}
+```
+
+## 2. Binary Search
+
+DP에서의 시간복잡도를 개선하기 위해 **이분탐색**을 활용한다.
+
+즉, LIS 형태를 유지하기 위해 주어진 배열의 인덱스를 하나씩 살펴보며 그 **숫자가 들어갈 위치를 이분탐색으로 탐색하여 삽입**한다.
+
+이분탐색의 시간복잡도는 O(logn) 이므로, 이 문제의 시간복잡도는 O(nlogn)이 된다.
+
+기본적인 풀이 과정은 아래와 같다.
+
+1. 탐색을 진행하며 수열의 최댓값 큰 수는 계속 뒤로 이어붙이고
+2. 중간에 낄 수 있는 수는 이분탐색을 이용해 적절한 자리를 찾아 교체시키는 방식으로 수열을 만든다.
+3. 수열에 포함된 숫자들보다 작은 숫자가 나오면 가장 처음 숫자를 교체한다.
+
+`arr[ ] = {10, 20, 10, 30, 20, 50}` 를 예시로 들어 로직을 자세하게 보자.
+
+- 첫 숫자 10은 가장 짧은 길이의 증가 부분 수열이다. 배열에 바로 포함시킨다. `{ 10 }`
+- 다음 숫자 20은 10보다 크기 때문에 부분 수열 중 가장 큰 수인 10보다 크다. 바로 뒤에 이어 붙인다. `{ 10, 20 }`
+- 다음 숫자 10은 제일 작은 수인 첫 번째 숫자 10보다 작은 것도 아니고 제일 큰 수인 20보다 큰 것도 아니므로 이분탐색으로 10의 위치를 찾아준다. 제일 첫번째 숫자인 10과 같으므로 이분탐색을 이용해서 교체 가능한 자리를 찾을 경우 첫번째 10의 자리가 리턴될 것이다. 10과 10을 교체한다. 부분 수열의 길이는 유지된다. `{ 10, 20 }`
+- 다음 숫자 30은 부분 수열에서 가장 큰 수인 20보다 크다. 끝에 바로 붙여준다. `{ 10, 20, 30 }`
+- 다음 숫자 20은 부분 수열에서 가장 작은 수인 10과 가장 큰 수인 30 사이에 있는 수이다. 앞에서와 같이 이분 탐색을 이용하여 자리를 찾고 자리를 교체한다. 부분 수열의 길이는 유지된다. `{ 10, 20, 30 }`
+- 마지막 숫자 50은 부분 수열의 가장 큰 수인 30보다 크다. 끝에 바로 붙여준다. `{ 10, 20, 30, 50 }`
+
+**이 문제에서는 우연히 정확한 부분 수열이 탄생했지만, 중간에 2자리의 10이 5로만 바껴도 부분수열이 달라졌을 것이다.**
+
+**따라서, 이 방법만으로는 길이를 구하는 방법이지 부분수열을 구하는 방법이 아닌 것을 주의하자.**
+
+**최종적으로 최장 부분 수열을 구하기 위해선 어떤 항목이 참조 되는지 Reference 배열을 정의하여 요소들을 Tracing하는 테크닉을 사용하여야 한다.**
+
+```c
+/* Find LIS NLogN */
+int arr[] = new int[100001]; // 원본 수열
+int lis[] = new int[100001]; // LIS 수열
+int lisCnt = 0; // LIS의 길이
+int trace[] = new int[100001]; // TRACE를 위한 수열
+int findLIS(int n) {
+    for (int i = 0; i < n; i++) {
+        if (i == 0 || arr[i] > lis[lisCnt - 1]) {
+            trace[arr[i]] = lisCnt;
+            lis[lisCnt++] = arr[i];
+        } else {
+            int start = 0, end = lisCnt;
+            int idx = lisCnt;
+            while(start < end) {
+                int mid = (start + end) / 2;
+                if(lis[mid] >= arr[i]) {
+                    idx = Math.min(idx, mid);
+                    end = mid;
+                } else {
+                    start = mid + 1;
+                }
+            }
+            lis[idx] = arr[i];
+            trace[arr[i]] = idx;
+        }
+    }
+    
+    // trace 배열에서 가장 나중을 꺼내면 됨.
+    int cur = lisCnt-1;
+    for(int i=n-1; i>=0; i--) {
+        if(trace[arr[i]] == cur) {
+            lis[cur] = arr[i];
+            cur--;
+        }
+    }
+    return lisCnt;
+}
+```
 
 
 
+### - BOJ[11053] : 가장 긴 증가하는 부분 수열
+
+https://www.acmicpc.net/problem/11053
+
+```java
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+		int[] A = new int[N];
+		for (int i = 0; i < N; i++) {
+			A[i] = sc.nextInt();
+		}
+
+		int[] lis = new int[N];
+		lis[0] = A[0];
+		int idx = 1;
+		int tmp = 0;
+		for (int i = 1; i < N; i++) {
+			if (lis[idx - 1] < A[i])
+				lis[idx++] = A[i];
+			else if (lis[0] > A[i])
+				lis[0] = A[i];
+			else {
+				tmp = Arrays.binarySearch(lis, 0, idx, A[i]);
+				lis[tmp < 0 ? -tmp - 1 : tmp] = A[i];
+			}
+		}
+		System.out.println(idx);
+	}
+}
+```
+
+### - BOJ[2352] : 반도체 설계
+
+https://www.acmicpc.net/problem/2352
+
+```JAVA
+// 직접 풀어 봐요 !
+```
+
+## 3. Segment Tree
+
+요소는 원래 인덱스를 유지하면서 오름차순으로 먼저 정렬됩니다. 엄격하게 증가하는 LIS의 경우 동일한 요소의 경우 인덱스가 높은 요소가 낮은 요소보다 초기 자리를 얻습니다. 이것은 쌍의 배열에 저장할 수 있습니다. 
+
+이제 세그먼트 트리에 채워집니다. 정렬 된 배열에서의 위치에 따라 원래 인덱스에 해당하는 잎의 세그먼트 트리에 채워집니다.
+
+처음에는 세그먼트 트리가 0으로 초기화되었습니다. 이제 정렬 된 배열에서 i 번째 요소를 처리했다고 가정 해 보겠습니다. (i + 1) 번째 반복에서 값의 원래 위치를 j로 둡니다.
+
+그런 다음 값이 0에서 (j-1) +1 사이의 잎의 최대 값이 될 세그먼트 트리의 j 번째 잎을 채 웁니다. 
+(앞의 하위 배열에서 그보다 작은 요소에 의해 형성된 LIS의 길이 및 포함에 대해 +1) 
+
+```java
+// Finding the Longest Increasing Subsequence
+// using Segment Tree
+import java.io.*;
+import java.util.*;
+
+class Pair {
+	int first;
+	int second;
+}
+
+class GFG {
+// Building the entire Segment tree, the root of which
+// contains the length of the LIS
+    static void buildTree(int[] tree, int pos, int low,
+                        int high, int index, int value) {
+
+        // Index is the original index of current element
+        // If the index is not present in the given range,
+        // then simply return
+        if (index < low || index > high)
+            return;
+
+        // If low == high then the current position
+        // should be updated to the value
+        if (low == high) {
+            tree[pos] = value;
+            return;
+        }
+
+        int mid = (high + low) / 2;
+
+        // Recursively call the function on the
+        // child nodes
+        buildTree(tree, 2 * pos + 1, low, mid,
+                index, value);
+        buildTree(tree, 2 * pos + 2, mid + 1, high,
+                index, value);
+
+        // Assign the current position the max of
+        // the 2 child nodes
+        tree[pos] = Math.max(tree[2 * pos + 1],
+                            tree[2 * pos + 2]);
+    }
+
+    // Function to query the Segment tree and
+    // return the value for a given range
+    static int findMax (int[] tree, int pos, int low, int high, int start, int end) {
+        // Query: Same as the query function of Segment
+        // tree. If the current range is totally inside
+        // the query range, return the value of current
+        // position
+        if (low >= start && high <= end)
+            return tree[pos];
+
+        // If it is out of bound, return the minimum
+        // which would be 0 in this case
+        if (start > high || end < low)
+            return 0;
+
+        // Partial overlap
+        int mid = (high + low) / 2;
+
+        // Call findMax on child nodes recursively
+        // and return the maximum of the two
+        return Math.max(findMax(tree, 2 * pos + 1, low, mid, start, end),
+                        findMax(tree, 2 * pos + 2, mid + 1, high, start, end));
+    }
+
+    static int findLIS(int arr[], int n) {
+        // The array of pairs stores the integers
+        // and indices in p[i]
+        List<Pair> p = new ArrayList<Pair>();
+
+        for(int i = 0; i < n; i++)
+        {
+            Pair p1 = new Pair();
+            p1.first = arr[i];
+            p1.second = i;
+            p.add(p1);
+        }
+
+        // Sorting the array in increasing order
+        // of the elements
+        Collections.sort(p, (p1, p2) ->
+        {
+
+            /* For same values, element with the higher
+            index appear earlier in the sorted array.
+            This is for strictly increasing subsequence.
+            For increasing subsequence, the lower index
+                appears earlier in the sorted array. */
+            if (p1.first == p2.first)
+                return p2.second - p1.second;
+
+            // Sorting the array according to their values.
+            return p1.first - p2.first;
+        });
+
+        // Calculating the length of the segment-tree
+        int len = (int)(Math.pow(2, (int)(Math.ceil(Math.sqrt(n))) + 1)) - 1;
+        int[] tree = new int[len];
+
+        // Building the segment-tree, the root node of
+        // which contains the length of LIS for the n
+        // elements
+        for(int i = 0; i < n; i++) {
+            buildTree(tree, 0, 0, n - 1, p.get(i).second, findMax(tree, 0, 0, n - 1, 0, p.get(i).second) + 1);
+        }
+        return tree[0];
+    }
+
+    // Driver Code
+    public static void main(String[] args) {
+        int arr[] = { 10, 22, 9, 33, 21, 50, 41, 60 };
+        int n = arr.length;
+
+        System.out.println("Length of the LIS: " + findLIS(arr, n));
+    }
+}
+```
+
+### - BOJ[12015] : 가장 긴 증가하는 부분 수열 2
+
+https://www.acmicpc.net/problem/12015
+
+```java
+// 직접 풀어 봐요!
+```
+
+
+
+**참조**
+
+https://code0xff.tistory.com/70
+
+https://jins-dev.tistory.com/entry/%EC%B5%9C%EC%A0%81%ED%99%94%EB%90%9C-LISLongest-Increasing-Subsequence-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EA%B3%BC-%ED%95%B4-%EC%B0%BE%EA%B8%B0
+
+https://www.geeksforgeeks.org/lis-using-segment-tree/
 
 
 
