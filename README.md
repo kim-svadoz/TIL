@@ -170,6 +170,7 @@
 | 2448_별찍기11                   | [Link](./Algorithm/Baekjoon/p2448.java)                      | [문제](https://www.acmicpc.net/problem/2448)                 | 분할정복, 재귀                      |
 | 2531_회전초밥                   | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                |
 | 2533_사회망서비스(SNS)          | [Link](./Algorithm/Baekjoon/p2533.java)                      | [문제](https://www.acmicpc.net/problem/2533)                 | Tree DP, DFS, 인접리스트            |
+| 2565_전깃줄                     | [Link](./Algorithm/Baekjoon/p2565.java)                      | [문제](https://www.acmicpc.net/problem/2565)                 | LIS - DP                            |
 | 2579_계단오르기                 | [Link](./Algorithm/Baekjoon/p2579.java)                      | [문제](https://www.acmicpc.net/problem/2579)                 | DP                                  |
 | 2580_스도쿠                     | [Link](./Algorithm/Baekjoon/p2580.java)                      | [문제](https://www.acmicpc.net/problem/2580)                 | 스도쿠, 백트래킹                    |
 | 2609_최대공약수,최소공배수      | [Link](./Algorithm/Baekjoon/p2609.java)                      | [문제](https://www.acmicpc.net/problem/2609)                 | 유클리드 호제법                     |
