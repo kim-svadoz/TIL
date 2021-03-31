@@ -1880,8 +1880,35 @@ public class Main {
 
 https://www.acmicpc.net/problem/2352
 
-```JAVA
-// 직접 풀어 봐요 !
+```java
+import java.io.*;
+import java.util.*;
+public class Main {
+    static int n, arr[], lis[];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        arr = new int[n];
+        lis = new int[n];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        int lis_cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if (i == 0 || arr[i] > lis[lis_cnt - 1]) {
+                lis[lis_cnt++] = arr[i];
+            } else {
+                int idx = Arrays.binarySearch(lis, 0, lis_cnt, arr[i]);
+                idx = (idx < 0) ? -idx -1 : idx;
+                lis[idx] = arr[i];
+            }
+        }
+
+        System.out.println(lis_cnt);
+    }
+}
 ```
 
 ## 3. Segment Tree
@@ -2034,10 +2061,4 @@ https://code0xff.tistory.com/70
 https://jins-dev.tistory.com/entry/%EC%B5%9C%EC%A0%81%ED%99%94%EB%90%9C-LISLongest-Increasing-Subsequence-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EA%B3%BC-%ED%95%B4-%EC%B0%BE%EA%B8%B0
 
 https://www.geeksforgeeks.org/lis-using-segment-tree/
-
-
-
-
-
-
 
