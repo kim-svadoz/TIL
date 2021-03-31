@@ -197,7 +197,7 @@
 | 9012_괄호                       | [Link](./Algorithm/Baekjoon/p9012.java)                      | [문제](https://www.acmicpc.net/problem/9012)                 | 문자열, 스택                        |
 | 9019_DSLR                       | [Link](./Algorithm/Baekjoon/p9019.java)                      | [문제](https://www.acmicpc.net/problem/9019)                 | 완전탐색, 구현, BFS                 |
 | 9095_1,2,3 더하기               | [Link](./Algorithm/Baekjoon/p9095.java)                      | [문제](https://www.acmicpc.net/problem/9095)                 | DP                                  |
-| 9465_스티커                     | [Link](./Algorithm/Baekjoon/p9495.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                  |
+| 9465_스티커                     | [Link](./Algorithm/Baekjoon/p9465.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                  |
 | 9466_텀 프로젝트                | [Link](./Algorithm/Baekjoon/p9466.java)                      | [문제](https://www.acmicpc.net/problem/9466)                 | 그래프,  DFS                        |
 | 9613_GCD 합                     | [Link](./Algorithm/Baekjoon/p9613.java)                      | [문제](https://www.acmicpc.net/problem/9613)                 | 유클리드 호제법                     |
 | 10430_나머지                    | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                            |
