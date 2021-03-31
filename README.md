@@ -166,6 +166,7 @@
 | 2293_동전1                      | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)                  |
 | 2294_동전2                      | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)                  |
 | 2331_반복수열                   | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                            |
+| 2352_반도체 설계                | [Link](./Algorithm/Baekjoon/p2352.java)                      | [문제](https://www.acmicpc.net/problem/2352)                 | LIS, Binary Search                  |
 | 2447_별찍기10                   | [Link](./Algorithm/Baekjoon/p2447.java)                      | [문제](https://www.acmicpc.net/problem/2447)                 | 분할정복, 재귀                      |
 | 2448_별찍기11                   | [Link](./Algorithm/Baekjoon/p2448.java)                      | [문제](https://www.acmicpc.net/problem/2448)                 | 분할정복, 재귀                      |
 | 2531_회전초밥                   | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                |
@@ -302,7 +303,8 @@
 | 42898_등굣길             | [Link](./Algorithm/Programmers/p42898.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/42898) | DP                           |
 | 43105_정수삼각형         | [Link](./Algorithm/Programmers/p43105.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/43105) | DP                           |
 | 70129_이진변환 반복하기  | [Link](./Algorithm/Programmers/p70129.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/70129) | 이진변환, 구현               |
-| 43238_입국심사           | [Link](./Algorithm/Programmers/p43238.java)                  | https://programmers.co.kr/learn/courses/30/lessons/43238     | Binary Search                |
+| 43238_입국심사           | [Link](./Algorithm/Programmers/p43238.java)                  | [문제](https://programmers.co.kr/learn/courses/30/lessons/43238) | Binary Search                |
+| 12952_N-Queens           | [Link](./Algorithm/Programmers/pg12952.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/12952) | Backtracking                 |
 
 ### [LeetCode](./Algorithm/LeetCode)
 
