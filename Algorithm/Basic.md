@@ -381,6 +381,220 @@ map.forEach((key, value) -> System.out.println("key: "+key+", value: "+value));
 
 4-> 2 -> 3 -> 1
 
+# **> For Each**
+
+배열, List, Map 등에 들어있는 값을 순서대로 꺼내거나 처리를 해야 할 때 for 문을 사용하는 경우가 많습니다.
+
+forEach 함수는 for 같은 반복문을 처리할 때 사용하는 함수입니다.
+
+람다식을 이용해 forEach를 사용하는 방법과 예제를 살펴보겠습니다.
+
+```java
+collection.forEach(변수 -> 반복처리(변수))
+```
+
+collection에는 배열이나 리스트 등 데이터를 저장해놓은 변수명을 지정합니다.
+
+forEach 함수는 람다식을 사용해서 작성해야 하지만, 간단한 반복 처리 같은 경우에는 쉽게 이해할 수 있습니다.
+
+예제 또한 간단한 반복 처리를 하는 소스로 설명을 하겠습니다.
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		List<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("p");
+		list.add("p");
+		list.add("l");
+		list.add("e");
+
+		// 확장 for문
+		System.out.println("확장 for문 출력");
+		for (String s : list) {
+			System.out.println(s);
+		}
+
+		// forEach 함수
+		System.out.println("forEach 함수 출력");
+		list.forEach(s -> System.out.println(s));
+	}
+}
+```
+
+```bash
+# 결과
+확장 for문 출력
+a
+p
+p
+l
+e
+
+forEach 함수 출력
+a
+p
+p
+l
+e
+```
+
+for 문을 사용해서 출력한 결과와 forEach 함수를 사용해 출력한 결과는 같습니다.
+
+forEach 함수는 람다식으로 사용하기 때문에 소스도 간결하게 작성할 수 있습니다.
+
+그리고 **람다식**에서 사용하는 **->** 부분도 보입니다.
+
+**->** 앞에 있는 **s**에 리스트 변수인 list에 저장되어 있는 값을 하나씩 대입합니다.
+
+그리고 출력문은 println에서 값이 저장되어 있는 s를 출력하고 있습니다.
+
+## 배열에서의 forEach
+
+배열에서 forEach 함수를 사용하기 위해서는 Stream API를 이용해야 합니다.
+
+```java
+import java.util.Arrays;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		String[] strArray = { "a", "p", "p", "l", "e" };
+		Arrays.stream(strArray).forEach(s -> System.out.println(s));
+	}
+}
+```
+
+```bash
+# 결과
+a
+p
+p
+l
+e
+```
+
+배열로 값을 저장해한 strArray 변수를 Arrays.stream() 안에 지정해서 forEach 함수로 출력하고 있습니다.
+
+forEach 작성 방법은 동일합니다.
+
+## Map에서의 forEach
+
+이번에는 forEach 사용하여 Map에 들어있는 데이터를 출력하는 예제를 보겠습니다.
+
+Map은 키(Key)와 값(Value)으로 구성되어 있습니다.
+
+forEach를 사용하여 Map에 들어있는 모든 값을 간단하게 출력할 수 있습니다.
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put("korea", "korean");
+		map.put("usa", "english");
+		map.put("japan", "japanese");
+
+		map.forEach((key, value) -> System.out.println(key + " : " + value));
+	}
+}
+```
+
+```bash
+# 결과
+korea : korean
+usa : english
+japan : japanese
+```
+
+Map에 들어있는 모든 데이터가 출력되었습니다.
+
+예제에서는 HashMap을 사용했기 때문에 출력 순서는 바뀔 수도 있습니다.
+
+## List에서의 forEach
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		List<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("p");
+		list.add("p");
+		list.add("l");
+		list.add("e");
+
+		list.forEach(s -> System.out.println(list.indexOf(s) + " : " + s));
+	}
+}
+```
+
+```bash
+# 결과
+0 : a
+1 : p
+2 : p
+3 : l
+4 : e
+```
+
+indexOf 함수를 사용해 인덱스 번호로 List에서 요소를 취득해 출력하도록 하고 있습니다.
+
+List 값을 출력할 때에는 람다식을 생략하고 작성할 수 있습니다.
+
+*List forEach 람다식 생략 예제*
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+	public static void main(String[] args) {
+
+		List<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("p");
+		list.add("p");
+		list.add("l");
+		list.add("e");
+
+		list.forEach(System.out::println);
+	}
+}
+```
+
+```bash
+# 결과
+a
+p
+p
+l
+e
+```
+
+forEach 함수에서 람다식을 생략해도 List에 들어있는 모든 값이 출력되었습니다.
+
+> 반복 처리를 할 때 사용하는 for 문을 forEach 함수와 람다식을 이용해 작성하는 방법을 알아봤습니다.
+>
+> 람다식을 사용하기 때문에 소스를 간결하게 작성할 수 있습니다.
+>
+> 간단한 반복 처리를 할 때에는 forEach와 람다식을 활용해보는 것도 좋을거 같습니다!
+
 # **> 분할 정복(Divide and Conquer) 알고리즘**
 
 ---
