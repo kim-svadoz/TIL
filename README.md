@@ -182,6 +182,7 @@
 | 2751_수 정렬하기 2              | [Link](./Algorithm/Baekjoon/p2751.java)                      | [문제](https://www.acmicpc.net/problem/2751)                 | 정렬                                |
 | 2805_나무 자르기                | [Link](./Algorithm/Baekjoon/p2805.java)                      | [문제](https://www.acmicpc.net/problem/2805)                 | Binary Search                       |
 | 2875_대회or인턴                 | [Link](./Algorithm/Baekjoon/p2875.java)                      | [문제](https://www.acmicpc.net/problem/2875)                 | Greedy                              |
+| 3029_경고                       | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                        |
 | 3108_로고                       | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                       |
 | 4195_친구네트워크               | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap        |
 | 4568_LRU Caching                | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                 |
@@ -196,6 +197,7 @@
 | 7576_토마토                     | [Link](./Algorithm/Baekjoon/p7576.java)                      | [문제](https://www.acmicpc.net/problem/7576)                 | BFS                                 |
 | 9012_괄호                       | [Link](./Algorithm/Baekjoon/p9012.java)                      | [문제](https://www.acmicpc.net/problem/9012)                 | 문자열, 스택                        |
 | 9019_DSLR                       | [Link](./Algorithm/Baekjoon/p9019.java)                      | [문제](https://www.acmicpc.net/problem/9019)                 | 완전탐색, 구현, BFS                 |
+| 9046_복호화                     | [Link](./Algorithm/Baekjoon/p9046.java)                      | [문제](https://www.acmicpc.net/problem/9046)                 | 문자열, 구현                        |
 | 9095_1,2,3 더하기               | [Link](./Algorithm/Baekjoon/p9095.java)                      | [문제](https://www.acmicpc.net/problem/9095)                 | DP                                  |
 | 9465_스티커                     | [Link](./Algorithm/Baekjoon/p9465.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                  |
 | 9466_텀 프로젝트                | [Link](./Algorithm/Baekjoon/p9466.java)                      | [문제](https://www.acmicpc.net/problem/9466)                 | 그래프,  DFS                        |
@@ -203,6 +205,7 @@
 | 10430_나머지                    | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                            |
 | 10451_순열 사이클               | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                  |
 | 10610_30                        | [Link](./Algorithm/Baekjoon/p10610.java)                     | [문제](https://www.acmicpc.net/problem/10610)                | Greedy                              |
+| 10798_세로읽기                  | [Link](./Algorithm/Baekjoon/p10798.java)                     | [문제](https://www.acmicpc.net/problem/10798)                | 문자열, 구현                        |
 | 10799_쇠 막대기                 | [Link](./Algorithm/Baekjoon/p10799.java)                     | [문제](https://www.acmicpc.net/problem/10799)                | 스택                                |
 | 10808_알파벳 개수               | [Link](./Algorithm/Baekjoon/p10808.java)                     | [문제](https://www.acmicpc.net/problem/10808)                | 문자열 구현                         |
 | 10809_알파벳 찾기               | [Link](./Algorithm/Baekjoon/p10809.java)                     | [문제](https://www.acmicpc.net/problem/10809)                | 문자열 구현                         |
@@ -226,6 +229,7 @@
 | 11054_가장 긴 바이토닉 부분수열 | [Link](./Algorithm/Baekjoon/p11054.java)                     | [문제](https://www.acmicpc.net/problem/11054)                | DP, 바이토닉 수열                   |
 | 11055_가장 큰 증가 부분 수열    | [Link](./Algorithm/Baekjoon/p11055.java)                     | [문제](https://www.acmicpc.net/problem/11055)                | DP                                  |
 | 11057_오르막 수                 | [Link](./Algorithm/Baekjoon/p11057.java)                     | [문제](https://www.acmicpc.net/problem/11057)                | DP                                  |
+| 11365_!비밀 급일                | [Link](./Algorithm/Baekjoon/p11365.java)                     | [문제](https://www.acmicpc.net/problem/11365)                | 문자열, 구현                        |
 | 11399_ATM                       | [Link](./Algorithm/Baekjoon/p11399.java)                     | [문제](https://www.acmicpc.net/problem/11399)                | Greedy, Sort                        |
 | 11559_뿌요뿌요                  | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559)                | BFS, DFS                            |
 | 11650_좌표 정렬하기             | [Link](./Algorithm/Baekjoon/p11650.java)                     | [문제](https://www.acmicpc.net/problem/11650)                | 정렬                                |
@@ -233,6 +237,7 @@
 | 11652_카드                      | [Link](./Algorithm/Baekjoon/p11652.java)                     | [문제](https://www.acmicpc.net/problem/11652)                | 정렬                                |
 | 11653_소인수분해                | [Link](./Algorithm/Baekjoon/p11653.java)                     | [문제](https://www.acmicpc.net/problem/11653)                | 정수론, 소수                        |
 | 11662_민호와 강호               | [Link](./Algorithm/Baekjoon/p11662.java)                     | [문제](https://www.acmicpc.net/problem/11662)                | Teranry Search, 극값 찾기           |
+| 11720_숫자의 합                 | [Link](./Algorithm/Baekjoon/p11720.java)                     | [문제](https://www.acmicpc.net/problem/11720)                | 문자열, 구현                        |
 | 11722_가장 긴 감소하는 부분수열 | [Link](./Algorithm/Baekjoon/p11722.java)                     | [문제](https://www.acmicpc.net/problem/11722)                | DP                                  |
 | 11724_연결 요소                 | [Link](./Algorithm/Baekjoon/p11724.java)                     | [문제](https://www.acmicpc.net/problem/11724)                | 그래프, 인접리스트                  |
 | 11725_트리의 부모 찾기          | [Link](./Algorithm/Baekjoon/p11725.java)                     | [문제](https://www.acmicpc.net/problem/11725)                | 그래프, 트리, 인접리스트            |
@@ -252,6 +257,7 @@
 | 17144_미세먼지안녕!             | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                          |
 | 17472_다리만들기2               | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm              |
 | 19236_청소년상어                | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                 |
+| 20154_이 구역의 승자는 누구야?  | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                        |
 | 20542_받아쓰기                  | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘               |
 | 21275_폰 호석만                 | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스          |
 | 21276_계보 복원가 호석          | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap    |
