@@ -630,7 +630,7 @@ This condition is best illustrated by a two thread, two semaphore example. Suppo
 >
 > 이 조건은 두 개의 스레드, 두 개의 세마포어 예에서 가장 잘 설명됩니다. 첫 번째 스레드가 첫 번째 세마포를 소유하고 두 번째 스레드가 두 번째 세마포를 소유한다고 가정합니다. 첫 번째 스레드가 두 번째 세마포어를 얻으려고 시도하고 동시에 두 번째 스레드가 첫 번째 세마포어를 얻으려고하면 두 스레드가 모두 교착 상태에 들어갑니다. 또한 이러한 스레드가 영구적으로 일시 중단 된 상태로 유지되면 관련 리소스도 영구적으로 잠 깁니다. 71 페이지의 그림 8은이 예를 보여줍니다.
 
-![image-20210209173157686](C:\Users\dhkdghehfdl\Desktop\ksh\Embedded\images\107336816-eb7be400-6afc-11eb-96bf-fa8e871a0fd5.png)
+![107336816-eb7be400-6afc-11eb-96bf-fa8e871a0fd5](https://user-images.githubusercontent.com/58545240/113228876-d2a7d780-92d0-11eb-8946-28fceb2452f5.png)
 
 How are deadly embraces avoided? Prevention in the application is the best method for real-time systems. This amounts to placing certain restrictions on how threads obtain semaphores. Deadly embraces are avoided if threads can only have one semaphore at a time. Alternatively, threads can own multiple semaphores if they all gather them in the same order. In the previous example, if the first and second thread obtain the first and second semaphore in order, the deadly embrace is prevented. 
 
