@@ -139,6 +139,7 @@
 | 1789_수들의 합                  | [Link](./Algorithm/Baekjoon/SumOfNumbers_1789.java)          | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                                   |
 | 1806_부분합                     | [Link](./Algorithm/Baekjoon/p1806.java)                      | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘                   |
 | 1850_최대공약수                 | [Link](./Algorithm/Baekjoon/p1850.java)                      | [문제](https://www.acmicpc.net/problem/1850)                 |                                     |
+| 1863_스카이라인 쉬운거          | [Link](./Algorithm/Baekjoon/p1863.java)                      | [문제](https://www.acmicpc.net/problem/1863)                 | 문자열, 스택, 구현                  |
 | 1912_연속합                     | [Link](./Algorithm/Baekjoon/p1912.java)                      | [문제](https://www.acmicpc.net/problem/1912)                 | DP                                  |
 | 1916_최소 비용 구하기           | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                  |
 | 1929_소수 구하기                | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체           |
@@ -261,6 +262,7 @@
 | 15686_치킨배달                  | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                    |
 | 16171_나는 친구가 적다          | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof     |
 | 16236_아기상어                  | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS                                 |
+| 16916_부분문자열                | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                         |
 | 17609_회문                      | [Link](./Algorithm/Baekjoon/p17603.java)                     | [문제](https://www.acmicpc.net/problem/17609)                | 문자열, 구현, 투포인터, 그리디      |
 | 17144_미세먼지안녕!             | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                          |
 | 17413_단어 뒤집기 2             | [Link](./Algorithm/Baekjoon/p17413.java)                     | [문제](https://www.acmicpc.net/problem/17413)                | 문자열, 스택, 구현                  |
@@ -268,6 +270,7 @@
 | 19236_청소년상어                | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                 |
 | 20154_이 구역의 승자는 누구야?  | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                        |
 | 20291_파일 정리                 | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                  |
+| 20437_문자열 게임2              | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우             |
 | 20542_받아쓰기                  | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘               |
 | 21275_폰 호석만                 | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스          |
 | 21276_계보 복원가 호석          | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap    |
