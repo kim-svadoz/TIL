@@ -117,12 +117,14 @@
 | 1316_그룹 단어 체커             | [Link](./Algorithm/Baekjoon/p1316.java)                      | [문제](https://www.acmicpc.net/problem/1316)                 | 문자열, 구현                        |
 | 1365_꼬인 전깃줄                | [Link](./Algorithm/Baekjoon/TwistedElectricWire_1365.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS                  |
 | 1373_2진수 8진수                | [Link](./Algorithm/Baekjoon/p1373.java)                      | [문제](https://www.acmicpc.net/problem/1373)                 | 문자열, 진수변환                    |
+| 1389_케빈 베이컨의 6단계법칙    | [Link](./Algorithm/Baekjoon/p1389.java)                      | [문제](https://www.acmicpc.net/problem/1389)                 | 그래프, 플로이드와샬                |
 | 1451_직사각형으로 나누기        | [Link](./Algorithm/Baekjoon/p1451.java)                      | [문제](https://www.acmicpc.net/problem/1451)                 | 완전탐색, 구현                      |
 | 1463_1로 만들기                 | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                  |
 | 1476_날짜계산                   | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                            |
 | 1517_버블 소트                  | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort               |
 | 1525_퍼즐                       | [Link](./Algorithm/Baekjoon/p1525.java)                      | [문제](https://www.acmicpc.net/problem/1525)                 | 완전탐색, 구현, 2차원->1차원, BFS   |
 | 1596_영식이                     | [Link](./Algorithm/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                          |
+| 1613_역사                       | [Link](./Algorithm/Baekjoon/p1613.java)                      | [문제](https://www.acmicpc.net/problem/1613)                 | 그래프, 플로이드와샬                |
 | 1644_소수의 연속합              | [Link](./Algorithm/Baekjoon/p1644.java)                      | [문제](https://www.acmicpc.net/problem/1644)                 | 소수, 에라토스테네스의 체, 투포인터 |
 | 1654_랜선자르기                 | [Link](./Algorithm/Baekjoon/p1654.java)                      | [문제](https://www.acmicpc.net/problem/1654)                 | Binary Serach                       |
 | 1676_팩토리얼 0의 개수          | [Link](./Algorithm/Baekjoon/p1676.java)                      | [문제](https://www.acmicpc.net/problem/1676)                 | 수학, 큰 수 연산                    |
@@ -144,8 +146,10 @@
 | 1916_최소 비용 구하기           | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                  |
 | 1929_소수 구하기                | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체           |
 | 1931_회의실배정                 | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator                  |
+| 1933_스카이라인                 | [Link](./Algorithm/Baekjoon/p1933.java)                      | [문제](https://www.acmicpc.net/problem/1933)                 | 우선순위큐, 스위핑, TreeMap         |
 | 1934_최소공배수                 | [Link](./Algorithm/Baekjoon/p1934.java)                      | [문제](https://www.acmicpc.net/problem/1934)                 |                                     |
 | 1946_신입사원                   | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator                  |
+| 1956_운동                       | [Link](./Algorithm/Baekjoon/p1956.java)                      | [문제](https://www.acmicpc.net/problem/1956)                 | 그래프, 플로이드와샬                |
 | 1963_소수 경로                  | [Link](./Algorithm/Baekjoon/p1963.java)                      | [문제](https://www.acmicpc.net/problem/1963)                 | 소수, BFS, 자리바꾸기               |
 | 1978_소수 찾기                  | [Link](./Algorithm/Baekjoon/p1978.java)                      | [문제](https://www.acmicpc.net/problem/1978)                 | 소수, 에라토스테네스의 체           |
 | 1987_알파벳                     | [Link](./Algorithm/Baekjoon/p1987.java)                      | [문제](https://www.acmicpc.net/problem/1987)                 | 백트래킹, dfs                       |
