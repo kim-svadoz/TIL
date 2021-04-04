@@ -259,6 +259,7 @@
 | 12100_2048                      | [Link](./Algorithm/Baekjoon/p12100.java)                     | [문제](https://www.acmicpc.net/problem/12100)                | 구현, 시뮬레이션, 브루트 포스       |
 | 12865_평범한배낭                | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)                    |
 | 13460_구슬탈출                  | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                 |
+| 14425_문자열집합                | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                       |
 | 14502_연구소                    | [Link](./Algorithm/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502)                | BFS                                 |
 | 14503_로봇청소기                | [Link](./Algorithm/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503)                | BFS                                 |
 | 14725_개미굴                    | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                 |
@@ -274,6 +275,7 @@
 | 17472_다리만들기2               | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm              |
 | 19236_청소년상어                | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                 |
 | 20154_이 구역의 승자는 누구야?  | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                        |
+| 20166_문자열 지옥에 빠진 호석   | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap             |
 | 20291_파일 정리                 | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                  |
 | 20437_문자열 게임2              | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우             |
 | 20542_받아쓰기                  | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘               |
