@@ -164,6 +164,7 @@
 | 2143_두 배열의 합               | [Link](./Algorithm/Baekjoon/p2143.java)                      | [문제](https://www.acmicpc.net/problem/2143)                 | 투포인터, 슬라이딩 윈도우, HashMap  |
 | 2146_다리 만들기                | [Link](./Algorithm/Baekjoon/p2146.java)                      | [문제](https://www.acmicpc.net/problem/2146)                 | 그래프, BFS, 맵 라벨링              |
 | 2156_포도주 시식                | [Link](./Algorithm/Baekjoon/p2156.java)                      | [문제](https://www.acmicpc.net/problem/2156)                 | DP                                  |
+| 2167_2차원 배열의 합            | [Link](./Algorithm/Baekjoon/p2167.java)                      | [문제](https://www.acmicpc.net/problem/2167)                 | Prefix Sum, 구간 합                 |
 | 2178_미로 탐색                  | [Link](./Algorithm/Baekjoon/p2178.java)                      | [문제](https://www.acmicpc.net/problem/2178)                 | BFS                                 |
 | 2186_문자판                     | [Link](./Algorithm/Baekjoon/p2186.java)                      | [문제](https://www.acmicpc.net/problem/2186)                 | DFS + DP(3차원), 구현               |
 | 2188_축사배정                   | [Link](./Algorithm/Baekjoon/BarnAssign_2188.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2188-%EC%B6%95%EC%82%AC%EB%B0%B0%EC%A0%95?category=936483) | 이분매칭                            |
@@ -266,6 +267,7 @@
 | 14503_로봇청소기                | [Link](./Algorithm/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503)                | BFS                                 |
 | 14725_개미굴                    | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                 |
 | 14891_톱니바퀴                  | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                          |
+| 14929_귀찮아(SIB)               | [Link](./Algorithm/Baekjoon/p14929.java)                     | [문제](https://www.acmicpc.net/problem/14929)                | Prefix Sum, 구간 합                 |
 | 15683_감시                      | [Link](./Algorithm/Baekjoon/p15683.java)                     | [문제](https://www.acmicpc.net/problem/15683)                | 시뮬레이션, 구현, n진법 right shift |
 | 15686_치킨배달                  | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                    |
 | 16171_나는 친구가 적다          | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof     |
@@ -280,6 +282,7 @@
 | 20166_문자열 지옥에 빠진 호석   | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap             |
 | 20291_파일 정리                 | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                  |
 | 20437_문자열 게임2              | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우             |
+| 20438_출석체크                  | [Link](./Algorithm/Baekjoon/p20438.java)                     | [문제](https://www.acmicpc.net/problem/20438)                | Prefix Sum, 구간합, 수학            |
 | 20542_받아쓰기                  | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘               |
 | 21275_폰 호석만                 | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스          |
 | 21276_계보 복원가 호석          | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap    |
