@@ -194,10 +194,12 @@
 | 3029_경고                       | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                        |
 | 3108_로고                       | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                       |
 | 4195_친구네트워크               | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap        |
+| 4358_생태학                     | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                           |
 | 4568_LRU Caching                | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                 |
 | 4659_비밀번호 발음하기          | [Link](./Algorithm/Baekjoon/p4659.java)                      | [문제](https://www.acmicpc.net/problem/4659)                 | 문자열, 구현                        |
 | 4963_섬의 개수                  | [Link](./Algorithm/Baekjoon/p4963.java)                      | [문제](https://www.acmicpc.net/problem/4963)                 | BFS                                 |
 | 5014_스타트링크                 | [Link](./Algorithm/Baekjoon/p5014.java)                      | [문제](https://www.acmicpc.net/problem/5014)                 | 완전탐색, BFS                       |
+| 5052_전화번호 목록              | [Link](./Algorithm/Baekjoon/p5052.java)                      | [문제](https://www.acmicpc.net/problem/5052)                 | Trie, Map                           |
 | 5397_키로거                     | [Link](./Algorithm/Baekjoon/p5397.java)                      | [문제](https://www.acmicpc.net/problem/5397)                 | Stack, 구현                         |
 | 5545_최고의피자                 | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                              |
 | 6086_최대유량                   | [Link](./Algorithm/Baekjoon/MaximumFlow_6086.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘                   |
