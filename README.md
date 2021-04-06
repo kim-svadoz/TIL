@@ -156,6 +156,7 @@
 | 1987_알파벳                     | [Link](./Algorithm/Baekjoon/p1987.java)                      | [문제](https://www.acmicpc.net/problem/1987)                 | 백트래킹, dfs                       |
 | 1992_쿼드트리                   | [Link](./Algorithm/Baekjoon/p1992.java)                      | [문제](https://www.acmicpc.net/problem/1992)                 | 분할정복, 재귀                      |
 | 2003_수들의 합 2                | [Link](./Algorithm/Baekjoon/p2003.java)                      | [문제](https://www.acmicpc.net/problem/2003)                 | 투 포인터                           |
+| 2015_수들의 합 4                | [Link](./Algorithm/Baekjoon/p2015.java)                      | [문제](https://www.acmicpc.net/problem/2015)                 | Prefix Sum, Map                     |
 | 2042_구간합구하기               | [Link](./Algorithm/Baekjoon/SaveJoint_2042.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                       |
 | 2056_작업                       | [Link](./Algorithm/Baekjoon/Work_2056.java)                  | [문제](https://www.acmicpc.net/problem/2056)                 | 위상정렬, queue                     |
 | 2096_내려가기                   | [Link](./Algorithm/Baekjoon/GoingDown_2096.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP            |
@@ -235,6 +236,7 @@
 | 10844_쉬운 계단 수              | [Link](./Algorithm/Baekjoon/p10844.java)                     | [문제](https://www.acmicpc.net/problem/10844)                | DP                                  |
 | 10872_팩토리얼                  | [Link](./Algorithm/Baekjoon/p10872.java)                     | [문제](https://www.acmicpc.net/problem/10872)                | 구현                                |
 | 10971_외판원 순회2              | [Link](./Algorithm/Baekjoon/p10971.java)                     | [문제](https://www.acmicpc.net/problem/10971)                | 완전탐색, 백트래킹, DFS, TSP        |
+| 10986_나머지 합                 | [Link](./Algorithm/Baekjoon/p10986.java)                     | [문제](https://www.acmicpc.net/problem/10986)                | Prefix Sum, 수학                    |
 | 10989_수 정렬하기3              | [Link](./Algorithm/Baekjoon/p10989.java)                     | [문제](https://www.acmicpc.net/problem/10989)                | 정렬                                |
 | 11004_K번째 수                  | [Link](./Algorithm/Baekjoon/p11004.java)                     | [문제](https://www.acmicpc.net/problem/11004)                | 정렬                                |
 | 11005_진법 변환 2               | [Link](./Algorithm/Baekjoon/p11005.java)                     | [문제](https://www.acmicpc.net/problem/11005)                | 진법 변환(10 -> N)                  |
@@ -251,6 +253,7 @@
 | 11651_좌표 정렬하기2            | [Link](./Algorithm/Baekjoon/p11651.java)                     | [문제](https://www.acmicpc.net/problem/11651)                | 정렬                                |
 | 11652_카드                      | [Link](./Algorithm/Baekjoon/p11652.java)                     | [문제](https://www.acmicpc.net/problem/11652)                | 정렬                                |
 | 11653_소인수분해                | [Link](./Algorithm/Baekjoon/p11653.java)                     | [문제](https://www.acmicpc.net/problem/11653)                | 정수론, 소수                        |
+| 11660_구간 합 구하기 5          | [Link](./Algorithm/Baekjoon/p11660.java)                     | [문제](https://www.acmicpc.net/problem/11660)                | Prefix Sum, DP, 사각형 테두리       |
 | 11662_민호와 강호               | [Link](./Algorithm/Baekjoon/p11662.java)                     | [문제](https://www.acmicpc.net/problem/11662)                | Teranry Search, 극값 찾기           |
 | 11720_숫자의 합                 | [Link](./Algorithm/Baekjoon/p11720.java)                     | [문제](https://www.acmicpc.net/problem/11720)                | 문자열, 구현                        |
 | 11722_가장 긴 감소하는 부분수열 | [Link](./Algorithm/Baekjoon/p11722.java)                     | [문제](https://www.acmicpc.net/problem/11722)                | DP                                  |
@@ -287,6 +290,7 @@
 | 21275_폰 호석만                 | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스          |
 | 21276_계보 복원가 호석          | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap    |
 | 21277_짠돌이 호석               | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스     |
+| 21318_피아노 체조               | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                          |
 
 ### [Programmers](./Algorithm/Programmers)
 
