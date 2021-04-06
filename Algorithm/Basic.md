@@ -2276,3 +2276,275 @@ https://jins-dev.tistory.com/entry/%EC%B5%9C%EC%A0%81%ED%99%94%EB%90%9C-LISLonge
 
 https://www.geeksforgeeks.org/lis-using-segment-tree/
 
+# **> Prefix Sum**
+
+---
+
+> 누적 합, 구간 합
+
+누적합 또는 구간 합을 빠르게 구하는 알고리즘입니다. 여기서 주의해야할 것은
+
+**부분 합** 은 **0 ~ k까지의 합**을 의미하는 것이고
+
+**구간 합**은 **a ~ b**까지의 합을 의미 합니다.
+
+
+
+이러한 알고리즘은 어디에 쓰일까요?
+
+아래와 같은 문제를 예시로 봅시다.
+
+```bash
+int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} 배열이 존재한다.
+이 때 a에서 b의 구간 합을 요구하는 쿼리 "2천만개"가 들어온다.
+이러한 문제에 대해 어떻게 해결 할 것인가?
+```
+
+
+
+가장 쉬운 방식은 브루트 포스를 이용해 일일이 더하는 것입니다.하지만 쿼리 **2천만개**를 1초만에 해결해달라고 요구 했을 때, 이 코드의 시간복잡도를 보면
+
+쿼리 2천만개 * (a에서 b의 합 구하는 for 문의 최악의 경우는 a = 0,  b= 9일 때 즉, 10)
+
+따라서 `O(20,000,000 * 10) => O(200,000,000)` 이므로 대략 **2초**입니다.
+
+결국 시간복잡도에 걸려 요구사항을 해결하지 못하게 됩니다. 이 때문에 우리는 **`Prefix Sum`**이라는 알고리즘을 공부하게 됩니다.
+
+```java
+public class Main{
+    public Solution() {
+        int[] arr = {0, 1, 2, 3, 4, 5, 6, 7, ,8, 9};
+        int[] psum = new int[arr.length];
+        
+        for (int i = 1; i < 10; i++) {
+            psum[i] = psum[i - 1] + arr[i];
+        }
+        
+        // 쿼리 a에서 b까지의 합 구하기
+        int result = prefixSum(a, b);
+        System.out.println(result);
+    }
+    
+    int prefixSum(int l, int r, int[] psum) {
+        return psum[r] - psum[l - 1];
+    }
+}
+```
+
+
+
+이렇게 psum이라는 누적 합 배열을 만들어 합을 미리 계산하여 저장합니다.
+
+이렇게 된다면 쿼리는 `psum[b] - psum[a - 1]`을 하게 되면 원하는 구간에서의 합을 구할 수 있습니다.!!
+
+
+
+이 알고리즘만으로는 문제에 잘 등장하지 않고 보통 다른 알고리즘들과 함께 응용되어 나오는 경우가 많으므로 다양한 예제를 보겠습니다.
+
+### - BOJ[11660] : 구간 합 구하기 5
+
+https://www.acmicpc.net/problem/11660
+
+```java
+/*
+	DP와 구간합을 활용하여야 한다.
+	사각형의 테두리 안을 구하려면
+	좌상 꼭짓점:(x1, y1) , 우하 꼭짓점:(x2, y2) 일때 구간 합은 다음과 같다
+	DP[i][j] =  DP[x2][y2] - DP[x1-1][y2] - DP[x2][y1-1] + DP[x1-1][y1-1];
+*/
+import java.io.*;
+import java.util.*;
+public class p11660 {
+    static int n, m, board[][], sum[][];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        board = new int[n + 1][n + 1];
+        sum = new int[n + 1][n + 1];
+        for (int i = 1; i <= n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 1; j <= n; j++) {
+                board[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                sum[i][j] = sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1] + board[i][j];
+            }
+        }
+        
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int x1 = Integer.parseInt(st.nextToken());
+            int y1 = Integer.parseInt(st.nextToken());
+            int x2 = Integer.parseInt(st.nextToken());
+            int y2 = Integer.parseInt(st.nextToken());
+            int result = prefixSum(x1, y1, x2, y2);
+            System.out.println(result);
+        }
+    }
+    static int prefixSum(int x1, int y1, int x2, int y2) {
+        return sum[x2][y2] - sum[x2][y1 - 1] - sum[x1 - 1][y2] + sum[x1 - 1][y1 - 1];
+    }
+}
+```
+
+### - BOJ[21318] : 피아노 체조
+
+https://www.acmicpc.net/problem/21318
+
+```JAVA
+import java.io.*;
+import java.util.*;
+public class p21318 {
+    static int n, q;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n + 1];
+        int[] dp = new int[n + 1];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            dp[i] = dp[i - 1];
+            if (arr[i] < arr[i - 1]) {
+                dp[i]++;
+            }
+            //System.out.println("i:"+i+", dp[i]:"+dp[i]);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        q = Integer.parseInt(br.readLine());
+        while (q-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            int result = prefixSum(x, y, dp);
+            sb.append(result).append("\n");
+        }
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+    static int prefixSum(int l, int r, int[] dp) {
+        return dp[r] - dp[l];
+    }
+
+}
+```
+
+### - BOJ[2015] : 수들의 합 4
+
+https://www.acmicpc.net/problem/2015
+
+```java
+/*
+	수가 자연수일 때는 투 포인터로 구할 수 있다.
+	하지만 이 문제는 음수와 0이 있기 때문에 구간 Map을 이용한 구간 합을 사용해야 한다.
+*/
+import java.io.*;
+import java.util.*;
+public class p2015 {
+    static int n, k;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        int[] arr = new int[n + 1];
+        int[] psum = new int[n + 1];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            psum[i] = psum[i - 1] + arr[i];
+        }
+        // i		:	0	1	2	3
+        // psum[i]	:	2	0	2	0
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        long ret = 0;
+        for(int i = 1; i <= n; i++) {
+            ret += map.getOrDefault(psum[i] - k, 0);
+            
+            // key에 해당하는 value가 없으면 1, 있으면 value + 1
+            map.put(psum[i], map.getOrDefault(psum[i], 0) + 1);
+        }
+
+        System.out.println(ret);
+    }
+
+}
+```
+
+### - BOJ[10986] : 나머지 합
+
+https://www.acmicpc.net/problem/10986
+
+```java
+/*
+    구간 합
+<<접근방식>>
+1. A % M + B % M = (A + B) % M 이므로 입력 받은 배열을 Prefix Sum 기법을 통해 누적합시킨 배열로 바꾸고 모두 M으로 나눈 나머지로 치환시킨다.
+2. 그럼 이제 sum 배열이 오른쪽 항이 된 것인데, Prefix Sum 배열에서 S[i] - S[i-2]는 i-2부터 i까지의 부분합이 된다. 이를 이용하여 sum[i] = sum[j] 인 부분을 찾으면 된다.
+3. 'i부터 j까지의 합을 M으로 나눈 나머지가 0이다'라는 것이 증명 되었으니 개수를 계산하면 되는데, sum[i] = sum[j]인 부분에서 2개만 고르면 0이 되는 부분이므로 nC2가 된다.
+
+문제의 예시를 통해 보자.
+1 2 3 1 2를 Prefix Sum 배열로 바꾸고 M으로 나눈 나머지로 치환시키면 1 0 0 1 0이 된다.
+
+이 배열의 의미가 무엇인지 파악해보자. 처음 1번째 인덱스의 0의 뜻은 처음부터 1번째까지 더하면 나누어 떨어진다는 뜻이다.
+2번째 인덱스의 0의 뜻은 처음부터 2번째까지 더하면 나누어 떨어진다는 뜻이다.
+3번째 인덱스의 1의 뜻은 자기와 같은 수의 0번째 인덱스의 다음 수부터 3번째까지 더하면 나누어 떨어진다는 뜻이다.
+4번째 인덱스의 0의 뜻은 처음부터 4번째까지 더하면 나누어 떨어진다는 뜻과, 자기와 같은 수의 1번째 또는 2번째 인덱스의 다음 수부터
+ 4번째까지 더하면 나누어 떨어진다는 뜻이다.
+
+즉 자기와 같은 수들 중 2개를 선택해서 부분합을 하면 나누어 떨어진다는 것을 응용하여 0이 3개이므로
+ 3C2 = 3, 1이 2개이므로 2C2 = 1, 총 4개에 자기까지 더해서 나누어 떨어지는 즉, 0이 3개를 더해서 7개이다.
+
+ 추가적으로 자료형을 long을 써야 통과가 된다.(생각해보자.)
+*/
+import java.io.*;
+import java.util.*;
+public class p10986 {
+    static final int MAX = 1000000 + 1;
+    static long[] psum, cnt;
+    static long n, m, ret;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = stol(st.nextToken());
+        m = stol(st.nextToken());
+        psum = new long[MAX];
+        cnt = new long[(int)m];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= n; i++) {
+            long num = stol(st.nextToken());
+            // 부분합의 나머지를 저장
+            psum[i] = (psum[i - 1] + num) % m;
+            // 나머지가 같은 부분합을 그룹화
+            cnt[(int) psum[i]]++;
+            // 부분합의 나머지가 0인 경우에는 답이므로 바로 카운팅한다.
+            if (psum[i] == 0) ret++;
+        }
+
+        // 각 부분합의 나머지가 0인 경우 같은 그룹에서 nC2를 구한다.
+        for (int i = 0; i < m; i++) {
+            ret += cnt[i] * (cnt[i] - 1) / 2;
+        }
+        System.out.println(ret);
+    }
+
+    static long stol(String s) {
+        return Long.parseLong(s);
+    }
+}
+```
+
