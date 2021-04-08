@@ -106,6 +106,7 @@
 | 1158_요세푸스 문제 1                         | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐                  |
 | 1167_트리의 지름                             | [Link](./Algorithm/Baekjoon/p1167.java)                      | [문제](https://www.acmicpc.net/problem/1167)                 | 트리 지름, 그래프, BFS 2번하기             |
 | 1168_요세푸스 문제 2                         | [Link](./Algorithm/Baekjoon/p1168.java)                      | [문제](https://www.acmicpc.net/problem/1168)                 | 순열, 요세푸스의 순열2, 큐                 |
+| 1174_줄어드는 숫자                           | [Link](./Algorithm/Baekjoon/p1174.java)                      | [문제](https://www.acmicpc.net/problem/1174)                 | 백트래킹, 비트연산, 정렬                   |
 | 1181_단어 정렬                               | [Link](./Algorithm/Baekjoon/p1181.java)                      | [문제](https://www.acmicpc.net/problem/1181)                 | 문자열, 구현, 정렬                         |
 | 1182_부분수열의 합                           | [Link](./Algorithm/Baekjoon/p1182.java)                      | [문제](https://www.acmicpc.net/problem/1182)                 | 투포인터, 조합, dfs                        |
 | 1238_파티                                    | [Link](./Algorithm/Baekjoon/p1238.java)                      | [문제](https://www.acmicpc.net/problem/1238)                 | 다익스트라 (단방향 간선)                   |
@@ -295,6 +296,7 @@
 | 17144_미세먼지안녕!                          | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                                 |
 | 17413_단어 뒤집기 2                          | [Link](./Algorithm/Baekjoon/p17413.java)                     | [문제](https://www.acmicpc.net/problem/17413)                | 문자열, 스택, 구현                         |
 | 17472_다리만들기2                            | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
+| 18430_무기공학                               | [Link](./Algorithm/Baekjoon/p18430.java)                     | [문제](https://www.acmicpc.net/problem/18430)                | 백트래킹, 구현                             |
 | 19236_청소년상어                             | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                        |
 | 20154_이 구역의 승자는 누구야?               | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
 | 20166_문자열 지옥에 빠진 호석                | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
