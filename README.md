@@ -101,6 +101,7 @@
 | 문제번호                                     | 솔루션                                                       | 문제 링크                                                    | 비고                                       |
 | -------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
 | 1018_체스판                                  | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
+| 1062_가르침                                  | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1076_저항                                    | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
 | 1107_리모컨                                  | [Link](./Algorithm/Baekjoon/p1107.java)                      | [문제](https://www.acmicpc.net/problem/1107)                 | 완전탐색, 구현                             |
 | 1158_요세푸스 문제 1                         | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐                  |
@@ -189,6 +190,7 @@
 | 2580_스도쿠                                  | [Link](./Algorithm/Baekjoon/p2580.java)                      | [문제](https://www.acmicpc.net/problem/2580)                 | 스도쿠, 백트래킹                           |
 | 2609_최대공약수,최소공배수                   | [Link](./Algorithm/Baekjoon/p2609.java)                      | [문제](https://www.acmicpc.net/problem/2609)                 | 유클리드 호제법                            |
 | 2632_피자판매                                | [Link](./Algorithm/Baekjoon/p2632.java)                      | [문제](https://www.acmicpc.net/problem/2632)                 | 부분합 투포인터                            |
+| 2661_좋은수열                                | [Link](./Algorithm/Baekjoon/p2661.java)                      | [문제](https://www.acmicpc.net/problem/2661)                 | 백트래킹                                   |
 | 2667_단지번호붙이기                          | [Link](./Algorithm/Baekjoon/p2667.java)                      | [문제](https://www.acmicpc.net/problem/2667)                 | BFS                                        |
 | 2743_단어 길이 재기                          | [Link](./Algorithm/Baekjoon/p2743.java)                      | [문제](https://www.acmicpc.net/problem/2743)                 |                                            |
 | 2745_진법 변환                               | [Link](./Algorithm/Baekjoon/p2745.java)                      | [문제](https://www.acmicpc.net/problem/2745)                 | 진법 변환                                  |
