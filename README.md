@@ -209,6 +209,7 @@
 | 5397_키로거                                  | [Link](./Algorithm/Baekjoon/p5397.java)                      | [문제](https://www.acmicpc.net/problem/5397)                 | Stack, 구현                                |
 | 5545_최고의피자                              | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                                     |
 | 6086_최대유량                                | [Link](./Algorithm/Baekjoon/MaximumFlow_6086.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘                          |
+| 6443_애너그램                                | [Link](./Algorithm/Baekjoon/p6443.java)                      | [문제](https://www.acmicpc.net/problem/6443)                 | 백트래킹, 수학, 구현                       |
 | 6550_부분 문자열                             | [Link](./Algorithm/Baekjoon/p6550.java)                      | [문제](https://www.acmicpc.net/problem/6550)                 | 문자열, 구현                               |
 | 6593_상범빌딩                                | [Link](https://ju-nam2.tistory.com/91?category=869217)       | [문제](https://www.acmicpc.net/problem/6593)                 | 3차원 BFS                                  |
 | 6603_로또                                    | [Link](./Algorithm/Baekjoon/p6603.java)                      | [문제](https://www.acmicpc.net/problem/6603)                 | 조합, 백트래킹                             |
@@ -275,6 +276,7 @@
 | 14712_넴모넴모(easy)                         | [Link](./Algorithm/Baekjoon/p14712.java)                     | [문제](https://www.acmicpc.net/problem/14712)                | 백트래킹, 구현                             |
 | 14725_개미굴                                 | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                        |
 | 14891_톱니바퀴                               | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                                 |
+| 14888_연산자 끼워넣기                        | [Link](./Algorithm/Baekjoon/p14888.java)                     | [문제](https://www.acmicpc.net/problem/14888)                | 백트래킹, 브루트포스                       |
 | 14929_귀찮아(SIB)                            | [Link](./Algorithm/Baekjoon/p14929.java)                     | [문제](https://www.acmicpc.net/problem/14929)                | Prefix Sum, 구간 합                        |
 | 15649_N과 M(1)                               | [Link](./Algorithm/Baekjoon/p15649.java)                     | [문제](https://www.acmicpc.net/problem/15649)                | 백트래킹, 중복가능                         |
 | 15650_N과 M(2)                               | [Link](./Algorithm/Baekjoon/p15650.java)                     | [문제](https://www.acmicpc.net/problem/15650)                | 백트래킹, 오름차순                         |
