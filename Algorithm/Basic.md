@@ -2548,3 +2548,342 @@ public class p10986 {
 }
 ```
 
+# **> 비트마스킹**
+
+---
+
+> **bitmask**
+>
+> : 정수의 이진수 표현을 자료구조로 쓰는 기법
+
+데이터들은 0과 1의 집합이라고 합니다. 비트는 네트워크 외에도 운영체제 등에서도 자주 접할 수 있는데요
+
+때문에 최적의 성능을 위해 여러 곳에서 쓰이고 있습니다.
+
+이진 숫자로 `0`, `1` 값을 가질 수 있고 이에 따라 `true/false`, `on/off` 와 같은 상태를 나타내는 것이 가능합니다.
+
+## 비트마스크 장점
+
+먼저 비트마스킹의 장점을 알아 보겠습니다.
+
+1. **빠른 수행시간**
+
+   시간복잡도 O(1)에 구현되는 것이 많습니다. 비트마스크를 사용할 수 있다는 말은 원소의 수가 많지 않다는 뜻이기 때문에, 큰 속도 향상을 기대할 수는 없지만 여러번 수행해야 하는 경우에는 작은 최적화도 큰 속도 향상을 가져올 수 있습니다.
+
+2. **간결한 코드**
+
+   양한 집합 연사자들을 반복문 없이 한 줄에 쓸 수 있습니다.
+
+3. **작은 메모리 사용량**
+
+    적은 메모리를 사용할 수 있다는 말은 데이터를 미리 계산하여 저장해 둘 수 있으므로 캐시 효율이 좋다는 말입니다.
+
+   ```c
+   // Array 사용 시
+   boolean[] array1 = {1, 0, 0, 0};
+   boolean[] array2 = {1, 1, 0, 0};
+   boolean[] array3 = {0, 0, 1, 1};
+   
+   // 비트마스킹 사용 시
+   {0} -> 1000
+   {0, 1} -> 1100
+   {2, 3} -> 0011
+   ```
+
+   
+
+4. **연관 배열을 배열로 대체**
+
+   예로 연관 배열 객체 `Map<Vector, int>`가 있다고 합시다. 이 때 비트마스크를 이용해 정수 변수로 나타내면 단ㄷ순 배열 `int[]`로 사용할 수 있습니다.
+
+## 용어 정의
+
+- `비트(bit)` : 0과 1로 나타내는 이진수의 한 자리
+- `부호 없는 N비트 값` : 2<sup>0</sup> ~ 2<sup>N-1</sup>
+- `최하위 비트(LSB)` : 2<sup>0</sup> 에 위치한 비트
+- `최사우이 비트(MSB)` : 2<sup>N-1</sup> 에 위치한 비트
+- `비트가 켜져있다` : 1
+- `비트가 꺼져있다` : 0
+
+## 비트 연산자
+
+**AND 연산 (`&`)**
+
+=> 대응하는 두 비트가 모두 1일 때 1 반환
+
+
+
+**OR 연산 (`|`)**
+
+=> 대응하는 두 비트 중 하나라도 1이라면 1, 아니면 0 반환
+
+
+
+**XOR 연산 (`^`)**
+
+=> 대응하는 두 비트가 다르면 1, 같으면 0을 반환
+
+
+
+**NOT 연산 (`~`)**
+
+=> 비트의 값을 반전
+
+
+
+**Shift 연산 (`<<`, `>>`)**
+
+=> 왼쪽 또는 오른쪽으로 비트를 이동
+
+![image-20210409104558903](https://user-images.githubusercontent.com/58545240/114128289-fef9ce80-9936-11eb-9541-7423cdd7d6ab.png)
+
+## 비트마스킹의 활용
+
+### 1. 비트를 1로 (원소 추가)
+
+```c
+// 1010 부분집합에 2번째 요소를 삽입해 1110으로 만들고 싶어요
+// bit = 1010
+bit = bit | (1 << 2)
+```
+
+-> 시프트 연산을 통해 2번째 비트만 1로 할당되어 있는 이진수로 만들고, or 연산을 통해 원하는 결과를 얻게 됩다.
+
+```cpp
+unsigned short usA = 0xa00b;
+usA |= (1 << 5) // 5번 비트만 1로 만든다.
+0100 0001	// 65
+0010 0000	// 32
+-------------------
+0110 0001	// 97
+```
+
+### 2. 비트를 0으로 (원소 삭제)
+
+```c
+// bit = 1110
+bit = bit & ~(1 << 2)
+```
+
+```cpp
+unsigend short usA = 0xa00b;
+usA &= ~ (1 << 5) // 5번 비트만 0으로 만든다.
+0110 0001	// 97
+1101 1111	// 127
+-------------------
+0100 0001	// 65
+```
+
+### 3. 비트의 조회
+
+```c
+if (bit & (1 << i) != 0) // i 번째 비트는 1
+else // i번째 비트는 0
+```
+
+### 4. 비트의 반전 (토글)
+
+```c
+bit = bit ^ (1 << i)
+```
+
+`xor`연산을 통해 다른 비트들은 1<sup>0</sup> = 0, 0<sup>0</sup> = 0이어서 영향을 받지 않고, 해당 비트는 1<sup>1</sup> = 1, 0<sup>1</sup> = 1 이기 때문에 전환할 수 있습니다.
+
+*정리*
+
+```java
+int added = a | b;				// a와 b의 합집합
+int intersection = a & b;		// a와 b의 교집합
+int removed = a & ~b;			// a에서 b를 뺀 차집합
+int toggled = a ^ b;			// a와 b 중 하나에만 포함된 원소들의 집합
+```
+
+
+
+## 비트마스크를 이용한 집합의 구현
+
+N비트 정수 변수는 0부터 N-1 까지의 정수 원소를 가질 수 있는 집합이 됩니다.
+
+원소 i는 2<sup>i</sup> 을 나타냅니다.
+
+ex) `{1, 4, 5, 6, 7, 9} = 1011110010(2) = 754`
+
+
+
+- **피자집 예제**
+
+  0부터 19까지 번호를 갖는 20가지의 토핑이 있고, 주문시 토핑을 `넣기/넣지 않기` 를 선택할 수 있습니다.
+
+  **공집합과 꽉 찬 집합 구하기**
+
+  - 토핑을 올리지 않은 피자(공집합) : 상수 0
+
+  - 모든 토핑을 올린 피자(꽉 찬 집합) : 20개의 비트가 모두 켜진 상태
+
+    ```java
+    int fullPizza = (1 << 20) - 1;
+    // 1 << 20은 이진수로 1뒤에 20개의 0이 있는 정수 인데, 여기서 1을 빼면 20개의 비트가 모두 켜진수
+    ```
+
+  **집합의 크기 구하기**
+
+  - 재귀 호출로 각 비트를 순회하면서 **켜져 있는** 비트의 수를 세는 방법입니다.
+
+    ```java
+    int bitCount(int x) {
+        if (x == 0) return 0;
+        return x % 2 + bitCount(x / 2);
+    }
+    ```
+
+## 주의할 점
+
+C99에 표준에 따르면 우측 피연산자 값이 음수이거나 좌측 피연산자의 범위보다 큰 경우의 행위는 정의되지 않았다고 합니다.
+
+---
+
+E1이 양수인 경우에는 E1 << E2 는 E1 을 E2 비트만큼 왼쪽으로 이동, 이것은 E1에 2<sup>E2</sup>을 곱한 것과 같다. **E1이 음수인 경우의 동작은 정의되지 않았다.**
+
+E1이 양수인 경우 E1 >> E2 역시 E2 비트만큼 오른쪽으로 이동, 이것은 E2를 2<sup>E2</sup>을 나눈 것과 같다. 그러나 **E1이 음수인 경우, 결과는 구현에 따라 달라진다.**
+
+---
+
+결국 C99 표준에 정의되지 않은 사항은 CPU 명령어 정의에 따라 달라지게 되는데 `Intel CPU`에서의 동작은 다음과 같습니다.
+
+
+
+`<<`, `>>` 의 연산자의 오른쪽 피연산자는 `short` 일때 4자리 (0 ~ 15), `int` 일때 5자리(0 ~ 31), 64 비트형인 `long long` 일때 6자리(0 ~ 63)의 범위에 대해서만 유효하다.
+
+다시 말하면 오른쪽 피연산자는 `short`일 때 하위 4비트만 사용하며 `int`일때는 하위 5비트, `long long`일때는 하위 6비트만 사용합니다.
+
+**`shift`연산**은 왼쪽 피연산자 값의 범위(비트 길이) 내에서만큼만 쉬프트 연산이 이루어집니다. 즉,
+
+`int n = 1`, `n <<= 32` 에서 32는 `100000`이 되고, 하위 5비트는 `00000` 이므로 `n <<= 32`는 `n <<= 0`과 같습니다.
+
+`n <<= 33`은 33이 `100001`이며 이중 하위 5비트는 `0000`이므로 `n <<= 33`은 `n <<= 1`과 같아집니다.
+
+`n <<= 31`의 경우는 답이 1 * 2<sup>31</sup>이 아닌 -2147483648( -1 * 2<sup>31</sup>)이 됩니다. 이렇게 되는 이유는 **int의 경우 최상위 비트가 부호비트가 되어 부호비트가 0에서 1로 바뀌면서 음수값을 취하게 됩니다.**
+
+
+
+이와 같이 비트연산은 다양한 최적화 테크닉에 있어 중요한 부분이지만 계속 봐도봐도 어려우므로 꾸준히 알아갑시다^^!
+
+## 사용사례
+
+그러면 마지막으로 비트연산을 활용할 수 있는 문제를 몇개 보고 가겠습니다.
+
+### - BOJ[1174] : 줄어드는 숫자
+
+https://www.acmicpc.net/problem/1174
+
+```java
+import java.io.*;
+import java.util.*;
+public class p1174 {
+    static int n;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        int[] num = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+        ArrayList<Long> arr = new ArrayList<>();
+        // 2^10 만큼의 모든 경우의 수를 만든다.
+        for (int i = 1; i < (1<<10); i++) {
+            long sum = 0;
+            // 10 자리 만큼 탐색한다.
+            for (int j = 0; j < 10; j++) {
+                // i가 0^2, 1^2, 2^2 .... j^2 승보다 크다면
+                // -> i에 해당하는 비트가 각각 어느 위치(몇 번째 자리)에 비트를 가지고 있는지 체크
+                // if문을 만족한다면 해당 자릿수가 존재한다는 것이므로 sum*10 + num[j]를 추가.
+                if ((i & (1 << j)) > 0) {
+                    sum = sum * 10 + num[j];
+                }
+            }
+            arr.add(sum);
+        }
+
+        Collections.sort(arr);
+        if (n > arr.size()) {
+            System.out.println("-1");
+            return;
+        }
+        System.out.println(arr.get(n - 1));
+    }
+}
+```
+
+
+
+### - BOJ[1062] : 가르침
+
+https://www.acmicpc.net/problem/1062
+
+모든 단어는 "anta"로 시작하고 "tica"로 끝나기 때문에 우선 5개의 알파벳은 고정입니다.
+따라서 k가 5보다 작으면 어느 단어도 읽을 수 없고, k가 26이라면 모든 단어를 읽을 수 있습니다.
+따라서 나머지 문자들에 대해서 비트마스킹을 이용한 백트래킹을 구현하면 됩니다.
+
+자세한 설명은 주석으로 달아놓겠습니다.
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+public class Main {
+    static int N, K;
+    static int answer = 0;
+    static int[] words;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] outline = br.readLine().split(" ");
+        N = Integer.parseInt(outline[0]);
+        K = Integer.parseInt(outline[1]);
+        if (K < 5) {
+            System.out.println(answer);
+            return;
+        } else if (K == 26) {
+            System.out.println(N);
+            return;
+        }
+
+        K -=5;
+        words = new int[N];
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            for (int j = 0; j <line.length(); j++) {
+                char values = line.charAt(j);
+                int index = values - 'a';
+                words[i] |= 1 << index;
+            }
+        }
+        int standard = 0;
+        // 'char' - 'a'에 해당하는 비트를 1로 만든다. (TRUE의 개념)
+        standard |= 1 << ('a' -'a');
+        standard |= 1 << ('n' -'a');
+        standard |= 1 << ('t' -'a');
+        standard |= 1 << ('c' -'a');
+        standard |= 1 << ('i' -'a');
+        combination(0, 0,standard);
+        System.out.println(answer);
+    }
+
+    public static void combination(int index,int start, int flag) {
+        if(index == K) {
+            int result = 0;
+            for(int word : words) {
+                // flag = 내가 읽을 수 있는 전체 집합 true면 새로운 단어는 없다.
+                // word와 flag를 합집합했을 때 flag가 나온다면 word는 읽을 수 있는 단어이다.
+                if( (word | flag) == flag)
+                    result ++;
+            }
+            answer = answer >= result ? answer : result;
+            return;
+        }
+
+        for(int i = start; i < 26; i++) {
+            // 켜져있는 비트를 제외하고 모든 경우의 수를 담는다.
+            if((flag & 1 << i) == 0) {
+                combination(index+1, i+1, flag | 1 << i);
+            }
+        }
+    }
+}
+```
+
