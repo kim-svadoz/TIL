@@ -370,6 +370,7 @@
 | 42626_더 맵게                 | [Link](./Algorithm/Programmers/pg42626.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42626) | 힙                           |
 | 42747_H-Index                 | [Link](./Algorithm/Programmers/pg42747.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42747) | 정렬                         |
 | 42885_구명보트                | [Link](./Algorithm/Programmers/pg42885.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42885) | 그리디                       |
+| 42860_조이스틱                | [Link](./Algorithm/Programmers/pg42860.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42860) | 그리디                       |
 
 ### [LeetCode](./Algorithm/LeetCode)
 
