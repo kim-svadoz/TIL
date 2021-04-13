@@ -142,6 +142,7 @@
 | 1780_종이의 개수                                    | [Link](./Algorithm/Baekjoon/p1780.java)                      | [문제](https://www.acmicpc.net/problem/1780)                 | 분할정복, 재귀                             |
 | 1783_병든 나이트                                    | [Link](./Algorithm/Baekjoon/p1783.java)                      | [문제](https://www.acmicpc.net/problem/1783)                 | Greedy, 구현                               |
 | 1789_수들의 합                                      | [Link](./Algorithm/Baekjoon/SumOfNumbers_1789.java)          | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1789-%EC%88%98%EB%93%A4%EC%9D%98-%ED%95%A9?category=936483) | ?                                          |
+| 1799_비숍                                           | [Link](./Algorithm/Baekjoon/p1799.java)                      | [문제](https://www.acmicpc.net/problem/1799)                 | 백트래킹, 구현, 체스판                     |
 | 1806_부분합                                         | [Link](./Algorithm/Baekjoon/p1806.java)                      | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1806-%EB%B6%80%EB%B6%84%ED%95%A9?category=936483) | 투포인터 알고리즘                          |
 | 1850_최대공약수                                     | [Link](./Algorithm/Baekjoon/p1850.java)                      | [문제](https://www.acmicpc.net/problem/1850)                 |                                            |
 | 1863_스카이라인 쉬운거                              | [Link](./Algorithm/Baekjoon/p1863.java)                      | [문제](https://www.acmicpc.net/problem/1863)                 | 문자열, 스택, 구현                         |
@@ -283,6 +284,7 @@
 | 14501_퇴사                                          | [Link](./Algorithm/Baekjoon/p14501.java)                     | [문제](https://www.acmicpc.net/problem/14501)                | 완전탐색, DP                               |
 | 14502_연구소                                        | [Link](./Algorithm/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502)                | BFS                                        |
 | 14503_로봇청소기                                    | [Link](./Algorithm/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503)                | BFS                                        |
+| 14620_꽃길                                          | [Link](./Algorithm/Baekjoon/p14620.java)                     | [문제](https://www.acmicpc.net/problem/14620)                | 브루트포스                                 |
 | 14712_넴모넴모(easy)                                | [Link](./Algorithm/Baekjoon/p14712.java)                     | [문제](https://www.acmicpc.net/problem/14712)                | 백트래킹, 구현                             |
 | 14725_개미굴                                        | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                        |
 | 14891_톱니바퀴                                      | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                                 |
@@ -306,6 +308,7 @@
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
+| 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
 | 16916_부분문자열                                    | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                                |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
