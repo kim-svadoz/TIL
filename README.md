@@ -193,6 +193,7 @@
 | 2579_계단오르기                                     | [Link](./Algorithm/Baekjoon/p2579.java)                      | [문제](https://www.acmicpc.net/problem/2579)                 | DP                                         |
 | 2580_스도쿠                                         | [Link](./Algorithm/Baekjoon/p2580.java)                      | [문제](https://www.acmicpc.net/problem/2580)                 | 스도쿠, 백트래킹                           |
 | 2609_최대공약수,최소공배수                          | [Link](./Algorithm/Baekjoon/p2609.java)                      | [문제](https://www.acmicpc.net/problem/2609)                 | 유클리드 호제법                            |
+| 2615_오목                                           | [Link](./Algorithm/Baekjoon/p2615.java)                      | [문제](https://www.acmicpc.net/problem/2615)                 | 브루트 포스, 구현, dir 이용한 BFS          |
 | 2632_피자판매                                       | [Link](./Algorithm/Baekjoon/p2632.java)                      | [문제](https://www.acmicpc.net/problem/2632)                 | 부분합 투포인터                            |
 | 2661_좋은수열                                       | [Link](./Algorithm/Baekjoon/p2661.java)                      | [문제](https://www.acmicpc.net/problem/2661)                 | 백트래킹                                   |
 | 2667_단지번호붙이기                                 | [Link](./Algorithm/Baekjoon/p2667.java)                      | [문제](https://www.acmicpc.net/problem/2667)                 | BFS                                        |
@@ -276,6 +277,7 @@
 | 11729_하노이탑 이동 순서                            | [Link](./Algorithm/Baekjoon/p11729.java)                     | [문제](https://www.acmicpc.net/problem/11729)                | 분할정복, 재귀                             |
 | 12100_2048                                          | [Link](./Algorithm/Baekjoon/p12100.java)                     | [문제](https://www.acmicpc.net/problem/12100)                | 구현, 시뮬레이션, 브루트 포스              |
 | 12865_평범한배낭                                    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)                           |
+| 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
 | 14425_문자열집합                                    | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                              |
 | 14501_퇴사                                          | [Link](./Algorithm/Baekjoon/p14501.java)                     | [문제](https://www.acmicpc.net/problem/14501)                | 완전탐색, DP                               |
@@ -303,6 +305,7 @@
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
+| 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
 | 16916_부분문자열                                    | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                                |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
