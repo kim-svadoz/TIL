@@ -129,6 +129,7 @@
 | 1613_역사                                           | [Link](./Algorithm/Baekjoon/p1613.java)                      | [문제](https://www.acmicpc.net/problem/1613)                 | 그래프, 플로이드와샬                       |
 | 1644_소수의 연속합                                  | [Link](./Algorithm/Baekjoon/p1644.java)                      | [문제](https://www.acmicpc.net/problem/1644)                 | 소수, 에라토스테네스의 체, 투포인터        |
 | 1654_랜선자르기                                     | [Link](./Algorithm/Baekjoon/p1654.java)                      | [문제](https://www.acmicpc.net/problem/1654)                 | Binary Serach                              |
+| 1662_압축                                           | [Link](./Algorithm/Baekjoon/p1662.java)                      | [문제](https://www.acmicpc.net/problem/1662)                 | Stack, 괄호처리, DFS                       |
 | 1676_팩토리얼 0의 개수                              | [Link](./Algorithm/Baekjoon/p1676.java)                      | [문제](https://www.acmicpc.net/problem/1676)                 | 수학, 큰 수 연산                           |
 | 1697_숨바꼭질                                       | [Link](./Algorithm/Baekjoon/p1697.java)                      | [문제](https://www.acmicpc.net/problem/1697)                 | 완전탐색, 구현, BFS                        |
 | 1699_제곱수의 합                                    | [Link](./Algorithm/Baekjoon/p1699.java)                      | [문제](https://www.acmicpc.net/problem/1699)                 | 정수론, DP                                 |
@@ -211,6 +212,7 @@
 | 4358_생태학                                         | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                                  |
 | 4568_LRU Caching                                    | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                        |
 | 4659_비밀번호 발음하기                              | [Link](./Algorithm/Baekjoon/p4659.java)                      | [문제](https://www.acmicpc.net/problem/4659)                 | 문자열, 구현                               |
+| 4949_균형잡힌세상                                   | [Link](./Algorithm/Baekjoon/p4949.java)                      | [문제](https://www.acmicpc.net/problem/4949)                 | Stack, 괄호 처리                           |
 | 4963_섬의 개수                                      | [Link](./Algorithm/Baekjoon/p4963.java)                      | [문제](https://www.acmicpc.net/problem/4963)                 | BFS                                        |
 | 5014_스타트링크                                     | [Link](./Algorithm/Baekjoon/p5014.java)                      | [문제](https://www.acmicpc.net/problem/5014)                 | 완전탐색, BFS                              |
 | 5052_전화번호 목록                                  | [Link](./Algorithm/Baekjoon/p5052.java)                      | [문제](https://www.acmicpc.net/problem/5052)                 | Trie, Map                                  |
