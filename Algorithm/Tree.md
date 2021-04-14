@@ -585,6 +585,90 @@ int get_leaf(TreeNode *root){		// 트리에 존재하는 단말노드의 갯수�
 
 위 코드의 탈출 조건은 `if (root->left == NULL && root->right == NULL)`다. 즉 **자식노드 혹은 서브트리가 존재하지 않을 때**가 탈출 조건이다. 의미는 **자식 노드는 존재하지 않지만 내가 존재한다는 건 적어도 증명했으니 난 1개로 셀 수 있다**는 것이다. 첫번째 `if (!root)`의 조건은 누군가 이 함수를 사용할 때 존재하지 않는 노드를 매개변수로 넘겼을 때를 대비하기 위함이다 .오류를 방지하는 용도로서의 의미를 가진 조건이다. 이 조건을 탈출 조건으로 쓸 수 없는 것은 이 조건 만으로는 단말 노드의 여부를 증명할 수 없기 때문이다. 아무것도 존재하지 않으므로 개수를 셀 수 없다.
 
+## 4. java코드
+
+```java
+class Node {
+    int element;
+    Node left;
+    Node right;
+    
+    Node(int element) {
+        this(element, null, null);
+    }
+    
+    Node (int element, Node left, Node right) {
+        this.element = element;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Tree {
+    // 트리 생성
+    public Node insert(Node tree, int n) {
+        if (tree == null) {
+            tree = new Node(n);
+            tree.right = tree.left = null;
+        } else if (n > tree.element) {
+            tree.right = insert(tree.right, n);
+        } else {
+            tree.left = insert(tree.left, n);
+        }
+        
+        return tree;
+    }
+    // 트리의 노드 갯수를 return하는 recursive한 알고리즘
+    public int count(Node rootNode) {
+        int num;
+        
+        if (rootNode == null) {
+            num = 0;
+        } else {
+            num = count(rootNode.left) + count(rootNode.right) + 1;
+        }
+        return num;
+    }
+    
+    // 트리의 높이를 return하는 recursive한 알고리즘
+    public int depth(Node rootNode) {
+        int dep, depl, depr;
+        
+        if (rootNode == null) {
+            dep = 0;
+        } else {
+            depl = depth(rootNode.left);
+            depr = depth(rootNode.right);
+            if (depl >= depr) {
+                dep = depl + 1;
+            } else {
+                dep = depr + 1;
+            }
+        }
+        return dep;
+    }
+}
+
+// 트리를 가지고 테스트를 해보자.
+public class Main {
+    public static void main(String[] args) {
+        Node rootNode = null;
+        int nansu;
+        Tree tree = new Tree();
+        
+        Random r = new Random();
+        System.out.print("발생된 난수: ");
+        for (int i = 0; i < 5; i++) {
+            nansu = r.nextInt() % 100;
+            System.out.print(nansu+" ");
+            
+            // 항상 루트노드가 반환된다.
+            rootNode = tree.insert(rootNode, nansu);
+        }
+    }
+}
+```
+
 # **> 트라이(Trie)**
 
 ---
