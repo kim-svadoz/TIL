@@ -204,6 +204,7 @@
 | 2798_블랙잭                                         | [Link](./Algorithm/Baekjoon/p2798.java)                      | [문제](https://www.acmicpc.net/problem/2798)                 | 브루트 포스                                |
 | 2805_나무 자르기                                    | [Link](./Algorithm/Baekjoon/p2805.java)                      | [문제](https://www.acmicpc.net/problem/2805)                 | Binary Search                              |
 | 2875_대회or인턴                                     | [Link](./Algorithm/Baekjoon/p2875.java)                      | [문제](https://www.acmicpc.net/problem/2875)                 | Greedy                                     |
+| 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
@@ -298,6 +299,7 @@
 | 15655_N과 M(6)                                      | [Link](./Algorithm/Baekjoon/p15655.java)                     | [문제](https://www.acmicpc.net/problem/15655)                | 백트래킹, 오름차순                         |
 | 15656_N과 M(7)                                      | [Link](./Algorithm/Baekjoon/p15656.java)                     | [문제](https://www.acmicpc.net/problem/15656)                | 백트래킹, 자신포함 중복가능                |
 | 15657_N과 M(8)                                      | [Link](./Algorithm/Baekjoon/p15657.java)                     | [문제](https://www.acmicpc.net/problem/15657)                | 백트래킹, 자신포함 중복가능 + 비내림차순   |
+| 15661_링크와스타트                                  | [Link](./Algorithm/Baekjoon/p15661.java)                     | [문제](https://www.acmicpc.net/problem/15661)                | 브루트포스, 백트래킹                       |
 | 15663_N과 M(9)                                      | [Link](./Algorithm/Baekjoon/p15663.java)                     | [문제](https://www.acmicpc.net/problem/15663)                | 백트래킹, 중복가능 +++ 중복수열제거        |
 | 15664_N과 M(10)                                     | [Link](./Algorithm/Baekjoon/p15664.java)                     | [문제](https://www.acmicpc.net/problem/15664)                | 백트래킹, 비내림차순 +                     |
 | 15665_N과 M(11)                                     | [Link](./Algorithm/Baekjoon/p15665.java)                     | [문제](https://www.acmicpc.net/problem/15665)                | 백트래킹, 자신포함 중복가능 +              |
