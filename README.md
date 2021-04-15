@@ -283,6 +283,7 @@
 | 12865_평범한배낭                                    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)                           |
 | 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
+| 14391_종이 조각                                     | [Link](./Algorithm/Baekjoon/p14391.java)                     | [문제](https://www.acmicpc.net/problem/14391)                | 브루트 포스, dfs, 비트마스킹               |
 | 14425_문자열집합                                    | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                              |
 | 14500_테트로미노                                    | [Link](./Algorithm/Baekjoon/p14500.java)                     | [문제](https://www.acmicpc.net/problem/14500)                | 브루트 포스, 구현, DFS                     |
 | 14501_퇴사                                          | [Link](./Algorithm/Baekjoon/p14501.java)                     | [문제](https://www.acmicpc.net/problem/14501)                | 완전탐색, DP                               |
@@ -314,6 +315,7 @@
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
 | 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
+| 16637_괄호 추가하기                                 | [Link](./Algorithm/Baekjoon/p16637.java)                     | [문제](https://www.acmicpc.net/problem/16637)                | 브루트 포스, dfs                           |
 | 16916_부분문자열                                    | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                                |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
@@ -338,6 +340,7 @@
 | 21275_폰 호석만                                     | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스                 |
 | 21276_계보 복원가 호석                              | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap           |
 | 21277_짠돌이 호석                                   | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스            |
+| 21278_호석이 두마리 치킨                            | [Link](./Algorithm/Baekjoon/p21278.java)                     | [문제](https://www.acmicpc.net/problem/21278)                | 브루트 포스, 플로이드 와샬, 인접행렬       |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
 
 ### [Programmers](./Algorithm/Programmers)
