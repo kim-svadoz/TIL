@@ -284,6 +284,7 @@
 | 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
 | 14425_문자열집합                                    | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                              |
+| 14500_테트로미노                                    | [Link](./Algorithm/Baekjoon/p14500.java)                     | [문제](https://www.acmicpc.net/problem/14500)                | 브루트 포스, 구현, DFS                     |
 | 14501_퇴사                                          | [Link](./Algorithm/Baekjoon/p14501.java)                     | [문제](https://www.acmicpc.net/problem/14501)                | 완전탐색, DP                               |
 | 14502_연구소                                        | [Link](./Algorithm/Baekjoon/SAMSUNG_lab_14502.java)          | [문제](https://www.acmicpc.net/problem/14502)                | BFS                                        |
 | 14503_로봇청소기                                    | [Link](./Algorithm/Baekjoon/SAMSUNG_robot_14503.java)        | [문제](https://www.acmicpc.net/problem/14503)                | BFS                                        |
