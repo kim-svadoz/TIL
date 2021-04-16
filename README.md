@@ -328,6 +328,7 @@
 | 18312_시각                                          | [Link](./Algorithm/Baekjoon/p18312.java)                     | [문제](https://www.acmicpc.net/problem/18312)                | 브루트 포스, 구현                          |
 | 18430_무기공학                                      | [Link](./Algorithm/Baekjoon/p18430.java)                     | [문제](https://www.acmicpc.net/problem/18430)                | 백트래킹, 구현                             |
 | 18511_큰 수 구성하기                                | [Link](./Algorithm/Baekjoon/p18511.java)                     | [문제](https://www.acmicpc.net/problem/18511)                | 브루트 포스, dfs                           |
+| 18808_스티커 붙이기                                 | [Link](./Algorithm/Baekjoon/p18808.java)                     | [문제](https://www.acmicpc.net/problem/18808)                | 브루트 포스, 시뮬레이션, 구현, 배열돌리기  |
 | 19236_청소년상어                                    | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                        |
 | 19532_수학은 비대면강의입니다                       | [Link](./Algorithm/Baekjoon/p19532.java)                     | [문제](https://www.acmicpc.net/problem/19532)                | 브루트 포스                                |
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
