@@ -208,6 +208,7 @@
 | 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
+| 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
 | 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
 | 4358_생태학                                         | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                                  |
 | 4568_LRU Caching                                    | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                        |
