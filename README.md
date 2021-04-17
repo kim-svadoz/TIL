@@ -124,7 +124,7 @@
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
 | 1517_버블 소트                                      | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort                      |
-| 1520_내리막 길                                      | [Link](./Algorithm/Baekjoon/p1520.java)                      | [문제](https://www.acmicpc.net/problem/1520)                 | DFS, DP                                    |
+| 1520_내리막 길                                      | [Link](./Algorithm/Baekjoon/p1520.java)                      | [문제](https://www.acmicpc.net/problem/1520)                 | DFS, DP, 해당 칸으로 들어오는 가지 수      |
 | 1525_퍼즐                                           | [Link](./Algorithm/Baekjoon/p1525.java)                      | [문제](https://www.acmicpc.net/problem/1525)                 | 완전탐색, 구현, 2차원->1차원, BFS          |
 | 1596_영식이                                         | [Link](./Algorithm/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                                 |
 | 1613_역사                                           | [Link](./Algorithm/Baekjoon/p1613.java)                      | [문제](https://www.acmicpc.net/problem/1613)                 | 그래프, 플로이드와샬                       |
@@ -154,6 +154,7 @@
 | 1931_회의실배정                                     | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator                         |
 | 1933_스카이라인                                     | [Link](./Algorithm/Baekjoon/p1933.java)                      | [문제](https://www.acmicpc.net/problem/1933)                 | 우선순위큐, 스위핑, TreeMap                |
 | 1934_최소공배수                                     | [Link](./Algorithm/Baekjoon/p1934.java)                      | [문제](https://www.acmicpc.net/problem/1934)                 |                                            |
+| 1937_욕심쟁이 판다                                  | [Link](./Algorithm/Baekjoon/p1937.java)                      | [문제](https://www.acmicpc.net/problem/1937)                 | DP, dfs, 경로별 최댓값                     |
 | 1946_신입사원                                       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator                         |
 | 1948_임계경로                                       | [Link](./Algorithm/Baekjoon/p1948.java)                      | [문제](https://www.acmicpc.net/problem/1948)                 | 위상정렬, tracing, dfs, bfs                |
 | 1956_운동                                           | [Link](./Algorithm/Baekjoon/p1956.java)                      | [문제](https://www.acmicpc.net/problem/1956)                 | 그래프, 플로이드와샬                       |
@@ -167,6 +168,7 @@
 | 2042_구간합구하기                                   | [Link](./Algorithm/Baekjoon/SaveJoint_2042.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EA%B5%AC%EA%B0%84-%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0?category=936483) | 세그먼트 트리                              |
 | 2056_작업                                           | [Link](./Algorithm/Baekjoon/Work_2056.java)                  | [문제](https://www.acmicpc.net/problem/2056)                 | 위상정렬, queue                            |
 | 2096_내려가기                                       | [Link](./Algorithm/Baekjoon/GoingDown_2096.java)             | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2042-%EB%82%B4%EB%A0%A4%EA%B0%80%EA%B8%B0?category=936483) | 2차원 슬라이딩윈도우, DP                   |
+| 2098_외판원 순회                                    | [Link](./Algorithm/Baekjoon/p2098.java)                      | [문제](https://www.acmicpc.net/problem/2098)                 | DP, dfs, tsp, 비트마스크                   |
 | 2110_공유기설치                                     | [Link](./Algorithm/Baekjoon/p2133.java)                      | [문제](https://www.acmicpc.net/problem/2110)                 | Binary Serach                              |
 | 2133_타일 채우기                                    | [Link](./Algorithm/Baekjoon/p2133.java)                      | [문제](https://www.acmicpc.net/problem/2133)                 | DP                                         |
 | 2143_두 배열의 합                                   | [Link](./Algorithm/Baekjoon/p2143.java)                      | [문제](https://www.acmicpc.net/problem/2143)                 | 투포인터, 슬라이딩 윈도우, HashMap         |
