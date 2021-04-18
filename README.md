@@ -150,6 +150,7 @@
 | 1850_최대공약수                                     | [Link](./Algorithm/Baekjoon/p1850.java)                      | [문제](https://www.acmicpc.net/problem/1850)                 |                                            |
 | 1863_스카이라인 쉬운거                              | [Link](./Algorithm/Baekjoon/p1863.java)                      | [문제](https://www.acmicpc.net/problem/1863)                 | 문자열, 스택, 구현                         |
 | 1912_연속합                                         | [Link](./Algorithm/Baekjoon/p1912.java)                      | [문제](https://www.acmicpc.net/problem/1912)                 | DP                                         |
+| 1913_달팽이                                         | [Link](./Algorithm/Baekjoon/p1913.java)                      | [문제](https://www.acmicpc.net/problem/1913)                 | 시뮬레이션, 배열돌리기                     |
 | 1916_최소 비용 구하기                               | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                         |
 | 1929_소수 구하기                                    | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체                  |
 | 1931_회의실배정                                     | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator                         |
@@ -325,6 +326,8 @@
 | 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
 | 16637_괄호 추가하기                                 | [Link](./Algorithm/Baekjoon/p16637.java)                     | [문제](https://www.acmicpc.net/problem/16637)                | 브루트 포스, dfs                           |
 | 16916_부분문자열                                    | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                                |
+| 16926_배열돌리기1                                   | [Link](./Algorithm/Baekjoon/p16926.java)                     | [문제](https://www.acmicpc.net/problem/16926)                | 시뮬레이션, 배열돌리기 1                   |
+| 16927_배열돌리기2                                   | [Link](./Algorithm/Baekjoon/p16927.java)                     | [문제](https://www.acmicpc.net/problem/16927)                | 시뮬레이션, 배열돌리기 2                   |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
