@@ -103,6 +103,7 @@
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
+| 1092_배                                             | [Link](./Algorithm/Baekjoon/p1092.java)                      | [문제](https://www.acmicpc.net/problem/1092)                 | 그리디, 구현                               |
 | 1107_리모컨                                         | [Link](./Algorithm/Baekjoon/p1107.java)                      | [문제](https://www.acmicpc.net/problem/1107)                 | 완전탐색, 구현                             |
 | 1158_요세푸스 문제 1                                | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐                  |
 | 1167_트리의 지름                                    | [Link](./Algorithm/Baekjoon/p1167.java)                      | [문제](https://www.acmicpc.net/problem/1167)                 | 트리 지름, 그래프, BFS 2번하기             |
@@ -357,6 +358,7 @@
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
 | 20291_파일 정리                                     | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                         |
+| 20300_서강근육맨                                    | [Link](./Algorithm/Baekjoon/p20300.java)                     | [문제](https://www.acmicpc.net/problem/20300)                | 그리디                                     |
 | 20437_문자열 게임2                                  | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우                    |
 | 20438_출석체크                                      | [Link](./Algorithm/Baekjoon/p20438.java)                     | [문제](https://www.acmicpc.net/problem/20438)                | Prefix Sum, 구간합, 수학                   |
 | 20440_니가 싫어 싫어 너무 싫어 싫어 오지 마~        | [Link](./Algorithm/Baekjoon/p20440.java)                     | [문제](https://www.acmicpc.net/problem/20440)                | Prefix Sum, 우선순위 큐, 정렬              |
