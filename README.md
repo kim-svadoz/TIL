@@ -115,6 +115,7 @@
 | 1991_트리 순회                                      | [Link](./Algorithm/Baekjoon/p1991.java)                      | [문제](https://www.acmicpc.net/problem/1991)                 | 트리, 재귀                                 |
 | 1197_최소스패닝트리                                 | [Link](https://ju-nam2.tistory.com/112?category=869217)      | [문제](https://www.acmicpc.net/problem/1197)                 | Kruscal Algorithm(간선)                    |
 | 1208_부분수열의 합2                                 | [Link](./Algorithm/Baekjoon/p1208.java)                      | [문제](https://www.acmicpc.net/problem/1208)                 | binary search, 투포인터, hashmap           |
+| 1244_스위치 켜고 끄기                               | [Link](./Algorithm/Baekjoon/p1244.java)                      | [문제](https://www.acmicpc.net/problem/1244)                 | 구현                                       |
 | 1260_DFS와 BFS                                      | [Link](./Algorithm/Baekjoon/p1260.java)                      | [문제](https://www.acmicpc.net/problem/1260)                 | DFS, BFS                                   |
 | 1261_알고스팟                                       | [Link](./Algorithm/Baekjoon/p1261.java)                      | [문제](https://www.acmicpc.net/problem/1261)                 | 다익스트라, BFS                            |
 | 1316_그룹 단어 체커                                 | [Link](./Algorithm/Baekjoon/p1316.java)                      | [문제](https://www.acmicpc.net/problem/1316)                 | 문자열, 구현                               |
@@ -326,6 +327,7 @@
 | 15683_감시                                          | [Link](./Algorithm/Baekjoon/p15683.java)                     | [문제](https://www.acmicpc.net/problem/15683)                | 시뮬레이션, 구현, n진법 right shift        |
 | 15686_치킨배달                                      | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                           |
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
+| 15787_기차가 어둠을 헤치고 은하수를                 | [Link](./Algorithm/Baekjoon/p15787.java)                     | [문제](https://www.acmicpc.net/problem/15787)                | 구현, 비트마스킹                           |
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
