@@ -162,6 +162,7 @@
 | 1937_욕심쟁이 판다                                  | [Link](./Algorithm/Baekjoon/p1937.java)                      | [문제](https://www.acmicpc.net/problem/1937)                 | DP, dfs, 경로별 최댓값                     |
 | 1946_신입사원                                       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator                         |
 | 1948_임계경로                                       | [Link](./Algorithm/Baekjoon/p1948.java)                      | [문제](https://www.acmicpc.net/problem/1948)                 | 위상정렬, tracing, dfs, bfs                |
+| 1949_우수마을                                       | [Link](./Algorithm/Baekjoon/p1949.java)                      | [문제](https://www.acmicpc.net/problem/1949)                 | tree, dp                                   |
 | 1956_운동                                           | [Link](./Algorithm/Baekjoon/p1956.java)                      | [문제](https://www.acmicpc.net/problem/1956)                 | 그래프, 플로이드와샬                       |
 | 1963_소수 경로                                      | [Link](./Algorithm/Baekjoon/p1963.java)                      | [문제](https://www.acmicpc.net/problem/1963)                 | 소수, BFS, 자리바꾸기                      |
 | 1969_DNA                                            | [Link](./Algorithm/Baekjoon/p1969.java)                      | [문제](https://www.acmicpc.net/problem/1969)                 | 브루트 포스                                |
@@ -314,6 +315,7 @@
 | 14891_톱니바퀴                                      | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                                 |
 | 14888_연산자 끼워넣기                               | [Link](./Algorithm/Baekjoon/p14888.java)                     | [문제](https://www.acmicpc.net/problem/14888)                | 백트래킹, 브루트포스                       |
 | 14929_귀찮아(SIB)                                   | [Link](./Algorithm/Baekjoon/p14929.java)                     | [문제](https://www.acmicpc.net/problem/14929)                | Prefix Sum, 구간 합                        |
+| 15486_퇴사 2                                        | [Link](./Algorithm/Baekjoon/p15486.java)                     | [문제](https://www.acmicpc.net/problem/15486)                | DP                                         |
 | 15649_N과 M(1)                                      | [Link](./Algorithm/Baekjoon/p15649.java)                     | [문제](https://www.acmicpc.net/problem/15649)                | 백트래킹, 중복가능                         |
 | 15650_N과 M(2)                                      | [Link](./Algorithm/Baekjoon/p15650.java)                     | [문제](https://www.acmicpc.net/problem/15650)                | 백트래킹, 오름차순                         |
 | 15651_N과 M(3)                                      | [Link](./Algorithm/Baekjoon/p15651.java)                     | [문제](https://www.acmicpc.net/problem/15651)                | 백트래킹, 자신포함 중복가능                |
@@ -327,6 +329,7 @@
 | 15664_N과 M(10)                                     | [Link](./Algorithm/Baekjoon/p15664.java)                     | [문제](https://www.acmicpc.net/problem/15664)                | 백트래킹, 비내림차순 +                     |
 | 15665_N과 M(11)                                     | [Link](./Algorithm/Baekjoon/p15665.java)                     | [문제](https://www.acmicpc.net/problem/15665)                | 백트래킹, 자신포함 중복가능 +              |
 | 15666_N과 M(12)                                     | [Link](./Algorithm/Baekjoon/p15666.java)                     | [문제](https://www.acmicpc.net/problem/15666)                | 백트래킹, 자신포함 중복가능 + 비내림차순 + |
+| 15681_트리와 쿼리                                   | [Link](./Algorithm/Baekjoon/p15681.java)                     | [문제](https://www.acmicpc.net/problem/15681)                | Tree, DP, dfs, graph                       |
 | 15683_감시                                          | [Link](./Algorithm/Baekjoon/p15683.java)                     | [문제](https://www.acmicpc.net/problem/15683)                | 시뮬레이션, 구현, n진법 right shift        |
 | 15686_치킨배달                                      | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                           |
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
@@ -369,6 +372,7 @@
 | 21276_계보 복원가 호석                              | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap           |
 | 21277_짠돌이 호석                                   | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스            |
 | 21278_호석이 두마리 치킨                            | [Link](./Algorithm/Baekjoon/p21278.java)                     | [문제](https://www.acmicpc.net/problem/21278)                | 브루트 포스, 플로이드 와샬, 인접행렬       |
+| 21317_징검다리 건너기                               | [Link](./Algorithm/Baekjoon/p21317.java)                     | [문제](https://www.acmicpc.net/problem/21317)                | DP, 브루트포스, 백트래킹                   |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
 
 ### [Programmers](./Algorithm/Programmers)
