@@ -139,6 +139,7 @@
 | 1699_제곱수의 합                                    | [Link](./Algorithm/Baekjoon/p1699.java)                      | [문제](https://www.acmicpc.net/problem/1699)                 | 정수론, DP                                 |
 | 1707_이분 그래프                                    | [Link](./Algorithm/Baekjoon/p1707.java)                      | [문제](https://www.acmicpc.net/problem/1707)                 | 그래프, 인접 리스트                        |
 | 1708_볼록껍질                                       | [Link](./Algorithm/Baekjoon/ConvexHull_1708.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔             |
+| 1713_후보 추천하기                                  | [Link](./Algorithm/Baekjoon/p1713.java)                      | [문제](https://www.acmicpc.net/problem/1713)                 | 구현, 시뮬레이션, 정렬                     |
 | 1744_수 묶기                                        | [Link](./Algorithm/Baekjoon/p1744.java)                      | [문제](https://www.acmicpc.net/problem/1744)                 | Greedy, Sort, 구현                         |
 | 1749_점수따먹기                                     | [Link](./Algorithm/Baekjoon/p1749.java)                      | [문제](https://www.acmicpc.net/problem/1749)                 | 2차원 Prefix Sum, DP                       |
 | 1759_암호 만들기                                    | [Link](./Algorithm/Baekjoon/p1759.java)                      | [문제](https://www.acmicpc.net/problem/1759)                 | 백트래킹, 조합, 완전탐색                   |
@@ -502,3 +503,4 @@ want more..
    보이는 대로 믿지말고, 움직이지말고, 모든 사고에 깊에 생각하는 습관을 기르자. 습관이 중요하다. 뇌가 도태되도록 내버려두지 말자.
    
 5. 열심히삽시다
+
