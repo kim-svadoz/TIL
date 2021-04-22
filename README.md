@@ -435,6 +435,7 @@
 | 42747_H-Index                 | [Link](./Algorithm/Programmers/pg42747.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42747) | 정렬                         |
 | 42885_구명보트                | [Link](./Algorithm/Programmers/pg42885.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42885) | 그리디                       |
 | 42860_조이스틱                | [Link](./Algorithm/Programmers/pg42860.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42860) | 그리디                       |
+| 60060_가사검색                | [Link](./Algorithm/Programmers/pg60060.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/60060) | TRIE                         |
 | 67259_경주로건설              | [Link](./Algorithm/Programmers/pg67259.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/67259) | bfs + dp                     |
 | 67260_동굴탐험                | [Link](./Algorithm/Programmers/pg67260.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/67260) | bfs, 인접리스트, 그래프      |
 | 72410_신규아이디추천          | [Link](./Algorithm/Programmers/pg72410.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72410) | 문자열, 패턴                 |
