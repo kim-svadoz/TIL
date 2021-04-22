@@ -104,6 +104,7 @@
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
 | 1092_배                                             | [Link](./Algorithm/Baekjoon/p1092.java)                      | [문제](https://www.acmicpc.net/problem/1092)                 | 그리디, 구현                               |
+| 1106_호텔                                           | [Link](./Algorithm/Baekjoon/p1106.java)                      | [문제](https://www.acmicpc.net/problem/1106)                 | DP                                         |
 | 1107_리모컨                                         | [Link](./Algorithm/Baekjoon/p1107.java)                      | [문제](https://www.acmicpc.net/problem/1107)                 | 완전탐색, 구현                             |
 | 1158_요세푸스 문제 1                                | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐                  |
 | 1167_트리의 지름                                    | [Link](./Algorithm/Baekjoon/p1167.java)                      | [문제](https://www.acmicpc.net/problem/1167)                 | 트리 지름, 그래프, BFS 2번하기             |
@@ -132,6 +133,7 @@
 | 1596_영식이                                         | [Link](./Algorithm/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                                 |
 | 1613_역사                                           | [Link](./Algorithm/Baekjoon/p1613.java)                      | [문제](https://www.acmicpc.net/problem/1613)                 | 그래프, 플로이드와샬                       |
 | 1644_소수의 연속합                                  | [Link](./Algorithm/Baekjoon/p1644.java)                      | [문제](https://www.acmicpc.net/problem/1644)                 | 소수, 에라토스테네스의 체, 투포인터        |
+| 1647_도시 분할 계획                                 | [Link](./Algorithm/Baekjoon/p1647.java)                      | [문제](https://www.acmicpc.net/problem/1647)                 | 최소 스패닝 트리, 크루스칼, UNION-FIND     |
 | 1654_랜선자르기                                     | [Link](./Algorithm/Baekjoon/p1654.java)                      | [문제](https://www.acmicpc.net/problem/1654)                 | Binary Serach                              |
 | 1662_압축                                           | [Link](./Algorithm/Baekjoon/p1662.java)                      | [문제](https://www.acmicpc.net/problem/1662)                 | Stack, 괄호처리, DFS                       |
 | 1676_팩토리얼 0의 개수                              | [Link](./Algorithm/Baekjoon/p1676.java)                      | [문제](https://www.acmicpc.net/problem/1676)                 | 수학, 큰 수 연산                           |
@@ -155,6 +157,7 @@
 | 1912_연속합                                         | [Link](./Algorithm/Baekjoon/p1912.java)                      | [문제](https://www.acmicpc.net/problem/1912)                 | DP                                         |
 | 1913_달팽이                                         | [Link](./Algorithm/Baekjoon/p1913.java)                      | [문제](https://www.acmicpc.net/problem/1913)                 | 시뮬레이션, 배열돌리기                     |
 | 1916_최소 비용 구하기                               | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                         |
+| 1922_네트워크 연결                                  | [Link](./Algorithm/Baekjoon/p1922.java)                      | [문제](https://www.acmicpc.net/problem/1922)                 | 최소 스패닝 트리, 크루스칼, UNION-FIND     |
 | 1929_소수 구하기                                    | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체                  |
 | 1931_회의실배정                                     | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator                         |
 | 1933_스카이라인                                     | [Link](./Algorithm/Baekjoon/p1933.java)                      | [문제](https://www.acmicpc.net/problem/1933)                 | 우선순위큐, 스위핑, TreeMap                |
@@ -333,6 +336,7 @@
 | 15683_감시                                          | [Link](./Algorithm/Baekjoon/p15683.java)                     | [문제](https://www.acmicpc.net/problem/15683)                | 시뮬레이션, 구현, n진법 right shift        |
 | 15686_치킨배달                                      | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                           |
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
+| 15721_주지수                                        | [Link](./Algorithm/Baekjoon/p15724.java)                     | [문제](https://www.acmicpc.net/problem/15724)                | DP, 2차원 배열 구간합                      |
 | 15787_기차가 어둠을 헤치고 은하수를                 | [Link](./Algorithm/Baekjoon/p15787.java)                     | [문제](https://www.acmicpc.net/problem/15787)                | 구현, 비트마스킹                           |
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16235_나무 재테크                                   | [Link](./Algorithm/Baekjoon/p16235.java)                     | [문제](https://www.acmicpc.net/problem/16235)                | 구현, 시뮬레이션                           |
