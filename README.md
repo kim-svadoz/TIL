@@ -102,6 +102,7 @@
 | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
+| 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
 | 1092_배                                             | [Link](./Algorithm/Baekjoon/p1092.java)                      | [문제](https://www.acmicpc.net/problem/1092)                 | 그리디, 구현                               |
 | 1106_호텔                                           | [Link](./Algorithm/Baekjoon/p1106.java)                      | [문제](https://www.acmicpc.net/problem/1106)                 | DP                                         |
@@ -356,6 +357,7 @@
 | 17472_다리만들기2                                   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
 | 17609_회문                                          | [Link](./Algorithm/Baekjoon/p17609.java)                     | [문제](https://www.acmicpc.net/problem/17609)                | 문자열, 구현, 투포인터, 그리디             |
 | 17626_Four Squares                                  | [Link](./Algorithm/Baekjoon/p17626.java)                     | [문제](https://www.acmicpc.net/problem/17626)                | 브루트 포스, 완전탐색, DP                  |
+| 17976_Thread knots                                  | [Link](./Algorithm/Baekjoon/p17976.java)                     | [문제](https://www.acmicpc.net/problem/17976)                | Greedy, Binary Search                      |
 | 18312_시각                                          | [Link](./Algorithm/Baekjoon/p18312.java)                     | [문제](https://www.acmicpc.net/problem/18312)                | 브루트 포스, 구현                          |
 | 18430_무기공학                                      | [Link](./Algorithm/Baekjoon/p18430.java)                     | [문제](https://www.acmicpc.net/problem/18430)                | 백트래킹, 구현                             |
 | 18511_큰 수 구성하기                                | [Link](./Algorithm/Baekjoon/p18511.java)                     | [문제](https://www.acmicpc.net/problem/18511)                | 브루트 포스, dfs                           |
