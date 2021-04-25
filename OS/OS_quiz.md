@@ -48,5 +48,96 @@
     3.  shell
     4.  process
 
+## Chapter 3. Proccess
 
+### Quiz
+
+1.  In the memory layout of a process, the ______ section is an area of memory that is dynamically allocated during program run time.
+
+    1.  **heap**
+    2.  stack
+    3.  data
+    4.  code
+
+2.  운영체제에서 프로세스의 상태에 대한 설명으로 가장 틀린 것은?
+
+    1.  fork() 시스템 콜로 새로운 프로세스를 생성하면 항상 NEW 상태가 된다.
+    2.  **READY 상태에 있는 프로세스에 interrupt를 걸면 WAITING 상태로 천이해서 응답이 올 때까지 대기한다. **
+    3.  RUNNING 상태의 프로세스가 I/O 처리를 하면 event가 응답할 때까지 WAITING 상태로 천이한 다. 
+    4.  RUNNING 상태의 프로세스가 time out이 되면 CPU 스케줄러는 READY 상태의 프로세스 하나 를 dispatch한다. 
+
+3.  다음 중 PCB(Process Control Block)에 저장해야 할 정보가 아닌 것은?
+
+    1.  Program Counter
+    2.  Instruction Register
+    3.  Process State
+    4.  Stack Pointer
+    5.  **BSS**
+
+4.  Concurrency(동시성, 병행성)에 대한 설명으로 가장 틀린 것은?
+
+    1.  multiprogramming은 동시에 여러 개의 프로그램을 메모리에 상주시키는 것을 말한다. 
+    2.  **multitasking은 여러 개의 CPU Core에서 한순간에 여러 명령어를 여러 Core에서 동시에 실행하 는 것을 말한다. **
+    3.  시분할(time-sharing)은 여러 개의 프로세스가 하나의 CPU를 시간상으로 분할하여 사용하는 것 을 말한다. 
+    4.  multiprocessing은 CPU 자원을 효율적으로 사용하고, 사용자에 대한 응답 시간을 줄이는 목적으 로 사용한다. 
+
+5.  Context Switch(문맥 교환)에 대한 설명으로 가장 틀린 것은?
+
+    1.  CPU 스케줄러가 프로세스에게 CPU를 배정해 주기 위해 문맥을 교환한다. 
+    2.  Context 정보는 Process Control Block에 저장하거나, PCB로부터 로드한다. 
+    3.  Context Switch는 interrupt 또는 system call에 의해 실행된다.
+    4.  **Context Switch의 대상이 되는 두 프로세스는 각각 RUNNING 상태, WAITING 상태에 있다. **
+
+6.  다음 프로그램에서 LINE X 라고 표기된 위치의 실행 순서로 올바른 것은?
+
+    ```c
+    int main() {
+        pid_t pid = fork();
+        if (pid > 0) {
+            wait(NULL);
+            // LINE A
+        } else {
+            pid = fork();
+            if (pid == 0) {
+                // LINE B
+            } else {
+                wait(NULL);
+                // LINE C
+            }
+        }
+        // LINE D
+    }
+    ```
+
+    1.  B - C - A - D - D - D
+    2.  B - C - D - A - D - D
+    3.  B - A - D - C - D - D
+    4.  **B - D - C - D - A - D**
+
+7.  다음 프로그램의 출력 결과로 올바른 것은?
+
+    ```c
+    int x = 10;
+    int main() {
+        pid_t pid = fork();
+        if (pid == 0) {
+            x += 10;
+        } else {
+            wait(NULL);
+            pid = fork();
+            x += 10;
+            if (pid > 0) {
+                wait(NULL);
+            } else {
+                x += 10;
+            }
+        }
+        printf("%d ", x);
+    }
+    ```
+
+    1.  20 20 30
+    2.  **20 30 20**
+    3.  20 30 30
+    4.  20 20 20
 
