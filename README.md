@@ -304,8 +304,10 @@
 | 11729_하노이탑 이동 순서                            | [Link](./Algorithm/Baekjoon/p11729.java)                     | [문제](https://www.acmicpc.net/problem/11729)                | 분할정복, 재귀                             |
 | 12100_2048                                          | [Link](./Algorithm/Baekjoon/p12100.java)                     | [문제](https://www.acmicpc.net/problem/12100)                | 구현, 시뮬레이션, 브루트 포스              |
 | 12865_평범한배낭                                    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)                           |
+| 12896_스크루지 민호                                 | [Link](./Algorithm/Baekjoon/p12896.java)                     | [문제](https://www.acmicpc.net/problem/12896)                | tree dp, 트리의 지름 구하기                |
 | 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 12933_오리                                          | [Link](./Algorithm/Baekjoon/p12933.java)                     | [문제](https://www.acmicpc.net/problem/12933)                | 구현                                       |
+| 12978_스크루지 민호 2                               | [Link](./Algorithm/Baekjoon/p12978.java)                     | [문제](https://www.acmicpc.net/problem/12978)                | tree dp                                    |
 | 13398_연속합 2                                      | [Link](./Algorithm/Baekjoon/p13398.java)                     | [문제](https://www.acmicpc.net/problem/13398)                | DP, Prefix Sum                             |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
 | 14391_종이 조각                                     | [Link](./Algorithm/Baekjoon/p14391.java)                     | [문제](https://www.acmicpc.net/problem/14391)                | 브루트 포스, dfs, 비트마스킹               |
