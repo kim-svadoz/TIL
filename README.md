@@ -34,9 +34,11 @@
 
 ---
 
-## :triangular_flag_on_post: **Network**
+## :triangular_flag_on_post: **IT**
 
 ### 1. [Network](./MultiCampus/Network.md)
+
+### 2. [OS_Quiz](./OS/OS_quiz.md)
 
 ---
 
