@@ -8,17 +8,17 @@
 
 ## :triangular_flag_on_post: **WEB**
 
-### 1. [basicJava](./MultiCampus/basicJava.md)
+### 1. [advancedJava](./MultiCampus/advancedJava.md)
 
-### 2. [advancedJava](./MultiCampus/advancedJava.md)
+### 2. [DBMS](./MultiCampus/DBMS.md)
 
-### 3. [DBMS](./MultiCampus/DBMS.md)
+### 3. [DBMS_PROBLEM](./MultiCampus/DB_example.md)
 
-### 4. [DBMS_PROBLEM](./MultiCampus/DB_example.md)
+### 4. [JDBC](./MultiCampus/JDBC.md)
 
-### 5. [JDBC](./MultiCampus/JDBC.md)
+### 5. [WEB](./MultiCampus/WEB.md)
 
-### 6. [WEB](./MultiCampus/WEB.md)
+### 6. [Network](./MultiCampus/Network.md)
 
 ### 7. [Spring](./MultiCampus/Spring.md)
 
@@ -36,41 +36,47 @@
 
 ## :triangular_flag_on_post: **IT**
 
-### 1. [Network](./MultiCampus/Network.md)
+### 1. [Network](./Embedded/Network.md)
 
 ### 2. [OS_Quiz](./OS/OS_quiz.md)
 
 ---
 
+## :triangular_flag_on_post: **Progamming Language**
+
+### 1. [C](./Programming Language/C.md)
+
+### 2. [Cpp](./Programming Language/Cpp.md)
+
+### 3. [C Coding Style](./Programming Language/C_Coding_Style_Guide.md)
+
+### 4. [Java](./MultiCampus/basicJava.md)
+
+### 5. [Java Script][./Programming Language/Java Script.md]
+
+---
+
 ## :triangular_flag_on_post: **Embedded**
 
-### 1. [C](./Embedded/C.md)
+### 1. [SSD](./Embedded/SSD.md)
 
-### 2. [SSD](./Embedded/SSD.md)
+### 2. [AudioAndImage](./Embedded/AudioAndImage.md)
 
-### 3. [AudioAndImage](./Embedded/AudioAndImage.md)
+### 3. [Embedded_Basic](./Embedded/Embedded_Basic.md)
 
-### 4. [Embedded_Basic](./Embedded/Embedded_Basic.md)
+### 4. [Linux_Kernel](./Embedded/Linux_Kernel.md)
 
-### 5. [Linux_Kernel](./Embedded/Linux_Kernel.md)
+### 5. [Nandflash](./Embedded/Nandflash.md)
 
-### 6. [Network](./Embedded/Network.md)
+### 6. [I2C](./Embedded/I2C.md)
 
-### 7. [Nandflash](./Embedded/Nandflash.md)
+### 7. [CAN](./Embedded/CAN.md)
 
-### 8. [I2C](./Embedded/I2C.md)
+### 8. [VoIP](./Embedded/VoIP.md)
 
-### 9. [CAN](./Embedded/CAN.md)
+### 9. [SQLite](./Embedded/SQLite.md)
 
-### 10. [VoIP](./Embedded/VoIP.md)
-
-### 11. [SQLite](./Embedded/SQLite.md)
-
-### 12. [Cpp](./Embedded/Cpp.md)
-
-### 13. [RTOS_ThreadX](./Embedded/RTOS_ThreadX.md)
-
-### 14. [C Coding Style](./Embedded/C_Coding_Style_Guide.md)
+### 10. [RTOS_ThreadX](./Embedded/RTOS_ThreadX.md)
 
 ---
 
