@@ -52,7 +52,7 @@
 
 ### 4. [Java](./MultiCampus/basicJava.md)
 
-### 5. [Java Script][./ProgrammingLanguage/Java Script.md]
+### 5. [Java Script][./ProgrammingLanguage/JavaScript.md]
 
 ---
 
