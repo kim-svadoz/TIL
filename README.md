@@ -44,15 +44,15 @@
 
 ## :triangular_flag_on_post: **Programming Language**
 
-### 1. [C](./Programming\ Language/C.md)
+### 1. [C](./ProgrammingLanguage/C.md)
 
-### 2. [Cpp](./Programming\ Language/Cpp.md)
+### 2. [Cpp](./ProgrammingLanguage/Cpp.md)
 
-### 3. [C Coding Style](./Programming\ Language/C_Coding_Style_Guide.md)
+### 3. [C Coding Style](./ProgrammingLanguage/C_Coding_Style_Guide.md)
 
 ### 4. [Java](./MultiCampus/basicJava.md)
 
-### 5. [Java Script][./Programming\ Language/Java Script.md]
+### 5. [Java Script][./ProgrammingLanguage/Java Script.md]
 
 ---
 
