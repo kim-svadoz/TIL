@@ -134,6 +134,7 @@
 | 1365_꼬인 전깃줄                                    | [Link](./Algorithm/Baekjoon/TwistedElectricWire_1365.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS                         |
 | 1373_2진수 8진수                                    | [Link](./Algorithm/Baekjoon/p1373.java)                      | [문제](https://www.acmicpc.net/problem/1373)                 | 문자열, 진수변환                           |
 | 1389_케빈 베이컨의 6단계법칙                        | [Link](./Algorithm/Baekjoon/p1389.java)                      | [문제](https://www.acmicpc.net/problem/1389)                 | 그래프, 플로이드와샬                       |
+| 1446_지름길                                         | [Link](./Algorithm/Baekjoon/p1446.java)                      | [문제](https://www.acmicpc.net/problem/1446)                 | DP, 다익스트라, 자료구조                   |
 | 1451_직사각형으로 나누기                            | [Link](./Algorithm/Baekjoon/p1451.java)                      | [문제](https://www.acmicpc.net/problem/1451)                 | 완전탐색, 구현                             |
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
