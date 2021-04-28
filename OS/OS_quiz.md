@@ -141,3 +141,30 @@
     3.  20 30 30
     4.  20 20 20
 
+### Quiz
+
+1.  Two fundamental models of inter-process communication are:
+    1.  **shared-memory and message-passing**
+    2.  pipes and sockets
+    3.  sockets and remote procedure call
+    4.  ordinary pipes and named pipes
+2.  생산자-소비자 문제를 shared memory로 해결하는 방법에 대한 설명으로 가장 옳은 것은?
+    1.  운영체제가 알아서 shared memory의 생성과 소멸을 처리해 주므로, 구현하기가 편하다.
+    2.  POSIX 표준에서는 shared memory를 지원하지 않는다.
+    3.  shared memory는 memory-mapped file로만 만들 수 있다.
+    4.  **생산자는 공유 버퍼에 메시지를 write()하고, 소비자는 공유 버퍼로부터 read()한다.**
+3.  Message-Passing 방식의 IPC에 대한 설명으로 가장 옳은 것은?
+    1.  message-passing 방식은 두 개의 프로세스간 통신에서만 사용할 수 있다.
+    2.  message를 생산자가 소비자에게 직접 전달하는 direct 통신 방식이다.
+    3.  메시지의 전송이 완료될 때까지 block되는 send를 사용하면 asynchronous 통신을 할 수 있다.
+    4.  **mailbox(또는 port)를 사용한 message-passing은 indirect 통신을 가능하게 한다.**
+4.  UNIX의 pipe에 대한 설명으로 가장 틀린 것은?
+    1.  ordinary pipe는 생산자-소비자 방식으로 두 개의 프로세스가 서로 통신하는 메커니즘이다.
+    2.  ordinary pipe는 한쪽 끝단에서 write를 하고, 다른쪽 끝단에서 read를 하므로 단방향 통신만 할 수 있다. 
+    3.  ordinary pipe로 양방향 통신을 하기 위해서는 두 개의 파이프를 사용하면 된다.
+    4.  **ordinary pipe를 사용하는 두 개의 프로세스가 반드시 부모-자식 관계일 필요는 없다.**
+5.  소켓에 대한 설명으로 가장 옳은 것은?
+    1.  원격에 있는 프로시저를 호출하기 위한 용도로 활용된다. 
+    2.  클라이언트 영역의 stub과 서버 영역의 skeleton으로 구현이 나뉘어 진다. 
+    3.  **IP 주소와 port 번호를 결합하여 하나의 소켓을 특정(identify)할 수 있다.**
+    4.  일반적으로 소켓은 connection-oriented (TCP) 용으로만 사용할 수 있다. 
