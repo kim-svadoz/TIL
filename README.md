@@ -250,6 +250,7 @@
 | 5052_전화번호 목록                                  | [Link](./Algorithm/Baekjoon/p5052.java)                      | [문제](https://www.acmicpc.net/problem/5052)                 | Trie, Map                                  |
 | 5397_키로거                                         | [Link](./Algorithm/Baekjoon/p5397.java)                      | [문제](https://www.acmicpc.net/problem/5397)                 | Stack, 구현                                |
 | 5545_최고의피자                                     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                                     |
+| 5557_1학년                                          | [Link](./Algorithm/Baekjoon/p5557.java)                      | [문제](https://www.acmicpc.net/problem/5557)                 | DP, 조합                                   |
 | 5568_카드놓기                                       | [Link](./Algorithm/Baekjoon/p5568.java)                      | [문제](https://www.acmicpc.net/problem/5568)                 | 브루트 포스, TreeSet, dfs                  |
 | 5597_과제 안내신 분..?                              | [Link](./Algorithm/Baekjoon/p5597.java)                      | [문제](https://www.acmicpc.net/problem/5597)                 | 구현, counting sort                        |
 | 5622_다이얼                                         | [Link](./Algorithm/Baekjoon/p5622.java)                      | [문제](https://www.acmicpc.net/problem/5622)                 | 구현                                       |
