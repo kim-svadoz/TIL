@@ -1,5 +1,7 @@
 # **Java Script**
 
+---
+
 # 1. 변수
 
 ## var
@@ -124,3 +126,138 @@ alert( 0 == '' ); // true
 
 쉼표 연산자 등의 기타 연산자도 있다.
 
+# 3. 조건문
+
+## if문
+
+특정 조건이 true를 반환할 경우에만 if문 안의 코드를 실행한다.
+
+```javascript
+if (condition) {
+    code..
+}
+```
+
+if 문 안과 밖은 블록으로 구분되어져 있기 때문에 `const`를 이중으로 정의해도 무방하다.
+
+```javascript
+const a = 1;
+if (true) {
+    const a = 2
+    console.log('if 문 안의 a 값은 ' + a)
+}
+console.log('if 문 밖의 a 값은' + a)
+```
+
+## if-else문
+
+둘 중 하나만 실행하고 싶은 분기를 할 때 사용한다.
+
+## if-else if문
+
+여러 조건 중 하나를 실행하고 싶은 분기를 할 때 사용한다.
+
+## switch / case 문
+
+특정 값이 무엇이냐에 따라 다른 작업을 하고 싶을 때 사용한다.
+
+단, case값부터 시작해서 마지막까지 순차적으로 실행하기 때문에 각 케이스 내용 끝에 break를 써주어야 한다.
+
+default는 해당하는 case 값이 없을 때 실행하는 코드이다.
+
+또한, `switch`문은 조건을 확인할 때 내부적으로 일치 연산자 `===`를 사용하여 비교를 진행한다.
+
+```javascript
+const device = 'iphone';
+
+switch (device) {
+    case 'iphone' :
+        console.log('아이폰!');
+        break;
+    case 'ipad' :
+        consoe.log('아이패드~!');
+        break;
+    case 'galaxy note' :
+        console.log('갤럭시 노트!');
+        break;
+	default :
+        console.log('무엇일까요..');
+}
+```
+
+# 4. 반복문
+
+`while, do-while, for`문은 아래와 같이 작성할 수 있따.
+
+```javascript
+while (condition) {
+    ...
+}
+    
+do {
+	...
+} while (condition);
+    
+for (let i = 0; i < 10; i++) {
+    ...
+}
+```
+
+# 5. 함수
+
+자바스크립트는 세 가지 방법으로 함수를 만들 수 있다.
+
+## 함수 선언문
+
+주요 코드 흐름을 차지하는 방식
+
+```javascript
+function sum(a, b) {
+    let result = a + b;
+    
+    return result;
+}
+```
+
+## 함수 표현식
+
+표현식 형태로 선언된 함수
+
+```javascript
+let sum = function(a, b) {
+    let result = a + b;
+    
+    return result;
+}
+```
+
+## 화살표 함수
+
+```javascript
+// 화살표 ( => ) 우측엔 표현식이 있음
+let sum = (a, b) => a + b;
+
+// 대괄호 { ... }를 사용하면 본문에 여러 줄의 코드를 작성할 수 있음. return 필수
+let sum = (a, b) => {
+    ...
+    return a + b;
+}
+
+// 인수가 없는 경우
+let sayHi = () => alert("Hello");
+
+// 인수가 하나인 경우
+let double = n => n * 2;
+```
+
+- 함수는 지역변수를 가질 수 있다. 지역변수는 함수의 본문에 선언된 변수로, 함수 내부에서만 접근 가능하다.
+
+- 매개변수에 기본값을 설정할 수 있다. 문법은 다음과 같다.
+
+  ```javascript
+  function sum(a = 1, b = 2) {
+      ...
+  }
+  ```
+
+- 함수는 항상 무언가를 반환한다. `return`문이 없는 경우는 `undefined`를 반환한다.
