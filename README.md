@@ -108,6 +108,7 @@
 
 | 문제번호                                            | 솔루션                                                       | 문제 링크                                                    | 비고                                       |
 | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
+| 1010_다리놓기                                       | [Link](./Algorithm/Baekjoon/p1010.java)                      | [문제](https://www.acmicpc.net/problem/1010)                 | DP, 조합, 파스칼                           |
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
@@ -154,6 +155,7 @@
 | 1707_이분 그래프                                    | [Link](./Algorithm/Baekjoon/p1707.java)                      | [문제](https://www.acmicpc.net/problem/1707)                 | 그래프, 인접 리스트                        |
 | 1708_볼록껍질                                       | [Link](./Algorithm/Baekjoon/ConvexHull_1708.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔             |
 | 1713_후보 추천하기                                  | [Link](./Algorithm/Baekjoon/p1713.java)                      | [문제](https://www.acmicpc.net/problem/1713)                 | 구현, 시뮬레이션, 정렬                     |
+| 1722_순열의 순서                                    | [Link](./Algorithm/Baekjoon/p1722.java)                      | [문제](https://www.acmicpc.net/problem/1722)                 | DP, 조합                                   |
 | 1744_수 묶기                                        | [Link](./Algorithm/Baekjoon/p1744.java)                      | [문제](https://www.acmicpc.net/problem/1744)                 | Greedy, Sort, 구현                         |
 | 1749_점수따먹기                                     | [Link](./Algorithm/Baekjoon/p1749.java)                      | [문제](https://www.acmicpc.net/problem/1749)                 | 2차원 Prefix Sum, DP                       |
 | 1759_암호 만들기                                    | [Link](./Algorithm/Baekjoon/p1759.java)                      | [문제](https://www.acmicpc.net/problem/1759)                 | 백트래킹, 조합, 완전탐색                   |
@@ -252,6 +254,7 @@
 | 5545_최고의피자                                     | [Link](https://ju-nam2.tistory.com/94?category=869217)       | [문제](https://www.acmicpc.net/problem/5545)                 | Greedy                                     |
 | 5557_1학년                                          | [Link](./Algorithm/Baekjoon/p5557.java)                      | [문제](https://www.acmicpc.net/problem/5557)                 | DP, 조합                                   |
 | 5568_카드놓기                                       | [Link](./Algorithm/Baekjoon/p5568.java)                      | [문제](https://www.acmicpc.net/problem/5568)                 | 브루트 포스, TreeSet, dfs                  |
+| 5569_출근경로                                       | [Link](./Algorithm/Baekjoon/p5569.java)                      | [문제](https://www.acmicpc.net/problem/5569)                 | 격자 DP                                    |
 | 5597_과제 안내신 분..?                              | [Link](./Algorithm/Baekjoon/p5597.java)                      | [문제](https://www.acmicpc.net/problem/5597)                 | 구현, counting sort                        |
 | 5622_다이얼                                         | [Link](./Algorithm/Baekjoon/p5622.java)                      | [문제](https://www.acmicpc.net/problem/5622)                 | 구현                                       |
 | 6086_최대유량                                       | [Link](./Algorithm/Baekjoon/MaximumFlow_6086.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘                          |
@@ -321,6 +324,7 @@
 | 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 12933_오리                                          | [Link](./Algorithm/Baekjoon/p12933.java)                     | [문제](https://www.acmicpc.net/problem/12933)                | 구현                                       |
 | 12978_스크루지 민호 2                               | [Link](./Algorithm/Baekjoon/p12978.java)                     | [문제](https://www.acmicpc.net/problem/12978)                | tree dp                                    |
+| 13251_조약돌 꺼내기                                 | [Link](./Algorithm/Baekjoon/p13251.java)                     | [문제](https://www.acmicpc.net/problem/13251)                | 조합                                       |
 | 13398_연속합 2                                      | [Link](./Algorithm/Baekjoon/p13398.java)                     | [문제](https://www.acmicpc.net/problem/13398)                | DP, Prefix Sum                             |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
 | 14391_종이 조각                                     | [Link](./Algorithm/Baekjoon/p14391.java)                     | [문제](https://www.acmicpc.net/problem/14391)                | 브루트 포스, dfs, 비트마스킹               |
