@@ -216,6 +216,7 @@
 | 2422_한윤정이 이탈리아에 가서 아이스크림을 사먹는데 | [Link](./Algorithm/Baekjoon/p2422.java)                      | [문제](https://www.acmicpc.net/problem/2422)                 | 브루트 포스                                |
 | 2447_별찍기10                                       | [Link](./Algorithm/Baekjoon/p2447.java)                      | [문제](https://www.acmicpc.net/problem/2447)                 | 분할정복, 재귀                             |
 | 2448_별찍기11                                       | [Link](./Algorithm/Baekjoon/p2448.java)                      | [문제](https://www.acmicpc.net/problem/2448)                 | 분할정복, 재귀                             |
+| 2493_탑                                             | [Link](./Algorithm/Baekjoon/p2493.java)                      | [문제](https://www.acmicpc.net/problem/2493)                 | Stack                                      |
 | 2503_숫자 야구                                      | [Link](./Algorithm/Baekjoon/p2503.java)                      | [문제](https://www.acmicpc.net/problem/2503)                 | 브루트 포스                                |
 | 2531_회전초밥                                       | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                       |
 | 2533_사회망서비스(SNS)                              | [Link](./Algorithm/Baekjoon/p2533.java)                      | [문제](https://www.acmicpc.net/problem/2533)                 | Tree DP, DFS, 인접리스트                   |
@@ -374,6 +375,7 @@
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
 | 17144_미세먼지안녕!                                 | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                                 |
+| 17298_오큰수                                        | [Link](./Algorithm/Baekjoon/p17298.java)                     | [문제](https://www.acmicpc.net/problem/17298)                | Stack                                      |
 | 17404_RGB거리 2                                     | [Link](./Algorithm/Baekjoon/p17404.java)                     | [문제](https://www.acmicpc.net/problem/17404)                | 2차원 DP                                   |
 | 17413_단어 뒤집기 2                                 | [Link](./Algorithm/Baekjoon/p17413.java)                     | [문제](https://www.acmicpc.net/problem/17413)                | 문자열, 스택, 구현                         |
 | 17472_다리만들기2                                   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
