@@ -458,6 +458,8 @@
 | 42626_더 맵게                 | [Link](./Algorithm/Programmers/pg42626.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42626) | 힙                           |
 | 42747_H-Index                 | [Link](./Algorithm/Programmers/pg42747.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42747) | 정렬                         |
 | 42885_구명보트                | [Link](./Algorithm/Programmers/pg42885.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42885) | 그리디                       |
+| 42888_오픈채팅방              | [Link](./Algorithm/Programmers/pg42888.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42888) | 문자열, 구현                 |
+| 42889_실패율                  | [Link](./Algorithm/Programmers/pg42889.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) | 구현                         |
 | 42860_조이스틱                | [Link](./Algorithm/Programmers/pg42860.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42860) | 그리디                       |
 | 60060_가사검색                | [Link](./Algorithm/Programmers/pg60060.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/60060) | TRIE                         |
 | 67259_경주로건설              | [Link](./Algorithm/Programmers/pg67259.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/67259) | bfs + dp                     |
