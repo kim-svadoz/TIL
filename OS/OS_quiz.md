@@ -168,3 +168,121 @@
     2.  클라이언트 영역의 stub과 서버 영역의 skeleton으로 구현이 나뉘어 진다. 
     3.  **IP 주소와 port 번호를 결합하여 하나의 소켓을 특정(identify)할 수 있다.**
     4.  일반적으로 소켓은 connection-oriented (TCP) 용으로만 사용할 수 있다. 
+
+## Chapter 4. Thread & Concurrency
+
+### Quiz
+
+1.  `From execise 4.2`: Using Amdahl's Law, calculate the speedup gain of an application that has a 60 percent  parallel component for (a) two processing cores and (b) four processing cores. 위 연습문제의 정답으로 가장 옳은 것은?
+
+    1.  **(a) 1.43 (b) 1.8**
+    2.  (a) 1.81 (b) 1.43
+    3.  (a) 2.56 (b) 2.13
+    4.  (a) 2.13 (b) 2.56
+
+2.  user-thread와 kernel-thread에 대한 설명으로 가장 틀린 것은?
+
+    1.  user thread는 사용자 모드에서 동작하고, kernel thread는 커널 모드에서 동작한다.
+    2.  **Many-to-one 쓰레드 모델에서는 다수의 kernel thread가 1개의 user thread를 지원한다.**
+    3.  user thread와 kernel thread는 반드시 생성한 process에 결합되어 있어야만 한다.
+    4.  One-to-one 쓰레드 모델은 concurrency의 측면에서 Many-to-one 모델보다 우수하다.
+
+3.  `From Exercise 4.10`: Which of the following components of program state are shared across threads in a  multithreaded process? 위 연습문제의 정답에 해당하는 것을 모두 고르시오.
+
+    1.  register values
+    2.  **heap memory**
+    3.  **global variables**
+    4.  stack memory
+
+4.  멀티쓰레드 프로그래밍 모델의 장점에 대한 설명으로 가장 틀린 것은?
+
+    1.  반응성이 좋다: 프로세스가 유저 인터페이스를 처리하느라 blocked 되어 있을 때도 실행을 계속할  수 있다.
+    2.  **자원 공유에 유리하다: 다른 프로세스와 shared memory를 사용할 수 있으므로 자원 공유에 유리하다.**
+    3.  경제성이 좋다: 프로세스간 context switch보다 쓰레드간 context switch가 훨씬 가볍다.
+    4.  확장성이 좋다: CPU가 여러 개이거나 core가 여러 개인 경우에 이를 잘 활용할 수 있다.
+
+5.  Java에서의 멀티쓰레드 프로그래밍에 대한 설명으로 가장 틀린 것은?
+
+    1.  Thread 클래스를 상속하여 public void run() 메소드를 오버라이딩한다.
+    2.  Runnable 인터페이스를 상속하여 public void run()을 오버라이딩한다.
+    3.  **Thread 클래스의 인스턴스를 생성하여 해당 인스턴스의 run() 메소드를 호출한다.**
+    4.  Thread 클래스 생성자의 매개변수로 Runnable 인터페이스를 상속한 객체 인스턴스를 줄 수 있다.
+
+6.  OpenMP에 대한 설명으로 가장 틀린 것은?
+
+    1.  컴파일러 지시어(directive)를 이용하여 병렬 처리를 할 수 있다. 
+    2.  병렬 처리 가능한 코드 영역을 #pragma omp parallel 로 지정할 수 있다.
+    3.  omp_set_num_threads() 함수로 병렬 처리할 쓰레드 갯수를 설정할 수 있다.
+    4.  **OpenMP는 쓰레드를 미리 생성하여 pool에 저장해 놓기 때문에 thread 생성 시간을 절약한다.**
+
+7.  다음 Pthread 예제의 출력으로 가장 옳은 것은?
+
+    ```c
+    int x = 10;
+    
+    void *runner(void *param) {
+        x += 10;
+        pthread_exit(0);
+    }
+    
+    int main() {
+        int i;
+        pid_t pid1, pid2;
+        pthread_t tid;
+        pid1 = fork();
+        if (pid1 == 0) {
+            pthread_create(&tid, NULL, runner, NULL);
+            pthread_join(tid, NULL);
+            pid2 = fork();
+            if (pid2 > 0) {
+                wait(NULL);
+                x += 10;
+            }
+            printf("%d ", x);
+        }
+        else {
+            wait(NULL);
+            printf("%d ", x);
+        }
+    }
+    ```
+
+    1.  10 20 30
+    2.  **20 30 10**
+    3.  30 20 10
+    4.  10 30 20
+
+    ```bash
+    # 해설
+    main에서 처음 fork()를 시작하고 child(pid==0)이 실행된다.
+    create하고 join이 되기때문에 runner가 다 돌기 까지에 기다린다.
+    다 끝나면 20이 되고 pid2 = fork()가 실행된다. pid2 > 0은 childprocess 0 이므로 조건문을 타지 않고 바로 내려간다.
+    그렇게 20을 프린트 하면 if(pid2 > 0) {x+=10} 이 되고 30이 리턴되고 마지막에 기다리던 10이 프린트된다.
+    ```
+
+8.  다음 Java 프로그램 예제의 출력으로 가장 옳은 것은?
+
+    ```java
+    class Runner implements Runnable {
+        public void runt() {
+            for (int i = 0; i < 3; i++) {
+                System.out.pirntf("A ");
+            }
+        }
+    }
+    public class ThreadQuiz {
+        public static final void main(String[] args) throws Exception {
+            Thread thread = new Thread(new Runner());
+            System.out.printf("B ");
+            thread.start();
+            System.out.printf("C ");
+            thread.join();
+            System.out.printf("D ");
+        }
+    }
+    ```
+
+    1.  **B C A A A D**
+    2.  B C D A A A
+    3.  B A A A C D
+    4.  B C A D A A
