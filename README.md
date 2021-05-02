@@ -132,6 +132,7 @@
 | 1260_DFS와 BFS                                      | [Link](./Algorithm/Baekjoon/p1260.java)                      | [문제](https://www.acmicpc.net/problem/1260)                 | DFS, BFS                                   |
 | 1261_알고스팟                                       | [Link](./Algorithm/Baekjoon/p1261.java)                      | [문제](https://www.acmicpc.net/problem/1261)                 | 다익스트라, BFS                            |
 | 1316_그룹 단어 체커                                 | [Link](./Algorithm/Baekjoon/p1316.java)                      | [문제](https://www.acmicpc.net/problem/1316)                 | 문자열, 구현                               |
+| 1339_단어 수학                                      | [Link](./Algorithm/Baekjoon/p1339.java)                      | [문제](https://www.acmicpc.net/problem/1339)                 | 그리디, 브루트포스                         |
 | 1365_꼬인 전깃줄                                    | [Link](./Algorithm/Baekjoon/TwistedElectricWire_1365.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS                         |
 | 1373_2진수 8진수                                    | [Link](./Algorithm/Baekjoon/p1373.java)                      | [문제](https://www.acmicpc.net/problem/1373)                 | 문자열, 진수변환                           |
 | 1389_케빈 베이컨의 6단계법칙                        | [Link](./Algorithm/Baekjoon/p1389.java)                      | [문제](https://www.acmicpc.net/problem/1389)                 | 그래프, 플로이드와샬                       |
@@ -338,6 +339,7 @@
 | 14620_꽃길                                          | [Link](./Algorithm/Baekjoon/p14620.java)                     | [문제](https://www.acmicpc.net/problem/14620)                | 브루트포스                                 |
 | 14712_넴모넴모(easy)                                | [Link](./Algorithm/Baekjoon/p14712.java)                     | [문제](https://www.acmicpc.net/problem/14712)                | 백트래킹, 구현                             |
 | 14719_빗물                                          | [Link](./Algorithm/Baekjoon/p14719.java)                     | [문제](https://www.acmicpc.net/problem/14719)                | 구현, 시뮬레이션                           |
+| 14722_우유 도시                                     | [Link](./Algorithm/Baekjoon/p14722.java)                     | [문제](https://www.acmicpc.net/problem/14722)                | DP, 구현                                   |
 | 14725_개미굴                                        | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                        |
 | 14891_톱니바퀴                                      | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                                 |
 | 14888_연산자 끼워넣기                               | [Link](./Algorithm/Baekjoon/p14888.java)                     | [문제](https://www.acmicpc.net/problem/14888)                | 백트래킹, 브루트포스                       |
