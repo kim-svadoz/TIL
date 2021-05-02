@@ -286,3 +286,92 @@
     2.  B C D A A A
     3.  B A A A C D
     4.  B C A D A A
+
+## Chapter 5. CPU Scheduling
+
+### Quiz
+
+1.  The ________ is a module that gives control of the CPU's core to the process selected by the CPU scheduler.
+
+    1.  **dispatcher**
+    2.  distributor
+    3.  deployer
+    4.  dissipator
+
+2.  다음 중 CPU 스케줄러를 설계할 때 목표로 삼기에 가장 어색한 것은?
+
+    1.  CPU의 사용효율(utilization)을 높이겠다
+    2.  단위시간당 처리하는 프로세스의 개수(throughput)을 늘리겠다.
+    3.  프로세스가 대기하는 시간(waiting time)을 줄이겠다
+    4.  **프로세스의 응답시간(response time)을 늘리겠다.**
+
+3.  선점형(preemptive), 비선점형(nonpreemptive) 스케줄러에 대한 설명으로 가장 옳은 것은?
+
+    1.  Shortest-Job-First(SJF)는 짧은 CPU burst를 가진 프로세스를 먼저 처리하는 preemptive 스케줄러다. 
+    2.  First-Come, First-Served(FCFS)는 먼저 도착한 프로세스를 먼저 처리하는 preemptive 스케 줄러다. 
+    3.  CPU를 점유한 프로세스가 waiting 상태에서 ready 상태로 갈 때는 반드시 non-preemptive 스케줄링을 해야 한다. 
+    4.  **Round-Robin 스케줄러는 time quantime이 지나면 CPU를 점유한 프로세스를 내보내는 preemptive 스케줄러다.**
+
+4.  CPU scheuler에 대한 설명으로 가장 틀린 것은?
+
+    1.  FCFS를 구현하기 위해서는 FIFO Queue를 ready-queue의 자료구조로 사용할 수 있다.
+    2.  Shortest-Remaining-Time-First 스케줄러는 Preemptive SJF라고 할 수 있다. 
+    3.  Round-Robin 스케줄러는 Preemptive FCFS라고 할 수 있다. 
+    4.  **Multi-Level Feedback Queue 스케줄러는 여러 개의 ready-queue에 우선순위에 따라 영구적 으로 한 개의 큐에 프로세스를 배정한다. **
+    5.  Soft-real-time 요구사항을 만족하는 Real-Time OS의 스케줄러는 Priority-based CPU 스케 줄러를 사용한다.
+
+5.  | Process | Arrival Time | CPU Burst |
+    | ------- | ------------ | --------- |
+    | p1      | 0            | 5         |
+    | p2      | 1            | 7         |
+    | p3      | 3            | 4         |
+
+    위와 같이, P1, P2, P3 프로세스의 도착시간과 CPU Burst가 주어졌다. FCFS와 RR 스케줄러를 사용 하면 프로세스의 완료 순서가 각각 어떻게 될까? (RR 스케줄러의 time quantum은 2를 사용한다.)
+
+    1.  `FCFS`: P1, P2, P3,  `RR2`: P1, P2, P3
+    2.  `FCFS`: P1, P3, P2,  `RR2`: P1, P3, P2
+    3.  **`FCFS`: P1, P2, P3,  `RR2`: P1, P3, P2**
+    4.  `FCFS`: P1, P3, P2,  `RR2`: P1, P2, P3
+
+6.  | Process | Arrival Time | CPU Burst |
+    | ------- | ------------ | --------- |
+    | p1      | 0ms          | 9ms       |
+    | p2      | 1ms          | 4ms       |
+    | p3      | 2ms          | 9ms       |
+
+    위와 같이 프로세스 P1, P2, P3의 도착시간과 CPU Burst가 주어졌다. 만약 Preemptive SJF 스케줄러를 사용한다면 평균 대기시간(average waiting time)은 얼마인가? 단, 스케줄러는 프로세스가 도착할 때와 프로세스가 완료할 때만 동작한다고 가정한다.
+
+    1.  **5.00ms**
+    2.  4.33ms
+    3.  6.33ms
+    4.  7.33ms
+
+7.  | Process | Arrival Time | CPU Burst |
+    | ------- | ------------ | --------- |
+    | p1      | 0            | 10        |
+    | p2      | 3            | 6         |
+    | p3      | 7            | 8         |
+    | p4      | 8            | 3         |
+
+    위와 같이 P1, P2, P3, P4 프로세스의 도착시간과 CPU Burst가 주어졌다. Preemptive SRTF(Shortest-Remaining-Time-First) 알고리즘을 사용하다고 했을 때, 평균 총처리시간 (average turnaround time)은 얼마인가?
+
+    1.  10.25
+    2.  11.25
+    3.  **12.25**
+    4.  13.25
+    5.  14.25
+
+8.  | Process | Arrival Time | CPU Burst |
+    | ------- | ------------ | --------- |
+    | p1      | 10           | 3         |
+    | p2      | 1            | 1         |
+    | p3      | 2            | 3         |
+    | p4      | 1            | 4         |
+    | p5      | 5            | 2         |
+
+    위와 같이 5개의 프로세스에 대한 CPU Burst와 우선순위가 주어졌다. 적용하는 스케줄러별로 total waiting time이 잘못 짝지어진 것은?
+
+    1.  **nonpreemptive FCFS = 47**
+    2.  nonpreemptive SJF = 16
+    3.  **RR (time quantum = 1) = 26**
+    4.  nonpreemptive Priority-based (smaller number, higher priority) = 41
