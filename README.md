@@ -243,7 +243,7 @@
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
-| 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/FriendNetwork_4195.java)         | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
+| 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/p4195.java)                      | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
 | 4358_생태학                                         | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                                  |
 | 4396_지뢰찾기                                       | [Link](./Algorithm/Baekjoon/p4396.java)                      | [문제](https://www.acmicpc.net/problem/4396)                 | 구현, 문자열, 파싱                         |
 | 4568_LRU Caching                                    | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                        |
@@ -339,6 +339,7 @@
 | 14620_꽃길                                          | [Link](./Algorithm/Baekjoon/p14620.java)                     | [문제](https://www.acmicpc.net/problem/14620)                | 브루트포스                                 |
 | 14712_넴모넴모(easy)                                | [Link](./Algorithm/Baekjoon/p14712.java)                     | [문제](https://www.acmicpc.net/problem/14712)                | 백트래킹, 구현                             |
 | 14719_빗물                                          | [Link](./Algorithm/Baekjoon/p14719.java)                     | [문제](https://www.acmicpc.net/problem/14719)                | 구현, 시뮬레이션                           |
+| 14720_우유 축제                                     | [Link](./Algorithm/Baekjoon/p14720.java)                     | [문제](https://www.acmicpc.net/problem/14720)                | DP                                         |
 | 14722_우유 도시                                     | [Link](./Algorithm/Baekjoon/p14722.java)                     | [문제](https://www.acmicpc.net/problem/14722)                | DP, 구현                                   |
 | 14725_개미굴                                        | [Link](./Algorithm/Baekjoon/p14725.java)                     | [문제](https://www.acmicpc.net/problem/14725)                | TRIE 자료구조, 트리                        |
 | 14891_톱니바퀴                                      | [Link](./Algorithm/Baekjoon/topni_14891.java)                | [문제](https://www.acmicpc.net/problem/14891)                | 시뮬레이션                                 |
@@ -367,6 +368,7 @@
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16235_나무 재테크                                   | [Link](./Algorithm/Baekjoon/p16235.java)                     | [문제](https://www.acmicpc.net/problem/16235)                | 구현, 시뮬레이션                           |
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
+| 16400_소수화폐                                      | [Link](./Algorithm/Baekjoon/16400.java)                      | [문제](https://www.acmicpc.net/problem/16400)                | 소수, DP(동전바꾸기)                       |
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
 | 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
 | 16637_괄호 추가하기                                 | [Link](./Algorithm/Baekjoon/p16637.java)                     | [문제](https://www.acmicpc.net/problem/16637)                | 브루트 포스, dfs                           |
@@ -388,6 +390,7 @@
 | 18430_무기공학                                      | [Link](./Algorithm/Baekjoon/p18430.java)                     | [문제](https://www.acmicpc.net/problem/18430)                | 백트래킹, 구현                             |
 | 18511_큰 수 구성하기                                | [Link](./Algorithm/Baekjoon/p18511.java)                     | [문제](https://www.acmicpc.net/problem/18511)                | 브루트 포스, dfs                           |
 | 18808_스티커 붙이기                                 | [Link](./Algorithm/Baekjoon/p18808.java)                     | [문제](https://www.acmicpc.net/problem/18808)                | 브루트 포스, 시뮬레이션, 구현, 배열돌리기  |
+| 18868_멀티버스1                                     | [Link](./Algorithm/Baekjoon/p18868.java)                     | [문제](https://www.acmicpc.net/problem/18868)                | 구현                                       |
 | 19236_청소년상어                                    | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                        |
 | 19532_수학은 비대면강의입니다                       | [Link](./Algorithm/Baekjoon/p19532.java)                     | [문제](https://www.acmicpc.net/problem/19532)                | 브루트 포스                                |
 | 20053_최소, 최대 2                                  | [Link](./Algorithm/Baekjoon/p20053.java)                     | [문제](https://www.acmicpc.net/problem/20053)                | 구현                                       |
