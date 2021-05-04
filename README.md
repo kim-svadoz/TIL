@@ -108,6 +108,7 @@
 
 | 문제번호                                            | 솔루션                                                       | 문제 링크                                                    | 비고                                       |
 | --------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
+| 1005_ACM Craft                                      | [Link](./Algorithm/Baekjoon/p1005.java)                      | [문제](https://www.acmicpc.net/problem/1005)                 | 그래프, 위상정렬                           |
 | 1010_다리놓기                                       | [Link](./Algorithm/Baekjoon/p1010.java)                      | [문제](https://www.acmicpc.net/problem/1010)                 | DP, 조합, 파스칼                           |
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
@@ -308,11 +309,13 @@
 | 11279_최대 힙                                       | [Link](./Algorithm/Baekjoon/p11279.java)                     | [문제](https://www.acmicpc.net/problem/11279)                | PQ, 최대 힙                                |
 | 11365_!비밀 급일                                    | [Link](./Algorithm/Baekjoon/p11365.java)                     | [문제](https://www.acmicpc.net/problem/11365)                | 문자열, 구현                               |
 | 11399_ATM                                           | [Link](./Algorithm/Baekjoon/p11399.java)                     | [문제](https://www.acmicpc.net/problem/11399)                | Greedy, Sort                               |
+| 11404_플로이드                                      | [Link](./Algorithm/Baekjoon/p11404.java)                     | [문제](https://www.acmicpc.net/problem/11404)                | 인접행렬, 플로이드 와샬                    |
 | 11559_뿌요뿌요                                      | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559)                | BFS, DFS                                   |
 | 11650_좌표 정렬하기                                 | [Link](./Algorithm/Baekjoon/p11650.java)                     | [문제](https://www.acmicpc.net/problem/11650)                | 정렬                                       |
 | 11651_좌표 정렬하기2                                | [Link](./Algorithm/Baekjoon/p11651.java)                     | [문제](https://www.acmicpc.net/problem/11651)                | 정렬                                       |
 | 11652_카드                                          | [Link](./Algorithm/Baekjoon/p11652.java)                     | [문제](https://www.acmicpc.net/problem/11652)                | 정렬                                       |
 | 11653_소인수분해                                    | [Link](./Algorithm/Baekjoon/p11653.java)                     | [문제](https://www.acmicpc.net/problem/11653)                | 정수론, 소수                               |
+| 11657_타임머신                                      | [Link](./Algorithm/Baekjoon/p11657.java)                     | [문제](https://www.acmicpc.net/problem/11657)                | 그래프, 벨만포드, 음의 사이클              |
 | 11660_구간 합 구하기 5                              | [Link](./Algorithm/Baekjoon/p11660.java)                     | [문제](https://www.acmicpc.net/problem/11660)                | Prefix Sum, DP, 사각형 테두리              |
 | 11662_민호와 강호                                   | [Link](./Algorithm/Baekjoon/p11662.java)                     | [문제](https://www.acmicpc.net/problem/11662)                | Teranry Search, 극값 찾기                  |
 | 11720_숫자의 합                                     | [Link](./Algorithm/Baekjoon/p11720.java)                     | [문제](https://www.acmicpc.net/problem/11720)                | 문자열, 구현                               |
@@ -395,6 +398,7 @@
 | 18868_멀티버스1                                     | [Link](./Algorithm/Baekjoon/p18868.java)                     | [문제](https://www.acmicpc.net/problem/18868)                | 구현                                       |
 | 19236_청소년상어                                    | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                        |
 | 19532_수학은 비대면강의입니다                       | [Link](./Algorithm/Baekjoon/p19532.java)                     | [문제](https://www.acmicpc.net/problem/19532)                | 브루트 포스                                |
+| 20010_악덕 영주 혜유                                | [Link](./Algorithm/Baekjoon/p20010.java)                     | [문제](https://www.acmicpc.net/problem/20010)                | 최소신장트리(MST), union-find, 트리의 지름 |
 | 20053_최소, 최대 2                                  | [Link](./Algorithm/Baekjoon/p20053.java)                     | [문제](https://www.acmicpc.net/problem/20053)                | 구현                                       |
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
