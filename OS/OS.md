@@ -532,13 +532,62 @@ Suspended(stopped) : 외부적인 이유로 프로세스의 수행이 정지된 
 > 해결을 위한 기본 조건
 
 - `Mutual Exclusion(상호 배제)`
-  프로세스 P1 이 Critical Section 에서 실행중이라면, 다른 프로세스들은 그들이 가진 Critical Section 에서 실행될 수 없다.
-- `Progress(진행)`
-  Critical Section 에서 실행중인 프로세스가 없고, 별도의 동작이 없는 프로세스들만 Critical Section 진입 후보로서 참여될 수 있다.
-- `Bounded Waiting(한정된 대기)`
-  P1 가 Critical Section 에 진입 신청 후 부터 받아들여질 때가지, 다른 프로세스들이 Critical Section 에 진입하는 횟수는 제한이 있어야 한다.
+  -   프로세스 P1 이 Critical Section 에서 실행중이라면, 다른 프로세스들은 그들이 가진 Critical Section 에서 실행될 수 없다.
+- `Progress(진행)` -> **No Deadlock**
+  -   Critical Section 에서 실행중인 프로세스가 없고, 별도의 동작이 없는 프로세스들만 Critical Section 진입 후보로서 참여될 수 있다.
+  -   임계영역에 어떤 스레드의 접근도 없을 때 항상 접근이 가능해야 한다.
+- `Bounded Waiting(한정된 대기)` -> **No Starvation**
+  -   P1 가 Critical Section 에 진입 신청 후 부터 받아들여질 때가지, 다른 프로세스들이 Critical Section 에 진입하는 횟수는 제한이 있어야 한다.
+  -   모든 프로세스가 임계영역에 들어가기 위해 기회를 가질 수 있어야 한다.
 
-### 해결책
+### Peterson's algorithm
+
+피터슨 알고리즘은 상호 배제를 위한 `병렬 프로그래밍 알고리즘`으로 공유 메모리를 활용하여 여러 개의 프로세스가 하나의 자원을 사용할 때 문제가 발생하지 않도록 한다. 당시의 알고리즘은 프로세스가 2개인 경우에서만을 제한한다.
+
+지금은 일반화 되어서 3개 이상의 프로세스들 사이에서도 이 방법이 통용된다고 한다.
+
+`Pi` `Pj` 프로세스로 표시하며 이 알고리즘의 가장 큰 특징은 `booelan flag`과 `int turn`이라고 하는 두 개의 변수를 이용한다.
+
+예를 들어 만나면 싸우기만 하는 두 개가 있다. 보다 못한 주인은 우리집 개가 산책할 때는 너희집 개는 집에 있으라고 한다. 우리집 개가 산책을 떠나면 집에서 깃발을 뽑고, 우리집 개가 산책을 마치고 돌아오면 집에 깃발을 다시 꽂음으로서 상대 집 개에게 알려주는 것이다. 
+
+이런식으로 서로 `*producer()`와 `*consumer()`가 주고받는 티키타카 구조를 구현하는 것이다.
+
+하지만 이는 `while (flag[1] && turn ==1 )`의 과정에서 **`context switch`**가 일어나면 피터슨 솔루션의 동작은 올바르게 수행되지 않는다. **그럼에도 이를 배우는 이유는 위에서 언급한 세가지 요구 사항을 개념적으로 완벽하게 증명하기 때문이다.**
+
+사실 sw가 아니라 hw instruction을 가지고 동기화를 수행하는 것이 가장 좋다.
+
+그 중에서 더이상 쪼갤 수 없는 성질인 **`Atomicity`**를 구현하는 것이다. 바로 HW Instruction을 Atoic instruction으로 구현하여 `a++`, `i<->j`와 같은 행위를 세번으로 나누지 말고 단 **원 클락**으로 구현하도록 만드는 것이다. 
+
+우리는 SW엔지니어로서 이를 자바를 피터슨 솔루션을 구현할 것이다.
+
+`java.util.concurrent.atomic.Atomicboolean`을 사용한다.
+
+```java
+static Atomicboolean[] falg;
+
+Producer implements Runnable {
+    public void run() {
+        flag[1].set(true);
+        turn = 1;
+        for (int k = 0; k < 1000; k++) {
+            while (flag[1].get() && turn == 1) {
+                ;
+            }
+        }
+        ...
+    }
+}
+```
+
+이와 같이 구현한다면 `flag[1].get()`이 **atomic variable**이기 때문에 while에서 **`context switch`**가 일어나지 않고 상호배제를 구현할 수 있게 된다.
+
+위에서 언급한 동기화의 가장 기본적인 방법 세가지를 모두 만족하는 것은 힘들다.
+
+그러므로 우리는 상호배제만 구현해볼 것인데 이를 위해서 바로 **`Mutex`, `Semaphore`, `Monitor`를 이용할 것이다.**
+
+
+
+### == 해결책 !?
 
 ### Lock
 
