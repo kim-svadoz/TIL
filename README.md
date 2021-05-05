@@ -369,6 +369,7 @@
 | 15666_N과 M(12)                                     | [Link](./Algorithm/Baekjoon/p15666.java)                     | [문제](https://www.acmicpc.net/problem/15666)                | 백트래킹, 자신포함 중복가능 + 비내림차순 + |
 | 15681_트리와 쿼리                                   | [Link](./Algorithm/Baekjoon/p15681.java)                     | [문제](https://www.acmicpc.net/problem/15681)                | Tree, DP, dfs, graph                       |
 | 15683_감시                                          | [Link](./Algorithm/Baekjoon/p15683.java)                     | [문제](https://www.acmicpc.net/problem/15683)                | 시뮬레이션, 구현, n진법 right shift        |
+| 15864_사다리조작                                    | [Link](./Algorithm/Baekjoon/p15684.java)                     | [문제](https://www.acmicpc.net/problem/15684)                | dfs, 구현, 백트래킹                        |
 | 15686_치킨배달                                      | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                           |
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
 | 15721_주지수                                        | [Link](./Algorithm/Baekjoon/p15724.java)                     | [문제](https://www.acmicpc.net/problem/15724)                | DP, 2차원 배열 구간합                      |
