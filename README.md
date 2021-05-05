@@ -220,6 +220,7 @@
 | 2422_한윤정이 이탈리아에 가서 아이스크림을 사먹는데 | [Link](./Algorithm/Baekjoon/p2422.java)                      | [문제](https://www.acmicpc.net/problem/2422)                 | 브루트 포스                                |
 | 2447_별찍기10                                       | [Link](./Algorithm/Baekjoon/p2447.java)                      | [문제](https://www.acmicpc.net/problem/2447)                 | 분할정복, 재귀                             |
 | 2448_별찍기11                                       | [Link](./Algorithm/Baekjoon/p2448.java)                      | [문제](https://www.acmicpc.net/problem/2448)                 | 분할정복, 재귀                             |
+| 2467_용액                                           | [Link](./Algorithm/Baekjoon/p2467.java)                      | [문제](https://www.acmicpc.net/problem/2467)                 | 투포인터                                   |
 | 2493_탑                                             | [Link](./Algorithm/Baekjoon/p2493.java)                      | [문제](https://www.acmicpc.net/problem/2493)                 | Stack                                      |
 | 2503_숫자 야구                                      | [Link](./Algorithm/Baekjoon/p2503.java)                      | [문제](https://www.acmicpc.net/problem/2503)                 | 브루트 포스                                |
 | 2531_회전초밥                                       | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                       |
