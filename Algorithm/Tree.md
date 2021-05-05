@@ -2194,3 +2194,389 @@ int main(){
 **P로 시작하는 지우면 안 되는 파일이 하나도 없다면** "rm P*"를 사용해서 모든 파일을 지울 수 있으므로 바로 1을 리턴합니다.
 
 이도저도 아닐 경우 자식들을 재귀호출에 결과를 모두 더하면 되겠죠. 이때 주의할 점은, 파일명이 P인 파일이 존재할 경우 이걸 지우기 위해 "rm P"를 한 번 써야 합니다! 따라서 노드의 output 값을 보고 1을 더해 줘야 합니다.
+
+# **> 최소 공통 조상(LCA)**
+
+---
+
+>   Lowest Common Ancestor
+
+LCA 알고리즘이란 주어진 트리에서 `최소 공통 조상`을 찾는 알고리즘입니다.
+
+`최소 공통 조상` 이란 두 정점 `u`, `v`에서 가장 **가까운** 공통 조상입니다. 
+
+u이거나 u의 조상이면서 동시에 v이거나 v의 조상인 노드들 중 가장 깊은 노드(가까이 있는) 노드이죠.
+
+![image-20210505114551055](https://user-images.githubusercontent.com/58545240/117093255-63277b00-ad9b-11eb-9f2a-c81c723b3c18.png)
+
+이런 트리가 있을 때, 4번 정점과 3번 정점의 LCA는 1번 정점입니다.
+
+이때 빨간색으로 칠해진 간선들을 이어보면 두 정점 사이의 최단 경로가 됩니다.
+
+![image-20210505114620505](https://user-images.githubusercontent.com/58545240/117093030-c1079300-ad9a-11eb-81c6-960efbe2c2e0.png)
+
+10번 정점과 14번 정점의 LCA는 2번 정점입니다.
+
+![image-20210505114704673](https://user-images.githubusercontent.com/58545240/117093050-ca90fb00-ad9a-11eb-85a4-d0459f953a51.png)
+
+3번 정점과 13번 정점의 LCA는 3번 정점입니다.
+
+트리에는 싸이클이 없으므로, 두 정점 u, v의 LCA를 w라 하면 두 정점 사이의 최단 경로는 u-w-v 형태의 경로가 됩니다. 이걸 지금까지의 빨간 간선들로 확인할 수 있죠.
+
+이것이 대부분의 LCA 문제에서 아주 중요한 경로입니다. 트리에서 너무 지나칠 정도로 최단경로를 빨리 찾기를 원한다면 LCA를 먼저 생각해 봐야 합니다.
+
+
+
+LCA를 찾는 방법은 여러 가지가 있는데, 세그먼트 트리를 사용하는 방법이 종만북에 나와 있지만
+
+저는 다른 방법을 선호합니다. DP를 사용하여 바텀업으로 각 정점의 정보들을 저장해 놓는 방식.
+
+양쪽 다 크기 N인 트리에서 **O(logN)**만에 두 특정 정점의 LCA를 찾을 수 있습니다.
+
+
+
+LCA를 가장 단순하고 쉽게 찾는 방법은, 그냥 두 정점 중 깊이가 더 깊은 정점에서 계속 부모로 이동합니다. 둘의 깊이가 같아질 때까지.
+
+그리고 두 정점이 만날 때까지 두 정점을 동시에 부모로 이동시키면, 두 정점이 만나는 지점이 LCA가 됩니다.
+
+그러나 이건 최악의 경우 **O(N)**입니다. 뭐 실제 상황에서 최악의 치우쳐진 트리가 맨날천날 나오지는 않겠지만, 대회문제에서는 무조건 반드시 나오겠죠.
+
+기본적인 알고리즘은 위와 동일하지만, 부모로 이동시키는 것을 좀 더 빨리, 더 많이 건너뛰는 것이 아이디어입니다.
+
+## 알고리즘 동작과정
+
+1.  입력받은 정점과 간선을 이용해 양방향 그래프를 생성합니다.
+2.  depth와 parent을 가지는 트리를 생성합니다. (이 때 누가 누구의 조상인지 알 수 있도록 하여야 합니다.)
+3.  LCA(u, v) 즉, u와 v의 공통 조상이 누구인지 조사합니다.
+    1.  LCA 알고리즘에서는 깊이가 더 깊은 노드를 깊이가 더 낮은 노드까지 올려줍니다.
+    2.  서로 다른 깊이를 가지는 노드를 같은 깊이를 가지는 노드로 만들어 주면
+    3.  한 칸(2<sup>k</sup>)씩 조상을 올려다보며 조상이 같아질때까지 올라갑니다.
+    4.  두 조상이 같으면 그 조상이 바로 LCA가 됩니다.
+
+## - BOJ [11437] : LCA
+
+https://www.acmicpc.net/problem/11437
+
+문제 이름부터 LCA를 쓰라고 나와있습니다.
+
+이 문제는 쉬우므로 바로 소스코드를 보겠습니다.
+
+```java
+/*
+    LCA (Lowest Common Ancestor): 최소 공통 조상
+    depth를 모두 구하고 부모 자식 간에 관계를 구하여 트리를 만든 다음에
+    구하고자 하는 정점의 depth를 맞춰준 다음 같은 노드가 될 때까지 부모를 타고 하나씩 올라오면 된다.
+*/
+import java.io.*;
+import java.util.*;
+
+public class p11437 {
+    static int n, m;
+    static int[] parent, depth;
+    static List<List<Integer>> list;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
+        list = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            list.add(new ArrayList<>());
+        }
+        
+        // 트리 생성
+        for (int i = 0; i < n - 1; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            list.get(u).add(v);
+            list.get(v).add(u);
+        }
+
+        parent = new int[n + 1];
+        depth = new int[n + 1];
+
+        // 루트노드 1, depth 1을 시작으로 각 정점들의 depth를 구한다.
+        dfs(1, 1);
+
+        m = Integer.parseInt(br.readLine());
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+
+            int ret = lca(u, depth[u], v, depth[v]);
+            System.out.println(ret);
+        }
+    }
+
+    // dfs가 아닌 bfs로 각 노드의 depth를 구해도 된다.
+    // depth 및 부모 관계 설정
+    static void dfs(int from, int cnt) {
+        depth[from] = cnt++;
+        for (int next : list.get(from)) {
+            // depth가 0이 아니면 이미 depth를 구한 노드이다.
+            if (depth[next] != 0) continue;
+
+            dfs(next, cnt);
+            parent[next] = from;
+        }
+    }
+
+    // LCA 알고리즘 
+    static int lca(int a, int aDepth, int b, int bDepth) {
+        // 두 노드의 depth가 같아질 때까지 한쪽을 올린다.
+        if (aDepth > bDepth) {
+            while (aDepth != bDepth) {
+                aDepth--;
+                a = parent[a];
+            }
+        } else if (aDepth < bDepth) {
+            while (aDepth != bDepth) {
+                bDepth--;
+                b = parent[b];
+            }
+        }
+        // 두 노드의 높이를 같게 했다.
+
+        // 그 이후에 depth를 똑같이 증가시키다가 (내 윗 부모가 되는 것이 올라가는 과정)
+        // 만난 같은 정점이 가장 가까운 공통 조상이 된다.
+        while (a != b) {
+            a = parent[a];
+            b = parent[b];
+        }
+
+        return a;
+    }
+}
+```
+
+## - BOJ [11438] : LCA2
+
+https://www.acmicpc.net/problem/11438
+
+문제를 풀어버려야만 합니다.
+
+https://kks227.blog.me/220793361738
+
+위 글에서 사용한 개념인 희소 테이블을 그대로 도입해서 유용하게 쓸 수 있습니다!
+
+방법을 설명하자면, 원래는 자신의 부모 하나만을 parent 배열로 저장하던 것을 확장하여
+
+2차원 배열 parent\[u][k]로 만듭니다. 이는 **정점 u의 2^k번째 부모**입니다.
+
+![image-20210505120226773](https://user-images.githubusercontent.com/58545240/117093064-d4b2f980-ad9a-11eb-84c4-1fa73f8d53d4.png)
+
+표로 나타내면 다음과 같습니다.
+
+그렇다면 이제 이 배열을 사용하여, 정점을 건너뛰는 것을 좀 더 빨리 할 수 있습니다.
+
+일단, 2^(k+1) = 2^k + 2^k이므로, **parent\[u][k+1] = parent[ parent\[u][k] ]\[k]**의 식으로 구할 수 있습니다.
+
+이렇게 k=i일 때의 정보가 모두 있다면 k=i+1일 때의 정보를 그에 기반하여 얻을 수 있으므로, 바텀업 DP를 사용하여 parent 배열을 채울 수 있습니다.
+
+
+
+이제 이 parent 배열을 사용해서 LCA를 빨리 찾아야 합니다.
+
+아까 LCA를 찾는 방식을 이렇게 2개의 단계로 나눌 수 있었습니다. 두 정점 u, v가 있고 depth[u] >= depth[v]일 때,
+
+**① depth[u] > depth[v]일 때, u를 parent[u]로 대체하는 것을 반복한다.**
+
+**② u != v일 때, u를 parent[u], v를 parent[v]로 동시에 대체하는 것을 반복한다.**
+
+이제 이 두 과정을 새로운 parent 배열로 좀 더 빨리 해야 합니다.
+
+
+
+먼저 **①**은 이렇게 할 겁니다.
+
+만약 u와 v의 깊이가 딱 보기에도 너무너무 많이 차이가 나는데도 부모를 하나씩 하나씩 따라 올라가고 있는 건 멍청한 짓입니다.
+
+만약 둘의 깊이 차이가 11이라면 이것은 이진수로 1011(2)이므로, 2^0번째 부모->2^1번째 부모->2^3번째 부모를 따라가면 될 겁니다. 그럼 단 3번만 따라가면 됩니다. 검사는 4번 하죠.
+
+이럴 때는 둘의 깊이 차이가 최대 O(N)이니까, 이진수로 나타냈을 때 비트 수가 O(logN)이므로 O(logN)번의 검사와 따라가기만으로 둘의 깊이를 같게 만들 수 있습니다.
+
+
+
+그 다음, **②**도 비슷합니다. 여기로 넘어왔으면 일단 depth[u] == depth[v]인 상태입니다.
+
+이제 둘의 깊이는 항상 똑같이 유지되면서 정점들이 바뀌어갈 겁니다.
+
+만약 parent\[u][k] != parent\[v][k]라 합시다. 그럼 일단 두 정점 u, v의 LCA의 깊이는 둘로부터 2^k보다는 멀리 떨어져 있음이 확실합니다.
+
+그런데 이 상태에서 parent\[u][k+1] == parent\[v][k+1]이다? 그렇다면 2^k, 2^(k+1) 사이의 어딘가에 둘의 LCA가 있다는 것이겠죠.
+
+이제 k를 큰 값부터 시도하면서 순회하여, parent\[u][k] != parent\[v][k]이면 u, v를 동시에 2^k만큼 위로 올려보내면 될 것입니다.
+
+```cpp
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <algorithm>
+using namespace std;
+const int MAX = 18; // roundup log(2, 100000)
+ 
+int N, M;
+int parent[100000][MAX]; // parent[i][k]: i의 2^k번째 부모
+int depth[100000]; // 정점의 깊이 (루트의 깊이: 0)
+vector<int> adj[100000]; // 인접 리스트
+ 
+// dfs로 트리 제작하며 parent[i][0], depth 배열 채움
+void makeTreeByDFS(int curr){
+    for(int next: adj[curr]){
+        if(depth[next] == -1){
+            parent[next][0] = curr;
+            depth[next] = depth[curr] + 1;
+            makeTreeByDFS(next);
+        }
+    }
+}
+ 
+ 
+ 
+int main(){
+    // 트리 정보 입력
+    scanf("%d", &N);
+    for(int i=0; i<N-1; i++){
+        int u, v;
+        scanf("%d %d", &u, &v);
+        u--; v--;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    // 배열 초기화
+    memset(parent, -1, sizeof(parent));
+    fill(depth, depth+N, -1);
+    depth[0] = 0;
+    // 트리 만들기
+    makeTreeByDFS(0);
+ 
+    // parent 배열 채움
+    for(int j=0; j<MAX-1; j++)
+        for(int i=1; i<N; i++)
+            if(parent[i][j] != -1)
+                parent[i][j+1] = parent[parent[i][j]][j];
+ 
+    // 쿼리 입력받기
+    scanf("%d", &M);
+    for(int i=0; i<M; i++){
+        int u, v;
+        scanf("%d %d", &u, &v);
+        u--; v--;
+ 
+        // depth[u] >= depth[v]가 되도록 필요에 따라 u, v를 스왑
+        if(depth[u] < depth[v]) swap(u, v);
+        int diff = depth[u] - depth[v];
+ 
+        // 깊이 차(diff)를 없애며 u를 이동시킴
+        for(int j=0; diff; j++){
+            if(diff % 2) u = parent[u][j];
+            diff /= 2;
+        }
+ 
+        // u와 v가 다르면 동시에 일정 높이만큼 위로 이동시킴
+        if(u != v){
+            // 높이 2^17, 2^16, ..., 2^2, 2, 1 순으로 시도
+            for(int j=MAX-1; j>=0; j--){
+                if(parent[u][j] != -1 && parent[u][j] != parent[v][j]){
+                    u = parent[u][j];
+                    v = parent[v][j];
+                }
+            }
+            // 마지막엔 두 정점 u, v의 부모가 같으므로 한 번 더 올림
+            u = parent[u][0];
+        }
+ 
+        // LCA 출력
+        printf("%d\n", u+1);
+    }
+}
+```
+
+입력을 받아서 트리를 형성하는 부분도 있습니다. 보통 트리 관련 문제는 다 이런 전처리가 들어가죠.
+
+희소 테이블 글에서 설명한 문제와는 좀 다르게, 여기서는 다음 이동이라는 게 없을 수도 있습니다. 즉, 조상이 없는 경우죠. 이 코드에서는 "-1" 값으로 그걸 초기화해 두고 사용하고 있습니다.
+
+
+
+그럼 LCA가 유용한 건 어떨 때일까요?
+
+가장 유명한 예시는 트리상에서 두 정점의 거리를 빠르게 구하는 것입니다.
+
+## - BOJ [1761] : 정점들의 거리
+
+https://www.acmicpc.net/problem/1761
+
+그래프가 아니라 트리이기 때문에 이 문제를 푸는 것이 가능합니다.
+
+두 정점 u, v가 주어지고 이 두 정점 사이의 거리를 구하라면, 애초에 트리에서는 두 정점 사이의 경로가 하나뿐이니까 최단이고 뭐고 없습니다. 그냥 어떻게든 거리를 구하면 되는데요.
+
+이때 이 경로는 LCA를 w라 하면 u-w-v의 형태가 됩니다.
+
+즉 거리는 (u와 w 사이의 거리) + (v와 w 사이의 거리)가 되는 것입니다. LCA를 구하면 해결되죠.
+
+이때, 모든 정점 사이의 거리를 바로 알기는 힘들지만, 어떤 루트 r이 있다고 치면
+
+u와 w 사이의 거리는 (u와 r 사이의 거리) - (w와 r 사이의 거리)가 되므로,
+
+루트를 아무거나 하나 정하고 모든 정점에 대해 자신과 루트 사이의 거리를 구해두면 될 것입니다.
+
+## LCA 관련 추천 문제
+
+**11438번: LCA 2**
+
+
+
+위에서 설명한 문제입니다.
+
+
+
+**1761번: 정점들의 거리**
+
+
+
+위에서 설명한 문제입니다.
+
+
+
+**8012번: Byteasar the Travelling Salesman**
+
+
+
+정점들의 거리 문제와 유사한데, 단지 마을을 일정 순서대로 방문해야만 한다는 점만 다릅니다.
+
+예제에서는 1, 3, 2, 5 순으로 방문하라는데 시작점은 항상 1이니까 1~1, 1~3, 3~2, 2~5의 거리의 총합이 답이 됩니다.
+
+
+
+**15480번: LCA와 쿼리 (★)**
+
+
+
+조금 생각을 해봐야 하는 문제. r을 신경쓰지 않고 먼저 u와 v의 LCA를 구했는데 그게 w라고 해봅시다. 만약, 이때 w가 r이거나 w의 조상 중에 r이 있다면 그냥 w가 답이겠죠. 아닌 경우들을 처리해야 합니다.
+
+
+
+**①** 먼저 관찰할 수 있는 것은, 꼭 r이 w의 조상이 아니더라도 w가 답인 경우가 존재한다는 것입니다. 이건 현재 트리의 루트에서 한쪽 서브트리에 w가, 다른 어떤 서브트리에 r이 속한 경우입니다. 이는 w가 r의 조상이 아닐 때에 해당하는데 이 여부는 w와 r의 LCA를 다시 구해서 판단할 수 있죠. LCA가 w면 w가 r의 조상인 겁니다.
+
+**②** u나 v 중 하나가 r의 조상이라면 답은 조상인 그 노드가 됩니다. 만약 둘 다 조상이라면 r에 좀 더 가까운 쪽이 답입니다.
+
+**③** u와 w 사이 또는 v와 w 사이 어딘가에 r이 있을 경우, 이때는 u와 r, v와 r의 LCA를 각각 구해서 케이스 분류를 할 수 있습니다. u와 r의 LCA가 w의 자손이거나 w라면 이게 답이 되는 식.
+
+...
+
+
+
+이렇게 케이스 분류를 세세하게 하면서 풀어야 하는 문제입니다. 핵심은 u와 v, u와 r, v와 r의 LCA를 구해보는 것이고, 간소화해 보면 위보다 더 간단히 추스릴 수도 있습니다.
+
+
+
+**1396번: 크루스칼의 공 (★)**
+
+
+
+상당히 발상이 재미있는 문제. 먼저 주어진 그래프에서 **크루스칼 알고리즘**을 통해 미니멈 스패닝 트리를 만드는 과정을 시뮬레이션하면서, 어떤 시간에 두 컴포넌트가 서로 합쳐진다면 그 두 컴포넌트 각각을 자식으로 하는 새 노드를 만듭니다. 이 노드는 이제 합쳐진 컴포넌트를 의미합니다.
+
+이런 식으로 트리를 구성해 두면, 쿼리가 주어졌을 때 노드 x와 노드 y의 LCA를 찾아 이 노드에 대응하는 시간이 언제인지를 구할 수 있습니다. 구현이 상당히 까다롭습니다.
+
+놀랍게도 다른 풀이가 존재합니다. 언젠가 그걸 볼 날이 오길...
