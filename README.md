@@ -115,6 +115,7 @@
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
 | 1092_배                                             | [Link](./Algorithm/Baekjoon/p1092.java)                      | [문제](https://www.acmicpc.net/problem/1092)                 | 그리디, 구현                               |
+| 1103_게임                                           | [Link](./Algorithm/Baekjoon/p1103.java)                      | [문제](https://www.acmicpc.net/problem/1103)                 | DP, DFS                                    |
 | 1106_호텔                                           | [Link](./Algorithm/Baekjoon/p1106.java)                      | [문제](https://www.acmicpc.net/problem/1106)                 | DP                                         |
 | 1107_리모컨                                         | [Link](./Algorithm/Baekjoon/p1107.java)                      | [문제](https://www.acmicpc.net/problem/1107)                 | 완전탐색, 구현                             |
 | 1158_요세푸스 문제 1                                | [Link](./Algorithm/Baekjoon/p1158.java)                      | [문제](https://www.acmicpc.net/problem/1158)                 | 순열, 요세푸스의 순열, 큐                  |
@@ -380,7 +381,7 @@
 | 15864_사다리조작                                    | [Link](./Algorithm/Baekjoon/p15684.java)                     | [문제](https://www.acmicpc.net/problem/15684)                | dfs, 구현, 백트래킹                        |
 | 15686_치킨배달                                      | [Link](./Algorithm/Baekjoon/ChickenDelivery_15686.java)      | [문제](https://www.acmicpc.net/problem/15686)                | dfs, combination                           |
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
-| 15721_주지수                                        | [Link](./Algorithm/Baekjoon/p15724.java)                     | [문제](https://www.acmicpc.net/problem/15724)                | DP, 2차원 배열 구간합                      |
+| 15724_주지수                                        | [Link](./Algorithm/Baekjoon/p15724.java)                     | [문제](https://www.acmicpc.net/problem/15724)                | DP, 2차원 배열 구간합                      |
 | 15787_기차가 어둠을 헤치고 은하수를                 | [Link](./Algorithm/Baekjoon/p15787.java)                     | [문제](https://www.acmicpc.net/problem/15787)                | 구현, 비트마스킹                           |
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16235_나무 재테크                                   | [Link](./Algorithm/Baekjoon/p16235.java)                     | [문제](https://www.acmicpc.net/problem/16235)                | 구현, 시뮬레이션                           |
@@ -396,6 +397,7 @@
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
 | 17144_미세먼지안녕!                                 | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                                 |
+| 17179_케이크 자르기                                 | [Link](./Algorithm/Baekjoon/p17179.java)                     | [문제](https://www.acmicpc.net/problem/17179)                | 이분탐색                                   |
 | 17298_오큰수                                        | [Link](./Algorithm/Baekjoon/p17298.java)                     | [문제](https://www.acmicpc.net/problem/17298)                | Stack                                      |
 | 17404_RGB거리 2                                     | [Link](./Algorithm/Baekjoon/p17404.java)                     | [문제](https://www.acmicpc.net/problem/17404)                | 2차원 DP                                   |
 | 17413_단어 뒤집기 2                                 | [Link](./Algorithm/Baekjoon/p17413.java)                     | [문제](https://www.acmicpc.net/problem/17413)                | 문자열, 스택, 구현                         |
