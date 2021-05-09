@@ -26,11 +26,6 @@ public class LINE_2021H_01 {
             String[] line = input.split(" ");
             String job = line[0];
             len = line.length - 1;
-            map.put(new HashMap<>(job, line[1]), 5);
-            map.put(new HashMap<>(job, line[2]), 4);
-            map.put(new HashMap<>(job, line[3]), 3);
-            map.put(new HashMap<>(job, line[4]), 2);
-            map.put(new HashMap<>(job, line[5]), 1);
         }
 
         int[] score = new int[len];

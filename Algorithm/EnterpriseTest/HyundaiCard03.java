@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,7 +25,7 @@ public class HyundaiCard03 {
         	String N = new_id.substring(x+1, new_id.length());
         	System.out.println(S); //ace
         	System.out.println(N); //15
-        	//id ÆÇº° 
+        	//id ï¿½Çºï¿½ 
         	if(S.length() >= 3 && S.length() <= 6) {
         		
         		for(int i=0; i<N.length(); i++) {
@@ -55,10 +53,10 @@ public class HyundaiCard03 {
         	
         	while(!state) {
         		if(check==true) {
-            		if(!q.contains(new_id)) { // µî·Ï ¾ÈµÇ¾î ÀÖÀ¸¹Ç·Î ¹Ù·Î »ç¿ëÇÒ ¼ö ÀÖÀ½
+            		if(!q.contains(new_id)) { // ï¿½ï¿½ï¿½ ï¿½ÈµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 		answer = new_id;
                 		state = true;
-                	}else { // µî·ÏÀÌ µÇ¾îÀÖÀ¸¹Ç·Î »õ·Î¿î ¾ÆÀÌµð ÃßÃµ
+                	}else { // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Ãµ
                 		n++;
                 		
                 		N = Integer.toString(n);

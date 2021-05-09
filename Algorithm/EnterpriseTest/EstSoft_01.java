@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,7 +32,7 @@ public class EstSoft_01 {
 		System.out.println(cntList); // 1 1 1 1 2
 		
 		System.out.println(cntList.get(cntList.size()-1));
-		System.out.println("key¸¦ ÅëÇØ mapÀÇ value¸¦ ¹Þ¾Æ¿À±â => "+map.get(2));
+		System.out.println("keyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ mapï¿½ï¿½ valueï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ => "+map.get(2));
 		
 		System.out.println("map+==="+map.get(cntList.get(cntList.size()-1)));
 		

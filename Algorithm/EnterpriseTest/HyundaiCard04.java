@@ -1,5 +1,3 @@
-package Exam;
-
 public class HyundaiCard04 {
 	public static int[][] map;
 	public static void main(String[] args) {
@@ -17,10 +15,10 @@ public class HyundaiCard04 {
 		};
 		solution(macaron);
 	}
-	/* 1 : ºÐÈ«
-	 * 2 : ³ë¶û
-	 * 3 : º¸¶ó
-	 * 4 : ÃÊ·Ï
+	/* 1 : ï¿½ï¿½È«
+	 * 2 : ï¿½ï¿½ï¿½
+	 * 3 : ï¿½ï¿½ï¿½ï¿½
+	 * 4 : ï¿½Ê·ï¿½
 	*/
 	public static String[] solution(int[][] macaron) {
 		String[] answer= {};

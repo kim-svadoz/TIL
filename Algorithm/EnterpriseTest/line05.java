@@ -1,5 +1,3 @@
-package Line;
-
 import java.util.*;
 
 public class line05 {
@@ -15,8 +13,8 @@ public class line05 {
 		String[] tags = {"t1", "t2", "t3"};
 		solution(dataSource, tags);
 	}
-	//1¼øÀ§´Â ¸¹ÀÌ ÃâÇöÇÑ ¼ø¼­
-	//2¼øÀ§´Â ±ÛÀÚÀÇ ÀÌ¸§
+	//1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 	public static List<String> solution(String[][] dataSource, String[] tags) {
 		List<String> answer ;
 		int len = dataSource.length;

@@ -1,5 +1,3 @@
-package Exam;
-
 public class KAKAO_INTERN_04 {
 	public static int N;
 	public static int a,b;
@@ -21,7 +19,7 @@ public class KAKAO_INTERN_04 {
         N = board.length;
         mBoard = new int[N][N];
         mBoard = board;
-        //Á÷¼±µµ·Î´Â 100¿ø ÄÚ³Ê´Â 500¿ø
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î´ï¿½ 100ï¿½ï¿½ ï¿½Ú³Ê´ï¿½ 500ï¿½ï¿½
         
         for(int i=0; i<N; i++) {
         	for(int j=0; j<N; j++) {

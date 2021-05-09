@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +27,14 @@ public class HyundaiCard01 {
 			price.add(Integer.parseInt(purchase[i].split("/")[2].split(" ")[1]));
 		}
 		for(int i=1; i<purchase.length; i++) {
-		/*	if(Math.abs(day[i]-day[i-1]) > 30 ) { //30ÀÏ ÀÌ»ó Â÷ÀÌ³ª¸é ÀÏ ¼ö °è»ê ÃÊ±âÈ­
+		/*	if(Math.abs(day[i]-day[i-1]) > 30 ) { //30ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½Ì³ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 				cur_day[i-1] = day[i]-day[i-1];
 			}else {
 				cur_day[i-1] = day[i]; 
 			}*/
 		}
 		
-		cnt = 0; // ÀÏ¼ö ÃÊ±â°ª
+		cnt = 0; // ï¿½Ï¼ï¿½ ï¿½Ê±â°ª
 		int pay = price.get(0);// 5000
 		int payday =  day.get(0);
 		System.out.println("payday"+payday);
@@ -45,21 +43,21 @@ public class HyundaiCard01 {
 			cnt++;
 			
 			map.put(i, price.get(0));
-			//19ÀÏ µ¿¾È ºê·ĞÁî => day[i]-1ÀÏ ¸¸Å­ ºê·ĞÁî
+			//19ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ => day[i]-1ï¿½ï¿½ ï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ï¿½
 			//for()
 			
-			//11ÀÏ µ¿¾È °ñµå => 
-			//³¯Â¥º°·Î ÃÑ ±¸¸Å °ªÀ» µé°íÀÖ¾î¾ßÇÔ.
+			//11ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ => 
+			//ï¿½ï¿½Â¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½.
 			
-			if(pay>=0 && pay<10000) { // ºê·ĞÁî
+			if(pay>=0 && pay<10000) { // ï¿½ï¿½ï¿½ï¿½ï¿½
 				answer[0] += cnt;
-			}else if(pay>=10000 && pay < 20000) { // ½Ç¹ö
+			}else if(pay>=10000 && pay < 20000) { // ï¿½Ç¹ï¿½
 				//answer[1]
-			}else if(pay>=20000 && pay < 50000) { // °ñµå
+			}else if(pay>=20000 && pay < 50000) { // ï¿½ï¿½ï¿½
 				//answer[2]
-			}else if(pay>=50000 && pay < 100000) { // ÇÃ·¹Æ¼³Ñ
+			}else if(pay>=50000 && pay < 100000) { // ï¿½Ã·ï¿½Æ¼ï¿½ï¿½
 				//answer[3]
-			}else { // ´ÙÀÌ¾Æ
+			}else { // ï¿½ï¿½ï¿½Ì¾ï¿½
 				//answer[4]
 			}
 			

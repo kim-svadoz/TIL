@@ -20,6 +20,7 @@ public class KAKAO2021H_INTERN05 {
     }
     static int n, m;
     static int[] parent, rank;
+    static PriorityQueue<Edge> pq = new PriorityQueue<>();
     static public int solution(int k, int[] num, int[][] links) {
         n = k;
 

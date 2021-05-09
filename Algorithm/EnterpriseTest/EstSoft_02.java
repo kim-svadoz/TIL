@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 import java.util.Collections;
 

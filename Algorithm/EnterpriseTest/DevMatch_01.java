@@ -1,8 +1,6 @@
-package Exam;
-
 public class DevMatch_01 {
 
-	//¸®ÆÑÅä¸µÇÏ±â.
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ä¸µï¿½Ï±ï¿½.
 	public static void main(String[] args) {
 		String P = "82195";
 		String S = "64723";

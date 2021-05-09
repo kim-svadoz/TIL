@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 
 public class KAKAO_INTERN_01 {
@@ -58,7 +56,7 @@ public class KAKAO_INTERN_01 {
         			rightHand.add(new Pair(2, 2));
         		}
         	}else {
-        		//°Å¸®°è»ê
+        		//ï¿½Å¸ï¿½ï¿½ï¿½ï¿½
         		if(dist(leftHand, rightHand, n) == "L") {
         			answer += "L";
         			if(n==2) {
@@ -112,9 +110,9 @@ public class KAKAO_INTERN_01 {
         return answer;
     }
 	
-	//¿Þ¼Õ°ú ¿À¸¥¼ÕÀÇ ÇöÀç À§Ä¡¸¦ ´ãÀ» ¹è¿­ÀÌ ÇÊ¿äÇØº¸ÀÓ..?!¤¤
+	//ï¿½Þ¼Õ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Øºï¿½ï¿½ï¿½..?!ï¿½ï¿½
 	
-	//°Å¸®°è»ê
+	//ï¿½Å¸ï¿½ï¿½ï¿½ï¿½
 	public static String dist(ArrayList<Pair> leftHand, ArrayList<Pair> rightHand, int n) {
 		ArrayList<Pair> mP = new ArrayList<>();
 		
@@ -122,8 +120,8 @@ public class KAKAO_INTERN_01 {
 		int leftY = leftHand.get(leftHand.size()-1).y;
 		int rightX = rightHand.get(rightHand.size()-1).x;
 		int rightY = rightHand.get(rightHand.size()-1).y;
-		System.out.println(n+"¹øÂ°"+" ¿Þ¼Õ À§Ä¡:"+leftX+","+leftY);
-		System.out.println(n+"¹øÂ°"+" ¿À¸¥¼Õ À§Ä¡:"+rightX+","+rightY);
+		System.out.println(n+"ï¿½ï¿½Â°"+" ï¿½Þ¼ï¿½ ï¿½ï¿½Ä¡:"+leftX+","+leftY);
+		System.out.println(n+"ï¿½ï¿½Â°"+" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡:"+rightX+","+rightY);
 		System.out.println();
 		
 		if(n==2) {

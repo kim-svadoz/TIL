@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.ArrayList;
 
 public class KAKAO_INTERN_02 {
@@ -25,7 +23,7 @@ public class KAKAO_INTERN_02 {
         for(int i=0; i<mC.size(); i++) {
         	System.out.println(mC.get(i));
         }
-        //¿¬»êÀÚ ¿ì¼±¼øÀ§ Á¤ÇÏ±â
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
         
         
         
@@ -34,7 +32,7 @@ public class KAKAO_INTERN_02 {
         	System.out.print(num[i]+" ");
         }
         
-        //¿¬»êÀÚ ¿ì¼±Á¶ÇÕ °æ¿ìÀÇ ¼ö
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         
         return answer;
     }

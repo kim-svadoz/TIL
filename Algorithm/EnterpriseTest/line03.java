@@ -1,5 +1,3 @@
-package Line;
-
 import java.util.*;
 
 public class line03 {

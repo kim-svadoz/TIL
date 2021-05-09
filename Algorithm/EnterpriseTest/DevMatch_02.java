@@ -1,5 +1,3 @@
-package Exam;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -14,8 +12,8 @@ public class DevMatch_02 {
 		int c = 0;
 		String[] move = {"go","go","right","go","right","go","left","go"};
 		//d   => 0 0 1 0 1 0 3 1
-		//ÇöÀç  => 0 0 1 1 2 2 5 6
-		//°¡°ø  => 0 0 1 1 2 2 1 2
+		//ï¿½ï¿½ï¿½ï¿½  => 0 0 1 1 2 2 5 6
+		//ï¿½ï¿½ï¿½ï¿½  => 0 0 1 1 2 2 1 2
 		solution(office, r, c, move);
 	}
 	
@@ -61,12 +59,12 @@ public class DevMatch_02 {
 		office[r][c] =0;
 		Robot robot = new Robot(r, c, 0);
 		Queue<Robot> q = new LinkedList<>();
-		q.add(robot); // (1, 0, 0) ÀÌ µé¾î¿È
+		q.add(robot); // (1, 0, 0) ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 		for(int i=0; i<move.length; i++) { // Ã¹ go
 			Robot qRobo = q.remove(); //
 			for(int j=0; j<4; j++) {
-				if(direction[i]==j) { // 0ºÏ 1µ¿ 2³² 3¼­  // direction =  0 0 1 ...
+				if(direction[i]==j) { // 0ï¿½ï¿½ 1ï¿½ï¿½ 2ï¿½ï¿½ 3ï¿½ï¿½  // direction =  0 0 1 ...
 					int nx =0;
 					int ny =0;
 					int d =0;

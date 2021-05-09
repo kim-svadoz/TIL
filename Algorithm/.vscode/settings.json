@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "실전코테"
+        "실전코테",
+        "EnterpriseTest"
     ]
 }
