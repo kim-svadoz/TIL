@@ -115,6 +115,7 @@
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
 | 1092_배                                             | [Link](./Algorithm/Baekjoon/p1092.java)                      | [문제](https://www.acmicpc.net/problem/1092)                 | 그리디, 구현                               |
+| 1102_발전소                                         | [Link](./Algorithm/Baekjoon/p1102.java)                      | [문제](https://www.acmicpc.net/problem/1102)                 | DP, DFS, 비트마스킹                        |
 | 1103_게임                                           | [Link](./Algorithm/Baekjoon/p1103.java)                      | [문제](https://www.acmicpc.net/problem/1103)                 | DP, DFS                                    |
 | 1106_호텔                                           | [Link](./Algorithm/Baekjoon/p1106.java)                      | [문제](https://www.acmicpc.net/problem/1106)                 | DP                                         |
 | 1107_리모컨                                         | [Link](./Algorithm/Baekjoon/p1107.java)                      | [문제](https://www.acmicpc.net/problem/1107)                 | 완전탐색, 구현                             |
@@ -218,6 +219,7 @@
 | 2293_동전1                                          | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)                         |
 | 2294_동전2                                          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)                         |
 | 2331_반복수열                                       | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                                   |
+| 2342_Dance Dance Revolution                         | [Link](./Algorithm/Baekjoon/p2342.java)                      | [문제](https://www.acmicpc.net/problem/2342)                 | DP                                         |
 | 2352_반도체 설계                                    | [Link](./Algorithm/Baekjoon/p2352.java)                      | [문제](https://www.acmicpc.net/problem/2352)                 | LIS, Binary Search                         |
 | 2422_한윤정이 이탈리아에 가서 아이스크림을 사먹는데 | [Link](./Algorithm/Baekjoon/p2422.java)                      | [문제](https://www.acmicpc.net/problem/2422)                 | 브루트 포스                                |
 | 2447_별찍기10                                       | [Link](./Algorithm/Baekjoon/p2447.java)                      | [문제](https://www.acmicpc.net/problem/2447)                 | 분할정복, 재귀                             |
