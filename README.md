@@ -185,6 +185,7 @@
 | 1933_스카이라인                                     | [Link](./Algorithm/Baekjoon/p1933.java)                      | [문제](https://www.acmicpc.net/problem/1933)                 | 우선순위큐, 스위핑, TreeMap                |
 | 1934_최소공배수                                     | [Link](./Algorithm/Baekjoon/p1934.java)                      | [문제](https://www.acmicpc.net/problem/1934)                 |                                            |
 | 1937_욕심쟁이 판다                                  | [Link](./Algorithm/Baekjoon/p1937.java)                      | [문제](https://www.acmicpc.net/problem/1937)                 | DP, dfs, 경로별 최댓값                     |
+| 1939_중량제한                                       | [Link](./Algorithm/Baekjoon/p1939.java)                      | [문제](https://www.acmicpc.net/problem/1939)                 | 이분탐색 + BFS, 크루스칼, union-find       |
 | 1946_신입사원                                       | [Link](https://ju-nam2.tistory.com/55)                       | [문제](https://www.acmicpc.net/problem/1946)                 | Greedy, Comparator                         |
 | 1948_임계경로                                       | [Link](./Algorithm/Baekjoon/p1948.java)                      | [문제](https://www.acmicpc.net/problem/1948)                 | 위상정렬, tracing, dfs, bfs                |
 | 1949_우수마을                                       | [Link](./Algorithm/Baekjoon/p1949.java)                      | [문제](https://www.acmicpc.net/problem/1949)                 | tree, dp                                   |
