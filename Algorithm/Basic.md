@@ -2931,3 +2931,50 @@ public class Main {
 }
 ```
 
+# **> Kadane Algorithm**
+
+>   카데인 알고리즘
+
+`[6, -1, 5, -3, 9]` 와 같은 수열이 있다고 하자.
+
+이 때 **각 수들을 더했을 때 가장 큰 수가 나오는 연속된 부분합**을 찾는 알고리즘을 카데인 알고리즘 이라고 한다.
+
+
+
+풀이의 핵심 순서는 이러하다.
+
+1.  수열의 각 요소를 하나씩 더하기
+2.  더한 값을 변수에 저장
+3.  더한 값이 마지막에 저장해놓은 변수보다 크다면 변수를 대입
+
+
+
+자바 코드로 보자
+
+```java
+int nums = {6, -1, 5, -3, 8};
+
+int getMaximumSubArray(int[] nums) {
+    if (nums.length == 1) {
+        return nums[0];
+    }
+    
+    int maxNum = Integer.MAX_VALUE;
+    int sum = 0;
+    // 1. 배열 요소를 하나씩 탐색하면서 값을 넣어본다.
+    for (int i = 0, j = nums.length; i < j; i++) {
+        // 2. 더한 값 sum 변수에 대입
+        sum += nums[i];
+        
+        // 3. 이전에 합산 값과 비교하여 최대값을 저장
+        if (maxNum < sum) maxNum = sum;
+        if (sum < 0) sum = 0;
+    }
+    
+    return maxNum;
+}
+```
+
+최대 부분합을 구하는 카데인 알고리즘은 `O(n)`의 시간복잡도를 가지게 되므로 Brute Force( O(n<sup>2</sup>) )보다 효율적이다.
+
+이 알고리즘을 모른다 하더라도, 투포인터로 충분히 해결할 수 있으며 필자는 투포인터가 더 마음에 든다.
