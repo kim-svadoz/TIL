@@ -1,10 +1,91 @@
 /*
     중량제한
-    이분탐색 + BFS
+    1. 최대 스패닝 트리
+        -> 최소 스패닝 트리의 반대 버전으로, 가중치가 가장 큰 간선을 선택하면서 스패닝 트리를 만들ㅇ 너간다.
+        -> 그러면 어떤 정점S  와 다른정점 E 가 같은 집합에 속하는 순간 우리가 원하는 경로가 완성된다.
+        -> 이렇게 완성된 경로는 최장경로 처럼, 가능하면 무거운 짐을 옮길 수 있는 다리만 선택하여 만들어진 것
+    2. 이분탐색 + BFS
 */
 import java.io.*;
 import java.util.*;
+public class p1939 {
+    static class Edge implements Comparable<Edge> {
+        int u, v, cost;
+        public Edge(int u, int v, int cost) {
+            this.u = u;
+            this.v = v;
+            this.cost = cost;
+        }
+        
+        public int compareTo(Edge o) {
+            return o.cost - cost;
+        }
+    }
+    static int n, m, s, e;
+    static PriorityQueue<Edge> pq;
+    static int[] parent, rank;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        pq = new PriorityQueue<>();
+        parent = new int[n + 1];
+        rank = new int [n + 1];
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+        
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            pq.add(new Edge(u, v, cost));
+        }
+        
+        st = new StringTokenizer(br.readLine());
+        s = Integer.parseInt(st.nextToken());
+        e = Integer.parseInt(st.nextToken());
+        
+        System.out.println(mst());
+    }
+    
+    static int mst() {
+        while (!pq.isEmpty()) {
+            Edge edge = pq.poll();
+            int u = edge.u;
+            int v = edge.v;
+            union(u, v);
+            if (find(s) == find(e)) return edge.cost;
+        }
+        
+        return -1;
+    }
+    
+    static void union(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a != b) {
+            if (rank[a] < rank[b]) {
+                parent[a] = b;
+            } else {
+                parent[b] = a;
+                if (rank[a] == rank[b]) {
+                    rank[a]++;
+                }
+            }
+        }
+    }
+    
+    static int find(int x) {
+        if (x == parent[x]) return x;
+        
+        return find(parent[x]);
+    }
+}
 
+/*
 public class p1939 {
     static class Node {
         int to;
@@ -98,6 +179,7 @@ public class p1939 {
         Arrays.fill(visited, false);
     }
 }
+*/
 
 /* 크루스칼 알고리즘으로 
 
