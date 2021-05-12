@@ -1479,7 +1479,7 @@ N번째 루프에서 시작점으로부터의 거리가 확실히 작아지는 �
 
 음의 가중치가 있는 간선 그래프에서도 제대로 동작합니다.
 
-## -BOJ[11404] : 플로이드
+## - BOJ[11404] : 플로이드
 
 https://www.acmicpc.net/problem/11404
 
@@ -1788,7 +1788,7 @@ C에서도 시작점인 A로 돌아가면서 "B A"를 출력하면...
 
 
 
-## -BOJ[1199] : 오일러 회로
+## - BOJ[1199] : 오일러 회로
 
 https://www.acmicpc.net/problem/1199
 
@@ -3049,7 +3049,7 @@ https://www.acmicpc.net/problem/11375
 
 그래서 이분 매칭 문제들은 약간 형태가 변형되거나, 자신이 이분 매칭 문제임을 어느 정도 숨기기도 합니다.
 
-## -BOJ[11376] : 열혈강호 2
+## - BOJ[11376] : 열혈강호 2
 
 https://www.acmicpc.net/problem/11376
 
@@ -3091,7 +3091,7 @@ https://www.acmicpc.net/problem/11377
 
 이제부터는 자기가 이분 매칭이 아니다! 라고 위장하고 있는 문제들이나, 좀 어려운 문제들입니다.
 
-## - BOJ[3295] : 단방향 링크 네트워크**
+## - BOJ[3295] : 단방향 링크 네트워크
 
 https://www.acmicpc.net/problem/3295
 
@@ -3329,3 +3329,422 @@ N이 홀수일 수도 있는 것으로 압니다. 이러면 당연히 걍 불가
 
 위에서 설명한 문제입니다. **이분 탐색**입니다.
 
+# **> SCC**
+
+> Strongly Connected Component
+>
+> 강한 연결 요소
+
+**방향 그래프**에서 임의의 두 정점 `u`, `v`가 있을 때 `u` -> `v`로 가는 경로가 존재 한다면 그 그룹이 바로  **`SCC`**입니다.
+
+이 때, `u` -> `v`로 가는 경로는 **직/간접적인 경로**를 의미합니다.
+
+**즉,  `SCC`는 집합 내 정점들이 서로 왕복 가능한 최대 크기의 집합**을 의미합니다.
+
+## SCC의 특징
+
+1. **같은 SCC**내에서 뽑은 임의의 `u`, `v` 점에서 `u` -> `v` 혹은 `v` -> `u`의 경로는 항상 **존재**한다.
+
+2. **서로 다른 SCC**에서 뽑은 임의의 `u`, `v` 점에서 `u` -> `v` 혹은 `v` -> `u`의 경로는 **존재하지 않는다.**
+
+   => *서로 다른 `SCC`끼리는 사이클이 존재 하지 않는다!*
+
+3. SCC는 **Maximal한 성질**을 가지고 있어 SCC가 형성 된다면 항상 형성될 수 있는 **가장 큰 집합**으로 형성이 된다.
+
+![image-20210512133449789](https://user-images.githubusercontent.com/58545240/117945501-5978b700-b349-11eb-8a43-001dd4573fbe.png)
+
+예를 들어, 오른쪽 `SCC`인 `{c, d, h}`의 하위 집합 중 `{c, d}` 역시 첫 번째 성질은 만족하지만, 여기에 정점 `h`를 더 추가해도 여전히 성질이 만족되므로 `h`는 반드시 추가되어 있어야 합니다.
+
+이렇게 **유향 그래프(DG)** 가 주어지면 파티션을 분할하여 각각이 `SCC`가 되도록 하는 것이 항상 가능하며, 선형 시간, 즉 **O(N)** 안에 모든 `SCC`를 분리하는 것이 가능합니다.
+
+또, 싸이클을 이루는 정점들 사이에서도 서로 항상 도달이 가능하다는 존재 덕분에, `SCC`는 싸이클보다도 더 상위으, 더 포괄적인 개념입니다. `{a, b, e}`나 `{f, g}`만 본다면 단순 싸이클이지만, `{c, d, h}` 쪽은 그렇지 않은 것을 보면 알 수 있습니다.
+
+또, 이것이 무향 그래프 였다면 컴포넌트 자체가 `SCC`라고 볼 수 있기 때문에 유향 그래프에만 이 용어가 유의미 합니다.
+
+그러면 방향그래프가 주어졌을 때, 어떤 정점들이 서로 `SCC`를 이루는 지 분류 할 수 있는 두 가지 알고리즘을 소개하갰습니다. 이 알고리즘 모두 **DFS**를 기반으로 동작합니다.
+
+## 코사라주 알고리즘
+
+먼저 **코사라주 알고리즘**을 수행하기 위해서는
+
+1. 방향 그래프
+2. 역방향 그래프
+3. 스택
+
+이렇게 세 가지 컨테이너를 준비한 뒤 다음과 같은 순서로 진행합니다.
+
+1. 모든 정점에 대해 정방향 그래프를 DFS를 수행하며 **끝나는 순서**대로 스택에 삽입합니다.
+   1. 방문하지 않은 정점이 있는 경우에는 해당 정점부터 다시 DFS를 수행한다.
+   2. 이로써 모든 정점을 방문하며 DFS를 완료하여, 스택에 모든 정점을 담는다
+2. 스택의 top에서 부터 `pop()`을 진행하며 순서대로 역방향 그래프에서 DFS를 수행하며 한번 수행에 탐색되는 모든 정점들을 같은 SCC로 묶습니다.
+   1. 이 과정은 스택이 빌 때까지 진행합니다.
+   2. 만약 스택의 top에 위치한 정점이 이미 방문했다면 `pop()`만 합니다.
+
+### - BOJ[2150] : Strongly Connected Component
+
+그러면 `SCC`의 가장 기초적인 문제인 백준의 2150번을 풀어보겠습니다.
+
+방향 그래프와 역방향 그래프를 생성합니다.
+
+그 후 방향 그래프에 대해 dfs를 수행하면서 종료되는 점부터 스택에 해당 정점을 push 합니다.
+
+그리고 스택에서 하나씩  pop하면서 역방향 그래프의 dfs를 수행하고 여기서 pop한 요소와 만나는 정점들은 모두 SCC를 형성하는 그룹이 됩니다.
+
+역방향 그래프에 대해서 dfs를 수행하 ㄹ때는 결과값을 담아야 하고
+
+출력 시에는 SCC 그룹 내 요소가 오름차순을 유지하기 위해서 `Collections.sort()`를 이용하였고, SCC 그룹의 첫번째 요소가 작은 순서대로 출력하기 위해 `TreeMap`을 사용합니다.
+
+```JAVA
+import java.io.*;
+import java.util.*;
+public class Main {
+    static List<List<Integer>> graph;
+    static List<List<Integer>> rgraph;
+    static List<List<Integer>> res;
+    static boolean[] visited;
+    static Stack<Integer> stack;
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+        
+        graph = new ArrayList<>();
+        rgraph = new ArrayList<>();
+        res = new ArrayList<>();
+        
+        for (int i = 0; i <= V; i++) {
+            graph.add(new ArrayList<>());
+            rgraph.add(new ArrayList<>());
+            res.add(new ArrayList<>());
+        }
+        
+        // 단방향 인접리스트 구현 (방향 , 역방향 그래프)
+        for (int i =  0; i < E; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph.get(u).add(v);
+            rgraph.get(v).add(u);
+        }
+        
+        visited = new boolean[V + 1];
+        stack = new Stack<>();
+        
+        // 방향 그래프에 대해 dfs 수행
+        for (int i = 1; i <= V; i++) {
+            if (!visited[i]) {
+                dfs(i);
+            }
+        }
+        
+        Arrays.fill(visited, false);
+        int groupNum = 0;
+        // 역방향 그래프에 대해 dfs 수행
+        while (!stack.isEmpty()) {
+            int start = stack.pop();
+            
+            // 스택에서 하나씩 꺼내면서!
+            // 이 때 방문 체크가 된 것은 start가 하나의 SCC그룹에 속해있다는 뜻!
+            if (visited[start]) {
+                continue;
+            }
+            
+            // 같은 그룹끼리(groupNum으로 분류) SCC를 분류한다.
+            redfs(start, groupNum);
+            groupNum++;
+        }
+        StringBuilder sb = new StringBuilder();
+        // SCC 그룹 개수
+        sb.append(groupNum + "\n");	
+        
+        // key를 기준으로 오름차순 정렬하기 위한 TreeMap 선언
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        for (int i = 0; i < groupNum; i++) {
+            // 각각의 SCC 그룹에 대해 오름차순 정렬한다.
+            Collections.sort(res.get(i));
+            // key : SCC그룹의 첫째 항
+            // value : index
+            tm.put(res.get(i).get(0), i);
+        }
+        
+        // map의 value를 이용하여 첫번째 항이 작은 순서대로 출력 (오름차순)
+        tm.keySet().forEach(key -> {
+            int value = tm.get(key);
+            
+            for (int now : res.get(value)) {
+                sb.append(now + " ");
+            }
+            sb.append("-1\n"); // 문제조건에 따라 끝에 -1 붙이기
+        });
+        
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
+    
+    // 끝나는 점에 대해서 stack에 push
+    static void dfs(int start) {
+        visited[start] = true;
+        
+        for (int cur : graph.get(start)) {
+            if (!visited[cur]) {
+                dfs(cur);
+            }
+        }
+        stack.push(start);
+    }
+    
+    // 같은 SCC 그룹은 groupNum으로 분류한다.
+    // 결과값을 담는 res 코드가 추가된다.
+    static void redfs(int start, int groupNum) {
+        visited[start] = true;
+        res.get(groupNum).add(start);
+        
+        for (int cur : rgraph.get(start)) {
+            if (!visited[cur]) {
+                redfs(cur, groupNum);
+            }
+        }
+    }
+}
+```
+
+
+
+## 타잔 알고리즘
+
+타잔 알고리즘은 DFS를 수행할 때 생성되는 DFS 트리의 간선의 정보를 이용해서 ALL DFS 한번으로 모든 `SCC`를 구하는 방법입니다.
+
+ALL DFS란 모든 정점에서 수행되는 DFS를 의미합니다.
+
+1. ALL DFS를 돌리며 **Spaning Tree**를 만들어 갈 때 DFS의 호출 순서에 따라 정점을 stack에 push합니다.
+2. 간선 분류를 통해 먼저 호출 되는 정점이 더 높은 위치를 가진다고 생각할 때 가장 높이 올라갈 수 있는 정점을 찾습니다.
+3. 이 때 `here` -> `there`이 교차간선이지만 `there`이 아직 `SCC`에 속하지 않는다면 discover[there]을 고려해줍니다.
+4. DFS가 끝나기 전에 ret과 discover[`here`]가 같다면 stack에서 pop하면서 `here`가 나올 때까지 같은 `SCC`로 분류합니다.
+
+*타잔 알고리즘은 **위상정렬**을 이용한 방법으로 생성되는 `SCC`들은 위상정렬의 역순으로 생성된다*
+
+타잔 알고리즘을 말로 설명하는 것은 힘든 부분이 있기 때문에, 
+
+https://m.blog.naver.com/PostView.nhn?blogId=kks227&logNo=220802519976&referrerCode=0&searchKeyword=scc 
+
+혹은
+
+https://m.blog.naver.com/PostView.nhn?blogId=ndb796&logNo=221236952158&proxyReferer=https:%2F%2Fwww.google.com%2F
+
+이곳을 참조해보면 좋을 것 같습니다.
+
+위에서 알아본 `2150`번 문제를 타잔알고리즘으로 다시 알아보겠습니다.
+
+```java
+import java.io.*;
+import java.util.*;
+public class p2150_ver2 {
+    static List<List<Integer>> graph;
+    static List<List<Integer>> res;
+    static int cnt = 0, groupNum = 0;
+    static int[] dfsn, sn;
+    static boolean[] finished; // SCC가 확정된 정점 판별
+    static Stack<Integer> stack;
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+        
+        dfsn = new int[V + 1];
+        sn = new int[V + 1];
+        graph = new ArrayList<>();
+        res = new ArrayList<>();
+        
+        for (int i = 0; i <= V; i++) {
+            graph.add(new ArrayList<>());
+            res.add(new ArrayList<>());
+        }
+        
+        // 단방향 인접리스트 구현 (방향 , 역방향 그래프)
+        for (int i =  0; i < E; i++) {
+            st = new StringTokenizer(br.readLine());
+            
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph.get(u).add(v);
+        }
+        
+        finished = new boolean[V + 1];
+        stack = new Stack<>();
+        
+        // 방향 그래프에 대해 dfs 수행
+        for (int i = 1; i <= V; i++) {
+            if (dfsn[i] == 0) {
+                dfs(i);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        // SCC 그룹 개수
+        sb.append(groupNum + "\n");	
+
+        // key를 기준으로 오름차순 정렬하기 위한 TreeMap 선언
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+        for (int i = 0; i < groupNum; i++) {
+            // 각각의 SCC 그룹에 대해 오름차순 정렬한다.
+            Collections.sort(res.get(i));
+            // key : SCC그룹의 첫째 항
+            // value : index
+            tm.put(res.get(i).get(0), i);
+        }
+
+        // map의 value를 이용하여 첫번째 항이 작은 순서대로 출력 (오름차순)
+        tm.keySet().forEach(key -> {
+            int value = tm.get(key);
+            
+            for (int now : res.get(value)) {
+                sb.append(now + " ");
+            }
+            sb.append("-1\n"); // 문제조건에 따라 끝에 -1 붙이기
+        });
+        
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+    }
+    
+    // 각 정점에 대해 dfs 수행
+    static int dfs(int start) {
+        dfsn[start] = ++cnt; // 노드 마다 고유한 SCC 번호를 할당한다.
+        stack.push(start); // 스택에 자기 자신을 삽입
+        
+        // 자신의 dfs, 자식들의 결과나 dfsn 중 가장 작은 번호를 result에 저장
+        int parent = dfsn[start];
+        for (int next : graph.get(start)) {
+            // 아직 방문하지 않은 이웃에 대하여
+            if (dfsn[next] == 0) {
+                parent = Math.min(parent, dfs(next));
+            } 
+            // 방문은 했으나, 아직 SCC로 추출되지 않은 이웃
+            else if (!finished[next]) {
+                parent = Math.min(parent, dfsn[next]);
+            }
+        }
+
+        // 부모노드가 자기 자신일 경우
+        // 자신과 자신의 자손들이 도달 가능한 제일 높은 정점이 자신일 경우 SCC 추출
+        if (parent == dfsn[start]) {
+            while (true) {
+                int t = stack.pop();
+                finished[t] = true;
+                sn[t] = groupNum;
+                res.get(groupNum).add(t);
+                
+                if (t == start) break;
+            }
+
+            groupNum++;
+        }
+        
+        // 자신의 부모값을 반환
+        return parent;
+    }
+}
+```
+
+
+
+
+
+이러한 **`SCC(강한 연결요소)`**는 그 자체로는 큰 의미가 없고, **위상정렬**과 함께 생각해보았을 때 큰 의미가 있습니다. 모든 `SCC`를 각 정점으로 고려했을 때 각 SCC를 위상 정렬할 수 있음을 인지합시다.
+
+![image-20210512144050417](https://user-images.githubusercontent.com/58545240/117945542-63021f00-b349-11eb-9cb7-81cb3d0be5f9.png)
+
+## SCC 관련 추천 문제
+
+**2150번: Strongly Connected Component**
+
+위에서 설명한 문제입니다. SCC 기본 문제죠.
+
+
+
+**10265번 : MT**
+
+동기들을 SCC로 분류하면됩니다.
+
+
+
+**6543번: The Bottom of a Graph**
+
+outdegree가 0인 SCC에 속하는 정점들만 출력하면 됩니다.
+
+
+
+**4196번: 도미노**
+
+
+
+**3977번: 축구 전술**
+
+이번엔 indegree가 0인 SCC가 단 1개만 있어야 합니다. 그렇지 않으면 confunsed입니다.
+
+답이 존재한다면, 그 SCC에 포함된 원소들을 출력해주면 됩니다.
+
+
+
+**2152번: 여행 계획 세우기**
+
+ATM 문제와 비슷한데, 이번엔 도착점이 단 하나이고, 각 정점에 서로 다른 값이 있지 않고 다 1이 있다고 생각하시면 됩니다.
+
+같은 SCC에 속한 도시들이 있으면 그 중 하나만 방문해도 나머지를 다 방문할 수 있죠.
+
+따라서 각 SCC의 값을 정점 개수로 두고, SCC 단위로 위상 정렬하여 시작점을 포함한 SCC로부터 방문해올 수 있는 최대 마을 개수를 SCC마다 구하는 식으로 문제를 풉니다.
+
+
+
+**4013번: ATM**
+
+위에서 설명한 문제입니다.
+
+
+
+**11097번: 도시 계획 (★)**
+
+일단 도시들을 갖고 SCC를 뽑은 뒤, 각 SCC마다 제일 큰 단순 싸이클의 경로 하나만 출력하고,
+
+서로 다른 SCC U, V에 대해 U에서 V로 가는 경로를 하나만 출력해주면 됩니다.
+
+원래의 간선 정보는 잃어버렸고, 리스트에 쓰인 건 도달가능성 뿐이므로 원래 있던 간선인지 아닌지는 아무 상관이 없죠.
+
+
+
+**1108번: 검색 엔진 (★)**
+
+링크를 간선으로 나타내고 각 사이트를 SCC 단위로 묶습니다.
+
+그리고 압축, 위상 정렬 후... 이번엔 SCC 단위로 방문하는 게 아니라, SCC 방문 순서는 위상 정렬 순서대로 하되, SCC 대신 SCC를 이루는 모든 정점을 한번씩 방문해야 합니다.
+
+처음엔 모든 사이트의 점수를 1점으로 놓고 시작합니다. 그리고 방문하면서 자신의 점수를 next 정점에 더하는데, 안 더하는 조건이 자신과 next가 같은 SCC 안에 있을 때입니다.
+
+답이 int 범위를 넘어갈 수도 있습니다.
+
+
+
+**6264번: Sub-dictionary (★)**
+
+이 문제는 지금까지와는 좀 다릅니다. 단어 u를 익히는 데 단어 v의 뜻이 필요하다고 할 때 간선 (u, v)를 모아서 그래프를 모델링하면,
+
+이번엔 단어 u만 알면 같은 SCC의 단어를 다 알 수 있는 게 아니고, **단어 u를 알려면 같은 SCC 안의 나머지 단어를 다 알아야 합니다.**
+
+이번에도 단어 단위로 익혔는지를 체크하는 bool 배열을 만들고, 이게 다 true가 되도록 각 단어들을 SCC DAG에서 위상 정렬 순으로 방문해야 합니다.
+
+일단 indegree가 0인 SCC들은 어쩔 수 없이 포함된 단어를 모두 가르쳐야 합니다.
+
+그리고 다른 SCC의 단어들의 경우, 어떤 단어를 배우는 데 학습했어야 하는 단어들을 모두 익혔다면 그 단어는 익힐 필요가 없고, 아니면 그 단어도 익혀야 하고...
+
+이런 식으로 처리해줘야 할 것이 상당히 까다로운 편입니다.
