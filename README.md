@@ -206,6 +206,7 @@
 | 2133_타일 채우기                                    | [Link](./Algorithm/Baekjoon/p2133.java)                      | [문제](https://www.acmicpc.net/problem/2133)                 | DP                                         |
 | 2143_두 배열의 합                                   | [Link](./Algorithm/Baekjoon/p2143.java)                      | [문제](https://www.acmicpc.net/problem/2143)                 | 투포인터, 슬라이딩 윈도우, HashMap         |
 | 2146_다리 만들기                                    | [Link](./Algorithm/Baekjoon/p2146.java)                      | [문제](https://www.acmicpc.net/problem/2146)                 | 그래프, BFS, 맵 라벨링                     |
+| 2150_Strongly Connected Component                   | [Link](./Algorithm/Baekjoon/p2150.java)                      | [문제](https://www.acmicpc.net/problem/2150)                 | SCC, 코사라주, 타잔                        |
 | 2156_포도주 시식                                    | [Link](./Algorithm/Baekjoon/p2156.java)                      | [문제](https://www.acmicpc.net/problem/2156)                 | DP                                         |
 | 2167_2차원 배열의 합                                | [Link](./Algorithm/Baekjoon/p2167.java)                      | [문제](https://www.acmicpc.net/problem/2167)                 | Prefix Sum, 구간 합                        |
 | 2178_미로 탐색                                      | [Link](./Algorithm/Baekjoon/p2178.java)                      | [문제](https://www.acmicpc.net/problem/2178)                 | BFS                                        |
