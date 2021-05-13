@@ -133,6 +133,7 @@
 | 1244_스위치 켜고 끄기                               | [Link](./Algorithm/Baekjoon/p1244.java)                      | [문제](https://www.acmicpc.net/problem/1244)                 | 구현                                       |
 | 1260_DFS와 BFS                                      | [Link](./Algorithm/Baekjoon/p1260.java)                      | [문제](https://www.acmicpc.net/problem/1260)                 | DFS, BFS                                   |
 | 1261_알고스팟                                       | [Link](./Algorithm/Baekjoon/p1261.java)                      | [문제](https://www.acmicpc.net/problem/1261)                 | 다익스트라, BFS                            |
+| 1309_동물원                                         | [Link](./Algorithm/Baekjoon/p1309.java)                      | [문제](https://www.acmicpc.net/problem/1309)                 | DP                                         |
 | 1316_그룹 단어 체커                                 | [Link](./Algorithm/Baekjoon/p1316.java)                      | [문제](https://www.acmicpc.net/problem/1316)                 | 문자열, 구현                               |
 | 1339_단어 수학                                      | [Link](./Algorithm/Baekjoon/p1339.java)                      | [문제](https://www.acmicpc.net/problem/1339)                 | 그리디, 브루트포스                         |
 | 1365_꼬인 전깃줄                                    | [Link](./Algorithm/Baekjoon/TwistedElectricWire_1365.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS                         |
@@ -433,6 +434,7 @@
 | 21276_계보 복원가 호석                              | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap           |
 | 21277_짠돌이 호석                                   | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스            |
 | 21278_호석이 두마리 치킨                            | [Link](./Algorithm/Baekjoon/p21278.java)                     | [문제](https://www.acmicpc.net/problem/21278)                | 브루트 포스, 플로이드 와샬, 인접행렬       |
+| 21312_홀짝 칵테일                                   | [Link](./Algorithm/Baekjoon/p21312.java)                     | [문제](https://www.acmicpc.net/problem/21312)                | 구현                                       |
 | 21317_징검다리 건너기                               | [Link](./Algorithm/Baekjoon/p21317.java)                     | [문제](https://www.acmicpc.net/problem/21317)                | DP, 브루트포스, 백트래킹                   |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
 
