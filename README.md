@@ -292,6 +292,7 @@
 | 9465_스티커                                         | [Link](./Algorithm/Baekjoon/p9465.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                         |
 | 9466_텀 프로젝트                                    | [Link](./Algorithm/Baekjoon/p9466.java)                      | [문제](https://www.acmicpc.net/problem/9466)                 | 그래프,  DFS                               |
 | 9613_GCD 합                                         | [Link](./Algorithm/Baekjoon/p9613.java)                      | [문제](https://www.acmicpc.net/problem/9613)                 | 유클리드 호제법                            |
+| 10265_MT                                            | [Link](./Algorithm/Baekjoon/p10265.java)                     | [문제](https://www.acmicpc.net/problem/10265)                | SCC, 위상정렬, knapsack, DP                |
 | 10430_나머지                                        | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                                   |
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
 | 10610_30                                            | [Link](./Algorithm/Baekjoon/p10610.java)                     | [문제](https://www.acmicpc.net/problem/10610)                | Greedy                                     |
