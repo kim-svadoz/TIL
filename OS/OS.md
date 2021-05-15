@@ -595,7 +595,7 @@ Suspended(stopped) : 외부적인 이유로 프로세스의 수행이 정지된 
 
 다른 프로세스와 공동으로 사용하는 변수, 테이블, 파일 등을 변경하는 부분이다.
 
-
+---
 
 ## Critical Section Problem
 
@@ -606,7 +606,7 @@ Suspended(stopped) : 외부적인 이유로 프로세스의 수행이 정지된 
 - **`Race Conditoin`**
   - 여러 프로세스가 공통된 데이터를 조작할 때 결과가 조작의 타이밍이나 접근 순서에 의해 결정되는 현상
 
-
+---
 
 ## Requirements
 
@@ -624,7 +624,7 @@ Suspended(stopped) : 외부적인 이유로 프로세스의 수행이 정지된 
   -   모든 프로세스가 임계영역에 들어가기 위해 기회를 가질 수 있어야 한다.
   -   ***한 프로세스가 자신의 임계 구역에 진입하고자 요청을 한 후부터 이 요청이 허용될 때까지 다른 프로세스가 그들의 임계구역에 진입할 수 있는 회수가 제한되어야 한다.***
 
-
+---
 
 ## Peterson's algorithm
 
@@ -671,9 +671,9 @@ Producer implements Runnable {
 
 그러므로 우리는 상호배제만 구현해볼 것인데 이를 위해서 바로 **`Mutex`, `Semaphore`, `Monitor`를 이용할 것이다.**
 
+---
 
-
-## ==== 해결책 ====
+## == 해결책 ==
 
 앞서 총 두 가지의 임계영역 문제의 솔루션을 알아보았다.
 
@@ -694,7 +694,7 @@ Producer implements Runnable {
 
 - 다중처리기 환경에서는 시간적인 효율성 측면에서 적용할 수 없다.
 
-
+---
 
 ## Semaphores
 
@@ -764,7 +764,7 @@ Lock과 UnLock을 하는 과정이 매우 짧아서 락하는 경우가 드문�
 
 - 세마포가 Ready Queue 를 가지고 있고, 둘 이상의 프로세스가 Critical Section 진입을 무한정 기다리고 있고, Critical Section 에서 실행되는 프로세스는 진입 대기 중인 프로세스가 실행되야만 빠져나올 수 있는 상황을 지칭한다.
 
-
+---
 
 ## 모니터
 
@@ -881,6 +881,8 @@ for (...) {
   - 결국 A스레드는 보다 빠르게 공유된 S자원의 할당을 받아 처리할 수 있다.
   - 리눅스 커널은 RT Task들 사이에서 사용되며, RT Mutex API를 통해 구현되었다.
 
+---
+
 ## 전통적인 동기화 문제
 
 ### 1. Producer-Consumer Problem
@@ -953,6 +955,139 @@ for (...) {
 예시로, **환형대기**를 해결하여 교착상태를 해결해 보자면, id가 짝수인 철학자는 왼쪽부터, id가 홀수인 철학자는 오른쪽부터 젓가락을 들게하면 교착상태가 일어나지 않는다. (이는 왼쪽 젓가락부터 집어드는 프로시저에 변화를 준 것이다.)
 
 이 예시는, starvation 등을 고려한 것이 아니라 `deadlock`의 해결에 초점을 맞춘 예시이다.
+
+---
+
+## Deadlock
+
+### RAG
+
+>   Resource Allocation Graph (자원 할당 그래프)
+>
+>   자원할당 그래프란, 프로세스의 자원 할당 상태를 표현해주는 그래프이다.
+
+![image-20210515123800139](https://user-images.githubusercontent.com/58545240/118347835-143eca00-b581-11eb-8dd8-2e455df502e9.png)
+
+-   동그라미는 프로세스, 네모는 자원, 점은 자원의 Instance를 의미한다.
+-   프로세스 -> 자원 : 프로세스가 해당 자원을 요청하는 것을 의미한다.
+-   자원 -> 프로세스 : 프로세스가 해당 자원을 소유하는 것을 의미한다.
+-   **위 `RAG`는 Deadlock이 아니다.**
+-   P3가 작업을 마치고 자원 R3을 반납한다면, P2는 R3를 할당받아 잡업을 수행할 수 있다.
+
+![image-20210515124059431](https://user-images.githubusercontent.com/58545240/118347849-1d2f9b80-b581-11eb-9cfc-414fc4fcef21.png)
+
+-   `RAG`에 **Cycle**이 존재 하지 않으면 Deadlock이 아니다.
+-   `RAG`에 **Cycle**이 존재 한다면, Deadlock일 수도, 아닐수도 있다.
+-   위의 두 `RAG`모두 Cycle이 존재하지만, 왼쪽 그래프만 Deadlock이다.
+-   오른쪽 `RAG`는 P2가 자원 R1을 반납하면, P1은 R1을 할당받아 작업을 수행한다. 마찬가지로 P4가 자원 R2를 반납하면 P3가 R2를 할당받아 작업을 수행한다.
+-   왼쪽 `RAG`는 모든 프로세스가 서로의 자원을 요구하면서 무한정 대기한다.
+
+
+
+그럼 이제 본격적으로 데드락을 해결하기 위한 방법들을 알아보자.
+
+### Deadlock Prevention
+
+위에서 알아 본 네가지 조건이 **동시에** 만족해야만 데드락이 발생하기 때문에 최소 하나 이상을 절대 발생하지 않도록 하는 방법이다.
+
+1.  `Mutual Exclusion` (현실성 X)
+    -   자원을 서로 동시에 사용하지 못하도록 하는 것이다. **Prevention**을 위해 Mutual Exclusion을 허용하지 않으면 공유를 가능하도록 만들어 준다는 것인데, 이 때 공유 불가능한 자원 자체가 존재하게 되는 경우 이 자원을 공유 가능하도록 만들어주는 것은 불가능 하므로 실행 불가능 이다.
+2.  `Hold and Wait` (현실성 떨어짐)
+    -   자원을 소유(**hold**)하면서 다른 자원을 요구하면서 기다리는 것을 방지하려면 `One shot Allocation`의 방법이 있는데 이는 프로세스가 자신에게 필요한 자원들을 한꺼번에 요구하고 동시에 허용될 때까지 프로세스를 보류시킴으로써 방지시키는 방법이다.
+    -   다른 방법으로 프로세스가 자원을 전혀 갖고 있지 않을 때만 자원을 요청할 수 있도록 허용하는 방법이 있다.
+    -   `One Shot Allocation`의 단점은 많은 자원을 동시에 요구하는 것은 제한적이며, 모든 자원을 얻어야 실행하므로 성능이 안 종하지며(**Low Throughtput**), 자원의 활용도가 떨어지며 **Starvation**의 문제가 발생할 수 있다.
+3.  `No preemption` (현실성 떨어짐)
+    -   프로세스가 필요한 자원을 가진 프로세스로부터 그것을 잠시 빼앗는다.
+    -   하지만 Hold and Wait와 마찬가지로 빼앗긴 프로세스의 실행이 지연될 수 있는 문제(**Starvation**)가 발생할 수 있다.
+4.  `Circular Wait` (그나마 현실성 있음)
+    -   모든 **Resource Type**(ex. file, memory, sdd, print, ...)마다 번호를 매겨서(**Ordering**) 소스를 요청할 때 내가 점유하고 있는 것 보다 번호가 높은 것만 요청하는 것이다. (내가 가진 order보다 높은 order의 자원만 요청한다.)
+    -   이렇게 Cycle이 형성되는 것을 막아 Deadlock으로 부터 보호한다.
+    -   하지만 데드락은 안걸리겠지만 **Stravation**는 발생할 수 있다.
+    -   이 Ordering은 Deadlock Preemption을 완벽히 보장할 수 없다.
+
+***이 `Deadlock Prevention`은 자원의 자원의 활용도가 떨어지고 시스템 성능이 안좋아 질 수 있다.***
+
+
+
+### Deadlock Avoidance
+
+따라서 우리는 데드락을 예방(Prevention) 하지말고, 피해버리자(Avoid). 이를 Banker's Algorithm으로 할 생각이다.
+
+기본적인 생각은 Deadlock이 될 수 있는 자원 할당 요청을 허락하지 않음으로써, Deadlock을 피하는 것이다.
+
+![image-20210515123337463](https://user-images.githubusercontent.com/58545240/118347856-26b90380-b581-11eb-8a7a-69e079b7892f.png)
+
+-   **Safe State** (안전 상태)
+    -   안전상태에 있는 경우가 Deadlock에 발생하지 않는 상태이고, **Unsafe State**로 넘어가지 않도록 해야한다.
+    -   동적으로 데드락이 발생하지 않는 **Cycle**을 찾아내어 자원을 할당하는 순서(**Safe Sequence**)를 정하여 데드락을 피한다.
+    -   시스템 초기  상태는 항상 safe state이다.
+
+#### > Resource-Allocation-Graph Algorithm
+
+>   자원당 instance가 하나일 때 (Single Instance of Each Resource Type) 사용하는 알고리즘
+
+![image-20210515125053166](https://user-images.githubusercontent.com/58545240/118347860-32a4c580-b581-11eb-95f0-5a87cb01bb8b.png)
+
+-   위에서 살펴본 `RAG`에서 는 `Assignment Edge`와 `Request Edge`를 사용했는데 추가로 점선으로 표시한  **`Claim Edge`**를 사용한다.
+-   이 **Claim Edge**는 프로세스가 자원을 요구할 가능 성이 있을 때 나타내주는 것으로 사전 정보를 가지고 표현한다.
+-   이 3종류의 Edge로 **Cycle**이 만들어지지 않았으므로 위 그래프는 **Safe State**이다.
+
+![image-20210515125251705](https://user-images.githubusercontent.com/58545240/118347867-39cbd380-b581-11eb-92b2-984d2932a359.png)
+
+-   위 그래프는 3종류의 Edge로 **Cycle**이 만들어 졌으므로 **Unsafe State**이며 Deadlock은 아니지만 발생가능성이 있으므로 피해주어야 한다.
+-   결론적으로 P2가 R2의 자원을 할당받는 것을 막아줌으로 피할 수 있는 방법이 있다.
+-   이는 N개의 프로세스에 대해 **O(N<sup>2</sup>)**의 Time Complexity를 가진다.
+
+#### > Banker's Algorithm
+
+>   자원당 instance가 두개 이상(Multiple Instance of Each Resource Type) 일 때는 cycle detectoin만으로는 판별할 수 없다. 이에 따라 나온것이 은행원 알고리즘
+
+![image-20210515125906564](https://user-images.githubusercontent.com/58545240/118347874-43553b80-b581-11eb-9989-a8b4d34d5280.png)
+
+이 은행원 알고리즘을 위해서는 사전 정보가 필요하다.
+
+-   `Allocation` : 현재 프로세스에 할당 되어 있는 자원 량
+-   `Max` : 프로세스가 요 구할 수 있는 최대 자원량
+-   `Available` : 현재 가용 자원량
+-   `Need` : 프로세스가 현재 추가로 요구할 수 있는 자원량 (Max - Allocation)
+
+여기서 P0는 추가적으로 A 7개, B 4개 C 3개를 요청할 수 있다.
+
+P1이 A 2개 B 2개 C 2개를 요청했다고 가정할 때 현재 가용 자원으로 충분히 할당할 수 있지만 P1이 요구할 수 있는 최대 자원량보다 현재 가용자원량이 적으므로 자원을 할당하지 않는다.
+
+이런 방법으로 순서(**Sequnce**)를 찾아보면 `P1 -> P3 -> P4 -> P2(or P0) -> P0(or P2)` 의 순서로 자원을 요청한다면, 모든 요청을 충족할 수 있고, 이는 **Safe State**가 된다.
+
+***하지만 매번 Request가 하나씩 올 때마다 알고리즘을 사용한다면 시스템 오버헤드가 증가하게 되고 이는 비효율적이다.***
+
+
+
+### Deadlock Detection
+
+>   **-> Recovery Algorithm**
+
+따라서 우리는, `Avoidance`보다 효율적인 `Detection`을 사용해보자. 이는 Deadlock을 감지하는 것으로 Deadlock이 발생한 것에 대해서 회복을 시키는 정도로 하는 것이다.
+
+매 요청 마다 `Detection Algorithm`을 돌리는 것은 비효율적이고 상당한 Overhead를 야기하므로 언제 사용되어야 할지 잘 결정하는 것이 중요하다. (쓰레드가 얼마나 돌아가고 있느냐, 쓰레드의 개수에 따라 deadlock cycle이 증가할 수 있으므로)
+
+얼마나 자주 데드락이 일어날지 예상하여, **deadlock detection**을 걸어주면 된다. (ex. 1년에 한번 데드락이 발생한다? -> 1달에 한번 detection)
+
+가장 좋은 것이 바로 그냥 데드락을 걸리게 냅두자!!! -> **그렇게 해서 데드락이 감지되면 어떻게 하는가?**
+
+1.  껐다 킨다.
+
+2.  중요한 시스템이 있다면 **`Recovery(복원)`** 한다.
+
+    *Recovery에는 두 가지 방법이 있다.*
+
+    1.  데드락이 발견되면 정지된 프로세스를 끊어버린다.(**Process Termination**)
+        -   Deadlock Cycle 중 의심 스러운 프로세스를 데드락이 해결될 때까지 하나씩 끊어본다. (비용이 크다.)
+        -   우선순위에 따라, 실행된지 오래된 프로세스는 죽이지 않고 프로세스가 많은 프로세스를 죽이는게 효율적일 것이다.
+        -   이처럼 프로세스를 어떻게 선택할지에 대해 효율성을 따져서 프로세스를 죽인다.
+    2.  자원 선점 (**Recoure Preemption**)
+        -   Deadlock Cycle이 없어질 때까지 자원을 선점하여 다른 프로세스에게 제공하는 방법이다.
+            1.  **희상자 선택 (`Victim Select`)** : 원상태로 되돌리는데 비용을 적게 하도록 프로세스나 자원의 선점 순서를 결정
+            2.  **복귀 (`Roolback`)** : 선점당하는 프로세스가 정상 상태로 복귀
+            3.  **기아상태(`Starvation`)** : 동일한 프로세스가 계속해서 선점당하는 문제 (복귀 횟수를 비용 요소에 포함시킴으로써 해결 가능)
 
 ---
 

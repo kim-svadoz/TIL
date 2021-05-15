@@ -48,6 +48,8 @@
     3.  shell
     4.  process
 
+---
+
 ## Chapter 3. Proccess
 
 ### Quiz
@@ -169,6 +171,8 @@
     3.  **IP 주소와 port 번호를 결합하여 하나의 소켓을 특정(identify)할 수 있다.**
     4.  일반적으로 소켓은 connection-oriented (TCP) 용으로만 사용할 수 있다. 
 
+---
+
 ## Chapter 4. Thread & Concurrency
 
 ### Quiz
@@ -287,6 +291,8 @@
     3.  B A A A C D
     4.  B C A D A A
 
+---
+
 ## Chapter 5. CPU Scheduling
 
 ### Quiz
@@ -375,6 +381,8 @@
     2.  nonpreemptive SJF = 16
     3.  **RR (time quantum = 1) = 26**
     4.  nonpreemptive Priority-based (smaller number, higher priority) = 41
+
+---
 
 ## Chapter 6. Synchronization Tools
 
@@ -563,5 +571,166 @@
      }
      ```
 
-     
 
+----
+
+## Chapter 7. Synchronization Examples
+
+### Quiz
+
+1.  Readers-Writers Problem에서 Reader 프로세스가 다음과 같은 자료 구조를 가지고 있다
+
+    ```cpp
+    semaphore rw_mutex = 1; 
+    semaphore mutex = 1; 
+    int read_count = 0;
+    ```
+
+    다음 사례들 중에서 rw_mutex 세마포어를 사용할 필요가 없는 경우로 가장 적절한 것은?
+
+    1.  첫번째 reader 프로세스가 임계구역에 진입할 때.
+    2.  마지막 reader 프로세스가 임계구역에 진입할 때.
+    3.  writer 프로세스가 쓰기 작업을 완료할 때. 
+    4.  **두번째 reader 프로세스가 임계구역에 진입할 때.**
+
+2.  Bounded Buffer Problem의 consumer process 구조를 아래와 같이 구현했다.
+
+    ```cpp
+    while (true) {
+        (A) wait(full);
+        (B) wait(mutex);
+        …
+        /* remove an item from buffer to next_consumd */
+        …
+    	(C) signal(mutex);
+         (D) signal(empty);
+        …
+    }
+    ```
+
+    위 슈도 코드에 대한 설명으로 가장 적절한 것은?
+
+    1.  (A)에서 wait(full)을 했을 때 signal(full)을 해 주지 않으므로 deadlock이 발생할 것이다.
+    2.  (A)에서 wait(full)을 했을 때 signal(full)을 해 주지 않으므로 deadlock이 발생할 것이다.
+    3.  (C)에서 signal(mutex)를 호출하는 것은 다른 consumer 프로세스가 임계구역에 진입할 수 있 게 해 준다.
+    4.  **(D)에서 signal(empty)를 호출했으므로 producer 프로세스가 임계구역에 진입할 수 있을 것이다.**
+
+3.  `<잠자는 TA 문제>` 주니온 교수는 운영체제 과목을 어려워하는 학생들을 도와줄 수 있는 TA를 한 명 배정하기로 했다. TA가 대기하는 IT융복합관 999호는 좁아서 한 명의 TA와 한 명의 학생만 들어갈 수 있다. 999호 바깥 복도에는 3개의 의자가 있으므로 TA가 한 명을 돕고 있을 때는 여기서 기다릴 수 있다. 도움을 요청하는 학생들이 없으면 잠이 많은 TA는 항상 졸고 있다. TA의 도움이 필요한 학생들은 999호에 도착해서 TA가 졸고 있으면 깨워서 도움을 받을 수 있다. 만약 이미 도움을 받는 학생이 있으면 빈 의자에서 대기하고, 빈 의자가 없으면 돌아갔다가 다시 와야 한다. 위 문제에 대해서 동기화 방법을 조율하는 해결책에 대한 설명으로 옳다고 할 수 없는 것을 모두 고르 시오.
+
+    1.  TA 1명과 도움이 필요한 n명의 학생들을 프로세스, 혹은 쓰레드로 구현하면 좋겠다.
+    2.  TA가 졸고 있을 때 도착한 학생은 조교를 깨우기 위해 뮤텍스 락을 이용해 깨우면 좋겠다.
+    3.  빈 의자에 앉을 때는 의자의 수로 초기화된 카운팅 세마포어를 이용하면 좋겠다. 
+    4.  **빈 의자가 가득찼을 때, 학번이 더 높은 학생이 도착하면 학번이 낮은 학생을 선점(premption) 하도록 하면 deadlock 문제가 발생할 수 있다.** 
+    5.  **TA의 도움을 받은 학생이 나가면서 바깥 의자에 대기하는 학생들에게 끝났다고 알려주지 않으면 starvation 문제가 발생할 수 있다.**
+
+4.  강의자료에 제공된 Dining Philosophers Problem에 대한 **Pthread / Java 솔루션**에 대한 설명으로 옳다고 할 수 없는 것을 모두 고르시오.
+
+    1.  **철학자들의 저녁식사 문제의 Pthread 솔루션은 Pthread에서 제공하는 monitor lock을 사용하고 있다.**
+    2.  pthread_cond_wait() 함수가 호출되기 전에 condition 변수와 연계된 mutex 락이 먼저 잠겨져 야 한다. 
+    3.  공유 데이터를 변경하는 쓰레드는 pthread_cond_signal() 함수를 호출하여 condition 변수가 참 이 되기를 기다리는 쓰레드에게 신호를 보낸다.
+    4.  **Java 솔루션에서는 DiningPhilosopherMonitor 클래스가 monitor 기능을 제공하고 있으며, Philosopher 쓰레드의 갯수만큼의 monitor를 생성하여 각 Philosopher 객체가 monitor instance 하나씩을 가지고 있다.**
+    5.  **Java 솔루션에서는 n 명의 철학자 쓰레드를 생성하기 위해서 카운팅 세마포어를 정의하고 초기값 으로 n을 설정해 주었다.**
+
+5.  Thread-safe Concurrent Application을 개발하기 위한 여러 가지 대안에 대한 설명으로 가장 틀린 것은?
+
+    1.  transactional memory를 통해 메모리 읽기와 쓰기 연산을 원자적 연산(atomic operation)으로 만들 수 있다. 
+    2.  OpenMP에서 #pragma omp critical 컴파일러 디렉티브로 임계 구역을 지정해 줄 수 있다. 
+    3.  함수형 프로그래밍 언어들은 명령형 프로그래밍 언어와 달리 상태를 유지하지 않으므로 경쟁조건이 나 교착상태가 아예 발생하지 않는다. 
+    4.  **여러 개의 CPU가 존재하는 다중 코어 시스템에서는 각 코어에서 별도의 프로세스(혹은 쓰레드)가 독립적으로 실행되기 때문에 동기화 문제는 크게 문제가 되지 않는다**
+
+---
+
+## Chapter 8. Deadlocks
+
+### Quiz
+
+1.  다음 여섯개의 resource-allocation graph의 그림 중에서 데드락이 발생한 경우만 모아 놓은 것을 고르시오.
+
+    ![image-20210515225458115](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20210515225458115.png)
+
+    1.  a, b, d
+    2.  b, c, d
+    3.  **b, d**
+    4.  b, d, e, f
+    5.  b, c, d, e, f
+
+2.  어떤 시스템이 세 개의 쓰레드 T1, T2, T3로 구성되어 있고 이 쓰레드들은 동일한 자원인 R의 인스턴 스 세 개를 필요로 하고 있다. 이 시스템이 절대로 데드락에 빠지지 않게 하기 위해서는 R이 최소한 몇 개 이상의 인스턴스를 가져야 하는가?
+
+    1.  6
+    2.  **7**
+    3.  8
+    4.  9
+    5.  10
+
+3.  데드락 방지 (deadlock prevetion) 방법에 대한 설명으로 가장 틀린 설명은?
+
+    1.  새로운 자원을 요청(request)하기 전에 모든 자원을 반납(release)하면 데드락은 발생하지 않는 다. 
+    2.  모든 자원에 유일한 번호를 부여하고, 자원을 요청할 때 반드시 오름차순으로 요청을 하면 데드락 을 발생하지 않도록 할 수 있다. 
+    3.  새로운 자원을 요청하는 쓰레드가 있으면 해당 자원을 소유한 쓰레드를 선점(preemption)시켜 버 리는 데드락이 발생하지 않는다. 
+    4.  **뮤텍스락이나 세마포어를 이용하여 상호 배제(mutual exclusion)를 하도록 하면 데드락은 발생하 지 않는다. **
+
+4.  한 집합의 쓰레드들이 공유하는 자원이 단 하나의 인스턴스를 가진 자원 딱 하나일 경우에 대한 설명으 로 가장 옳은 것은?
+
+    1.  **데드락이 발생할 일이 전혀 없다.**
+    2.  두 개 이상의 쓰레드가 이 자원에 대한 경쟁 상황이 발생하면 데드락이 발생한다.
+    3.  세 개 이상의 쓰레드가 이 자원에 대한 경쟁 상황이 발생하면 데드락이 발생한다.
+    4.  한 쓰레드가 이 자원을 점유하고 있을 때 다른 쓰레드가 이 자원을 요청하는 상황이 되면 데드락 이 발생한다. 
+
+5.  다음 중 데드락이 발생할 수 있는 조건 네 가지와 거리가 가장 먼 것은?
+
+    1.  상호 배제 (mutual exclustion)
+    2.  점유 대기 (hold and wait)
+    3.  선점 불가 (no preemption)
+    4.  **한정 대기 (bounded waiting)**
+
+6.  교착상태(deadlock)의 방지(prevention)와 회피(avoidance)와 관련하여 가장 적절한 설명은?
+
+    1.  **데드락 회피(avoidance)를 위해서, 어떤 요청을 수락(grant)했을 때의 시스템 상태가 safe state라면 그 요청을 수락해도 된다. **
+    2.  데드락 방지(prevention)을 위해서, 어떤 시스템의 상태가 safe state에 있을 때 자원 요청이 들 어오면 그 요청을 수락해도 된다.
+    3.  데드락 방지(prevention)는 데드락을 발생하지 않도록 하고, 데드락 회피(avoidance)는 데드락 이 발생하도록 두고, 데드락이 발생하면 이를 감지하여 복구한다. 
+    4.  데드락 회피(avoidance)를 위한 알고리즘은 어떤 시스템의 요청(request)에 대한 선행지식(piori knowledge)을 필요로 하지 않는다. 
+
+7.  다음 시스템 스냅샷을 고려해보자.
+
+    쓰레드 집합 T = { T0, T1, T2 }, 자원 집합 R = { A, B, C } 세 개의 자원 유형 A, B, C의 인스턴스 개수는 각각 (8, 5, 4)이다. Allocation은 현재 프로세스가 점유한 자원의 수이고, Max는 각 프로세스가 필요로 하는 자원 수의 최대값이라고 할 때, Banker's Algorithm을 적용했을 때 올바른 설명으로만 묶인 것은?
+
+    ```bash
+    	Allocation	 	Max
+    	A B C 			A B C
+    T0  0 0 1			8 4 3
+    T1  3 2 0 			6 2 0
+    T2  2 1 1 			3 3 3
+    ```
+
+    1.  Banker's Algorithm에서 Available의 값은 (3, 2, 3)이다.
+    2.  T0 쓰레드의 Need 벡터 (Need[0]) 의 값은 (8, 4, 3)이다.
+    3.  **현재 이 시스템의 상태는 safe state이다.**
+    4.  위 상태에서 T0가 자원을 다음과 같이 요청했다.(A=2, B=0, C=2) Request[0] = (2, 0, 2) 이 때 Resource-Request 알고리즘을 적용하면 Allocation[0] 벡터의 값은 (1, 0, 3)이 된다.
+    5.  위 상태에서 T1이 자원을 다음과 같이 요청했다. (A=2, B=0, C=0) Request[1] = (2, 0, 0) 이 때 Safety 알고리즘을 적용하면 Work 벡터의 값은 (8, 5, 4)가 된다.
+
+8.  만약 어떤 시스템이 4개의 인스턴스를 가진 자원을 하나 가지고 있다고 해보자. 이 때 3개의 쓰레드가 이 자원을 공유하고 있는데, 이 쓰레드는 2개의 인스턴스가 필요한 상황이다. 이런 시스템 상황에 대한 설명으로 가장 옳은 것은?
+
+    1.  한 쓰레드가 2개를 점유하고 나면, 2개의 자원만 남기 때문에 데드락이 발생한다. 
+    2.  한 쓰레드가 한 개씩의 자원을 점유하고 나면, 1개의 자원만 남기 때문에 데드락이 발생한다.
+    3.  두 개의 쓰레드가 두 개씩의 자원을 점유하고 나면, 한 개의 쓰레드가 자원을 얻지 못해 데드락이 발생한다. 
+    4.  **이런 시스템의 상황에서는 데드락이 발생할 수가 없다. **
+
+9.  다음은 연습문제 8.3의 시스템 스냅샷이다.
+
+    ![image-20210515225951904](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20210515225951904.png)
+
+    위 시스템 상황에 대해 올바른 설명으로만 묶여진 것은? 
+
+    a) P4의 Need 벡터는 Need[4] = (0, 6, 4, 2)이다. 
+
+    b) 이 시스템의 상태는 safe state이다. 
+
+    c) Request1 = (0, 4, 2, 0) (P1의 자원요청)에 대해서 grant해도 된다.
+
+    d) 위 c)번의 Request1의 요청을 처리한 후에 Available1은 (1, 1, 0, 0)이 된다. e) 프로세스 시퀀스 의 순서는 safe sequence이다. 
+
+    1.  **a, b, c, d, e**
+    2.  a, b, d, c
+    3.  a, b, e
+    4.  a, b, c, e
+    5.  a, b, d, e
