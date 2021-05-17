@@ -36,9 +36,11 @@
 
 ## :triangular_flag_on_post: **IT**
 
-### 1. [Network](./Embedded/Network.md)
+### 1. [OS](./OS/OS.md)
 
 ### 2. [OS_Quiz](./OS/OS_quiz.md)
+
+### 3. [Network](./Embedded/Network.md)
 
 ---
 
