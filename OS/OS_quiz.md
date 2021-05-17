@@ -734,3 +734,74 @@
     3.  a, b, e
     4.  a, b, c, e
     5.  a, b, d, e
+
+## Chapter 9. Main Memory
+
+### Quiz
+
+1.  다음과 같은 메모리 파티션이 순서대로 주어져있다. 
+    100MB 500MB 200MB 300MB 600MB 다음과 같은 크기를 가진 네 개의 프로세스가 순서대로 도착했을 때, 212MB 417MB 112MB 426MB 다음 중 가장 효율적인 전략은 무엇인가?
+
+    1.  First-Fit
+    2.  **Best-Fit**
+    3.  Worst-Fit
+    4.  Random-Fit
+
+2.  ___ is the  area in a region or a page that is not used by the job occupying that region or page.
+
+    This space is unavailable for use by the system until that job is finished and the page or the region is released.
+
+    ___에 들어갈 용어로 가장 알맞은 것은?
+
+    1.  external fragmentation
+    2.  **internal fragmentation**
+    3.  segmentation
+    4.  separated paging
+
+3.  다음 중에서 페이징 기법에 대한 설명으로 가장 틀린 것은?
+
+    1.  페이징 기법은 연속 메모리 할당(contiguous memory allocation) 방법보다 외부 단편화 (fragmentation) 현상이 덜 심하다. 
+    2.  **페이징 기법을 사용하기 위해서는 각 페이지의 크기를 프로그램의 크기에 따라 다양하게 변경할 수 있어야 한다. **
+    3.  페이징 기법을 적용하기 위해서는 물리적인 메모리 공간을 여러 개의 작은 프레임으로 나누어야 한다.
+    4.  페이징 기법을 적용하기 위해서는 페이징 테이블을 정보를 저장하기 위한 작은 캐시 메모리 장치 가 필요하다.
+
+4.  페이지의 크기가 1KB라고 하자. 주소 번지 3085번지가 저장되는 위치의 페이지 번호와 오프셋은 각각 얼마인가?
+
+    이때 3085는 십진수이고, 페이지 번호는 0번부터 시작한다고 가정한다.
+
+    1.  **3, 13**
+    2.  2, 1013
+    3.  2, 13
+    4.  3, 1013
+
+5.  Consider a logical address space of 64 pages of 1,024 words each, mapped onto a physical memory of 32 frames. a. How many bits are there in the logical address? 
+
+    b. How many bits are there in the physical address?
+
+    위 문제에서 word는 메모리 주소공간의 기본 단위(byte)의 2배(2 bytes)를 의미한다.
+
+    a. b. 에서 묻는 것은 각각 최소한 몇 비트가 있으면 이 주소 공간을 표현할 수 있는가를 질문한다.
+
+    즉, 1024=2^10 바이트의 주소공간의 주소는 10비트를 필요로 한다. 
+
+    a, b에 대한 답으로 올바르게 묶인 것은?
+
+    1.  **17, 16**
+    2.  16, 16
+    3.  17, 15
+    4.  16, 15
+
+6.  Consider a paging system with the page table stored in memory.
+
+    a. If a memory reference takes 50 nanoseconds, how long does a paged memory reference take?
+
+    b. If we add TLBs, and if 75 percent of all page-table references are found in the TLBs, what is the effective memory reference time?
+
+    a. 메모리 참조에 50ns가 걸린다고 한다. 페이징 메모리에 접근하는 시간은 얼마인가?
+
+    b. TLB가 있고, hit ratio가 0.75라고 한다. 유효 메모리 접근시간 (EAT)는 얼마인가?
+
+    1.  50, 62.5
+    2.  50, 78.5
+    3.  **100, 62.5**
+    4.  100, 78.5
