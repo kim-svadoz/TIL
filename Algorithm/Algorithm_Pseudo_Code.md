@@ -375,17 +375,65 @@ class Trie {
 ```java
 class Edge {
     int s, e, cost;
-    public Edge(int s, int e, int cost) {
+    public Edge(int s, int e, int cost) implements Comparable<Edge> {
         this.s = s;
         this.e = e;
         this.cost = cost;
     }
+    
+    public Edge(int e, cost) {
+        this.e = e;
+        this.cost = cost;
+    }
+    
+    public int compareTo(Edge o) {
+        return cost - o.cost;
+    }
 }
-void mst() {
+void Solution() {
     PriorityQueue<Edge> pq = new PriorityQueue<>();
     ...
     pq.add(new Edge(s, e, cost));
     ...
+        
+    mst();
+    
+    int leaf = 0;
+    // 가장 먼 노드를 구하려면 (트리의 지름) 먼저 leaf를 구한다.
+    dfs(0, 0, new boolean[n]);
+    dfs(leaf, 0, new boolean[n]);
+    // 가장 먼 길이 answer
+    System.out.println(answer);
+}
+
+void mst() {
+    while (!pq.isEmpty()) {
+        Edge edge = pq.poll();
+        int u = edge.s;
+        int v = edge.e;
+        int cost = edge.cost;
+        if (find(u) == find(v)) continue;
+        union(u, v);
+        // 여기까지 하면 최소스패닝 트리(MST) 완성
+        
+        // 이 과정은 다시 알짜배기 간선들로만 이루어진 graph 구현
+        list[u].add(new Edge(v, cost));
+        list[v].add(new Edge(u, cost));
+    }
+}
+
+void dfs(int now, int sum, boolean[] visited) {
+    visited[now] = true;
+    if (answer < sum) {
+        // 가장 먼 길이(지름) answer
+        answer = sum;
+        // 가장 먼 노드 leaf
+        leaf = now;
+    }
+    for (Edge edge : list[now]) {
+        if (visited[edge.e]) continue;
+        dfs(edge.e, sum + edge.cost, visited);
+    }
 }
 
 void union(int u, int v) {
@@ -410,6 +458,50 @@ int find(int x) {
     return find(parent[x]);
 }
 ```
+
+## Tree + DP
+
+```java
+dp = new int[n + 1][2];
+list[u].add(v);
+list[v].add(u);
+
+// 트리는 사이클을 형성하지 않으므로 아무 노드나 시작점으로 결정
+dfs(1, -1);
+
+// 시작점에서의 메모이제이션 배열을 가져온다
+System.out.println(Math.max(dp[1][0], dp[1][1]));
+
+// 1차원
+int dfs(int cur, int parent) {
+    if (dp[cur] != 0) {
+        return dp[cur];
+    }
+    dp[cur] = 1;
+    
+    for (int next : list[cur]) {
+        if (next == p) continue;
+        
+        dp[cur] += dfs(next, cur);
+    }
+}
+
+
+// 2차원
+void dfs(int cur, int parent) {
+    if (dp[cur] != 0)
+    
+    for (int next : list[cur]) {
+        if (next == parent) continue;
+        dfs(next, cur);
+        // 구현 부분
+        
+    }
+    dp[cur][1] += 1;
+}
+```
+
+
 
 ## Topological Sort
 
@@ -537,6 +629,7 @@ void Solution() {
     ...
     list[u].add(new Node(v, cost));
     
+    // 다익스트라는 한 점에서 모든 정점으로의 거리를 알아 보는 것이므로 start 노드가 필요하다.
     dijkstra(0);
 }
 
