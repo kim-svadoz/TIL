@@ -259,6 +259,7 @@
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3584_가장 가까운 공통 조상                          | [Link](./Algorithm/Baekjoon/p3584.java)                      | [문제](https://www.acmicpc.net/problem/3584)                 | 트리, LCA, dfs                             |
 | 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
+| 4097_수익                                           | [Link](./Algorithm/Baekjoon/p4097.java)                      | [문제](https://www.acmicpc.net/problem/4097)                 | DP, 구현                                   |
 | 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/p4195.java)                      | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
 | 4358_생태학                                         | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                                  |
 | 4396_지뢰찾기                                       | [Link](./Algorithm/Baekjoon/p4396.java)                      | [문제](https://www.acmicpc.net/problem/4396)                 | 구현, 문자열, 파싱                         |
@@ -423,6 +424,7 @@
 | 18868_멀티버스1                                     | [Link](./Algorithm/Baekjoon/p18868.java)                     | [문제](https://www.acmicpc.net/problem/18868)                | 구현                                       |
 | 19236_청소년상어                                    | [Link](./Algorithm/Baekjoon/p19236.java)                     | [문제](https://www.acmicpc.net/problem/19236)                | 백트래킹, 구현, DFS                        |
 | 19532_수학은 비대면강의입니다                       | [Link](./Algorithm/Baekjoon/p19532.java)                     | [문제](https://www.acmicpc.net/problem/19532)                | 브루트 포스                                |
+| 19947_투자의 귀재 배주형                            | [Link](./Algorithm/Baekjoon/p19947.java)                     | [문제](https://www.acmicpc.net/problem/19947)                | DP                                         |
 | 20010_악덕 영주 혜유                                | [Link](./Algorithm/Baekjoon/p20010.java)                     | [문제](https://www.acmicpc.net/problem/20010)                | 최소신장트리(MST), union-find, 트리의 지름 |
 | 20053_최소, 최대 2                                  | [Link](./Algorithm/Baekjoon/p20053.java)                     | [문제](https://www.acmicpc.net/problem/20053)                | 구현                                       |
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
