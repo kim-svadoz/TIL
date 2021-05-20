@@ -182,6 +182,7 @@
 | 1915_가장 큰 정사각형                               | [Link](./Algorithm/Baekjoon/p1915.java)                      | [문제](https://www.acmicpc.net/problem/1915)                 | DP                                         |
 | 1916_최소 비용 구하기                               | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                         |
 | 1922_네트워크 연결                                  | [Link](./Algorithm/Baekjoon/p1922.java)                      | [문제](https://www.acmicpc.net/problem/1922)                 | 최소 스패닝 트리, 크루스칼, UNION-FIND     |
+| 1926_그림                                           | [Link](./Algorithm/Baekjoon/p1926.java)                      | [문제](https://www.acmicpc.net/problem/1926)                 | BFS, 구현                                  |
 | 1927_최소 힙                                        | [Link](./Algorithm/Baekjoon/p1927.java)                      | [문제](https://www.acmicpc.net/problem/1927)                 | PQ, 최소 힙                                |
 | 1929_소수 구하기                                    | [Link](./Algorithm/Baekjoon/p1929.java)                      | [문제](https://www.acmicpc.net/problem/1929)                 | 소수, 에라토스테네스의 체                  |
 | 1931_회의실배정                                     | [Link](./Algorithm/Baekjoon/p1931.java)                      | [문제](https://www.acmicpc.net/problem/1931)                 | Greedy, Comparator                         |
@@ -257,6 +258,7 @@
 | 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
+| 3184_양                                             | [Link](./Algorithm/Baekjoon/p3184.java)                      | [문제](https://www.acmicpc.net/problem/3184)                 | bfs, 구현                                  |
 | 3584_가장 가까운 공통 조상                          | [Link](./Algorithm/Baekjoon/p3584.java)                      | [문제](https://www.acmicpc.net/problem/3584)                 | 트리, LCA, dfs                             |
 | 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
 | 4097_수익                                           | [Link](./Algorithm/Baekjoon/p4097.java)                      | [문제](https://www.acmicpc.net/problem/4097)                 | DP, 구현                                   |
@@ -285,6 +287,7 @@
 | 7453_합이 0인 네 수                                 | [Link](./Algorithm/Baekjoon/p7453.java)                      | [문제](https://www.acmicpc.net/problem/7453)                 | 부분 부분합, 투포인터                      |
 | 7576_토마토                                         | [Link](./Algorithm/Baekjoon/p7576.java)                      | [문제](https://www.acmicpc.net/problem/7576)                 | BFS                                        |
 | 7579_앱                                             | [Link](./Algorithm/Baekjoon/p7579.java)                      | [문제](https://www.acmicpc.net/problem/7579)                 | DF, 냅색 알고리즘                          |
+| 7682_틱택토                                         | [Link](./Algorithm/Baekjoon/p7682.java)                      | [문제](https://www.acmicpc.net/problem/7682)                 | 구현                                       |
 | 9012_괄호                                           | [Link](./Algorithm/Baekjoon/p9012.java)                      | [문제](https://www.acmicpc.net/problem/9012)                 | 문자열, 스택                               |
 | 9019_DSLR                                           | [Link](./Algorithm/Baekjoon/p9019.java)                      | [문제](https://www.acmicpc.net/problem/9019)                 | 완전탐색, 구현, BFS                        |
 | 9046_복호화                                         | [Link](./Algorithm/Baekjoon/p9046.java)                      | [문제](https://www.acmicpc.net/problem/9046)                 | 문자열, 구현                               |
@@ -301,6 +304,7 @@
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
 | 10610_30                                            | [Link](./Algorithm/Baekjoon/p10610.java)                     | [문제](https://www.acmicpc.net/problem/10610)                | Greedy                                     |
 | 10714_케이크 자르기 2                               | [Link](./Algorithm/Baekjoon/p10714.java)                     | [문제](https://www.acmicpc.net/problem/10714)                | DP, DFS, 스택오버플로우 발생               |
+| 10775_공항                                          | [Link](./Algorithm/Baekjoon/p10775.java)                     | [문제](https://www.acmicpc.net/problem/10775)                | Disjoint-Set, Union-Find, Greedy           |
 | 10798_세로읽기                                      | [Link](./Algorithm/Baekjoon/p10798.java)                     | [문제](https://www.acmicpc.net/problem/10798)                | 문자열, 구현                               |
 | 10799_쇠 막대기                                     | [Link](./Algorithm/Baekjoon/p10799.java)                     | [문제](https://www.acmicpc.net/problem/10799)                | 스택                                       |
 | 10808_알파벳 개수                                   | [Link](./Algorithm/Baekjoon/p10808.java)                     | [문제](https://www.acmicpc.net/problem/10808)                | 문자열 구현                                |
