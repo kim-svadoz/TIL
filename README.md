@@ -1,12 +1,56 @@
-# KIM SUNG HYUN:yum:
+# TIL:yum:
 
 > 매일 배운 것을 정리합니다.
+
+- [Computer Science](#computer-science)
+- [Programming Language](#programming-language)
+- [WEB](#web)
+- [Android](#android)
+- [Embedded](#embedded)
+- [Algorithm](#algorithm)
+- [PS](#ps)
+- [ETC..](#etc)
+- [개발자 마음가짐](#개발자-마음가짐)
 
 # :bulb:목차
 
 ---
 
+## :triangular_flag_on_post: **Computer Science**
+
+[위로](#til)
+
+### 1. [Operating System](./ComputerScience/OS/OS.md)
+
+### 2. [Operating System_Quiz](./ComputerScience/OS/OS_quiz.md)
+
+### 3. [Network](./ComputerScience/Network/Network.md)
+
+[위로](#til)
+
+---
+
+## :triangular_flag_on_post: **Programming Language**
+
+[위로](#til)
+
+### 1. [C](./ProgrammingLanguage/C.md)
+
+### 2. [Cpp](./ProgrammingLanguage/Cpp.md)
+
+### 3. [C Coding Style](./ProgrammingLanguage/C_Coding_Style_Guide.md)
+
+### 4. [Java](./MultiCampus/basicJava.md)
+
+### 5. [Java Script](./ProgrammingLanguage/JavaScript.md)
+
+[위로](#til)
+
+---
+
 ## :triangular_flag_on_post: **WEB**
+
+[위로](#til)
 
 ### 1. [advancedJava](./MultiCampus/advancedJava.md)
 
@@ -24,41 +68,25 @@
 
 ### 8. [Django](./MultiCampus/django.md)
 
+[위로](#til)
+
 ---
 
 ## :triangular_flag_on_post: **Android**
+
+[위로](#til)
 
 ### 1. [Bigdata](./MultiCampus/Bigdata.md)
 
 ### 2. [Android](./MultiCampus/Android.md)
 
----
-
-## :triangular_flag_on_post: **IT**
-
-### 1. [OS](./OS/OS.md)
-
-### 2. [OS_Quiz](./OS/OS_quiz.md)
-
-### 3. [Network](./Embedded/Network.md)
-
----
-
-## :triangular_flag_on_post: **Programming Language**
-
-### 1. [C](./ProgrammingLanguage/C.md)
-
-### 2. [Cpp](./ProgrammingLanguage/Cpp.md)
-
-### 3. [C Coding Style](./ProgrammingLanguage/C_Coding_Style_Guide.md)
-
-### 4. [Java](./MultiCampus/basicJava.md)
-
-### 5. [Java Script](./ProgrammingLanguage/JavaScript.md)
+[위로](#til)
 
 ---
 
 ## :triangular_flag_on_post: **Embedded**
+
+[위로](#til)
 
 ### 1. [SSD](./Embedded/SSD.md)
 
@@ -80,9 +108,13 @@
 
 ### 10. [RTOS_ThreadX](./Embedded/RTOS_ThreadX.md)
 
+[위로](#til)
+
 ---
 
-## :triangular_flag_on_post: **알고리즘 개념**
+## :triangular_flag_on_post: **Algorithm**
+
+[위로](#til)
 
 ### 1. [Basic](./Algorithm/Basic.md)
 
@@ -102,9 +134,13 @@
 
 ### 9. [Geometric](./Algorithm/Geometric.md)
 
+[위로](#til)
+
 ---
 
-## :triangular_flag_on_post: **알고리즘 문제풀이**
+## :triangular_flag_on_post: **PS**
+
+[위로](#til)
 
 ### [Baekjoon](./Algorithm/Baekjoon)
 
@@ -538,9 +574,13 @@
 | LC103    | [Link](./Algorithm/LeetCode/LC103_BinaryTreeZigZagTraversal.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA103-Binary-Tree-Zigzag-Level-Order-Traversal) | Tree, Stack          |
 | LC155    | [Link](./Algorithm/LeetCode/LC155_MinStack.java)             | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA155-MinStack) | Stack                |
 
+[위로](#til)
+
 ---
 
-## :triangular_flag_on_post: **기타**
+## :triangular_flag_on_post: **ETC ..**
+
+[위로](#til)
 
 ### [Markdown](./MultiCampus/markdown.md)
 
@@ -550,11 +590,13 @@
 
 ### [정보처리기사 실기 요약](./Embedded/EIPP.md)
 
-want more..
+[위로](#til)
 
 ---
 
-## :triangular_flag_on_post: **마음가짐**
+## :triangular_flag_on_post: **개발자 마음가짐**
+
+[위로](#til)
 
 1. 현재 맡고 있는 직무에서 개선점을 찾는다.
    \- SW 업무는 굉장히 다양하지만 크게 다음과 같이 분류할 수 있겠습니다.
@@ -584,3 +626,4 @@ want more..
    
 5. 열심히삽시다
 
+[위로](#til)
