@@ -5,7 +5,7 @@
 - [**Proxy Server**](#proxy-server)
 - [**NAT**](#nat)
 - [**OSI 7계층**](#osi-7계층)
-- [**전송계층(Transport Layer)**](#전송계층(transport-layer))
+- [**전송계층(Transport Layer)**](#전송계층transport-layer)
 
 # **Proxy Server**
 
