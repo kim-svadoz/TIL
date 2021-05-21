@@ -9,7 +9,7 @@
 - [Embedded](#triangular_flag_on_post-embedded)
 - [Algorithm](#triangular_flag_on_post-algorithm)
 - [PS](#triangular_flag_on_post-ps)
-- [ETC..](#triangular_flag_on_post-etc)
+- [ETC..](#triangular_flag_on_post-etc-)
 - [개발자 마음가짐](#triangular_flag_on_post-개발자-마음가짐)
 
 # :bulb:목차
