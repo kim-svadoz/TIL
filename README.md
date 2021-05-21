@@ -2,15 +2,15 @@
 
 > 매일 배운 것을 정리합니다.
 
-- [Computer Science](#triangularflagonpost-computer-science)
-- [Programming Language](#triangularflagonpost-programming-language)
-- [WEB](#triangularflagonpost-web)
-- [Android](#triangularflagonpost-android)
-- [Embedded](#triangularflagonpost-embedded)
-- [Algorithm](#triangularflagonpost-algorithm)
-- [PS](#triangularflagonpost-ps)
-- [ETC..](#triangularflagonpost-etc)
-- [개발자 마음가짐](#triangularflagonpost-개발자-마음가짐)
+- [Computer Science](#-triangularflagonpost-computer-science)
+- [Programming Language](#-triangularflagonpost-programming-language)
+- [WEB](#-triangularflagonpost-web)
+- [Android](#-triangularflagonpost-android)
+- [Embedded](#-triangularflagonpost-embedded)
+- [Algorithm](#-triangularflagonpost-algorithm)
+- [PS](#-triangularflagonpost-ps)
+- [ETC..](#-triangularflagonpost-etc)
+- [개발자 마음가짐](#-triangularflagonpost-개발자-마음가짐)
 
 # :bulb:목차
 
