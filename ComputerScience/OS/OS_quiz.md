@@ -805,3 +805,115 @@
     2.  50, 78.5
     3.  **100, 62.5**
     4.  100, 78.5
+
+## Chapter 10. Virtual Memory
+
+### Quiz
+
+1.  (연습문제 10.3) 
+    다음 페이지 교체 알고리즘들 중에서 Belady's anomaly 현상을 겪지 않는 알고리즘으로 묶인 것은?
+
+    a. LRU replacement
+
+    b. FIFO replacement
+
+    c. Optimal replacement
+
+    d. Second-change replacement
+
+    1.  a, b
+    2.  **a, c**
+    3.  b, c
+    4.  b, d
+
+2.  (연습문제 10.8) 
+    Consider the following page reference string:
+
+    `1, 2, 3, 4, 5, 3, 4, 1, 6, 7, 8, 7, 8, 9, 7, 8, 9, 5, 4, 5, 4, 2.`
+
+    How many page faults would occur for the following replacement algorithms, assuming  four frames? Remember that all frames are initially empty, so your first unique pages  will cost one fault each.
+
+    a. LRU replacement 
+    b. FIFO replacement 
+    c. Optimal replacement
+
+    1.  a = 10, b = 14, c = 8
+    2.  a = 8, b = 10, c = 7
+    3.  a = 10, b = 14, c = 9
+    4.  a = 8, b = 10, c = 8
+    5.  **a = 10, b = 10, c = 10**
+
+3.  (연습문제 10.9)
+    Consider the following page reference string:
+
+    `7, 2, 3, 1, 2, 5, 3, 4, 6, 7, 7, 1, 0, 5, 4, 6, 2, 3, 0 , 1`
+
+    Assuming demand paging with three frames, how many page faults would occur for the  following replacement algorithms?
+
+    a. LRU replacement 
+    b. FIFO replacement 
+    c. Optimal replacement
+
+    1.  a = 11, b = 12, c = 12
+    2.  a = 12, b = 13, c = 15
+    3.  a = 11, b = 13, c = 13
+    4.  **a = 11, b = 12, c = 13**
+    5.  a = 13, b = 13, c = 11
+
+4.  (연습문제 10.36)
+    어떤 시스템이 demand paging을 도입했는데, 페이징 디스크의 평균 액세스 시간이 20 millisecond 라고 하자. 페이지 테이블은 메인 메모리에 저장이 되어 있고, 메인 메모리 액세스 시간은 1 microsecond라고 하자. 
+    페이지 테이블을 통한 각 메모리의 참조는 2 microsecond가 걸리게 될 것이다. 여기에 TLB를 추가했고, TLB hit ratio는 80%로 측정되었다. TLB miss가 발생하는 20%의 10%(즉, 전체의 2%)는 페이지 폴트가 발생한다.
+
+    다음 중 이 시스템에서 유효 메모리 접근 시간(EAT)과 가장 근사한 값은 얼마인가?
+
+    1.  0.1 millisecond
+    2.  0.2 millisecond
+    3.  0.3 millisecond
+    4.  **0.4 millisecond**
+    5.  0.5 millisecond
+
+5.  (연습문제 10.29) 
+    Consider a demand-paging system with the following time-measured utilizations:
+
+    `CPU utilization`: 20% 
+    `Paging disk`: 97.7% 
+    `Other I/O devices`: 5%
+
+    For each of the following, indicate whether it will (or is likely to) improve CPU  utilization.  
+    디맨드 페이징 시스템에서 시스템 측정 결과가 위와 같이 나올 때, 아래의 전략 중 CPU unilization을  향상시킬 수 없을 것 같은 전략으로만 묶인 것은?
+
+    a. Install a faster CPU. 
+    b. Install more main memory. 
+    c. Install a bigger paging disk 
+    d. Increase the page size. 
+    e. Decrease the degree of multiprogramming.
+
+    1.  a, b, c, d, e
+    2.  a, b, c
+    3.  a, c, e
+    4.  **b, e**
+    5.  c, d, e
+
+6.  페이지 폴트가 계속적으로 너무 자주 발생하게 되어 프로세스의 실행 시간보다 페이지 교체를 하는 시간이 더 많아지는 현상과 가장 관련이 높은 것은?
+
+    1.  외부 단편화 (external fragmentation)
+    2.  프로그램의 국부성 (the locality or programs)
+    3.  **쓰레싱 (thrashing)**
+    4.  역전 페이지 테이블 (Inverted Page Table)
+
+7.  다음 중 가상 메모리(virtual memory)에 대한 설명으로 가장 틀린 것은?
+
+    1.  가상 메모리를 사용하면 물리적 주소 공간의 크기는 가상 주소 공간의 크기보다 더 작아도 문제가  없다. 
+    2.  가상 주소 공간에서의 주소와 물리적 주소 공간에서의 주소 공간은 서로 독립적이다. 
+    3.  **디맨드 페이징을 적용하여 여러 페이지를 분산하여 메모리에 적재하므로 실행 속도가 훨씬 빠르다.**
+    4.  가상 메모리를 도입하면 하나의 프로세스의 크기가 물리적인 메모리 용량보다 더 커도 문제가 없 다. 
+
+8.  프로그램의 국부성 (the locality of program)에 대한 설명으로 가장 옳지 않은 것은?
+
+    1.  반복 횟수가 많은 for문을 자주 사용하면 국부성이 높아진다고 할 수 있다. 
+    2.  프로그램의 국부성이 높을수록 디맨드 페이징을 사용하는 시스템의 성능은 좋아진다
+    3.  **자주 사용하는 전역변수들은 heap 영역에서 가급적이면 넓게 분포하도록 하면 프로그램의 효율을  올릴 수 있다.**
+    4.  가상 메모리를 사용하지 않고 Contiguous Memory Allocation을 하는 시스템이라면 프로그램의  국부성은 성능과의 관련이 많지 않다. 
+
+
+
