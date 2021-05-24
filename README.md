@@ -367,6 +367,7 @@
 | 11055_가장 큰 증가 부분 수열                        | [Link](./Algorithm/Baekjoon/p11055.java)                     | [문제](https://www.acmicpc.net/problem/11055)                | DP                                         |
 | 11057_오르막 수                                     | [Link](./Algorithm/Baekjoon/p11057.java)                     | [문제](https://www.acmicpc.net/problem/11057)                | DP                                         |
 | 11062_카드게임                                      | [Link](./Algorithm/Baekjoon/p11062.java)                     | [문제](https://www.acmicpc.net/problem/11062)                | DP, DFS                                    |
+| 11170_0의 개수                                      | [Link](./Algorithm/Baekjoon/p11170.java)                     | [문제](https://www.acmicpc.net/problem/11170)                | 구현                                       |
 | 11279_최대 힙                                       | [Link](./Algorithm/Baekjoon/p11279.java)                     | [문제](https://www.acmicpc.net/problem/11279)                | PQ, 최대 힙                                |
 | 11365_!비밀 급일                                    | [Link](./Algorithm/Baekjoon/p11365.java)                     | [문제](https://www.acmicpc.net/problem/11365)                | 문자열, 구현                               |
 | 11399_ATM                                           | [Link](./Algorithm/Baekjoon/p11399.java)                     | [문제](https://www.acmicpc.net/problem/11399)                | Greedy, Sort                               |
@@ -388,6 +389,7 @@
 | 11726_2xn 타일링                                    | [Link](./Algorithm/Baekjoon/p11726.java)                     | [문제](https://www.acmicpc.net/problem/11726)                | DP                                         |
 | 11728_배열 합치기                                   | [Link](./Algorithm/Baekjoon/p11728.java)                     | [문제](https://www.acmicpc.net/problem/11728)                | 분할정복, 정렬, 투포인터                   |
 | 11729_하노이탑 이동 순서                            | [Link](./Algorithm/Baekjoon/p11729.java)                     | [문제](https://www.acmicpc.net/problem/11729)                | 분할정복, 재귀                             |
+| 11779_최소비용 구하기 2                             | [Link](./Algorithm/Baekjoon/p11779.java)                     | [문제](https://www.acmicpc.net/problem/11779)                | 다익스트라, 역추적                         |
 | 11985_오렌지 출하                                   | [Link](./Algorithm/Baekjoon/p11985.java)                     | [문제](https://www.acmicpc.net/problem/11985)                | DP                                         |
 | 12100_2048                                          | [Link](./Algorithm/Baekjoon/p12100.java)                     | [문제](https://www.acmicpc.net/problem/12100)                | 구현, 시뮬레이션, 브루트 포스              |
 | 12865_평범한배낭                                    | [Link](https://fbtmdwhd33.tistory.com/60)                    | [문제](https://www.acmicpc.net/problem/12865)                | DP(배낭알고리즘)                           |
@@ -395,11 +397,13 @@
 | 12919_A와 B 2                                       | [Link](./Algorithm/Baekjoon/p12919.java)                     | [문제](https://www.acmicpc.net/problem/12919)                | 브루트 포스, 구현, 재귀, 거꾸로 생각       |
 | 12933_오리                                          | [Link](./Algorithm/Baekjoon/p12933.java)                     | [문제](https://www.acmicpc.net/problem/12933)                | 구현                                       |
 | 12978_스크루지 민호 2                               | [Link](./Algorithm/Baekjoon/p12978.java)                     | [문제](https://www.acmicpc.net/problem/12978)                | tree dp                                    |
+| 13019_A를 B로                                       | [Link](./Algorithm/Baekjoon/p13019.java)                     | [문제](https://www.acmicpc.net/problem/13019)                | greedy, 구현                               |
 | 13251_조약돌 꺼내기                                 | [Link](./Algorithm/Baekjoon/p13251.java)                     | [문제](https://www.acmicpc.net/problem/13251)                | 조합                                       |
 | 13398_연속합 2                                      | [Link](./Algorithm/Baekjoon/p13398.java)                     | [문제](https://www.acmicpc.net/problem/13398)                | DP, Prefix Sum                             |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
 | 14391_종이 조각                                     | [Link](./Algorithm/Baekjoon/p14391.java)                     | [문제](https://www.acmicpc.net/problem/14391)                | 브루트 포스, dfs, 비트마스킹               |
 | 14425_문자열집합                                    | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                              |
+| 14430_자원 캐기                                     | [Link](./Algorithm/Baekjoon/p14430.java)                     | [문제](https://www.acmicpc.net/problem/14430)                | dp, 메모이제이션                           |
 | 14467_소가 길을 건너간 이유1                        | [Link](./Algorithm/Baekjoon/p14467.java)                     | [문제](https://www.acmicpc.net/problem/14467)                | 구현                                       |
 | 14500_테트로미노                                    | [Link](./Algorithm/Baekjoon/p14500.java)                     | [문제](https://www.acmicpc.net/problem/14500)                | 브루트 포스, 구현, DFS                     |
 | 14501_퇴사                                          | [Link](./Algorithm/Baekjoon/p14501.java)                     | [문제](https://www.acmicpc.net/problem/14501)                | 완전탐색, DP                               |
