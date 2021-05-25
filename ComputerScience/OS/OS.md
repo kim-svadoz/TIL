@@ -40,7 +40,7 @@
   - Critical Section
   - Critical Section Problem
   - Requirements
-  - Peterons's Algorithm
+  - Petersons's Algorithm
   - Lock
   - Semaphores
   - 모니터
@@ -48,7 +48,7 @@
   - Deadlock
 - [**메모리 관리 전략**](#-메모리-관리-전략-)
   - Dynamic Loading
-  - Statkc Linking vs Dynamic Linking
+  - Static Linking vs Dynamic Linking
   - 연속 메모리 할당
   - 단순 Paging
   - 가상 메모리 Paging
