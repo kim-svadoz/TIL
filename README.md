@@ -24,7 +24,11 @@
 
 ### 2. [Operating System_Quiz](./ComputerScience/OS/OS_quiz.md)
 
-### 3. [Network](./ComputerScience/Network/Network.md)
+### [3. RTOS_ThreadX](./ComputerScience/OS/RTOS_ThreadX.md)
+
+### 4. [Linux Kernel](./ComputerScience/OS/Linux_Kernel.md)
+
+### 5. [Network](./ComputerScience/Network/Network.md)
 
 [위로](#til)
 
@@ -43,6 +47,8 @@
 ### 4. [Java](./MultiCampus/basicJava.md)
 
 ### 5. [Java Script](./ProgrammingLanguage/JavaScript.md)
+
+### 6. [SQLite](./ProgrammingLanguage/SQLite.md)
 
 [위로](#til)
 
@@ -94,19 +100,13 @@
 
 ### 3. [Embedded_Basic](./Embedded/Embedded_Basic.md)
 
-### 4. [Linux_Kernel](./Embedded/Linux_Kernel.md)
+### 4. [Nandflash](./Embedded/Nandflash.md)
 
-### 5. [Nandflash](./Embedded/Nandflash.md)
+### 5. [I2C](./Embedded/I2C.md)
 
-### 6. [I2C](./Embedded/I2C.md)
+### 6. [CAN](./Embedded/CAN.md)
 
-### 7. [CAN](./Embedded/CAN.md)
-
-### 8. [VoIP](./Embedded/VoIP.md)
-
-### 9. [SQLite](./Embedded/SQLite.md)
-
-### 10. [RTOS_ThreadX](./Embedded/RTOS_ThreadX.md)
+### 7. [VoIP](./Embedded/VoIP.md)
 
 [위로](#til)
 
