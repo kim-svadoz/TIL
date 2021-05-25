@@ -646,7 +646,7 @@
 
 1.  다음 여섯개의 resource-allocation graph의 그림 중에서 데드락이 발생한 경우만 모아 놓은 것을 고르시오.
 
-    ![image-20210515225458115](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20210515225458115.png)
+    ![image-20210515225458115](https://user-images.githubusercontent.com/58545240/119491946-81303c00-bd99-11eb-89ca-7955791fbf98.png)
 
     1.  a, b, d
     2.  b, c, d
@@ -717,7 +717,7 @@
 
 9.  다음은 연습문제 8.3의 시스템 스냅샷이다.
 
-    ![image-20210515225951904](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20210515225951904.png)
+    ![image-20210515225951904](https://user-images.githubusercontent.com/58545240/119491953-83929600-bd99-11eb-9c01-2009a524a27c.png)
 
     위 시스템 상황에 대해 올바른 설명으로만 묶여진 것은? 
 
