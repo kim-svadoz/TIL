@@ -44,11 +44,13 @@
 
 ### 3. [C Coding Style](./ProgrammingLanguage/C_Coding_Style_Guide.md)
 
-### 4. [Java](./MultiCampus/basicJava.md)
+### 4. [Java](./ProgrammingLanguage/Java.md)
 
-### 5. [Java Script](./ProgrammingLanguage/JavaScript.md)
+### 5. [Java](./MultiCampus/basicJava.md)
 
-### 6. [SQLite](./ProgrammingLanguage/SQLite.md)
+### 6. [Java Script](./ProgrammingLanguage/JavaScript.md)
+
+### 7. [SQLite](./ProgrammingLanguage/SQLite.md)
 
 [위로](#til)
 
