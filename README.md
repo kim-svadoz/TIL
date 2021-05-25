@@ -24,7 +24,7 @@
 
 ### 2. [Operating System_Quiz](./ComputerScience/OS/OS_quiz.md)
 
-### [3. RTOS_ThreadX](./ComputerScience/OS/RTOS_ThreadX.md)
+### 3. [RTOS_ThreadX](./ComputerScience/OS/RTOS_ThreadX.md)
 
 ### 4. [Linux Kernel](./ComputerScience/OS/Linux_Kernel.md)
 

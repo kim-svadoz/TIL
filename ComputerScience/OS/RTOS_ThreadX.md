@@ -1,10 +1,25 @@
 # THREADX (RTOS)
 
+---
+
+- [**Memory Usage**](#memory-usage)
+- [**Initialization**](#initialization)
+- [**Thread Execution**](#thread-execution)
+- [**Message Queue**](#message-queues)
+- [**Counting Semaphores**](#counting-semaphores)
+- [**Mutexes**](#mutexes)
+- [**Event Flags**](#event-flags)
+- [**Memory Block Pools**](#memory-block-pools)
+- [**RTOS 환경에서 워치독 사용하기**](#rtos-환경에서-워치독-사용하기)
+- [**부속 개념**](#부속-개념)
+
 > 참조글 : [THREADX.PDF](http://www.ece.ualberta.ca/~cmpe490/documents/ghs/405/threadxug_g40c.pdf)
 >
 > 여기도 도움이 된다. https://ppua.tistory.com/entry/%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C-RTOS%EC%9D%98-%EC%9D%B4%ED%95%B4
 
 ## Memory Usage
+
+[위로](#threadx-rtos)
 
 ThreadX resides along with the application program. As a result, the static memory (or fixed memory) usage of ThreadX is determined by the development tools; e.g., the compiler, linker, and locator. Dynamic memory (or run-time memory) usage is under direct control of the application.
 
@@ -48,7 +63,11 @@ For example, suppose a target hardware environment has both fast memory and slow
 >
 > 예를 들어 대상 하드웨어 환경에 빠른 메모리와 느린 메모리가 모두 있다고 가정합니다. 응용 프로그램에 우선 순위가 높은 스레드에 대한 추가 성능이 필요한 경우 제어 블록 (TX_THREAD) 및 스택을 빠른 메모리 영역에 배치 할 수 있으므로 성능이 크게 향상 될 수 있습니다.
 
+[위로](#threadx-rtos)
+
 ## Initialization
+
+[위로](#threadx-rtos)
 
 Understanding the initialization process is very important. The initial hardware environment is setup here. In addition, this is where the application is given its initial personality. 
 
@@ -116,7 +135,11 @@ Interrupts are left disabled during the entire initialization process. If the ap
 
 ![image-20210210143048768](https://user-images.githubusercontent.com/58545240/107469165-98616a00-6bac-11eb-899c-9b648a60b2cd.png)
 
+[위로](#threadx-rtos)
+
 ## Thread Execution
+
+[위로](#threadx-rtos)
 
 Scheduling and executing application threads is the most important activity of ThreadX. What exactly is a thread? A thread is typically defined as semi-independent program segment with a dedicated purpose. The combined processing of all threads makes an application.
 
@@ -463,7 +486,11 @@ Stack size is always an important debug topic in multi-threading. Whenever total
 > 스택 크기는 항상 멀티 스레딩에서 중요한 디버그 주제입니다.
 > 완전히 이상한 동작이 보일 때마다 일반적으로 모든 스레드의 스택 크기를 늘리는 것이 좋습니다. 특히 마지막 실행 스레드의 스택 크기를 늘리는 것이 좋습니다.
 
+[위로](#threadx-rtos)
+
 ## Message Queues
+
+[위로](#threadx-rtos)
 
 Message queues are the primary means of interthread communication in ThreadX. One or more messages can reside in a message queue. A message queue that holds a single message is commonly called a mailbox.
 
@@ -554,7 +581,11 @@ This is especially lethal when a too-small message destination is on the stack�
 >
 > 이는 함수의 반환 주소를 손상시키는 것과 같이 너무 작은 메시지 대상이 스택에있을 때 특히 치명적입니다.
 
+[위로](#threadx-rtos)
+
 ## Counting Semaphores
+
+[위로](#threadx-rtos)
 
 ThreadX provides 32-bit counting semaphores that range in value between 0 and 4,294,967,295. There are two operations for counting semaphores: tx_semaphore_get and tx_semaphore_put. The get operation decreases the semaphore by one. If the semaphore is 0, the get operation is not successful. The inverse of the get operation is the put operation. It increases the semaphore by one. 
 
@@ -656,7 +687,11 @@ The basic problem results from a situation where a lower-priority thread has a s
 >
 > 기본적인 문제는 우선 순위가 낮은 스레드가 높은 우선 순위 스레드가 필요로하는 세마포어를 갖는 상황에서 발생합니다. 이것은 그 자체로 정상입니다. 그러나 그 사이에 우선 순위가있는 스레드는 우선 순위 반전이 비 결정적 시간 동안 지속되도록 할 수 있습니다. 이것은 스레드 우선 순위를 신중하게 선택하고, 선점 임계 값을 사용하고, 리소스를 소유 한 스레드의 우선 순위를 높은 우선 순위 스레드의 우선 순위로 일시적으로 올려서 처리 할 수 있습니다.
 
+[위로](#threadx-rtos)
+
 ## Mutexes
+
+[위로](#threadx-rtos)
 
 In addition to semaphores, ThreadX also provides a mutex object. A mutex is basically a binary semaphore, which means that only one thread can own a mutex at a time. In addition, the same thread may perform a successful mutex get operation on an owned mutex multiple times, 4,294,967,295 to be exact. There are two operations on the mutex object, namely tx_mutex_get and tx_mutex_put. The get operation obtains a mutex not owned by another thread, while the put operation releases a previously obtained mutex. In order for a thread to release a mutex, the number of put operations must equal the number of prior get operations. 
 
@@ -728,7 +763,11 @@ When the lower priority thread releases the mutex, its original priority is then
 >
 > 우선 순위가 낮은 스레드가 뮤텍스를 해제하면 원래 우선 순위가 복원되고 우선 순위가 높은 스레드에 뮤텍스의 소유권이 부여됩니다. 이 기능은 우선 순위가 낮은 스레드가 뮤텍스를 보유하는 시간으로 반전 양을 제한하여 비 결정적 우선 순위 반전을 제거합니다. 물론,이 장의 앞부분에서 비 결정적 우선 순위 반전을 처리하기 위해 논의한 기술은 뮤텍스에서도 유효합니다.
 
+[위로](#threadx-rtos)
+
 ## Event Flags
+
+[위로](#threadx-rtos)
 
 Event flags provide a powerful tool for thread synchronization. Each event flag is represented by a single bit. Event flags are arranged in groups of 32. 
 
@@ -780,7 +819,11 @@ Event group control blocks can be located anywhere in memory, but it is most com
 >
 > 이벤트 그룹 제어 블록은 메모리의 어느 위치 에나 위치 할 수 있지만 모든 기능의 범위 밖에서 정의하여 제어 블록을 글로벌 구조로 만드는 것이 가장 일반적입니다.
 
+[위로](#threadx-rtos)
+
 ## Memory Block Pools
+
+[위로](#threadx-rtos)
 
 Allocating memory in a fast and deterministic manner is always a challenge in real-time applications. With this in mind, ThreadX provides the ability to create and manage multiple pools of fixed-size memory blocks. 
 
@@ -860,7 +903,11 @@ It is very important to ensure that the user of an allocated memory block does n
 
 > 할당 된 메모리 블록의 사용자가 경계 외부에 쓰지 않도록하는 것이 매우 중요합니다. 이 경우 인접한 (일반적으로 후속) 메모리 영역에서 손상이 발생합니다. 결과는 예측할 수 없으며 매우 치명적입니다!
 
+[위로](#threadx-rtos)
+
 ## **RTOS 환경에서 워치독 사용하기**
+
+[위로](#threadx-rtos)
 
 현업 골칫거리 중 하나인 WDT에 대해서 알아보려고 합니다.
 
@@ -911,7 +958,11 @@ NASA는 시스템을 다시 작동 시키려고 20 분을 보냈지 만 소용�
 
 필자가 겪은 많은 `System Reset`의 이유 중 대부분은 **`WDT KICK Handler`**와 동일한 `Handler`에서 많은 실시간 처리를 하는 경우, `WDT KICK Handler`의 처리가 밀리면서 `WDT KICK`을 처리하지 못해 카운트가 0이 되어 종료되는 것이었습니다. 혹은 반복적으로 돌아가는 while문에서 메모리 누수가 발생하여 시스템이 비정상 종료가 될 수도 있을겁니다. 따라서 이러한 것들과 관련된 로직을 면밀히 분석하고 고쳐나가다보면 **WDT에 의한 비정상 시스템 종료 문제**를 해결할 수 있을 것이다.
 
+[위로](#threadx-rtos)
+
 # 부속 개념
+
+[위로](#threadx-rtos)
 
 ## Segment(세그먼트)
 
@@ -974,6 +1025,5 @@ C프로그램에서 사용되는 기억장소를 할당하는 방법은 기본�
 
    ​	- 라이브러리 내장함수로 제공되는 할당(calloc, malloc)과 해제(realloc, free) 함수를 이용하여 프로그래머가 주소에 의한 접근으로 기억장소를 관리하는 방식
 
-   
 
-   
+[위로](#threadx-rtos)
