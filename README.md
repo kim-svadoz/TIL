@@ -300,6 +300,7 @@
 | 4097_수익                                           | [Link](./Algorithm/Baekjoon/p4097.java)                      | [문제](https://www.acmicpc.net/problem/4097)                 | DP, 구현                                   |
 | 4195_친구네트워크                                   | [Link](./Algorithm/Baekjoon/p4195.java)                      | [문제](https://www.acmicpc.net/problem/4195)                 | Kruscal, Union-Find, HashMap               |
 | 4358_생태학                                         | [Link](./Algorithm/Baekjoon/p4358.java)                      | [문제](https://www.acmicpc.net/problem/4358)                 | Trie, Map                                  |
+| 4386_별자리 만들기                                  | [Link](./Algorithm/Baekjoon/p4386.java)                      | [문제](https://www.acmicpc.net/problem/4386)                 | 크루스칼, MST, Union-Find                  |
 | 4396_지뢰찾기                                       | [Link](./Algorithm/Baekjoon/p4396.java)                      | [문제](https://www.acmicpc.net/problem/4396)                 | 구현, 문자열, 파싱                         |
 | 4568_LRU Caching                                    | [Link](./Algorithm/Baekjoon/p4568.java)                      | [문제](https://www.acmicpc.net/problem/4568)                 | LRU Caching, 문자열                        |
 | 4659_비밀번호 발음하기                              | [Link](./Algorithm/Baekjoon/p4659.java)                      | [문제](https://www.acmicpc.net/problem/4659)                 | 문자열, 구현                               |
@@ -328,6 +329,7 @@
 | 9019_DSLR                                           | [Link](./Algorithm/Baekjoon/p9019.java)                      | [문제](https://www.acmicpc.net/problem/9019)                 | 완전탐색, 구현, BFS                        |
 | 9046_복호화                                         | [Link](./Algorithm/Baekjoon/p9046.java)                      | [문제](https://www.acmicpc.net/problem/9046)                 | 문자열, 구현                               |
 | 9079_동전게임                                       | [Link](./Algorithm/Baekjoon/p9079.java)                      | [문제](https://www.acmicpc.net/problem/9079)                 | 브루트포스, 비트마스킹, 다익스트라         |
+| 9081_단어 맞추기                                    | [Link](./Algorithm/Baekjoon/p9081.java)                      | [문제](https://www.acmicpc.net/problem/9081)                 | next_permutation, 순열                     |
 | 9095_1,2,3 더하기                                   | [Link](./Algorithm/Baekjoon/p9095.java)                      | [문제](https://www.acmicpc.net/problem/9095)                 | DP                                         |
 | 9251_LCS                                            | [Link](./Algorithm/Baekjoon/p9251.java)                      | [문제](https://www.acmicpc.net/problem/9251)                 | DP, LCS                                    |
 | 9252_LCS 2                                          | [Link](./Algorithm/Baekjoon/p9252.java)                      | [문제](https://www.acmicpc.net/problem/9252)                 | DP, LCS                                    |
@@ -335,6 +337,7 @@
 | 9465_스티커                                         | [Link](./Algorithm/Baekjoon/p9465.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                         |
 | 9466_텀 프로젝트                                    | [Link](./Algorithm/Baekjoon/p9466.java)                      | [문제](https://www.acmicpc.net/problem/9466)                 | 그래프,  DFS                               |
 | 9613_GCD 합                                         | [Link](./Algorithm/Baekjoon/p9613.java)                      | [문제](https://www.acmicpc.net/problem/9613)                 | 유클리드 호제법                            |
+| 10025_게으른 백곰                                   | [Link](./Algorithm/Baekjoon/p10025.java)                     | [문제](https://www.acmicpc.net/problem/10025)                | 투포인터, 슬라이딩 윈도우                  |
 | 10265_MT                                            | [Link](./Algorithm/Baekjoon/p10265.java)                     | [문제](https://www.acmicpc.net/problem/10265)                | SCC, 위상정렬, knapsack, DP                |
 | 10430_나머지                                        | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                                   |
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
@@ -401,6 +404,7 @@
 | 13251_조약돌 꺼내기                                 | [Link](./Algorithm/Baekjoon/p13251.java)                     | [문제](https://www.acmicpc.net/problem/13251)                | 조합                                       |
 | 13398_연속합 2                                      | [Link](./Algorithm/Baekjoon/p13398.java)                     | [문제](https://www.acmicpc.net/problem/13398)                | DP, Prefix Sum                             |
 | 13460_구슬탈출                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_guseulEscape_13460.java) | [문제](https://www.acmicpc.net/problem/13460)                | BFS                                        |
+| 14267_회사 문화 1                                   | [Link](./Algorithm/Baekjoon/p14267.java)                     | [문제](https://www.acmicpc.net/problem/14267)                | DFS, 구현                                  |
 | 14391_종이 조각                                     | [Link](./Algorithm/Baekjoon/p14391.java)                     | [문제](https://www.acmicpc.net/problem/14391)                | 브루트 포스, dfs, 비트마스킹               |
 | 14425_문자열집합                                    | [Link](./Algorithm/Baekjoon/p14425.java)                     | [문제](https://www.acmicpc.net/problem/14425)                | Trie, HashMap                              |
 | 14430_자원 캐기                                     | [Link](./Algorithm/Baekjoon/p14430.java)                     | [문제](https://www.acmicpc.net/problem/14430)                | dp, 메모이제이션                           |
