@@ -15,7 +15,7 @@
 - [**11. Context Switch (유저 모드와 커널 모드 사이의 전환)**](#11-context-switch-유저-모드와-커널-모드-사이의-전환)
 - [**12. 중간 정리**](#12-총정리)
 - [**13. 복습**](#13-복습)
-- [**14. Process Create**](#14-process-state)
+- [**14. Process Create**](#14-process-create)
 - [**15. Process Copy**](#15-process-copy)
 - [**16. Kernel Thread(커널 스레드)**](#16-kernel-thread커널-스레드)
 - [**17. Process State**](#17-process-state)
