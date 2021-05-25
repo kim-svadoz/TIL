@@ -1,4 +1,4 @@
-# **LINUX 커널 :black_nib:**
+# **LINUX 커널**
 
 ---
 
