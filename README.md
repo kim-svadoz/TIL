@@ -177,6 +177,7 @@
 | 1316_그룹 단어 체커                                 | [Link](./Algorithm/Baekjoon/p1316.java)                      | [문제](https://www.acmicpc.net/problem/1316)                 | 문자열, 구현                               |
 | 1339_단어 수학                                      | [Link](./Algorithm/Baekjoon/p1339.java)                      | [문제](https://www.acmicpc.net/problem/1339)                 | 그리디, 브루트포스                         |
 | 1365_꼬인 전깃줄                                    | [Link](./Algorithm/Baekjoon/TwistedElectricWire_1365.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1365-%EA%BC%AC%EC%9D%B8-%EC%A0%84%EA%B9%83%EC%A4%84?category=936483) | 세그먼트 트리, LIS                         |
+| 1368_물대기                                         | [Link](./Algorithm/Baekjoon/p1368.java)                      | [문제](https://www.acmicpc.net/problem/1368)                 | Kruskal, MST, Union-Find                   |
 | 1373_2진수 8진수                                    | [Link](./Algorithm/Baekjoon/p1373.java)                      | [문제](https://www.acmicpc.net/problem/1373)                 | 문자열, 진수변환                           |
 | 1389_케빈 베이컨의 6단계법칙                        | [Link](./Algorithm/Baekjoon/p1389.java)                      | [문제](https://www.acmicpc.net/problem/1389)                 | 그래프, 플로이드와샬                       |
 | 1446_지름길                                         | [Link](./Algorithm/Baekjoon/p1446.java)                      | [문제](https://www.acmicpc.net/problem/1446)                 | DP, 다익스트라, 자료구조                   |
@@ -453,6 +454,7 @@
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
 | 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
 | 16637_괄호 추가하기                                 | [Link](./Algorithm/Baekjoon/p16637.java)                     | [문제](https://www.acmicpc.net/problem/16637)                | 브루트 포스, dfs                           |
+| 16719_ZOAC                                          | [Link](./Algorithm/Baekjoon/p16719.java)                     | [문제](https://www.acmicpc.net/problem/16719)                | 문자열 정렬, DFS, 구현                     |
 | 16916_부분문자열                                    | [Link](./Algorithm/Baekjoon/p16916.java)                     | [문제](https://www.acmicpc.net/problem/16916)                | 문자열, KMP                                |
 | 16926_배열돌리기1                                   | [Link](./Algorithm/Baekjoon/p16926.java)                     | [문제](https://www.acmicpc.net/problem/16926)                | 시뮬레이션, 배열돌리기 1                   |
 | 16927_배열돌리기2                                   | [Link](./Algorithm/Baekjoon/p16927.java)                     | [문제](https://www.acmicpc.net/problem/16927)                | 시뮬레이션, 배열돌리기 2                   |
@@ -486,6 +488,7 @@
 | 20437_문자열 게임2                                  | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우                    |
 | 20438_출석체크                                      | [Link](./Algorithm/Baekjoon/p20438.java)                     | [문제](https://www.acmicpc.net/problem/20438)                | Prefix Sum, 구간합, 수학                   |
 | 20440_니가 싫어 싫어 너무 싫어 싫어 오지 마~        | [Link](./Algorithm/Baekjoon/p20440.java)                     | [문제](https://www.acmicpc.net/problem/20440)                | Prefix Sum, 우선순위 큐, 정렬              |
+| 20495_수열과 헌팅                                   | [Link](./Algorithm/Baekjoon/p20495.java)                     | [문제](https://www.acmicpc.net/problem/20495)                | lower bound, upper bound, 구현             |
 | 20542_받아쓰기                                      | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘                      |
 | 20546_기적의 매매법                                 | [Link](./Algorithm/Baekjoon/p20546.java)                     | [문제](https://www.acmicpc.net/problem/20546)                | 구현                                       |
 | 21275_폰 호석만                                     | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스                 |
