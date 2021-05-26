@@ -195,6 +195,40 @@ void binarySearch() {
 }
 ```
 
+## LowerBound, UpperBound
+
+```java
+// lower bound는 찾고자 하는 값 이상이 처음 나타나는 위치
+static int lower_bound(List<Integer> list, int val) {
+    int left = 0;
+    int right = list.size();
+    while (left < right) {
+        int mid = (left + right) / 2;
+        if (list.get(mid) >= val) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return right;
+}
+
+// upper bound는 찾고자 하는 값 이상이 처음 나타나는 위치
+static int upper_bound(List<Integer> list, int val) {
+    int left = 0;
+    int right = list.size();
+    while (left < right) {
+        int mid = (left + right) / 2;
+        if (list.get(mid) <= val) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    return right;
+}
+```
+
 ## Levenshtein
 
 ```java
