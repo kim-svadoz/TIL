@@ -342,9 +342,11 @@
 | 9613_GCD 합                                         | [Link](./Algorithm/Baekjoon/p9613.java)                      | [문제](https://www.acmicpc.net/problem/9613)                 | 유클리드 호제법                            |
 | 10025_게으른 백곰                                   | [Link](./Algorithm/Baekjoon/p10025.java)                     | [문제](https://www.acmicpc.net/problem/10025)                | 투포인터, 슬라이딩 윈도우                  |
 | 10265_MT                                            | [Link](./Algorithm/Baekjoon/p10265.java)                     | [문제](https://www.acmicpc.net/problem/10265)                | SCC, 위상정렬, knapsack, DP                |
+| 10427_빚                                            | [Link](./Algorithm/Baekjoon/p10427.java)                     | [문제](https://www.acmicpc.net/problem/10427)                | 슬라딩 윈도우, 구현                        |
 | 10430_나머지                                        | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                                   |
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
 | 10610_30                                            | [Link](./Algorithm/Baekjoon/p10610.java)                     | [문제](https://www.acmicpc.net/problem/10610)                | Greedy                                     |
+| 10713_기차 여행                                     | [Link](./Algorithm/Baekjoon/p10713.java)                     | [문제](https://www.acmicpc.net/problem/10713)                | 누적합, Segment Tree, Lazy                 |
 | 10714_케이크 자르기 2                               | [Link](./Algorithm/Baekjoon/p10714.java)                     | [문제](https://www.acmicpc.net/problem/10714)                | DP, DFS, 스택오버플로우 발생               |
 | 10775_공항                                          | [Link](./Algorithm/Baekjoon/p10775.java)                     | [문제](https://www.acmicpc.net/problem/10775)                | Disjoint-Set, Union-Find, Greedy           |
 | 10798_세로읽기                                      | [Link](./Algorithm/Baekjoon/p10798.java)                     | [문제](https://www.acmicpc.net/problem/10798)                | 문자열, 구현                               |
@@ -426,6 +428,7 @@
 | 14888_연산자 끼워넣기                               | [Link](./Algorithm/Baekjoon/p14888.java)                     | [문제](https://www.acmicpc.net/problem/14888)                | 백트래킹, 브루트포스                       |
 | 14929_귀찮아(SIB)                                   | [Link](./Algorithm/Baekjoon/p14929.java)                     | [문제](https://www.acmicpc.net/problem/14929)                | Prefix Sum, 구간 합                        |
 | 14938_서강그라운드                                  | [Link](./Algorithm/Baekjoon/p14938.java)                     | [문제](https://www.acmicpc.net/problem/14938)                | 인접리스트, 다익스트라                     |
+| 14950_정복자                                        | [Link](./Algorithm/Baekjoon/p14950.java)                     | [문제](https://www.acmicpc.net/problem/14950)                | MST, 크루스칼, Union-Find                  |
 | 15486_퇴사 2                                        | [Link](./Algorithm/Baekjoon/p15486.java)                     | [문제](https://www.acmicpc.net/problem/15486)                | DP                                         |
 | 15649_N과 M(1)                                      | [Link](./Algorithm/Baekjoon/p15649.java)                     | [문제](https://www.acmicpc.net/problem/15649)                | 백트래킹, 중복가능                         |
 | 15650_N과 M(2)                                      | [Link](./Algorithm/Baekjoon/p15650.java)                     | [문제](https://www.acmicpc.net/problem/15650)                | 백트래킹, 오름차순                         |
