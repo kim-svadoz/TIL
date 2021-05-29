@@ -298,3 +298,448 @@ JVM은 코드를 실행하고, 해당 코드에 대해 런타임 환경을 제�
         2.  삭제된 객체의 메모리 반환
         3.  힙 메모리 재사용
 
+# Casting
+
+>   캐스팅이란?
+>
+>   변수가 원하는 정보를 다 갖고 있는 것
+
+```java
+int a = 0.1;			// (1) 에러 발생 X
+int b = (int) true;		// (2) 에러 발생 O, boolean 은 int로 캐스트 불가
+```
+
+(1)은 0.1이 double 형이 지만, int로 될 정보 또한 가지고 있다.
+(2)는 true는 int형이 될 정보를 가지고 있지 않다.
+
+왜 캐스팅이 필요한가요?
+
+-   **`다형성`** : 오버라이딩 된 함수를 분리해서 활용할 수 있다.
+-   **`상속`** : 캐스팅을 통해 범용적인 프로그래밍이 가능하다.
+
+## 형변환의 종류
+
+### 묵시적 형변환
+
+>   캐스팅이 자동으로 발생 (업캐스팅)
+
+```java
+Parent p = new Child(); 
+```
+
+-   (Parent) new Child()할 필요가 없다.
+-   Parent를 상속받은 Child는 Parent의 속성을 포함하고 있기 때문에
+
+### 명시적 형변환
+
+>   캐스팅할 내용을 적어줘야 하는 경우 (다운캐스팅)
+
+```java
+Parent p = new Child();
+Child c = (Child) p;
+```
+
+-   다운캐스팅은 업캐스팅이 발생한 이후에 작용한다.
+
+
+
+## 예시
+
+```java
+class Parent {
+    int age;
+    
+    Parent() {}
+    
+    Parent(int age) {
+        this.age = age;
+    }
+    
+    void printInfo() {
+        System.out.println("Parent Call !!");
+    }
+}
+
+class Child extends Parent {
+    String name;
+    
+    Child() {}
+    
+    Child(int age, String name) {
+        super(age);
+        this.name = name;
+    }
+    
+    @Override
+    void printInfo() {
+        System.out.println("Child Call !!");
+    }
+}
+
+public class test {
+    public static void main(String[] args) {
+        Parent p = new Child();
+        
+        p.printInfo(); // 문제 1 : 출력 결과는?
+        Child c = (Child) new Parent(); // 문제 2 : 에러 종류는?
+    }
+}
+```
+
+-   문제 1 : **Child Call !!**
+
+    -> 자바에서는 오버라이딩된 함수를 동적 바인딩 하기 때문에, Parent에 담겼어도 Child의 printInfo()함수를 불러 오게 된다.
+
+-   문제 2 : **Runtime Error**
+
+    -> 컴파일 과정에서는 데이터형의 일치만 따진다.
+    -> 프로그래머가 따로 (Child)로 명시적 형변환을 해줬기 때문에 컴파일러는 문법이 맞다고 생각해서 넘어간다.
+    -> 하지만 런타임 과정에서 Child 클래스에 Parent 클래스를 넣을 수 없다는 것을 알게되고 런타임 에러가 발생하게 된다.
+
+# Java에서의 Thread 활용
+
+요즘 OS은 모두 멀티태스킹을 지원한다.
+
+실제로 동시에 처리될 수 있는 프로세스의 개수는 CPU 코어의 개수와 동일한데, 이보다 많은 개수의 프로세스가 존재하기 때문에 모두 함께 동시에 처리할 수는 없다.
+
+각 코어들은 아주 짧은 시간동안 여러 프로세스를 번갈아가며 처리하는 방식을 통해 동시에 동작하는 것 처럼 보이게 할 뿐인다.
+
+이와 마찬가지로 멀티스레딩이란 하나의 프로세스 안에 여러개의 스레드가 동시에 작업을 수행하는 것을 말한다. 스레드는 하나의 작업 단위라고 생각하면 편하다.
+
+## Thread 구현
+
+자바에서의 스레드 구현방법에는 2가지가 있다.
+
+1.  `Runnable` **인터페이스** 구현
+2.   `Thread` **클래스** 상속
+
+둘다 **`run()`** 메소드를 오버라이딩 하는 방식이다 !
+
+```java
+public class MyThread implements Runnable {
+    @Override
+    public void run() {
+        // 수행 코드
+    }
+}
+```
+
+```java
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        // 수행 코드
+    }
+}
+```
+
+
+
+## Thread 생성
+
+하지만 이 두가지 방법에는 **인스턴스 생성 방법에 차이가 있다.**
+
+**Runnable**
+
+`Runnable` 인터페이스를 구현한 경우는, 해당 클래스를 인스턴스화 해서 Thread 생성자에 argument로 넘겨줘야 한다.
+
+그리고 `run()`을 호출하면 `Runnable` 인터페이스에서 구현한 `run()`이 호출되므로 따로 오버라이딩하지 않아도 되는 장점이 있다.
+
+```java
+public static void main(String[] args) {
+    Runnable r = new MyThread();
+    Thread t = new Thread(r, "mythread");
+}
+```
+
+
+
+**Thread**
+
+Thread 클래스를 상속받은 경우는, 상속받은 클래스 자체를 스레드로 사용할 수 있다.
+
+또, `Thread` 클래스를 상속받으면 스레드 클래스의 메소드(`getName()`)를 바로 사용할 수 있지만, `Runnable` 구현의 경우 Thread 클래스의 static 메소드인 `currentThread()`를 호출하여 현재 스레드에 대한 참조를 얻어와야만 호출이 가능하다.
+
+```java
+public class ThreadTest implements Runnable {
+    public ThreadTest(){}
+    
+    public ThreadTest(String name) {
+        Thread t = new Thread(this, name);
+        t.start();
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 0; i <= 50; i++) {
+            System.out.print(i + ":" + Thread.currentThread().getName() + " ");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+
+
+## Thread 실행
+
+스레드의 실행은 `run()` 호출이 아닌 `start()` 호출로 해야한다.
+
+우리는 분명 `run()` 메소드를 정의했는데, 실제 스레드 작업을 시키려면 `start()`로 작업해야 한다고 한다.
+
+ `run()`으로 작업 지시를 하면 스레드가 일을 안할까? 그렇지 않다. 두 메소드 모두 같은 작업을 한다. **하지만, `run()`메소드를 사용한다면, 이건 스레드를 사용하는 것이 아니다.**
+
+Java에는 콜 스택(call stack)이 있는데 이 영역이 실질적인 명령어들을 담고 있는 메모리로, 하나씩 꺼내서 실행시키는 역할을 한다.
+
+만약 동시에 두 가지 작업을 한다면, 두 개 이상의 콜 스택이 필요하게 된다.
+
+**스레드를 이용한다는 건, `JVM`이 다수의 콜 스택을 번갈아가며 일처리**를 하고 사용자는 동시에 작업하는 것 처럼 보여준다.
+
+즉, `run()`메소드를 이용한다는 것은 main()의 콜 스택 하나만 이용하는 것으로 스레드를 활용하는 것이 아니라, 스레드 객체의 run이라는 메소드를 호출하는 것 뿐이다.
+
+`start()` 메소드를 호출하면, `JVM`은 알아서 스레드를 위한 콜 스택을 새로 만들어주고 **context switchin**을 통해 스레드답게 동작하도록 해준다.
+
+따라서 우리는 새로운 콜 스택을 만들어 작업을 해야 스레드 일처리가 되는 것이기 때문에,`start()` 메소드를 써야하는 것이다.
+
+*`start()`는 스레드가 작업을 실행하는데 필요한 **콜 스택**을 생성한 다음 `run()`을 호출해서 그 스택안에 `run()`을 저장할 수 있도록 해준다.*
+
+
+
+## Thread 실행제어
+
+스레드에는 5가지의 상태가 있다.
+
+-   **`NEW`** : 스레드가 생성되고 아직 `start()`가 호출되지 않은 상태
+-   **`RUNNABLE`** : 실행 중 또는 실행 가는 상태
+-   **`BLOCKED`** : 동기화 블럭에 의해 일시정지된 상태(lock이 풀릴 때 까지 기다린다)
+-   **`WAITING, TIME_WAITING`** : 실행가능하지 않은 일시정지 상태
+-   **`TERMINATED`** : 스레드 작업이 종료된 상태
+
+스레드로 구현하는 것이 어려운 이유는 바로 동기화와 스케쥴링 대문이다.
+
+스케쥴링과 관련된 메소드는 `sleep(), join(), yield(), interrupt()`와 같은 것들이 있다.
+
+`start()` 이후에 `join()`을 해주면 main 스레드가 모두 종료될 때까지 기다려주는 일도 한다.
+
+
+
+## 동기화
+
+멀티스레드로 구현을 하려면 동기화는 필수적이다.
+
+**동기화가 필요한 이유는, 여러 스레드가 같은 프로세스 내의 자원을 공유하면서 작업할 때 서로의 작업이 다른 작업에 여향을 주기 때문이다.**
+
+스레드의 동기화를 위해선, **임계영역(Critical Section)**과 **잠금(Lock)**을 활용한다.
+
+임계영역을 지정하고, 임계영역을 가지고 있는 `lock`을 단 하나의 스레드에게만 빌려주는 개념으로 이루어져 있다.
+
+따라서 임계구역 안에서 수행할 코드가 완료되면, `lock`을 반납해줘야 한다.
+
+**스레드 동기화 방법**
+
+-   **임계영역(Critical Section)** : 공유 자원에 단 하나의 스레드만 접근하도록 (하나의 프로세스에 속한 스레드만 가능)
+-   **뮤텍스(Mutex)** : 공유 자원에 단 하나의 스레드만 접근하도록 (서로 다른 프로세스에 속한 스레드도 가능)
+-   **이벤트(Event)** : 특정한 사건 발생을 다른 스레드에게 알린다.
+-   **세마포어(Semaphore)** : 한정된 개수의 자원을 여러 스레드가 사용하려고 할 때 접근 제한
+-   **대기 가능 타이머(Waitable Timer)** : 특정 시간이 되면 대기 중이던 스레드를 깨운다.
+
+### Synchronized
+
+`Synchronized` 를 활용해 임계영역을 설정할 수 있다.
+
+서로 다른 두 객체가 동기화를 하지 않은 메소드를 같이 오버라이딩해서 이용하면, 두 스레드가 동시에 진행되므로 원하는 출력값을 얻지 못한다.
+
+이 때 오버라이딩되는 부모 클래스의 메소드에 `synchronized` 키워드로 임계영역을 설정하여 해결할 수 있다.
+
+```java
+// synchronized : 스레드의 동기화. 공유자원에 Lock !
+public synchronized void Deposit(int save) { // 입금
+    int m = money;
+    try {
+        Thread.sleep(2000); // 지연시간 2초
+    } catch (Exception e) {
+        
+    }
+    money = m + save;
+    System.out.println("입금 처리 완료");
+}
+
+public synchronized void WithDrawal(int minus) {
+    int m = money;
+    try {
+        Thread.sleep(3000); // 지연시간 3초
+    } catch (Exception e) {
+        
+    }
+    money = m - minus;
+    System.out.println("출금 완료");
+}
+```
+
+### wait(), notify()
+
+스레드가 서로 협력관계일 경우에는 무작정 대기시키는 것으로 올바르게 실행되지 않기 때문에 `wait()`와 `notify()`를 사용한다.
+
+-   `wait()` : 스레드가 `lock`을 가지고 있으면 `lock` 권한을 반납하고 대기하게 만든다.
+-   `notify()` : 대기 상태인 스레드에게 다시 `lock` 권한을 부여하고 수행하게 만든다.
+
+이 두 메소드는 동기화 된 영역(임계 영역) 내에서 사용되어야 한다.
+
+동기화 처리한 메소드들이 반복문에서 활용된다면, 의도한 결과가 나오지 않는다. 이 때 `wait()`와 `notify()`를 **try-catch**문에서 적절히 활용해 해결할 수 있따.
+
+```java
+/*
+	스레드 동기화 중 협력관계 처리 작업 : wait(), notify()
+	스레드 간 협력 작업 강화 !
+*/
+public synchronized void makeBread() {
+    if (breadCount >= 10) {
+        try {
+            System.out.println("빵 생산 초과");
+            wait();		// Thread를 Not Runnable 상태로 전환
+        } catch (Exception e) {
+
+        }
+    }
+    breadCount++;	// 빵 생산
+    System.out.println("총 "+breadCount+" 개의 빵을 만들었다.");
+    notify();		// Thread를 Runnable 상태로 전환
+}
+
+public synchronized void eatBread() {
+    if (breadCount < 1) {
+        try {
+            System.out.println("빵이 없어서 기다린다..");
+            wait();
+        } catch (Exception e) {
+
+        }
+    }
+    breadCount--;
+    System.out.println("총 "+breadCount+" 개의 빵을 먹었다.");
+    notify();
+}
+```
+
+조건이 만족 할 시 `wait()`를 호출하고
+조건이 만족 안할 시 `notify()`를 받아 수행한다.
+
+# Intrinsic Lock
+
+>   고유 락
+>
+>   = **monitor lock** = **monitor**
+
+자바의 모든 객체는 `lock`을 갖고 있따.
+
+*`Synchronized` 블록은 `Intrinsic Lock`을 이용해서 Thread의 접근을 제어한다.*
+
+```java
+public class Counter {
+    private int count;
+    
+    public int increase() {
+        return ++count;		// Thread-Safe 하지 않은 연산
+    }
+}
+```
+
+Q) `++count`문이 **atomic 연산**인가?
+
+A)
+
+1.  read (count 값을 읽음)
+2.  modify (count 값 수정)
+3.  write (count 값 저장)
+
+의 과정에서 여러 Thread가 **공유 자원(count)으로 접근할 수 있으므로 동시성 문제가 발생**한다.
+
+그러면 `Synchronized` 블록을 사용해서 **Thread-Safe**하게 만들어보자.
+
+```java
+public class Counter {
+    private Object lock = new Object();	// 모든 객체가 가능 (Lock이 있음)
+    private int count;
+    
+    public int increase() {
+        // 단계 1
+        synchronized(lock) { // lock을 이용하여, count 변수에의 접근을 막음
+            return ++count;
+        }
+        /*
+        단계 2
+        synchronized (lock) { // this도 객체이므로 lock으로 사용가능
+        	return ++count;
+        }
+        */
+    }
+    /*
+    단계 3
+    public synchronized int increase() {
+    	return ++count;
+    }
+    */
+}
+```
+
+*단계 3과 같이 `lock` 생성 없이 `synchronized` 블록 구현 가능*
+
+## Reentrancy
+
+>   재진입 : Lock을 획득한 Thread가 Lock을 얻기 위해 대기할 필요가 없는 것
+>
+>   Lock의 획득은 **호출 단위**가 아니라, **Thread 단위**로 일어난다.
+
+```java
+public class Reentrancy {
+    // b가 Sycnhronized로 선언되어 있더라도, a 진입 시 lock을 획득하였음.
+    // b를 호출할 수 있게 됨.
+    public synchronized void a() {
+        Sytsem.out.println("a");
+        b();
+    }
+    
+    public synchronized void b() {
+        System.out.println("b");
+    }
+  	
+    public static void main(String[] args) {
+        new Reentrancy().a();
+    }
+}
+```
+
+## Structed Lock vs Reentrant Lock
+
+>   `Structured Lock (구조적 Lock)` : 고유 lock을 이용한 동기화
+
+Synchronized 블록 단위로 lock의 획득 / 해제가 일어나므로!
+
+따라서,
+
+A획득 -> B획득 -> B해제 -> A해제는 가능하지만
+A획득 -> B회득 -> A해제 -> B해제는 불가능하다.
+
+이것을 가능하게 하기 위해서는 **Reentrant Lock(명시적 Lock)**을 사용해야 한다.
+
+## Visibility
+
+-   가시성 : 여러 Thread가 동시에 작동하였을 때, 한 Thread가 쓴 값을 다른 Thread가 볼 수 있는지, 없는지 여부
+-   문제 : 하나의 Thread가 쓴 값을 다른 Thread가 볼 수 있느냐 없느냐. (볼 수 없으면 문제가 된다.)
+-   Lock : Structure Lock과 Reentrant Lock은 Visibility를 보장한다.
+-   원인
+    -   최적화를 위해 Compiler나 CPU에서 발생하는 코드 재배열로 인해
+    -   CPU core의 cache 값이 Memory에 제때 쓰이지 않아 발생하는 문제
+
+
+
+
+
+
+
+
+
