@@ -345,6 +345,7 @@
 | 10025_게으른 백곰                                   | [Link](./Algorithm/Baekjoon/p10025.java)                     | [문제](https://www.acmicpc.net/problem/10025)                | 투포인터, 슬라이딩 윈도우                  |
 | 10159_저울                                          | [Link](./Algorithm/Baekjoon/p10159.java)                     | [문제](https://www.acmicpc.net/problem/10159)                | 플로이드 와샬                              |
 | 10265_MT                                            | [Link](./Algorithm/Baekjoon/p10265.java)                     | [문제](https://www.acmicpc.net/problem/10265)                | SCC, 위상정렬, knapsack, DP                |
+| 10423_전기가 부족해                                 | [Link](./Algorithm/Baekjoon/p10423.java)                     | [문제](https://www.acmicpc.net/problem/10423)                | 크루스칼, MST, Union-Find                  |
 | 10427_빚                                            | [Link](./Algorithm/Baekjoon/p10427.java)                     | [문제](https://www.acmicpc.net/problem/10427)                | 슬라딩 윈도우, 구현                        |
 | 10430_나머지                                        | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                                   |
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
