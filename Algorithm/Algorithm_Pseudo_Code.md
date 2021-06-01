@@ -749,13 +749,19 @@ void floyd() {
 ## KMP
 
 ```java
+static String O, P;
+static int cnt;
+static int[] fail;
+static List<Integer> list = new ArrayList<>();
 void Solution() {
-    fail = new int[Pattern.length()];
-    failFunc(Pattern);
-    compare(Origin);
+    O = br.readLine();
+    P = br.readLine();
+    fail = new int[P.length()];
+    failFunc();
+    compare();
 }
 
-void failFunc(String Pattern) {
+void failFunc() {
     int j = 0;
     for (int i = 1; i < P.length(); i++) {
         while (j > 0 && P.charAt(i) != P.charAt(j)) {
@@ -768,9 +774,9 @@ void failFunc(String Pattern) {
     }
 }
 
-void compare(String Origin) {
+void compare() {
     int j = 0;
-    for (int i = 1 ; i < O.legnth(); i++) {
+    for (int i = 0 ; i < O.legnth(); i++) {
         while (j > 0 && O.charAt(i) != P.charAt(j)) {
             j = fail[j - 1];
         }
@@ -778,6 +784,7 @@ void compare(String Origin) {
         if (O.charAt(i) == P.charAt(j)) {
             if (j == P.length() - 1) {
                 sb.append(i - P.length() + 2).append(" ");
+                list.add(i - j + 1); // idx 저장
                 j = fail[j];
                 total++;
             } else {
