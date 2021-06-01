@@ -188,6 +188,7 @@
 | 1517_버블 소트                                      | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort                      |
 | 1520_내리막 길                                      | [Link](./Algorithm/Baekjoon/p1520.java)                      | [문제](https://www.acmicpc.net/problem/1520)                 | DFS, DP, 해당 칸으로 들어오는 가지 수      |
 | 1525_퍼즐                                           | [Link](./Algorithm/Baekjoon/p1525.java)                      | [문제](https://www.acmicpc.net/problem/1525)                 | 완전탐색, 구현, 2차원->1차원, BFS          |
+| 1543_문서검색                                       | [Link](./Algorithm/Baekjoon/p1543.java)                      | [문제](https://www.acmicpc.net/problem/1543)                 | String, indexof                            |
 | 1596_영식이                                         | [Link](./Algorithm/Baekjoon/yeongsik_1596.java)              | [문제](https://www.acmicpc.net/problem/1596)                 | 시뮬레이션                                 |
 | 1613_역사                                           | [Link](./Algorithm/Baekjoon/p1613.java)                      | [문제](https://www.acmicpc.net/problem/1613)                 | 그래프, 플로이드와샬                       |
 | 1644_소수의 연속합                                  | [Link](./Algorithm/Baekjoon/p1644.java)                      | [문제](https://www.acmicpc.net/problem/1644)                 | 소수, 에라토스테네스의 체, 투포인터        |
@@ -370,6 +371,7 @@
 | 10971_외판원 순회2                                  | [Link](./Algorithm/Baekjoon/p10971.java)                     | [문제](https://www.acmicpc.net/problem/10971)                | 완전탐색, 백트래킹, DFS, TSP               |
 | 10986_나머지 합                                     | [Link](./Algorithm/Baekjoon/p10986.java)                     | [문제](https://www.acmicpc.net/problem/10986)                | Prefix Sum, 수학                           |
 | 10989_수 정렬하기3                                  | [Link](./Algorithm/Baekjoon/p10989.java)                     | [문제](https://www.acmicpc.net/problem/10989)                | 정렬                                       |
+| 11000_강의실 배정                                   | [Link](./Algorithm/Baekjoon/p11000.java)                     | [문제](https://www.acmicpc.net/problem/11000)                | Greedy, PriorityQueue                      |
 | 11004_K번째 수                                      | [Link](./Algorithm/Baekjoon/p11004.java)                     | [문제](https://www.acmicpc.net/problem/11004)                | 정렬                                       |
 | 11005_진법 변환 2                                   | [Link](./Algorithm/Baekjoon/p11005.java)                     | [문제](https://www.acmicpc.net/problem/11005)                | 진법 변환(10 -> N)                         |
 | 11047_동전0                                         | [Link](./Algorithm/Baekjoon/p11047.java)                     | [문제](https://www.acmicpc.net/problem/11047)                | Greedy                                     |
