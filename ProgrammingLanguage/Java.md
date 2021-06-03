@@ -12,7 +12,7 @@
 - [Java에서의 Thread](#java에서의-thread)
 - [Intrinsic Lock](#intrinsic-lock)
 - [Garbage Collection](#garbage-collection)
-- [Promotion & Casting](promotion--casting)
+- [Promotion & Casting](#promotion--casting)
 - [Primitive type & Reference type](#primitive-type--reference-type)
 - [Error & Exception](#error--exception)
 - [JAVA Stream](#java-stream)
@@ -1023,6 +1023,8 @@ int result = intValue + (int) doubleValue;
 # Primitive type & Reference type
 
 ---
+
+[위로](#java)
 
 > - Primitive type에 대해 설명하라
 > - Reference type에 대해 설명하라
