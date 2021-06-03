@@ -880,6 +880,74 @@ void solve(int cnt, int bit) {
 
 
 
+## Segment Tree
+
+```java
+public class Main {
+    int[] numbers = new int[1000001];
+    int N = @input;
+    for (int i = 1; i<= N; i++) {
+        numbers[i] = @input;
+    }
+    
+    SegmentTree segTree = new SegmentTree(N);
+    
+    // numbers 배열로 1번에서 n번노드까지 세그먼트 트리 생성
+    segTree.init(sgTree.tree, numbers, 1, 1, n);
+    for(){}
+    switch(command) {
+        case 1 :
+            // b번째 수를 c 로 바꾼다.
+            long num = numbers[b];
+            long diff = c- num;
+            numbers[b] = c;
+            
+            // 세그먼트 트리의 1번부터 n번 노드에서 b번째에 있는 값을 diff만큼 더하기
+            sgTree.update(sgTree.tree, 1, 1, n, b, diff);
+            break;
+        case 2:
+            // 세그먼트 트리의 1번부터 n번 노드에서 b번째 수부터 c번째 수 까지의 합
+            long sum = sgTree.sum(sgTree.tree, 1, 1, n, b, c);
+            break;
+    }
+}
+
+class SegmentTree {
+    long tree[];
+    int treeSize;
+    
+    public SegmentTree(int arrSize) {
+        int h = (int) Math.ceil(Math.log(arrSize) / Math.log(2));
+        this.treeSize = (int) Math.pow(2, h + 1);
+        tree = new long[treeSize];
+    }
+    
+    protected static long init(long[] tree, int[] nums, int node, int start, int end) {
+        if (start == end) return tree[node] = nums[start];
+        int mid = (start + end) / 2;
+        return tree[node] = init(tree, nums, node * 2, start, mid) + init(tree, nums, node * 2 + 1, mid + 1, end);
+    }
+    
+    protected static void update(long[] tree, int node, int start, int end, int idx, long diff) {
+        if (!(start <= idx && idx <= end)) return;
+        tree[node] += diff;
+        if (start != end) {
+            int mid = (start + end) / 2;
+            update(tree, node * 2, start, mid, idx, diff);
+            update(tree, node * 2 + 1, mid + 1, end, idx, diff);
+        }
+    }
+    
+    protected static long sum(long[] tree, int node, int start, int end, int left, int right) {
+        if (left > end || right < start) return 0;
+        if (left <= start && end <= right) return tree[node];
+        int mid = (start + end) / 2;
+        return sum(tree, node * 2, start, mid, left, right) + sum(tree, node * 2 + 1, mid + 1, end, left, right);
+    }
+    
+}
+```
+
 
 
 
