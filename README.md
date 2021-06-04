@@ -269,6 +269,7 @@
 | 2331_반복수열                                       | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                                   |
 | 2342_Dance Dance Revolution                         | [Link](./Algorithm/Baekjoon/p2342.java)                      | [문제](https://www.acmicpc.net/problem/2342)                 | DP                                         |
 | 2352_반도체 설계                                    | [Link](./Algorithm/Baekjoon/p2352.java)                      | [문제](https://www.acmicpc.net/problem/2352)                 | LIS, Binary Search                         |
+| 2357_최솟값과 최댓값                                | [Link](./Algorithm/Baekjoon/p2357.java)                      | [문제](https://www.acmicpc.net/problem/2357)                 | 세그먼트 트리                              |
 | 2422_한윤정이 이탈리아에 가서 아이스크림을 사먹는데 | [Link](./Algorithm/Baekjoon/p2422.java)                      | [문제](https://www.acmicpc.net/problem/2422)                 | 브루트 포스                                |
 | 2447_별찍기10                                       | [Link](./Algorithm/Baekjoon/p2447.java)                      | [문제](https://www.acmicpc.net/problem/2447)                 | 분할정복, 재귀                             |
 | 2448_별찍기11                                       | [Link](./Algorithm/Baekjoon/p2448.java)                      | [문제](https://www.acmicpc.net/problem/2448)                 | 분할정복, 재귀                             |
@@ -388,6 +389,7 @@
 | 11399_ATM                                           | [Link](./Algorithm/Baekjoon/p11399.java)                     | [문제](https://www.acmicpc.net/problem/11399)                | Greedy, Sort                               |
 | 11404_플로이드                                      | [Link](./Algorithm/Baekjoon/p11404.java)                     | [문제](https://www.acmicpc.net/problem/11404)                | 인접행렬, 플로이드 와샬                    |
 | 11437_LCA                                           | [Link](./Algorithm/Baekjoon/p11437.java)                     | [문제](https://www.acmicpc.net/problem/11437)                | 트리, LCA, DFS                             |
+| 11505_구간 곱 구하기                                | [Link](./Algorithm/Baekjoon/p11505.java)                     | [문제](https://www.acmicpc.net/problem/11505)                | 세그먼트 트리                              |
 | 11559_뿌요뿌요                                      | [Link](https://ju-nam2.tistory.com/117?category=869217)      | [문제](https://www.acmicpc.net/problem/11559)                | BFS, DFS                                   |
 | 11650_좌표 정렬하기                                 | [Link](./Algorithm/Baekjoon/p11650.java)                     | [문제](https://www.acmicpc.net/problem/11650)                | 정렬                                       |
 | 11651_좌표 정렬하기2                                | [Link](./Algorithm/Baekjoon/p11651.java)                     | [문제](https://www.acmicpc.net/problem/11651)                | 정렬                                       |
