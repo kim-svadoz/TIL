@@ -359,6 +359,7 @@
 | 10427_빚                                            | [Link](./Algorithm/Baekjoon/p10427.java)                     | [문제](https://www.acmicpc.net/problem/10427)                | 슬라딩 윈도우, 구현                        |
 | 10430_나머지                                        | [Link](./Algorithm/Baekjoon/p10430.java)                     | [문제](https://www.acmicpc.net/problem/10430)                | 사칙연산                                   |
 | 10451_순열 사이클                                   | [Link](./Algorithm/Baekjoon/p10451.java)                     | [문제](https://www.acmicpc.net/problem/10451)                | 그래프, 인접리스트                         |
+| 10472_십자뒤집기                                    | [Link](./Algorithm/Baekjoon/p10472.java)                     | [문제](https://www.acmicpc.net/problem/10472)                | bfs, 비트마스킹                            |
 | 10610_30                                            | [Link](./Algorithm/Baekjoon/p10610.java)                     | [문제](https://www.acmicpc.net/problem/10610)                | Greedy                                     |
 | 10713_기차 여행                                     | [Link](./Algorithm/Baekjoon/p10713.java)                     | [문제](https://www.acmicpc.net/problem/10713)                | 누적합, Segment Tree, Lazy                 |
 | 10714_케이크 자르기 2                               | [Link](./Algorithm/Baekjoon/p10714.java)                     | [문제](https://www.acmicpc.net/problem/10714)                | DP, DFS, 스택오버플로우 발생               |
