@@ -228,7 +228,7 @@ b -> Object에 접근 -> prop 접근 -> ZZZZ
     *ex. `+ Boolean, Integer, Float, Long`*
 -   `Garbage Collector`로 제거되어야 합니다.
 -   문자열 연산시 새로 객체를 만드는 Overhead가 발생합니다.
--   문자열 연산이 많이 일어나는 경우 더 이상 참조되지 않는 기존 객체는 **Garabae Collector**에 의해 제거되어야 하기 때문에 성능이 좋지 않습니다.
+-   문자열 연산이 많이 일어나는 경우 더 이상 참조되지 않는 기존 객체는 **Garabage Collector**에 의해 제거되어야 하기 때문에 성능이 좋지 않습니다.
 -   객체가 불변하므로, 멀티쓰레드에서 동기화를 신경 쓸 필요가 없습니다.(조회 연산에 매우 큰 장점!)
 -   객체가 가지는 값마다 새로운 객체가 필요하기 때문에, 메모리 누수와 새로운 객체를 계속 생성해야하기 때문에 성능저하를 발생시킬 수 있습니다.
 
@@ -351,7 +351,11 @@ int b = (int) true;		// (2) 에러 발생 O, boolean 은 int로 캐스트 불가
 
 ### 묵시적 형변환
 
+>   Promotion
+>
 >   캐스팅이 자동으로 발생 (업캐스팅)
+>
+>   작은 타입이 큰 타입으로 변환
 
 ```java
 Parent p = new Child(); 
@@ -362,7 +366,11 @@ Parent p = new Child();
 
 ### 명시적 형변환
 
+>   Casting
+>
 >   캐스팅할 내용을 적어줘야 하는 경우 (다운캐스팅)
+>
+>   큰 타입을 작은타입으로 변환
 
 ```java
 Parent p = new Child();
@@ -426,13 +434,131 @@ public class test {
     -> 프로그래머가 따로 (Child)로 명시적 형변환을 해줬기 때문에 컴파일러는 문법이 맞다고 생각해서 넘어간다.
     -> 하지만 런타임 과정에서 Child 클래스에 Parent 클래스를 넣을 수 없다는 것을 알게되고 런타임 에러가 발생하게 된다.
 
+
+
+## 묵시적 형변환과 바인딩
+
+작은 타입이 큰 타입으로 변환될 때 데이터 앞에 따로 타입을 명시하지 않아도 자동으로 형변환 되는 것이 묵시적 형변환(`Promotion`)이라고 했다.
+
+```java
+int a = 10;
+float b;
+
+b = a;
+```
+
+이는 객체에서도 타입변환이 가능하다.
+
+```java
+// Subclass는 Superclass를 상속 받고 있는 상태
+Superclass var = new Subclass();
+```
+
+여기서 `JVM ` 지식이 필요한데, `var` 변수는 메모리의 어디영역에 저장되고, `new` 키워드로 생성된 `Subclass`는 메모리의 어디 영역에 저장되는지 알고있어야 한다.
+
+`var`는 메모리의 **`Stack Area`**에 저장되며 `Subclass`는 **`Heap Area`**에 저장된다.
+
+그리고, `Stack Area`에 저장된 `var`는 `Heap Area`의 `Subclass`를 가리킨다.
+
+하지만, var변수로 접근가능한 멤버는 Superclass이다.
+
+만약, 하위 클래스에서 상위 클래스의 메서드를 오버라이딩해서 구현한 상태면 어떻게 될까요? var 변수로 접근가능한 멤버가 Superclass니까 부모메서드가 호출될까요?
+
+정답은 **NO**입니다.
+
+
+
+이것은 또 예외가 있는데, 바로 **하위 클래스에서 상위 클래스의 메서드를 오버라이딩하여 구현한 경우에는 `var`변수가 오버라이딩한 자식 클래스의 메서드를 호출하게 된다.**
+
+하지만, 예외가 하나 더 있다. 바로 상위 클래스에 **`static`** 메서드가 전언된 경우이다.
+
+여기서 **`동적 바인딩(Dynamic Binding)`**과 **`정적 바인딩(Static Binding)`** 개념이 등장하는데 이걸 또 이해해야 한다.
+예시를 보자.
+
+```java
+class Polymorphism {
+    public static void main(String[] args) {
+        SuperClass var = new SubClass(); // Promotion : 자동 타입 변환, Polymorphism
+        // 동적 바인딩(Dynmaic Binding)
+        var.methodA(); // Runtime 시에 결정된다. SubClass의 메서드 호출
+        // 정적 바인딩(Static Binding)
+        var.staticMethodA(); // static 메서드는 compile 시에 결정, SuperClass의 메서드 호출
+    }
+}
+class SuperClass {
+    public void methodA();
+    public static void staticMethodA();
+}
+
+class SubClass extends SuperClass {
+    @Override
+    void methodA() {
+        System.out.println("SubClass");
+    }
+    
+    /*
+    	아래 코드는 Error 발생
+    	static 으로 선언된 메서드는 오버라이딩 불가능
+    */
+    @Override
+    static void staticMethodA() {
+        System.out.println("SubClass");
+    }
+}
+```
+
+위 코드를 보면 상위 클래스를 만들고 하나는 인스턴스 메서드 하나는 정적 메서드를 만들고 하위 클래스는 상위 클래스를 상속받아서 메서드 오버라이딩 하는 코드이다.
+
+주석을 보면 알 수 있듯이, **`static` 키워드로 선언된 메서드는 하위클래스에서 오버라이딩이 불가능하다.**
+
+그 이유는, 동적 바인딩(Dynamic Binding)은 실행시에 성격이 결정되고 정적 바인딩(Static Binding)은 컴파일시에 성격이 결정되는데, `static` 키워드가 붙은 애들은 `JVM`에서 객체가 생성되기 전에 먼저 메모리에 올리기 때문에, 객체가 생성되지 않아도, `클래스명.변수명 혹은 클래스명.메소드명` 으로 접근이 가능했던 이유가 이것이다.
+
+`static` 변수의 값 할당은 `JVM`의 클래스 로더 시스템의 과정(로딩, 링크, 초기화) 중 **초기화** 과정에서 진행된다.
+
+> 동적바인딩은 런타임(Runtime, 실행) 시점에 객체 타입을 기준으로 실행될 함수를 호출하는 것을 의미하고
+> 정적바인딩은 컴파일(Compile) 시점에 객체 타입을 기준으로 실행될 함수를 호출하는 것을 의미한다.
+
+따라서 `static` 메서드는 `new Subclass()`가 메모리에 등록되기 전에 생성되기 때문에 오버라이딩 자체가 불가능 한 것이다.
+반면 `instance` 메서드는 런타임 시에 성격이 결정되기 때문에 `var`변수로 하위 클래스의 오버라이딩 된 메서드를 호출할 수 있게 되는 것이다.
+
+
+
+## 명시적 형변환
+
+명시적 형변환은 큰 타입을 작은 타입으로 바꿔야 하는 경우에, 데이터 앞에 타입을 '명시'해줌으로써 타입 변환이 가능하게 하는 기법이다.
+
+원시 타입(Primitive Type)의 경우에는 데이터 앞에 타입만 명시하면 바꿀 수 있다.
+
+```java
+int a;
+float b = 1.1;
+
+a = (int) b;
+```
+
+문제는 객체간의 Casting인데 예제로 보자.
+
+```java
+public void casting(Parent parent) {
+    if (parent instanceof Child) {
+        Child child = (Child) parent; // Casting
+    }
+}
+```
+
+객체간 Casting을 하기 위해서는 항상 **`instanceof`**를 사용하여 상속관계에 있는지 확인해야 한다.
+
+상속관계에 있지 않은 객체를 형변환 하려면 에러가 발생한다.
+
+
+
 # Java에서의 Thread 활용
 
 ---
 
 [위로](#java)
 
-요즘 OS은 모두 멀티태스킹을 지원한다.
+요즘 OS는 모두 멀티태스킹을 지원한다.
 
 실제로 동시에 처리될 수 있는 프로세스의 개수는 CPU 코어의 개수와 동일한데, 이보다 많은 개수의 프로세스가 존재하기 때문에 모두 함께 동시에 처리할 수는 없다.
 
