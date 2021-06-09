@@ -427,7 +427,7 @@
 > >
 > > 표준화된 폴더 구조안에 있는 classes 폴더(서블릿 디렉토리)
 > >
-> > ![image-20200114093838703](../../tmpImg/89752786-b3c1be80-db10-11ea-94da-d4bb100c5636.png)
+> > ![89752786-b3c1be80-db10-11ea-94da-d4bb100c5636](https://user-images.githubusercontent.com/58545240/121325922-ffb9db80-c94c-11eb-8363-b14d46620892.png)
 >
 > - 특징
 >   - 클라이언트의 요청에 대해 동적으로 작동하는 웹 어플리케이션 컴포넌트
@@ -450,7 +450,7 @@
 
 ## 서블릿 동작 방식
 
-![image-20210609133452649](../../tmpImg/image-20210609133452649.png)
+![image-20210609133452649](https://user-images.githubusercontent.com/58545240/121325986-119b7e80-c94d-11eb-88b2-9b42904a9fb8.png)
 
 1. 사용자(클라이언트)가 `URL`을 입력하면 `HTTP Request`가 Servlet Container로 전송한다.
 2. 요청을 전송받은 Servlet Container는 `HTTPServletRequest, HttpServletResponse` 객체를 생성한다.
@@ -498,7 +498,7 @@
 
 ### 생명주기
 
-![image-20210609134925916](../../tmpImg/image-20210609134925916.png)
+![image-20210609134925916](https://user-images.githubusercontent.com/58545240/121326017-195b2300-c94d-11eb-8af1-0951347a4ff0.png)
 
 1. 클라이언트의 요청이 들어오면 컨테이너는 해당 서블릿이 메모리에 있는지 확인하고, 없을 경우 **`init()`** 메소드를 호출하여 적재한다.
    `init()` 메소드는 처음 한번만 실행되기 때문에, 서블릿의 쓰레드에서 공통적으로 사용해야 하는 것이 있다면 **오버라이딩**하여 구현하면 된다.
@@ -862,7 +862,7 @@ https://siyoon210.tistory.com/120
 
 ## MVC 구동원리
 
-![image-20210609151104276](../../tmpImg/image-20210609151104276.png)
+![image-20210609151104276](https://user-images.githubusercontent.com/58545240/121326126-3859b500-c94d-11eb-9138-d7f6ad636512.png)
 
 > Client - Server 구조로 요청을 하면 그에 맞는 응답을 하는 것을 기반으로 한다.
 
@@ -936,7 +936,7 @@ Spring MVC는 Dispatcher-Servlet이 등장함에 따라 `web.xml`의 역할을 �
 
 그리고 이 서블릿을 이용한다면 `MVC` 역시 사용할 수 있게 되어 좋다. 
 
-![image-20210609150000076](../../tmpImg/image-20210609150000076.png)
+![image-20210609150000076](https://user-images.githubusercontent.com/58545240/121326054-2415b800-c94d-11eb-8bfd-bdecc03c9711.png)
 
 위 그림과 같이 Dispatcher Servlet이 모든 요청을 Controller로 넘겨주는 방식으 효율적으로 보이나, **모든 요청을 처리하다 보니 이미지나 HTML 파일을 불러오는 요청마저 전부 Controller로 넘겨버린다.**
 
