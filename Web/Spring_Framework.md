@@ -1054,7 +1054,7 @@ Spring은 이러한 문제들을 해결함과 동시에 편리한 방법을 제�
 
 ## 웹 환경 애플리케이션 구조
 
-![image-20210610155159651](../../tmpImg/image-20210610155159651.png)
+![image-20210610155159651](https://user-images.githubusercontent.com/58545240/121491488-f4c87f00-ca10-11eb-8a5e-bd74ca118d7e.png)
 
 웹 환경에서의 스프링은 클라이언트 요청을 전부 받는 'FrontController', 'DispatcherServlet'을 제공한다.
 
@@ -1119,9 +1119,9 @@ IoC 컨테이너는 계층구조로 구현할 수 있다. 각자 독립적으로
 
 >  ***일반적인 Web Application의 IoC컨테이너 구성***
 >
-> ![image-20210610155556723](../../tmpImg/image-20210610155556723.png)
+> ![image-20210610155556723](https://user-images.githubusercontent.com/58545240/121491523-fd20ba00-ca10-11eb-902a-99fc13a9a7e5.png)
 >
-> ![image-20210610155858020](../../tmpImg/image-20210610155858020.png)
+> ![image-20210610155858020](https://user-images.githubusercontent.com/58545240/121491543-027e0480-ca11-11eb-8ea2-e9448741854f.png)
 >
 > **DispatcherServlet**은 자체적으로 ApplicationContext를 생성하고 사용한다. 이를 `ServletContext`라고도 부른다.
 >
