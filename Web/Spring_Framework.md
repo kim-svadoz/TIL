@@ -6,7 +6,13 @@
 - [POJO](#pojo)
 - [MVC 패턴이 무엇인가](#mvc-패턴)
 - [Spring MVC](#spring-mvc)
+- [IoC Container](#ioc-container)
+- [Component Scan](#component-scan)
 - [의존성 주입: DI](#di)
+- [AOP](#aop)
+- [Annotation](#annotation)
+- [DAO vs DTO vs Entity class](#dao--dto--entity)
+- [JDBC](#jdbc)
 
 # OOP
 
@@ -181,6 +187,32 @@
 
 **자식 클래스를 외부로부터 은닉하는 캡슐화의 일종**이라고 말할 수 있다.
 
+하위 객체는 상위 객체(부모)의 특징을 물려 받는데, 이 상위 객체의 메소드나 변수를 **구현**하는가 그대로 **사용**하는가에 따라서 **`상속`**의 형태가 갈리게된다.
+
+1. **extends**
+   - 부모에서 선언 / 정의 를 모두하며 자식은 메소드 / 변수를 그대로 사용할 수 있음
+2. **implements** (interface 구현)
+   - 부모 객체는 선언만 하며 정의(내용)은 자식에서 오버라이딩(재정의)해서 사용해야 함
+3. **abstract**
+   - extends와 interface의 혼합으로. extends하되 몇 개는 추상 메소드로 구현되어 있음
+
+```bash
+# 요약
+1. `extends`는 일반 클래스와 abstract 클래스 상속에 사용되고, `implement`는 interface상속에 사용된다.
+2. class가 class를 상속받을 땐 extends를 사용하고 interface가 interface가 상속 받을 땐 extneds를 사용한다.
+3. class가 interface를 사용할 땐 implements를 써아햐고
+4. interface가 class를 사용할 땐 implements를 쓸 수 없다.
+5. extends는 클래스 한 개만 상속 받을 수 있다.(단일상속)
+6. extends 자신 클래스는 부모 클래스의 기능을 사용한다.
+7. implements는 여러 개 사용 가능하다. (다중상속 해법)
+8. implements는 설계 목적으로 구현이 가능하다.
+9. implements한 클래스는 implements의 내용을 다 사용해야 한다.
+
+extends는 클래스를 확장하는 것이고 implemtns는 인터페이스를 구현하는 것이다.
+인터페이스와 보통 클래스의 차이는 인터페이스는 정의한 메소드를 구현하지 않아도 된다.
+인터페이스를 상속받는 클래스에서 인터페이스에 정의된 메소드를 구현하면 된다.
+```
+
 
 
 아까 자동차를 예로 들어 추상화를 설명했다. 여기에 추가로 대리 운전을 하는 사람 클래스가 있다고 생각해보자.
@@ -193,7 +225,7 @@
 
 
 
-이처럼, 상속 관계에서는 단순히 하나의 클래스 안에서 속성 및 연산들의 캡슐화에 한정되지 않는다. 즉, 자식 클래스 자체를 캡슐화하여 `'사람 클래스'와 같은 외부에 은닉하는 것으로 확장되는 것이다.
+이처럼, 상속 관계에서는 단순히 하나의 클래스 안에서 속성 및 연산들의 캡슐화에 한정되지 않는다. 즉, 자식 클래스 자체를 캡슐화하여 '사람 클래스'와 같은 외부에 은닉하는 것으로 확장되는 것이다.
 
 이렇게 자식 클래스를 캡슐화 해두면, 외부에선 이러한 클래스들에 영향을 받지 않고 개발을 이어갈 수 있는 장점이 있다.
 
@@ -330,8 +362,6 @@
 
 
 
-
-
 ### + 인터페이스
 
 > 추상메소드(상수도 포함)만 정의하는 특별한 클래스
@@ -403,7 +433,11 @@
 
 
 
-참조 : https://github.com/gyoogle/tech-interview-for-developer/blob/master/Computer%20Science/Software%20Engineering/Object-Oriented%20Programming.md
+***참조***
+
+https://github.com/gyoogle/tech-interview-for-developer/blob/master/Computer%20Science/Software%20Engineering/Object-Oriented%20Programming.md
+
+https://velog.io/@hkoo9329/%EC%9E%90%EB%B0%94-extends-implements-%EC%B0%A8%EC%9D%B4
 
 # Servlet
 
@@ -824,7 +858,9 @@ Java EE 등을 사용할 때에 비해서 특정 인터페이스를 구현하거
 
 
 
-참조 : https://siyoon210.tistory.com/120
+***참조***
+
+https://siyoon210.tistory.com/120
 https://siyoon210.tistory.com/120
 
 # MVC 패턴
@@ -878,7 +914,9 @@ https://siyoon210.tistory.com/120
 
 
 
-참조 : https://asfirstalways.tistory.com/180
+***참조***
+
+https://asfirstalways.tistory.com/180
 
 # Spring MVC
 
@@ -900,6 +938,7 @@ https://siyoon210.tistory.com/120
 > >
 > > - `DispatcherServlet`
 > >   - 클라이언트의 모든 요청을 처리하기 위해 첫 번째로 실행되는 서블릿
+> >   - Dispatcher가 받은 요청은 HandlerMapping으로 넘어간다.
 > > - `HandlerMapping`
 > >   - 클라이언트가 요청한 path를 분석해 어떤 컨트롤러를 실행해야 하는지 찾아서 DispatcherServlet으로 넘겨주는 객체
 > > - `Controller`
@@ -915,6 +954,8 @@ https://siyoon210.tistory.com/120
 > > 스프링 MVC를 구축하면, 위 클래스 들이 자동으로 실행되며 일처리를 한다.
 > >
 > > 필요에 따라 ViewResolver나 HandlerMapping 객체를 다양하게 등록하고 사용할 수 있다.
+
+
 
 ## Dispatcher-Servlet
 
@@ -962,6 +1003,195 @@ Spring은 이러한 문제들을 해결함과 동시에 편리한 방법을 제�
 이렇게 영역을 분리하면 효율적인 리소스 관리를 지원할 뿐 아니라 추후에 확장을 용이하게 해준다는 장점이 있다.
 
 참조 : https://mangkyu.tistory.com/18?category=761302
+
+# IoC Container
+
+---
+
+[위로](#spring-framework)
+
+> 기본적으로 스프링의 IoC 컨테이너는 스프링 애플리케이션에서 'Object 생성', '관계 설정', '오브젝트 사용 및 제거' 등의 역할을 수행하는 컨테이너를 의미한다.
+>
+> 스프링에서는 '빈 팩토리', '애플리케이션 컨텍스트'라고도 하고, 아주 간단한 표현으로 **Application Context** 인터페이스를 구현한 클래스 오브젝트라고도 한다.
+>
+> 편의상 일반적으로 IoC컨테이너를 애플리케이션 컨텍스트라고 칭하고, 스프링을 개발할 때 이 애플리케이션 컨텍스트를 **계층 구조**로 만드는 경우가 많다.
+>
+> 애플리케이션 컨텍스트의 계층구조는 부모역할을 하는 **root-application context(루트 애플리케이션 컨텍스트)**와, **servlet-applicaiton context(서블릿 애플리케이션 컨텍스트)**로 구성하며 계층 구조 안에 모든 컨텍스트는 각자 독립적인 설정정보를 이용해서 `Bean Object`를 만들고 관리한다.
+>
+> 스프링 애플리케이션에서 애플리케이션 컨텍스트 계층구조를 구현할 때 사용하는 방법에는 아래와 같다.
+>
+> - `root-application context`
+>   - `ContextLoaderListener` 등록
+>   - 디폴트 설정 파일 위치가 아닌 변경시 `<context-param>`으로 변경
+> - `servlet-application context`
+>   - `DispatcherServlet` 등록
+>   - 디폴트 설정 파일 위치가 아닌 변경시 `<init-param>`으로 변경
+>
+> 정리하자면,`web.xml`내 `<context-param>`에 해당하는 `xml` 파일에 의해 등록되는 빈은 **루트 애플리케이션 컨텍스트**에서 등록-관리 되는 빈이고, `dispatcher-servlet.xml`을 통해서 등록되는 빈은 **서블릿 애플리케이션 컨텍스트**에서 등록-관리되는 빈이다.
+>
+> 이 두 개의 IoC 컨테이너는 계층구조로 만들어진 별개의 IoC 컨테이너 인것이다.
+>
+> 그러면 왜 굳이 이렇게 IoC 컨테이너를 나누어서 사용하는가??
+
+
+
+## IoC 컨테이너의 종류
+
+- `StaticApplicationContext`
+  - `StaticApplicationContext`는 코드를 통해 빈 메타정보를 등록하기 위해 사용한다.
+  - 스프링의 기능에 대한 학습 테스트를 만들 때를 제외하면 실제로 사용되지 않는다.
+  - 웹 관련 기능을 공부하며 학습 테스트로 검증하고 싶을 때는 `StaticWebApplicationContext`를 사용한다.
+- `GenericApplicationContext`
+  - 실전에서 사용될 수 있는 모든 기능을 갖추고 있는 애플리케이션 컨텍스트이다.
+  - `StaticApplicationContext`와 달리 **xml**파일과 같은 외부의 리소스에 있는 빈 설정 메타정보를 리더를 통해 읽어들여서 메타정보로 전환해 사용한다.
+- `GenericXmlApplicationContext`
+  - `GenericApplicationContext`에서 `XmlBeanDefinitionReader`를 내장하고 있어, **xml**을 읽어 사용할때 편리하다.
+- **`WebApplicationContext`**
+  - 스프링 애플리케이션에서 가장 많이 사용된다.
+  - **XML**설정 파일을 사용하는 경우에는 `XmlWebApplicationContext`를 사용하며, 애노테이션을 사용한다면 `AnnotationConfigWebApplicationContext`를 사용한다.
+
+
+
+## 웹 환경 애플리케이션 구조
+
+![image-20210610155159651](../../tmpImg/image-20210610155159651.png)
+
+웹 환경에서의 스프링은 클라이언트 요청을 전부 받는 'FrontController', 'DispatcherServlet'을 제공한다.
+
+**'DispatcherServlet'은 자체적으로 `Application Context`를 생성하고  `Root Application Context`를 부모로 등록한다.**
+
+
+
+### > Application Context
+
+> 공통 기능을 할 수 있는 Bean 설정(DataSource, Service 등..)
+>
+> 각 서블릿에서 공유할 수 있는 Bean!!
+
+- Web Application 최상단에 위치하고 있는 Context
+- Spring ApplicationContext란 BeanFactory를 상속받고 있는 Context
+- Spring에서 `root-context.xml`, `applicatoinContext.xml` 파일은 Application  Context 생성 시 필요한 설정정보를 담은 파일(Bean 선언 등..)
+- Spring에서 생성되는 Bean에 대한 IoC Container(또는 Bean Container)
+- 특정 Servlet 설정과 관계 없는 설정을 한다.(`@Service, @Repository, @Configuration, @Component`)
+- 서로 다른 여러 Servlet에서 공통적으로 공유해서 사용할 수 있는 Bean을 선언한다.
+- **Appliction Context**에 정의된 **Bean**은 **Servlet Context**에서 정의된 **Bean을 사용할 수 없다.**
+
+
+
+### > Servlet Context
+
+> servlet.context.xml
+>
+> Servlet 구성에 필요한 Bean 설정(Controller, Interceptor, HandlerMapping ..)
+
+- Servlet 단위로 생성되는 Context
+- Spring에서 `servlet-context.xml` 파일은 **DispatcherServlet** 생성 시에 필요한 설정 정보를 담은 파일
+  (Interceptor, Bean생성, ViewResolver 등...)
+- URL설정이 있는 Bean을 생성(`@Controller, Interceptor`)
+- Application Context를 자신의 부모 Context로 사용한다.
+- Application Context와 Servlet Context에 같은 id로 된 Bean이 등록 되는 경우, Servlet Container에 선언된 Bean을 사용한다.
+- Bean 찾는 순서
+  1. Servlet Context에서 먼저 찾는다.
+  2. 만약 Servlet Context에서 Bean을 못 찾은 경우 Application Context에 정의된 Bean을 찾는다.
+- **Servlet Context**에 정의된 **Bean**은 **Application Context**에서 정의된 **Bean을 사용할 수 있다.**
+
+
+
+### > web.xml
+
+> 서블릿 클래스는 JSP와 달리 설치 뿐 만 아니라, 등록을 하는 과정이 필요로 하다.
+>
+> 여기서 서블릿 클래스를 등록하는 곳의 이름을 `Web Application depolyment descripor(DD-deplyment Descriptor)`라고 하는데 이 역할을 하는 것이 바로 **`web.xml`**이다.
+>
+> `web.xml`파일은 웹 애플리케이션 디렉터리 마다 딱 하나씩 만 존재할 수 있다.
+>
+> `DD`는 WAS 구동 시 `/WEB-INF` 디렉토리에 존재하는 `web.xml`을 읽어 웹 애플리케이션의 설정을 구성하기 위해 존재한다.
+
+
+
+## IoC 컨테이너 계층구조
+
+IoC 컨테이너는 계층구조로 구현할 수 있다. 각자 독립적으로 빈을 갖고 있으며, 자신의 어플리케이션 컨텍스트에 빈이 존재하지 않을 경우, 부모 어플리케이션 컨텍스트에서 빈을 찾는다.
+
+중요한 점은 자식 어플리케이션 컨텍스트에서는 탐색하지 않는다는 점이다.
+
+미리 만들어진 어플리케이션 컨텍스트의 설정을 그대로 가져다가 사용하면서 그 중 일부 빈만 설정을 변경하고 싶다면, 어플리케이션 컨텍스트를 두 개 만들어서 하위 컨텍스트에서 바꾸고 싶은 빈들을 설정해줘도 된다.
+
+>  ***일반적인 Web Application의 IoC컨테이너 구성***
+>
+> ![image-20210610155556723](../../tmpImg/image-20210610155556723.png)
+>
+> ![image-20210610155858020](../../tmpImg/image-20210610155858020.png)
+>
+> **DispatcherServlet**은 자체적으로 ApplicationContext를 생성하고 사용한다. 이를 `ServletContext`라고도 부른다.
+>
+> 이외에도 `RootApplicationContext`가 하나 존재하는데, 이는 스프링 외의 기술을 사용하는 `Ajax Engine, JSP` 등에서 Spring IoC의 기능을 사용할 수 있도록 하기 위함이다.
+>
+> 스프링 밖의 어디서라도  `WebApplicationContextUtils.getWebApplicationContext(ServletContext sc)` 을 호출하면 `RootApplicationContext`를 가져올 수 있다.
+
+
+
+
+
+***참조***
+
+https://jaehun2841.github.io/2018/10/21/2018-10-21-spring-context/#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0
+
+https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=pjok1122&logNo=221744895053
+
+
+
+# Component Scan
+
+---
+
+[위로](#spring-framework)
+
+>  xml 설정파일에 서 모든 빈을 <bean>으로 일일이 등록해줘야 하는 것은 매우 번거로운 일이다
+>
+> 그래서 등장한것이 **Component Scan**이다.
+>
+> 
+>
+> ***test.xml***
+>
+> ```xml
+> <context:component-scan base-package="com.multi.app" />
+> ```
+>
+> 위와 같이 내부 filter 태그가 없다면, base-package에 지정한 패키지에서부터 모든 하위 패키지를 scanning해서 빈을 등록하도록 한다.
+>
+> 모든 클래스를 빈으로 등록하는 것은 아니고, `@Component` Annotation이 붙은 클래스를 빈으로 등록한다.
+>
+> 
+>
+> ***ApplicationContext.xml***
+>
+> ```xml
+> <context:component-scan base-package="com.myapp.core, com.myapp.app">
+>     <!-- Component-scan대상에서 @Controller annotation Class는 제외한다. -->
+>     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> 
+> </context:component-scan>
+> ```
+>
+> 
+>
+> ***Servlet-Context.xml***
+>
+> ```xml
+> <context:component-scan base-package="com.myapp.app" use-default-filters="false">
+>     <!-- Component-scan대상은 @Controller annotation Class만 scan한다. -->
+>     <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> 
+> </context:component-scan>
+> ```
+>
+> 위를 보면 Servlet-Context.xml 설정 시, `use-default-filters` 속성을 `false`로 처리 하였다.
+>
+> `use-default-filters` 속성은 원래 `default`가 `true`인데, **@Component Annotation**(`@Controller, @Service, @Repository` 등..)의 클래스를 자동으로 Bean으로 등록해주는 filter 속성이다.
+>
+> 따라서 위의 filter를 false로 변경하고 scan할 대상에 대한 Annotation만 include-filter에 추가하였다.
+
+
 
 # DI
 
@@ -1164,3 +1394,533 @@ public class MyLifeService {
 
 
 참조 : https://madplay.github.io/post/why-constructor-injection-is-better-than-field-injection
+
+# AOP
+
+---
+
+[위로](#spring-framework)
+
+> Aspect Oriented Programming
+> (측면/양상 지향적 프로그래밍)
+>
+> " 공통의 관심사항을 적용해서 발생하는 의존 관계의 복잡성과 코드 중복을 해소 "
+>
+> 즉, 여러군데서 사용되는 중복되는 코드를 떼어내서 분리하고 각 메소드는 자신이 해야할 작업만 갖고 있자는 개념이다.
+>
+> 여기서 **여러군데서 사용되는 중복되는 코드(부가 기능)**가 AOP에서 말하는 **Aspect**이다.
+>
+> 각 클래스에서 공통 관심 사항을 구현한 모듈에 대한 의존관계를 갖기 보단, Aspect를 이용해 핵심 로직을 구현한 각 클래스에 공통 기능을 적용한다.
+>
+> 간단한 설정만으로도 공통 기능을 여러 클래스에 적용할 수 있는 장점이 있으며 핵심 로직 코드를 수정하지 않고도 웹 애플리케이션의 보안, 로깅, 트랜잭션과 같은 공통 관심사항을 `AOP`를 이용해 간단하게 적용가능하다.
+>
+> 
+>
+> ![image-20210610103947651](https://user-images.githubusercontent.com/58545240/121490566-1c6b1780-ca10-11eb-9cef-33136052a2cd.png)
+>
+> - **핵심기능** : 업무 로직을 포함하는 기능
+> - **부가기능** : 핵심 기능을 도와주는 부가적인 기능(로깅, 보안 등)
+>
+> 
+>
+> - `target` : 핵심 기능을 담고 있는 모듈로 타겟은 부가기능을 부여한 대상
+> - `Advice` : 타겟에 제공할 부가기능을 담고 있는 모듈
+> - `Joinpoint`
+>   - Advice를 적용이 가능한 지점을 의미(before, after 등등)
+>   - 타겟 객체가 구현한 인터페이스의 모든 메서드는 Jointpoint가 된다.
+> - `Pointcut`
+>   - Jointpoint의 부분집합으로, 실제로 Advice가 적용되는 Joinpoint를 나타냄.
+>   - Advice를 적용할 타겟의 메서드를 선별하는 정규표현식
+>   - 표현식은 execution으로 시작하고 메서드의 Signature를 비교하는 방법을 주로 이용한다.
+> - `Weaving`
+>   - Pointcut에 의해서 결정된 타겟의 조인 포인트에 부가기능(Advice)를 삽입하는 과정
+>   - AOP가 핵심기능(Target)의 코드에 영향을 주지 않으면서 필요한 부가기능(Advice)을 추가할 수 있도록 해주는 핵심적인 처리과정
+> - `Aspect`
+>   - 여러 객체에 공통으로 적용되는 공통 관심사항을 말함. 트랜잭션이나 보안 등이 Aspect의 좋은 예 
+>   - AOP의 기본 모듈
+>   - Advice + Pointcut
+>   - Aspect는 싱글톤 형태의 객체로 존재한다.
+
+
+
+## AOP란?
+
+객체지향의 기본원칙을 적용하여도 핵심기능에서 부가기능을 분리해서 모듈화하는 것은 매우 어렵다.
+
+AOP는 애플리케이션에서의 **관심사의 분리(기능의 분리), 핵심적인 기능에서 부가적인 기능을 분리**한다.
+
+분리한 부가기능을 **Aspect**라는 독특한 모듈형태로 만들어서 설계하고 개발하는 방법이다.
+
+> - OOP를 적용하여도 핵심기능에서 부가기능을 쉽게 분리된 모듈로 작성하기 어려운 문제점을 AOP가 해결해준다고 볼 수 있다.
+>
+> - AOP는 부가기능을 Aspect로 정의하여 핵심기능에서 부가기능을 분리함으로써 핵심기능을 설계하고 구현할 때 객체지향적인 가치를 지킬 수 있도록 도와주는 개념이다.
+
+
+
+## Spring AOP 특징
+
+1. **Spring은 프록시 기반 AOP를 지원한다.**
+   - Spring은 타겟(tartget) 객체에 대한 프록시를 만들어 제공한다.
+   - 타겟을 감싸는 프록시는 실행시간(Runtime)에 생성된다.
+   - 프록시는 어드바이스를 타겟 객체에 적용하면서 생성되는 객체이다.
+2. **프록시(Proxy)가 호출을 가로챈다.(Intercept)**
+   - 프록시는 타겟 객체에 대한 호출을 가로챈 다음 어드바이스의 부가기능 로직을 수행하고 난 후에 타겟의 핵심기능 로직을 호출한다.(**전처리 Advice**)
+   - 또는 타겟의 핵심기능 로직 메서드를 호출한 후에 부가기능(어드바이스)을 수행하는 경우도 있다.(**후처리 Advice**)
+3. **Spring AOP는 메서드 조인 포인트만 지원한다.**
+   - Spring은 동적 프록시를 기반으로 AOP를 구현하므로 메서드 조인포인트만 지원한다.
+   - 핵심기능(타겟)의 메서드가 호출되는 런타임 시점에만 부가기능(어드바이스)을 적용할 수 있다.
+   - 반면에 `AspectJ`같은 고급 AOP 프레임워크를 사용하면 객체의 생성, 필드값의 조회와 조작, static 메서드 호출 및 초기화 등 다양한 작업에 부가기능을 적용할 수 있다.
+
+
+
+## Spring AOP 구현방식
+
+1. **XML 기반의 POJO 클래스를 이용한 AOP 구현**
+   - 부가기능을 제공하는 Advice 클래스를 작성한다.
+   - XML 설정 파일에 `<aop:config>`를 이용해서 Aspect를 설정한다.
+     (즉, Advice와 Pointcut을 설정하는 것)
+2. **`@Aspect` 어노테이션을 이용한 AOP 구현**
+   - `@Aspect` 어노테이션을 이용해서 부가기능을 제공하는 Aspect 클래스를 작성한다.
+   - 이 떄 Aspect 클래스는 어드바이스를 구현하는 메서드와 Pointcut을 포함한다.
+   - XML 설정 파일에 `<aop:aspectj-autoproxy/>`를 설정한다.
+
+
+
+## Advice의 종류
+
+- `Around 어드바이스`
+  - 타겟의 메서드가 호출되기 이전(before) 시점과 이후(after) 시점에 모두 처리해야 할 필요가 있는 부가기능을 정의
+  - Jointpoint 앞과 뒤에서 실행되는 Advice
+- `Before 어드바이스`
+  - 타겟의 메서드가 실행되기 이전(before) 시점에 처리해야 할 필요가 있는 부가기능을 정의
+  - Jointpoint앞에서 실행되는 Advice
+- `After Returning 어드바이스`
+  - 타겟의 메서드가 정상적으로 실행된 이후(after) 시점에 처리해야 할 필요가 있는 부가기능을 정의
+  - Jointpoint 메서드 호출이 정상적으로 종료된 뒤에 실행되는 Advice
+- `After Throwing 어드바이스`
+  - 타겟의 메서드가 예외를 발생한 이후(after) 시점에 처리해야 할 필요가 있는 부가기능을 정의
+  - 예외가 던져질때 실행되는 Advice
+
+
+
+## Advice 태그
+
+- `<aop:before>`
+  - 메서드 실행전에 적용되는 어드바이스 정의
+- `<aop:after-returning>`
+  - 메서드가 정상적으로 실행된 후에 적용되는 어드바이스 정의
+- `<aop:after-throwing>`
+  - 메서드가 예외를 발생시킬 때 적용되는 어드바이스 정의
+  - try-catch 블록에서의 catch와 비슷하다.
+- `<aop:after>`
+  - 메서드가 정상적으로 실행되는지 또는 예외를 발생시키는지 여부에 상관없이 어드바이스를 저으이
+  - try-catch-finally 블록에서 finally와 비슷하다.
+- `<aop:around>`
+  - 메서드 호출 이전, 이후 예외발생 등 모든 시점에 적용 가능한 어드바이스 정의
+
+
+
+## 프록시 패턴
+
+String AOP는 프록시 패턴이라는 디자인 패턴을 사용해서 `AOP`의 효과를 낸다.
+
+프록시 패턴을 사용하면 어떤 기능을 추가하려 할 때 기존 코드를 변경하지 않고 기능을 추가할 수 있다.
+
+
+
+어떤 클래스가 Spring AOP의 대상이라면 그 기존 클래스의 빈이 만들어질 때 Spring AOP가 프록시(기능이 추가된 클래스)를 자동으로 만들고 원본 클래스 대신 프록시를 빈으로 등록한다.
+
+그리고 원본 클래스가 사용되는 지점에서 프록시를 대신 사용한다.
+
+
+
+아래 예제의 **`@Transactional`** 어노테이션이 이에 해당한다.
+
+![image-20210610112017582](https://user-images.githubusercontent.com/58545240/121490638-2db42400-ca10-11eb-8670-57c9ac39ab86.png)
+
+`@Transactional` 어노테이션이 붙어있으면 OwnerRepository 타입의 프록시가 새로 만들어지고 Spring AOP에 의해 자동으로 생성되는 OwnerRepository의 프록시에는 `@Transactional` 어노테이션이 지시하는 코드가 삽입된다.
+
+**`@Transactional`**에 의해 추가되는 기능은 다음과 같다.
+
+JDBC에서 트랜잭션 처리를 하려면 SQL 실행문 앞뒤에 `setAutoCommit()`과 `commit() / rollback()` 코드가 항상 붙는데 `@Transactional` 어노테이션은 프록시에 자동으로 그 코드를 넣어서 반복, 중복되는 코드를 생략할 수 있게 한다.
+
+이로 인해 개발자는 비즈니스 로직에만 집중할 수 있게 되는 것이다.
+
+
+
+***참조***
+
+https://atoz-develop.tistory.com/entry/Spring-%EC%8A%A4%ED%94%84%EB%A7%81-AOP-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4-%EB%B0%8F-%EC%A0%81%EC%9A%A9-%EB%B0%A9%EB%B2%95
+
+https://shlee0882.tistory.com/206
+
+# Annotation
+
+---
+
+[위로](#spring-framework)
+
+> 소스코드에 `@어노테이션`의 형태로 표현하며, 클래스, 필드, 메소드의 선언부에 적용할 수 있는 특정기능이 부여된 표현법
+>
+> 애플리케이션의 규모가 커질수록, xml환결설정이 매우 복잡해지는데 , 이를 개선하기 위해 자바 파일에 어노테이션을 적용해서 개발자가 설정 파일 작업을 할때 발생시키는 오류를 최소화해주는 역할을 한다.
+>
+> 어노테이션의 사용으로 소스 코드에 메타데이터를 보관할 수 있고, 컴파일 타임의 체크 뿐 아니라 어노테이션 API를 사용해 코드 가독성도 높여줄 수 있다.
+
+- `@Controller` : **Dispatcher-Servlet.xml**에서 bean 태그로 정의하는 것과 같은 역할
+- `@RequestMapping` : 특정 메소드에서 요청되는 URL과 매칭시키는 어노테이션
+- `@Autowired` : 자동으로 의존성 주입(필드 주입)하기 위한 어노테이션
+- `@Service` : 비즈니스 로직 처리하는 서비스 클래스에 등록
+- `@Repository` : DAO에 등록
+
+# DAO & DTO & Entity
+
+---
+
+[위로](#spring-framework)
+
+> ![image-20210610132928215](https://user-images.githubusercontent.com/58545240/121490678-37d62280-ca10-11eb-9faf-9b33ff94825f.png)
+
+
+
+## DAO
+
+> Data Access Object
+>
+> **repository package**
+>
+> ![image-20210610140801515](https://user-images.githubusercontent.com/58545240/121490721-40c6f400-ca10-11eb-8425-1a1260e720e9.png)
+>
+> - 실제로 DB에 접근하는 객체
+>
+>   - **Persistance Layer**(`DB`에 dat를 `CRUD`하는 계층)이다.
+>
+> - Service와 DB를 연결하는 고리의 역할
+>
+> - SQL을 사용해 (개발자가 직접 코딩)  DB에 접근한 후 적절한 CRUD API를 제공한다.
+>
+>   - **JPA** 대부분의 기본적인 CRUD method를 제공하고 있다.
+>
+>   - **`extends JpaRepository<User, Long>`**
+>
+>   - ```java
+>     public interface QuestionRepository extends CrudRepository<Question, Long> {
+>         
+>     }
+>     ```
+>
+> - "Object" 단위 -> (SQL을 이용한 CURD) -> DB의 "Record" 단위로 저장 되는 순서
+>
+>   - Obejct와 Record 간의 miss match가 발생할 수 있는데, 이를 해결해줘야 한다.
+
+
+
+## DTO
+
+> Data Transfer Object
+>
+> **dto package**
+>
+> - 계층간 데이터 교환을 위한 객체(**Java Beans**)이다.
+>
+>   - DB에서 데이터를 얻어 Service나 Controller 등으로 보낼 때 사용하는 객체를 말한다.
+>   - 즉, DB의 데이터가 **Presentation Logic Tier**로 넘어오게 될 때는 DTO의 모습으로 바껴서 오고 가는 것이다.
+>   - **로직을 갖고 있지 않는 순수한 데이터 객체**이며, `getter/setter` 메소드만을 갖는다.
+>   - 하지만 DB에서 꺼낸 값을 임의로 변경할 필요가 없기 때문에 DTO클래스에는 `setter`가 없다.
+>     (대신 생성자에서 값을 할당한다.)
+>
+> - **`Request`와 `Response`**용 DTO는 view를 위한 클래스
+>
+>   - 자주 변경이 필요한 클래스
+>   - **Presentation Model**
+>   - `toEntity()` 메서드를 통해서 DTO에서 필요한 부분을 이용해 Entity로 만든다.
+>   - 또한 Controller Layer에서 Response DTO 형태로 Client에 전달한다.
+>
+> - **`VO`(Value Object)**??
+>
+>   - VO는 DTO와 동일한 개념이지만 read only 속성을 가진다.
+>   - VO는 특정한 비즈니스 값을 담는 객체이고, DTO는 Layer간의 통신 용도로 오고가는 객체를 말한다.
+>
+> - 예시
+>
+>   ```java
+>   @Getter
+>   @NoArgsConstructor
+>   @AllArgsConstructor
+>   public class UserDto {
+>     @NotBlank
+>     @Pattern(regexp = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$")
+>     private String email;
+>   
+>     @JsonIgnore
+>     @NotBlank
+>     @Size(min = 4, max = 15)
+>     private String password;
+>   
+>     @NotBlank
+>     @Size(min = 6, max = 10)
+>     private String name;
+>   
+>     public User toEntity() {
+>         return new User(email, password, name);
+>     }
+>   
+>     public User toEntityWithPasswordEncode(PasswordEncoder bCryptPasswordEncoder) {
+>         return new User(email, bCryptPasswordEncoder.encode(password), name);
+>     }
+>   }
+>   ```
+
+
+
+## Entity Class
+
+> **domain package**
+>
+> - 실제 DB의 테이블과 매칭될 클래스
+>
+>   - 즉, 테이블과 링크될 클래스임을 나타낸다.
+>   - Entity 클래스 또는 가장 Core한 클래스라고 부른다.
+>   - `@Entity`, `@Column`, `@Id` 등을 이용
+>
+> - 최대한 외부에서 Entity 클래스의 getter method를 사용하지 않도록 해당 클래스 안에서 필요한 **logic method**를 구현한다.
+>
+>   - 단, `Domain Logic`만 가지고 있어야 하고 `Presentation Logic`을 가지고 있어서는 안된다.
+>   - 여기서 구현한 method는 주로 **Service Layer**에서 이용된다.
+>
+> - **Entity Class와 DTO Class를 분리하는 이유??**
+>
+>   - View Layer와 DB Layer의 역할을 철저하게 분리하기 위해서
+>
+>   - 테이블과 매핑되는 Entity 클래스가 변경되면 여러 클래스에 영향을 끼치게 되는 반면 View와 통신하는 DTO 클래스 (Request / Response 클래스) 는 자주 변경되므로 분리해야 한다.
+>
+>   - Domain Model을 아무리 잘 설계했다고 해도 각 View 내에서 Domain Model의 getter만을 이용해서 원하는 정보를 표시하기가 어려운경우가 종종 있다. 이런 경우 Domain Model 내에 Presentation을 위한 필드나 로직을 추가하게 되는데, 이러한 방식이 모델링의 순수성을 깨고 Domain Model 객체를 망가뜨리게 된다.
+>
+>   - 또한 Domain Model을 복잡하게 조합한 형태의 Presentation 요구사항들이 있기 때문에 Domain Model을 직접 사용하는 것은 어렵다.
+>
+>   - **즉, DTO는 Domain Model을 복사한 형태로, 다양한 Presentation Logic을 추가한 정도로 사용하며 Domain Model의 객체는 Persistent만을 위해서 사용한다.**
+>
+>   - 예시
+>
+>     ```java
+>     @Entity
+>     @Getter
+>     @AllArgsConstructor
+>     @NoArgsConstructor
+>     @EqualsAndHashCode
+>     @ToString
+>     public class User implements Serializable {
+>       private static final long serialVersionUID = 7342736640368461848L;
+>     
+>       @Id
+>       @GeneratedValue(strategy = GenerationType.IDENTITY)
+>       @JsonProperty
+>       private Long id;
+>     
+>       @Column(nullable = false)
+>       @JsonProperty
+>       private String email;
+>     
+>       @Column(nullable = false)
+>       @JsonIgnore
+>       private String password;
+>     
+>       // @Override 
+>       // public boolean equals(Object o) { ... }
+>       // @Override
+>       // public int hashCode() { ... }
+>       // @Override
+>       // public String toString() { ... }
+>     ```
+
+
+
+## 패키지의 전체 구조
+
+![image-20210610135314187](https://user-images.githubusercontent.com/58545240/121490755-491f2f00-ca10-11eb-9294-366d8afbbe8f.png)
+
+
+
+### > Controller
+
+- 기능
+
+  - 해당 요청 url에 따라 적절한 view와 mapping 처리
+  - `@Autowired Service`를 통해 service와 method를 이용
+  - 적절한 ResponseEntity(DTO)를 body에 담아 Client에 반환
+
+- **`@Controller`**
+
+  - API와 view를 동시에 사용하는 경우 사용
+  - 대신 API 서비스로 사용하는 경우에는 `@ResponseBody`를 사용하여 객체를 반환
+  - view(화면) return이 주 목적이다.
+  - 예시 1
+
+  ```java
+  @Controller
+  @RequestMapping("/")
+  public class HomeController {
+    @GetMapping
+    public String home(HttpSession session) {
+        if (!SessionUtil.getUser(session).isPresent()) {
+            return "login";
+        }
+        return "index";
+    }
+  }
+  ```
+
+- **`@RestContoller`**
+
+  - view가 필요없는 API만 지원하는 서비스에서 사용 (`Spring 4.0.1`부터 제공하낟)
+  - `@RequestMapping` 메서드가 기본적으로 `@ResponseBody` 의미를 가정한다.
+  - data(json, xml 등) return이 주 목적 : **return ResponseEntity**
+  - 즉, **`@RestController` = `@Controller` + `@ResponseBody`**
+  - 예시 2
+
+  ```java
+  @RestController
+  @RequestMapping("/api/users")
+  public class ApiUserController {
+    @Autowired
+    private UserService userService;
+  
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody @Valid LoginDto loginDto, HttpSession session) {
+        SessionUtil.setUser(session, userService.login(loginDto));
+        return new ResponseEntity(HttpStatus.OK);
+    }
+  }
+  ```
+
+
+
+### > Service
+
+- 기능
+
+  - `@Autowired Repository`를 통해 repository의 method를 이용
+  - 적절한 비즈니스 로직을 처리한다.
+  - DAO로 DB에 접근하고 DTO로 데이터를 전달받은 다음, 비즈니스 로직을 처리해 적절한 데이터를 반환
+
+- 예시
+
+  ```java
+  @Service
+  public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Resource(name = "bCryptPasswordEncoder")
+    private PasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private MessageSourceAccessor msa;
+  
+    public User save(UserDto userDto) {
+        if (isExistUser(userDto.getEmail())) {
+            throw new UserDuplicatedException(msa.getMessage("email.duplicate.message"));
+        }
+        return userRepository.save(userDto.toEntityWithPasswordEncode(bCryptPasswordEncoder);
+    }
+  }
+  ```
+
+
+
+### > Repository(dao)
+
+- 기능
+
+  - 실제로 DB에 접근하는 객체
+  - Service와 DB를 연결하는 고리
+  - SQL을 사용해서 DB에 접근한 후 CRUD API를 제공
+    - JPA 대부분 기본적인 CRUD Method를 제공
+
+- 예시 (`JPA` 의 경우)
+
+  ```java
+  public interface UserRepository extends JpaRepository<User, Long> {
+      
+  }
+  ```
+
+  
+
+***참조***
+
+https://gmlwjd9405.github.io/2018/12/25/difference-dao-dto-entity.html
+
+# JDBC
+
+---
+
+[위로](#spring-framework)
+
+> JDBC는 자바에서 DB를 활용할 수 있도록 지원하는 API이다.
+>
+> 데이터 베이스 테이블과, 자바 객체 사이의 단순한 매핑을 간단한 설정을 통해 처리한다.
+>
+> 기존의 JDBC에서는 구현하고 싶은 로직마다 필요한 SQL문이 모두 달랐고, 이에 필요한 Connection, PrepareStatement, ResultSet 등을 생성하고 Exception 처리도 모두 해야 하는 번거로움이 존재했다.
+>
+> 때문에 Spring에서는 JDBC와 ORM 프레임워크를 직접 지원하기 때문에 따로 작성하지 않아도 모두 다 처리해주는 장점이 있다. (**Spring-JDBC**)
+>
+> 여기서는 Spring JDBC에 대해서 알아본다.
+
+
+
+## DataSource란?
+
+> DataSource는 JDBC 명세의 일부분이면서 일반화된 연결 팩토리이다.
+>
+> 즉, DB와 관계된 connection 정보를 담고 있으며, bean으로 등록하여 인자로 넘겨준다.
+>
+> 이 과정을 통해 Spring은 DataSource로 DB와의 연결을 획득한다.
+
+- DataSource는 JDBC Driver vendor(Mysql, Oracle 등) 별로 여러가지가 존재한다.
+
+- **DataSource가 하는 일**
+
+  - DB Server와의 기본적인 연결
+  - DB Connection Pooling 기능
+  - 트랜잭션 처리
+
+- **DataSource의 구현 예시**
+
+  - BasicDataSource
+  - PoolingDataSource
+  - SIngleConnectionDataSource
+  - DriveerManagerDataSource
+
+- **DataSource 설정 및 Bean 등록, 주입 방법**
+
+  1. DB와의 연결을 위한 DB Server에 관한 정보(Property)를 설정한다.
+
+     (url, driver, username, password)
+
+  2. 해당 property file에 있는 값을 **place holder**를 통해 DataSource의 속성으로 설정한 후 해당 BasicDataSource를 bean으로 등록한다.
+
+     - *Spring JDBC를 사용하려면 먼저, DB Connection을 가져오는 DataSource를 Spring IoC 컨테이너의 공유가능한 Bean으로 등록해야 한다.*
+
+  3. 생성된 BasicDataSource Bean을 Spring JDBC에 주입한다.
+
+
+
+### - DB Connection Pooling
+
+- 자바 프로그램에서 데이터베이스에 연결(Connection 객체를 얻는 작업)은 시갆이 많이 걸린다.
+- 만약, **일정량의 Connection을 미리 생성시켜 저장소에 저장**했다가 프로그램에서 요청이 있으면 저장소에서 Connection을 꺼내 제공한다면 시간을 절약할 수 있는데, 이러한 프로그래밍 기법을 **Connection Pooling**이라 한다.
+- Connection Pooling을 사용하면 속도와 퍼포먼스가 좋아진다.
+
+
+
+### - Placeholder
+
+- 정보를 적어둔 곳에서 내용만 고치면 다른 모든 부분에서 변경된 내용이 적용된다.
+- 예를 들어, Parameter 정보들을 적어둔 Property file에서 특정 정보를 수정하면 변경된 정보가 `placeholder`를 통해 `${jdbc.password}`에 주입된다.
+- 예를 들어, `pom.xml`에서 springframework-version을 4.2.5.RELEASE로 설정했으면
+  `<groupID>org.springframework</groupID>`에 해당하는 밑에 요소들은
+  `${org.springframework-verson}`으로 적어주면 알아서 버전에 맞는 것이 적용된다.
+
+
+
+***참고***
+
+https://gmlwjd9405.github.io/2018/05/15/setting-for-db-programming.html
