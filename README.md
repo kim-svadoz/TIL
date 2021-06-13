@@ -46,11 +46,9 @@
 
 ### 4. [Java](./ProgrammingLanguage/Java.md)
 
-### 5. [Java](./MultiCampus/basicJava.md)
+### 5. [Java Script](./ProgrammingLanguage/JavaScript.md)
 
-### 6. [Java Script](./ProgrammingLanguage/JavaScript.md)
-
-### 7. [SQLite](./ProgrammingLanguage/SQLite.md)
+### 6. [SQLite](./ProgrammingLanguage/SQLite.md)
 
 [위로](#til)
 
@@ -70,21 +68,23 @@
 
 [위로](#til)
 
-### 1. [advancedJava](./MultiCampus/advancedJava.md)
+### 1. [Java](./MultiCampus/basicJava.md)
 
-### 2. [DBMS](./MultiCampus/DBMS.md)
+### 2. [advancedJava](./MultiCampus/advancedJava.md)
 
-### 3. [DBMS_PROBLEM](./MultiCampus/DB_example.md)
+### 3. [DBMS](./MultiCampus/DBMS.md)
 
-### 4. [JDBC](./MultiCampus/JDBC.md)
+### 4. [DBMS_PROBLEM](./MultiCampus/DB_example.md)
 
-### 5. [WEB](./MultiCampus/WEB.md)
+### 5. [JDBC](./MultiCampus/JDBC.md)
 
-### 6. [Network](./MultiCampus/Network.md)
+### 6. [WEB](./MultiCampus/WEB.md)
 
-### 7. [Spring](./MultiCampus/Spring.md)
+### 7. [Network](./MultiCampus/Network.md)
 
-### 8. [Django](./MultiCampus/django.md)
+### 8. [Spring](./MultiCampus/Spring.md)
+
+### 9. [Django](./MultiCampus/django.md)
 
 [위로](#til)
 
