@@ -194,6 +194,7 @@
 | 1451_직사각형으로 나누기                            | [Link](./Algorithm/Baekjoon/p1451.java)                      | [문제](https://www.acmicpc.net/problem/1451)                 | 완전탐색, 구현                             |
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
+| 1480_보석모으기                                     | [Link](./Algorithm/Baekjoon/p1480.java)                      | [문제](https://www.acmicpc.net/problem/1480)                 | 배낭 알고리즘, 비트마스킹                  |
 | 1516_게임개발                                       | [Link](./Algorithm/Baekjoon/p1516.java)                      | [문제](https://www.acmicpc.net/problem/1516)                 | 그래프, 위상정렬                           |
 | 1517_버블 소트                                      | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort                      |
 | 1520_내리막 길                                      | [Link](./Algorithm/Baekjoon/p1520.java)                      | [문제](https://www.acmicpc.net/problem/1520)                 | DFS, DP, 해당 칸으로 들어오는 가지 수      |
