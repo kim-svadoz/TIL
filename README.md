@@ -496,6 +496,7 @@
 | 17472_다리만들기2                                   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
 | 17609_회문                                          | [Link](./Algorithm/Baekjoon/p17609.java)                     | [문제](https://www.acmicpc.net/problem/17609)                | 문자열, 구현, 투포인터, 그리디             |
 | 17626_Four Squares                                  | [Link](./Algorithm/Baekjoon/p17626.java)                     | [문제](https://www.acmicpc.net/problem/17626)                | 브루트 포스, 완전탐색, DP                  |
+| 17836_공주님을 구해라                               | [Link](./Algorithm/Baekjoon/p17836.java)                     | [문제](https://www.acmicpc.net/problem/17836)                | BFS                                        |
 | 17976_Thread knots                                  | [Link](./Algorithm/Baekjoon/p17976.java)                     | [문제](https://www.acmicpc.net/problem/17976)                | Greedy, Binary Search                      |
 | 18312_시각                                          | [Link](./Algorithm/Baekjoon/p18312.java)                     | [문제](https://www.acmicpc.net/problem/18312)                | 브루트 포스, 구현                          |
 | 18430_무기공학                                      | [Link](./Algorithm/Baekjoon/p18430.java)                     | [문제](https://www.acmicpc.net/problem/18430)                | 백트래킹, 구현                             |
@@ -508,6 +509,7 @@
 | 19947_투자의 귀재 배주형                            | [Link](./Algorithm/Baekjoon/p19947.java)                     | [문제](https://www.acmicpc.net/problem/19947)                | DP                                         |
 | 20010_악덕 영주 혜유                                | [Link](./Algorithm/Baekjoon/p20010.java)                     | [문제](https://www.acmicpc.net/problem/20010)                | 최소신장트리(MST), union-find, 트리의 지름 |
 | 20053_최소, 최대 2                                  | [Link](./Algorithm/Baekjoon/p20053.java)                     | [문제](https://www.acmicpc.net/problem/20053)                | 구현                                       |
+| 20152_Game Addiction                                | [Link](./Algorithm/Baekjoon/p20152.java)                     | [문제](https://www.acmicpc.net/problem/20152)                | 최단거리, DP                               |
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
 | 20291_파일 정리                                     | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                         |
