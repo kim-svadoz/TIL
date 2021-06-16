@@ -525,6 +525,7 @@
 | 21277_짠돌이 호석                                   | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스            |
 | 21278_호석이 두마리 치킨                            | [Link](./Algorithm/Baekjoon/p21278.java)                     | [문제](https://www.acmicpc.net/problem/21278)                | 브루트 포스, 플로이드 와샬, 인접행렬       |
 | 21312_홀짝 칵테일                                   | [Link](./Algorithm/Baekjoon/p21312.java)                     | [문제](https://www.acmicpc.net/problem/21312)                | 구현                                       |
+| 21313_문어                                          | [Link](./Algorithm/Baekjoon/p21313.java)                     | [문제](https://www.acmicpc.net/problem/21313)                | 구현                                       |
 | 21317_징검다리 건너기                               | [Link](./Algorithm/Baekjoon/p21317.java)                     | [문제](https://www.acmicpc.net/problem/21317)                | DP, 브루트포스, 백트래킹                   |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
 
