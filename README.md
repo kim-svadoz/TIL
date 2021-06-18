@@ -4,8 +4,8 @@
 
 - [Computer Science](#triangular_flag_on_post-computer-science)
 - [Programming Language](#triangular_flag_on_post-programming-language)
-- [WEB](#triangular_flag_on_post-web)
-- [Android](#triangular_flag_on_post-android)
+- [WEB Programming](#triangular_flag_on_post-web-programming)
+- [Android Programming](#triangular_flag_on_post-android-programming)
 - [Embedded](#triangular_flag_on_post-embedded)
 - [Algorithm](#triangular_flag_on_post-algorithm)
 - [PS](#triangular_flag_on_post-ps)
@@ -54,7 +54,7 @@
 
 ---
 
-## :triangular_flag_on_post: **WEB**
+## :triangular_flag_on_post: **WEB Programming**
 
 [위로](#til)
 
@@ -90,7 +90,7 @@
 
 ---
 
-## :triangular_flag_on_post: **Android**
+## :triangular_flag_on_post: **Android Programming**
 
 [위로](#til)
 
