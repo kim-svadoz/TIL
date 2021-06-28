@@ -161,6 +161,7 @@
 | 1005_ACM Craft                                      | [Link](./Algorithm/Baekjoon/p1005.java)                      | [문제](https://www.acmicpc.net/problem/1005)                 | 그래프, 위상정렬                           |
 | 1010_다리놓기                                       | [Link](./Algorithm/Baekjoon/p1010.java)                      | [문제](https://www.acmicpc.net/problem/1010)                 | DP, 조합, 파스칼                           |
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
+| 1043_거짓말                                         | [Link](./Algorithm/Baekjoon/p1043.java)                      | [문제](https://www.acmicpc.net/problem/1043)                 | 분리집합, union-find                       |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
@@ -481,6 +482,7 @@
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
 | 16400_소수화폐                                      | [Link](./Algorithm/Baekjoon/p16400.java)                     | [문제](https://www.acmicpc.net/problem/16400)                | 소수, DP(동전바꾸기)                       |
 | 16439_치킨치킨치킨                                  | [Link](./Algorithm/Baekjoon/p16439.java)                     | [문제](https://www.acmicpc.net/problem/16439)                | 브루트 포스, 조합                          |
+| 16472_고냥이                                        | [Link](./Algorithm/Baekjoon/p16472.java)                     | [문제](https://www.acmicpc.net/problem/16472)                | 문자열, 투포인터, 슬라이딩 윈도우          |
 | 16508_전공책                                        | [Link](./Algorithm/Baekjoon/p16508.java)                     | [문제](https://www.acmicpc.net/problem/16508)                | 브루트 포스, dfs, 백트래킹                 |
 | 16637_괄호 추가하기                                 | [Link](./Algorithm/Baekjoon/p16637.java)                     | [문제](https://www.acmicpc.net/problem/16637)                | 브루트 포스, dfs                           |
 | 16719_ZOAC                                          | [Link](./Algorithm/Baekjoon/p16719.java)                     | [문제](https://www.acmicpc.net/problem/16719)                | 문자열 정렬, DFS, 구현                     |
