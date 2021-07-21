@@ -311,6 +311,7 @@
 | 2941_크로아티아 알파벳                              | [Link](./Algorithm/Baekjoon/p2941.java)                      | [문제](https://www.acmicpc.net/problem/2941)                 | 구현, 문자열                               |
 | 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
+| 3055_탈출                                           | [Link](./Algorithm/Baekjoon/p3055.java)                      | [문제](https://www.acmicpc.net/problem/3055)                 | BFS, 멀티 소스 BFS                         |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3184_양                                             | [Link](./Algorithm/Baekjoon/p3184.java)                      | [문제](https://www.acmicpc.net/problem/3184)                 | bfs, 구현                                  |
 | 3584_가장 가까운 공통 조상                          | [Link](./Algorithm/Baekjoon/p3584.java)                      | [문제](https://www.acmicpc.net/problem/3584)                 | 트리, LCA, dfs                             |
