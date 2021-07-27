@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
-        "실전코테",
-        "EnterpriseTest"
+        "EnterpriseTest",
+        ".vscode",
+        "test"
     ]
 }
