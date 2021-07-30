@@ -182,6 +182,7 @@
 | 1212_8진수 2진수                                    | [Link](./Algorithm/Baekjoon/p1212.java)                      | [문제](https://www.acmicpc.net/problem/1212)                 | 구현, 진법변환                             |
 | 1238_파티                                           | [Link](./Algorithm/Baekjoon/p1238.java)                      | [문제](https://www.acmicpc.net/problem/1238)                 | 다익스트라 (단방향 간선)                   |
 | 1244_스위치 켜고 끄기                               | [Link](./Algorithm/Baekjoon/p1244.java)                      | [문제](https://www.acmicpc.net/problem/1244)                 | 구현                                       |
+| 1253_좋다                                           | [Link](./Algorithm/Baekjoon/p1253.java)                      | [문제](https://www.acmicpc.net/problem/1253)                 | 투포인터                                   |
 | 1260_DFS와 BFS                                      | [Link](./Algorithm/Baekjoon/p1260.java)                      | [문제](https://www.acmicpc.net/problem/1260)                 | DFS, BFS                                   |
 | 1261_알고스팟                                       | [Link](./Algorithm/Baekjoon/p1261.java)                      | [문제](https://www.acmicpc.net/problem/1261)                 | 다익스트라, BFS                            |
 | 1309_동물원                                         | [Link](./Algorithm/Baekjoon/p1309.java)                      | [문제](https://www.acmicpc.net/problem/1309)                 | DP                                         |
@@ -291,6 +292,7 @@
 | 2503_숫자 야구                                      | [Link](./Algorithm/Baekjoon/p2503.java)                      | [문제](https://www.acmicpc.net/problem/2503)                 | 브루트 포스                                |
 | 2531_회전초밥                                       | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                       |
 | 2533_사회망서비스(SNS)                              | [Link](./Algorithm/Baekjoon/p2533.java)                      | [문제](https://www.acmicpc.net/problem/2533)                 | Tree DP, DFS, 인접리스트                   |
+| 2559_수열                                           | [Link](./Algorithm/Baekjoon/p2559.java)                      | [문제](https://www.acmicpc.net/problem/2559)                 | 누적합, 투포인터                           |
 | 2565_전깃줄                                         | [Link](./Algorithm/Baekjoon/p2565.java)                      | [문제](https://www.acmicpc.net/problem/2565)                 | LIS - DP                                   |
 | 2578_빙고                                           | [Link](./Algorithm/Baekjoon/p2578.java)                      | [문제](https://www.acmicpc.net/problem/2578)                 | 구현                                       |
 | 2579_계단오르기                                     | [Link](./Algorithm/Baekjoon/p2579.java)                      | [문제](https://www.acmicpc.net/problem/2579)                 | DP                                         |
