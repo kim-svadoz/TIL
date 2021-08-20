@@ -234,6 +234,7 @@
 | 1913_달팽이                                         | [Link](./Algorithm/Baekjoon/p1913.java)                      | [문제](https://www.acmicpc.net/problem/1913)                 | 시뮬레이션, 배열돌리기                     |
 | 1915_가장 큰 정사각형                               | [Link](./Algorithm/Baekjoon/p1915.java)                      | [문제](https://www.acmicpc.net/problem/1915)                 | DP                                         |
 | 1916_최소 비용 구하기                               | [Link](./Algorithm/Baekjoon/p1916.java)                      | [문제](https://www.acmicpc.net/problem/1916)                 | 그래프, 다익스트라                         |
+| 1920_수 찾기                                        | [Link](./Algorithm/Baekjoon/p1920.java)                      | [문제](https://www.acmicpc.net/problem/1920)                 | 이분탐색                                   |
 | 1922_네트워크 연결                                  | [Link](./Algorithm/Baekjoon/p1922.java)                      | [문제](https://www.acmicpc.net/problem/1922)                 | 최소 스패닝 트리, 크루스칼, UNION-FIND     |
 | 1926_그림                                           | [Link](./Algorithm/Baekjoon/p1926.java)                      | [문제](https://www.acmicpc.net/problem/1926)                 | BFS, 구현                                  |
 | 1927_최소 힙                                        | [Link](./Algorithm/Baekjoon/p1927.java)                      | [문제](https://www.acmicpc.net/problem/1927)                 | PQ, 최소 힙                                |
@@ -316,6 +317,7 @@
 | 3055_탈출                                           | [Link](./Algorithm/Baekjoon/p3055.java)                      | [문제](https://www.acmicpc.net/problem/3055)                 | BFS, 멀티 소스 BFS                         |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3184_양                                             | [Link](./Algorithm/Baekjoon/p3184.java)                      | [문제](https://www.acmicpc.net/problem/3184)                 | bfs, 구현                                  |
+| 3273_두 수의 합                                     | [Link](./Algorithm/Baekjoon/p3273.java)                      | [문제](https://www.acmicpc.net/problem/3273)                 | 이분탐색                                   |
 | 3584_가장 가까운 공통 조상                          | [Link](./Algorithm/Baekjoon/p3584.java)                      | [문제](https://www.acmicpc.net/problem/3584)                 | 트리, LCA, dfs                             |
 | 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
 | 4097_수익                                           | [Link](./Algorithm/Baekjoon/p4097.java)                      | [문제](https://www.acmicpc.net/problem/4097)                 | DP, 구현                                   |
@@ -347,6 +349,7 @@
 | 7576_토마토                                         | [Link](./Algorithm/Baekjoon/p7576.java)                      | [문제](https://www.acmicpc.net/problem/7576)                 | BFS                                        |
 | 7579_앱                                             | [Link](./Algorithm/Baekjoon/p7579.java)                      | [문제](https://www.acmicpc.net/problem/7579)                 | DF, 냅색 알고리즘                          |
 | 7682_틱택토                                         | [Link](./Algorithm/Baekjoon/p7682.java)                      | [문제](https://www.acmicpc.net/problem/7682)                 | 구현                                       |
+| 7795_먹을 것인가 먹힐 것인가                        | [Link](./Algorithm/Baekjoon/p7795.java)                      | [문제](https://www.acmicpc.net/problem/7795)                 | 이분탐색                                   |
 | 8980_택배                                           | [Link](./Algorithm/Baekjoon/p8980.java)                      | [문제](https://www.acmicpc.net/problem/8980)                 | 그리디, 구현                               |
 | 9012_괄호                                           | [Link](./Algorithm/Baekjoon/p9012.java)                      | [문제](https://www.acmicpc.net/problem/9012)                 | 문자열, 스택                               |
 | 9019_DSLR                                           | [Link](./Algorithm/Baekjoon/p9019.java)                      | [문제](https://www.acmicpc.net/problem/9019)                 | 완전탐색, 구현, BFS                        |
@@ -505,6 +508,7 @@
 | 17472_다리만들기2                                   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
 | 17609_회문                                          | [Link](./Algorithm/Baekjoon/p17609.java)                     | [문제](https://www.acmicpc.net/problem/17609)                | 문자열, 구현, 투포인터, 그리디             |
 | 17626_Four Squares                                  | [Link](./Algorithm/Baekjoon/p17626.java)                     | [문제](https://www.acmicpc.net/problem/17626)                | 브루트 포스, 완전탐색, DP                  |
+| 17779_게리맨더링2                                   | [Link](./Algorithm/Baekjoon/p17779.java)                     | [문제](https://www.acmicpc.net/problem/17779)                | 브루트 포스, 시뮬레이션                    |
 | 17836_공주님을 구해라                               | [Link](./Algorithm/Baekjoon/p17836.java)                     | [문제](https://www.acmicpc.net/problem/17836)                | BFS                                        |
 | 17976_Thread knots                                  | [Link](./Algorithm/Baekjoon/p17976.java)                     | [문제](https://www.acmicpc.net/problem/17976)                | Greedy, Binary Search                      |
 | 18312_시각                                          | [Link](./Algorithm/Baekjoon/p18312.java)                     | [문제](https://www.acmicpc.net/problem/18312)                | 브루트 포스, 구현                          |
