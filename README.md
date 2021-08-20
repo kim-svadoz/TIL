@@ -291,6 +291,7 @@
 | 2467_용액                                           | [Link](./Algorithm/Baekjoon/p2467.java)                      | [문제](https://www.acmicpc.net/problem/2467)                 | 투포인터                                   |
 | 2493_탑                                             | [Link](./Algorithm/Baekjoon/p2493.java)                      | [문제](https://www.acmicpc.net/problem/2493)                 | Stack                                      |
 | 2503_숫자 야구                                      | [Link](./Algorithm/Baekjoon/p2503.java)                      | [문제](https://www.acmicpc.net/problem/2503)                 | 브루트 포스                                |
+| 2512_예산                                           | [Link](./Algorithm/Baekjoon/p2512.java)                      | [문제](https://www.acmicpc.net/problem/2512)                 | 이분탐색                                   |
 | 2531_회전초밥                                       | [Link](./Algorithm/Baekjoon/RotatingSushi_2531.java)         | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA2531-%ED%9A%8C%EC%A0%84%EC%B4%88%EB%B0%A5) | 1차원 슬라이딩윈도우                       |
 | 2533_사회망서비스(SNS)                              | [Link](./Algorithm/Baekjoon/p2533.java)                      | [문제](https://www.acmicpc.net/problem/2533)                 | Tree DP, DFS, 인접리스트                   |
 | 2559_수열                                           | [Link](./Algorithm/Baekjoon/p2559.java)                      | [문제](https://www.acmicpc.net/problem/2559)                 | 누적합, 투포인터                           |
