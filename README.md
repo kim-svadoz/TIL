@@ -282,6 +282,7 @@
 | 2294_동전2                                          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)                         |
 | 2331_반복수열                                       | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                                   |
 | 2342_Dance Dance Revolution                         | [Link](./Algorithm/Baekjoon/p2342.java)                      | [문제](https://www.acmicpc.net/problem/2342)                 | DP                                         |
+| 2343_기타레슨                                       | [Link](./Algorithm/Baekjoon/p2343.java)                      | [문제](https://www.acmicpc.net/problem/2343)                 | 이분탐색                                   |
 | 2352_반도체 설계                                    | [Link](./Algorithm/Baekjoon/p2352.java)                      | [문제](https://www.acmicpc.net/problem/2352)                 | LIS, Binary Search                         |
 | 2357_최솟값과 최댓값                                | [Link](./Algorithm/Baekjoon/p2357.java)                      | [문제](https://www.acmicpc.net/problem/2357)                 | 세그먼트 트리                              |
 | 2422_한윤정이 이탈리아에 가서 아이스크림을 사먹는데 | [Link](./Algorithm/Baekjoon/p2422.java)                      | [문제](https://www.acmicpc.net/problem/2422)                 | 브루트 포스                                |

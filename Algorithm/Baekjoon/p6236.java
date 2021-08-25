@@ -8,6 +8,7 @@ public class p6236 {
     static int totalDayCnt, totalWithdrawCnt;
     static int HighestPrice;
     static int[] costArr;
+    static int sum;
     public static void main(String[] args) throws IOException {
         initValue();
         minWithdrawPrice();
@@ -23,6 +24,7 @@ public class p6236 {
         for (int i = 0; i < totalDayCnt; i++) {
             costArr[i] = Integer.parseInt(br.readLine());
             HighestPrice = Math.max(HighestPrice, costArr[i]);
+            sum += costArr[i];
         }
     }
 
@@ -33,7 +35,7 @@ public class p6236 {
         // 최소 금액: 1 (원)
         // 최대 금액: 가장 높은 금액 x 총 일수 (원)
         int lo = 1;
-        int hi = HighestPrice * totalWithdrawCnt;
+        int hi = HighestPrice * totalDayCnt;
         answer = hi;
         while (lo <= hi) {
             int testPrice = (lo + hi) / 2;
