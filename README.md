@@ -509,6 +509,7 @@
 | 17413_단어 뒤집기 2                                 | [Link](./Algorithm/Baekjoon/p17413.java)                     | [문제](https://www.acmicpc.net/problem/17413)                | 문자열, 스택, 구현                         |
 | 17472_다리만들기2                                   | [Link](https://ju-nam2.tistory.com/120)                      | [문제](https://www.acmicpc.net/problem/17472)                | BFS, Kruscal Algorithm                     |
 | 17609_회문                                          | [Link](./Algorithm/Baekjoon/p17609.java)                     | [문제](https://www.acmicpc.net/problem/17609)                | 문자열, 구현, 투포인터, 그리디             |
+| 17616_등수 찾기                                     | [Link](./Algorithm/Baekjoon/p17616.java)                     | [문제](https://www.acmicpc.net/problem/17616)                | 너비우선탐색, BFS 2번                      |
 | 17626_Four Squares                                  | [Link](./Algorithm/Baekjoon/p17626.java)                     | [문제](https://www.acmicpc.net/problem/17626)                | 브루트 포스, 완전탐색, DP                  |
 | 17779_게리맨더링2                                   | [Link](./Algorithm/Baekjoon/p17779.java)                     | [문제](https://www.acmicpc.net/problem/17779)                | 브루트 포스, 시뮬레이션                    |
 | 17836_공주님을 구해라                               | [Link](./Algorithm/Baekjoon/p17836.java)                     | [문제](https://www.acmicpc.net/problem/17836)                | BFS                                        |
