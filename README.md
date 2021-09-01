@@ -611,7 +611,7 @@
 | 72411_메뉴 리뉴얼             | [Link](./Algorithm/Programmers/pg72411.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72411) | hashmap, list                |
 | 72412_순위 검색               | [Link](./Algorithm/Programmers/pg72412.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72412) | hashmap, list, binarysearch  |
 | 72413_합승 택시요금           | [Link](./Algorithm/Programmers/pg72413.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72413) | floyd warshall               |
-|                               |                                                              |                                                              |                              |
+| 84512_모음 사전               | [Link](./Algorithm/Programmers/pg84512.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/84512) | dfs                          |
 
 ### [LeetCode](./Algorithm/LeetCode)
 
