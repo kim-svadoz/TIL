@@ -161,6 +161,7 @@
 | 1005_ACM Craft                                      | [Link](./Algorithm/Baekjoon/p1005.java)                      | [문제](https://www.acmicpc.net/problem/1005)                 | 그래프, 위상정렬                           |
 | 1010_다리놓기                                       | [Link](./Algorithm/Baekjoon/p1010.java)                      | [문제](https://www.acmicpc.net/problem/1010)                 | DP, 조합, 파스칼                           |
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
+| 1038_감소하는 수                                    | [Link](./Algorithm/Baekjoon/p1038.java)                      | [문제](https://www.acmicpc.net/problem/1038)                 | Brute force                                |
 | 1043_거짓말                                         | [Link](./Algorithm/Baekjoon/p1043.java)                      | [문제](https://www.acmicpc.net/problem/1043)                 | 분리집합, union-find                       |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
@@ -216,6 +217,7 @@
 | 1708_볼록껍질                                       | [Link](./Algorithm/Baekjoon/ConvexHull_1708.java)            | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1708-%EB%B3%BC%EB%A1%9D%EA%BB%8D%EC%A7%88) | 볼록껍질, CCW정렬, 그라함-스캔             |
 | 1713_후보 추천하기                                  | [Link](./Algorithm/Baekjoon/p1713.java)                      | [문제](https://www.acmicpc.net/problem/1713)                 | 구현, 시뮬레이션, 정렬                     |
 | 1722_순열의 순서                                    | [Link](./Algorithm/Baekjoon/p1722.java)                      | [문제](https://www.acmicpc.net/problem/1722)                 | DP, 조합                                   |
+| 1725_히스토그램                                     | [Link](./Algorithm/Baekjoon/p1725.java)                      | [문제](https://www.acmicpc.net/problem/1725)                 | 분할정복, Stack                            |
 | 1744_수 묶기                                        | [Link](./Algorithm/Baekjoon/p1744.java)                      | [문제](https://www.acmicpc.net/problem/1744)                 | Greedy, Sort, 구현                         |
 | 1749_점수따먹기                                     | [Link](./Algorithm/Baekjoon/p1749.java)                      | [문제](https://www.acmicpc.net/problem/1749)                 | 2차원 Prefix Sum, DP                       |
 | 1753_최단거리                                       | [Link](./Algorithm/Baekjoon/p1753.java)                      | [문제](https://www.acmicpc.net/problem/1753)                 | 그래프, 최단거리, 다익스트라               |
