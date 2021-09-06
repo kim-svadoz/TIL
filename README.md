@@ -531,6 +531,8 @@
 | 20053_최소, 최대 2                                  | [Link](./Algorithm/Baekjoon/p20053.java)                     | [문제](https://www.acmicpc.net/problem/20053)                | 구현                                       |
 | 20152_Game Addiction                                | [Link](./Algorithm/Baekjoon/p20152.java)                     | [문제](https://www.acmicpc.net/problem/20152)                | 최단거리, DP                               |
 | 20154_이 구역의 승자는 누구야?                      | [Link](./Algorithm/Baekjoon/p20154.java)                     | [문제](https://www.acmicpc.net/problem/20154)                | 문자열, 구현                               |
+| 20164_홀수 홀릭 호석                                | [Link](./Algorithm/Baekjoon/p20164.java)                     | [문제](https://www.acmicpc.net/problem/20164)                | 완전탐색                                   |
+| 20165_인내의 도미노 장인 호석                       | [Link](./Algorithm/Baekjoon/p20165.java)                     | [문제](https://www.acmicpc.net/problem/20165)                | 구현                                       |
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
 | 20291_파일 정리                                     | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                         |
 | 20300_서강근육맨                                    | [Link](./Algorithm/Baekjoon/p20300.java)                     | [문제](https://www.acmicpc.net/problem/20300)                | 그리디                                     |
