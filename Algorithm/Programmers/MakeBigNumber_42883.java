@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.Stack;
 
 public class MakeBigNumber_42883 {

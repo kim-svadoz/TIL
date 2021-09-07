@@ -1,5 +1,3 @@
-package programmers;
-
 public class IntOf124_12899 {
 
 	public static void main(String[] args) {

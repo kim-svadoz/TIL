@@ -1,5 +1,3 @@
-package programmers;
-
 /*
 		 * for(int i=0;)
 		 * 
@@ -25,7 +23,7 @@ package programmers;
 		}
 		System.out.println(tmp); */
 
-// board ют╥б : ["DBA", "C*A", "CDB"]
+// board О©╫т╥О©╫ : ["DBA", "C*A", "CDB"]
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

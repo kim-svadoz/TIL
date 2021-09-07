@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,11 +12,11 @@ public class fail_rate {
 	
 	public static int[] solution(int N, int[] stages) {
 		int[] answer = new int[N+1];
-		int count; // °è»ê
+		int count; // ï¿½ï¿½ï¿½
 		int count2;
-		double mom[] = new double[N+1]; // ºÐ¸ð
-		double child[] = new double[N+1]; //ºÐÀÚ
-		double fr[] = new double[N+1] ; // ½ÇÆÐÀ²
+		double mom[] = new double[N+1]; // ï¿½Ð¸ï¿½
+		double child[] = new double[N+1]; //ï¿½ï¿½ï¿½ï¿½
+		double fr[] = new double[N+1] ; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		HashMap<Integer, Double> res = new HashMap<Integer, Double>();
 		for(int i=0; i<N+1;i++) {
 			count = 0;
@@ -38,7 +36,7 @@ public class fail_rate {
 			res.put(i+1, fr[i]);
 		}
 	
-		List<Integer> valueList = new ArrayList<>(res.keySet()); //½ÇÆÐÀ² ³»¸²Â÷¼ø
+		List<Integer> valueList = new ArrayList<>(res.keySet()); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Collections.sort(valueList, (o1, o2) ->(res.get(o2).compareTo(res.get(o1))));
 		
 		for(int i=0; i<valueList.size()-1;i++) {

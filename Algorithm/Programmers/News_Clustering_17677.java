@@ -1,10 +1,8 @@
-package programmers;
-
 import java.util.ArrayList;
 
 public class News_Clustering_17677 {
 	public static void main(String[] args) {
-		solution("FRANCE", "FRENCH");//�׽�Ʈ
+		solution("FRANCE", "FRENCH");//�׽�Ʈ
 	}
 	public static int solution(String str1, String str2) {
         ArrayList<String> str1Array = new ArrayList<String>();

@@ -1,5 +1,3 @@
-package programmers;
-
 public class LongestPalindrome_12904 {
 
 	public static void main(String[] args) {
@@ -14,19 +12,19 @@ public class LongestPalindrome_12904 {
 		
 		int[][] dp = new int[len][len];
 		
-		//1磊府
+		//1锟节革拷
 		for(int i=0; i<len; i++) {
 			dp[i][i]= 1;
 		}
 		
-		//2磊府
+		//2锟节革拷
 		for(int i=0; i<len-1; i++) {
 			if(word[i] == word[i+1]) {
 				dp[i][i+1] = 1;
 				answer = 2;
 			}
 		}
-		//3磊府 捞惑
+		//3锟节革拷 锟教伙拷
 		for(int k=3; k<=len; k++) {
 			for(int i=0; i<=len-k; i++) {
 				int j = i + k - 1;

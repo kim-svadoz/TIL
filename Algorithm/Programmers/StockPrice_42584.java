@@ -1,5 +1,3 @@
-package programmers;
-
 public class StockPrice_42584 {
 
 	public static void main(String[] args) {

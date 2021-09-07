@@ -1,5 +1,3 @@
-package programmers;
-
 public class getMiddleNumber_12903 {
 
 	public static void main(String[] args) {
@@ -18,9 +16,9 @@ public class getMiddleNumber_12903 {
 	    
      	int half = size/2;
      
-     	if(size%2 == 0){ // Â¦¼ö
+     	if(size%2 == 0){ // Â¦ï¿½ï¿½
      		return myString[half-1]+myString[half];
-     	}else if(size%2 ==1 ){ //È¦¼ö
+     	}else if(size%2 ==1 ){ //È¦ï¿½ï¿½
             return myString[half];
      	}
 	      

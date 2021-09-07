@@ -1,5 +1,3 @@
-package programmers;
-
 public class ExpressionOfInteger_12924 {
 
 	public static void main(String[] args) {

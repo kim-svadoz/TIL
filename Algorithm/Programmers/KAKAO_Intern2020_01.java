@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.ArrayList;
 
 public class KAKAO_Intern2020_01 {
@@ -41,7 +39,7 @@ public class KAKAO_Intern2020_01 {
 		rebuild(tmp);
 		result = tmplength-tmp.size();
 		System.out.println(moves.length);
-		System.out.println("¹Ù²ÛÈÄ======"+tmp);
+		System.out.println("ï¿½Ù²ï¿½ï¿½ï¿½======"+tmp);
 		System.out.println("result===="+result);
 		
 		return result;

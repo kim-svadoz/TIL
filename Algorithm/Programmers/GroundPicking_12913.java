@@ -1,5 +1,3 @@
-package programmers;
-
 public class GroundPicking_12913 {
 	public static int[][] d, map;
     public static int N;

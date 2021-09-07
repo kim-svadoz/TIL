@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.Arrays;
 
 public class integer_triangle {
@@ -21,7 +19,7 @@ public class integer_triangle {
 		}
 		return Arrays.stream(triangle[triangle.length-1]).max().getAsInt();
 		/*
-		 * °´Ã¼ÁýÇÕ.½ºÆ®¸²»ý¼º().Áß°³¿¬»ê().ÃÖÁ¾¿¬»ê();
+		 * ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½.ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½().ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½().ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½();
 		 * 
 		*/
 	}

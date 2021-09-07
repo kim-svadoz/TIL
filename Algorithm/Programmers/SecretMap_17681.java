@@ -1,5 +1,3 @@
-package programmers;
-
 public class SecretMap_17681 {
 
 	public static void main(String[] args) {
@@ -48,7 +46,7 @@ public class SecretMap_17681 {
 	      for(int i=0; i<n; i++) {
 	    	  String x = "";
 	    	  for(int j=0; j<n; j++) {
-	    		  if(map1[i][j].equals("1") || map2[i][j].equals("1")) { // º®
+	    		  if(map1[i][j].equals("1") || map2[i][j].equals("1")) { // ï¿½ï¿½
 	    			  ansMap[i][j] = "#";
 	    			  x += ansMap[i][j];
 	    		  }else {

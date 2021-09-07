@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,12 +14,12 @@ public class BestAlbum_42579 {
 	}
 	
 	public static int[] solution(String[] genres, int[] plays) {
-        Map<String, Object> genresMap = new HashMap<>();		// <Àå¸£, °îÁ¤º¸>
-        Map<String, Integer> playMap = new HashMap<>();		// <Àå¸£, ÃÑ Àå¸£ Àç»ý¼ö>
+        Map<String, Object> genresMap = new HashMap<>();		// <ï¿½å¸£, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½>
+        Map<String, Integer> playMap = new HashMap<>();		// <ï¿½å¸£, ï¿½ï¿½ ï¿½å¸£ ï¿½ï¿½ï¿½ï¿½ï¿½>
         ArrayList<Integer> resultAL = new ArrayList<>();
         for(int i=0; i<genres.length; i++) {
         	String key = genres[i];
-        	HashMap<Integer, Integer> infoMap; 				// °îÁ¤º¸: <°î °íÀ¯¹øÈ£, Àç»ýÈ½¼ö>
+        	HashMap<Integer, Integer> infoMap; 				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: <ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£, ï¿½ï¿½ï¿½È½ï¿½ï¿½>
         	
         	if(genresMap.containsKey(key)) {
         		infoMap = (HashMap<Integer, Integer>)genresMap.get(key);
@@ -32,7 +30,7 @@ public class BestAlbum_42579 {
         	infoMap.put(i, plays[i]);
         	genresMap.put(key, infoMap);
         	
-        	// Àç»ý ¼ö 
+        	// ï¿½ï¿½ï¿½ ï¿½ï¿½ 
         	if(playMap.containsKey(key)) {
         		playMap.put(key, playMap.get(key) + plays[i]);
         	} else {

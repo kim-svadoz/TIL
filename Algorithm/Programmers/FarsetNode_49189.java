@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,7 +17,7 @@ public class FarsetNode_49189 {
         Queue<Integer> nodes = new LinkedList<Integer>();
         nodes.add(1);
 
-        // BFS Å½»ö
+        // BFS Å½ï¿½ï¿½
         int maxDist = 0;
         while(!nodes.isEmpty()) {
             int i = nodes.poll();
@@ -33,7 +31,7 @@ public class FarsetNode_49189 {
             }
         }
 
-        // °¡Àå ¸Ö¸® ÀÖ´Â ³ëµå°¡ ¸î °³ÀÎÁö °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¸ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         int count = 0;
         for (int d : dist) {
             if( maxDist == d )

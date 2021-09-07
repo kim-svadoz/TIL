@@ -1,5 +1,3 @@
-package programmers;
-
 public class Network_43162 {
 
 	public static void main(String[] args) {

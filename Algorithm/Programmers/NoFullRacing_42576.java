@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.HashMap;
 
 public class NoFullRacing_42576 {

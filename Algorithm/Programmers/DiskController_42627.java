@@ -1,12 +1,9 @@
-package programmers;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
-public class DisckController_42627 {
-
+public class DiskController_42627 {
 	public static void main(String[] args) {
 		int[][] jobs = {
 			{0, 3},
@@ -17,10 +14,10 @@ public class DisckController_42627 {
 	}
 	
 	public static int solution(int[][] jobs) {
-        //´ë±â Å¥
+        //ï¿½ï¿½ï¿½ Å¥
         LinkedList<Process> waiting = new LinkedList<>();
         
-        //ÀÛ¾÷ Å¥
+        //ï¿½Û¾ï¿½ Å¥
         PriorityQueue<Process> pq = new PriorityQueue<>(new Comparator<Process>() {
            public int compare(Process p1, Process p2){
                return p1.wt - p2.wt;

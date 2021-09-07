@@ -1,4 +1,3 @@
-package programmers;
 public class DartGame{
 
 	public static void main(String[] args) {
@@ -15,12 +14,12 @@ public class DartGame{
 		for(int i=0; i<length; i++) {
 			int pow=1;
 			switch(dartResult.charAt(i)) {
-				case 'T': //Æ®¸®ÇÃ
+				case 'T': //Æ®ï¿½ï¿½ï¿½ï¿½
 					pow++;
-				case 'D': //´õºí
+				case 'D': //ï¿½ï¿½ï¿½ï¿½
 					pow++;
-				case 'S': //½Ì±Û
-					curScore = Math.pow(curScore, pow); // pow : Á¦°öÇÔ¼ö
+				case 'S': //ï¿½Ì±ï¿½
+					curScore = Math.pow(curScore, pow); // pow : ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
 					answer += curScore;
 					break;
 				case '*':
@@ -38,7 +37,7 @@ public class DartGame{
                 default: 
                 	preScore = curScore;
 
-                    //curScore ÃÖ´ë°ª 10. ±ÔÄ¢»ó Á¡¼ö ´ÙÀ½¿¡ out of index ¾È³ª¹Ç·Î ±ÔÄ¢ ÀÌ¿ëÇÑ Ã³¸®
+                    //curScore ï¿½Ö´ë°ª 10. ï¿½ï¿½Ä¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ out of index ï¿½È³ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½Ä¢ ï¿½Ì¿ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                     if (i > 0 && dartResult.substring(i - 1, i).matches("[-+]?\\d*\\.?\\d+"))
                     {
                         curScore = 10;

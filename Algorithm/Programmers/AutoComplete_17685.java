@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.*;
 
 public class AutoComplete_17685 {

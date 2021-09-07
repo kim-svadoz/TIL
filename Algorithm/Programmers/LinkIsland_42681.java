@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.PriorityQueue;
 
 public class LinkIsland_42681 {

@@ -1,10 +1,10 @@
 /*
-			Àç±ÍÇÔ¼ö ÀÌ¿ëÇØ¼­ DFS(Depth-First-Search)±¸Çö
-			Àç±ÍÇÔ¼ö ; ³ëµå¿¡ ¹æ¹® µ¥ÀÌÅÍ Ãâ·Â - ÀÚ½ÄµéÀ» ¼ø¼­´ë·Î Àç±Í È£Ãâ
-			ÀÚ½ÄµéÀÌ È£Ãâ¹ÞÀ¸¸é ¸¶Âù°¡Áö·Î ÀÚ±â¸¦ Ãâ·ÂÇÏ°í ÀÚ½ÄµéÀ» Àç±ÍÈ£Ãâ
-			¹ÝÈ¯ÇÏ±âÀü¿¡ ÀÚ½ÄµéÀ» ¸ÕÀú È£ÃâÇÏ±â ¶§¹®¿¡ Àç±ÍÈ£Ãâ·Î ±íÀÌ¿ì¼± °Ë»öÀÌ °¡´É
+			ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ DFS(Depth-First-Search)ï¿½ï¿½ï¿½ï¿½
+			ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ ; ï¿½ï¿½å¿¡ ï¿½æ¹® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ - ï¿½Ú½Äµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+			ï¿½Ú½Äµï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±â¸¦ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ú½Äµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È£ï¿½ï¿½
+			ï¿½ï¿½È¯ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½Äµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ì¼± ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			
-			È£ÃâµÇ¸é ÀÚ±âÀÚ½ÅÀ» ¸ÕÀú Ãâ·ÂÇÏ°í
+			È£ï¿½ï¿½Ç¸ï¿½ ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
 			dfsR(0)
 				dfsR(1)
 					dfsR(2)
@@ -13,13 +13,12 @@
 								dfsR(5)
 									dfsR(6)
 										dfsR(8)
-											dfsR(7) - Á¾·á
+											dfsR(7) - ï¿½ï¿½ï¿½ï¿½
 					
-			¿©±â¼­ ½ºÅÃ°ú ´Ù¸¥Á¡Àº ÀÚ½ÄÀÌ ÇÏ³ª ÀÌ»óÀÎ °æ¿ì¿¡ 
-			- ½ºÅÃÀº ½×°í ³ª¼­ È£ÃâÀ» ÇÏ±â ¶§¹®¿¡ ÀÚ½ÄÁß ¸Ç ¸¶Áö¸·¿¡ µé¾î°¡´Â ¾Ö°¡ ¸ÕÀú Ãâ·ÂÀÌ µÇÁö¸¸
-			- Àç±ÍÈ£ÃâÀº Á¤¹æÇâÀ¸·Î È£ÃâÇÏ±â ¶§¹®¿¡ À§°¡ ¸ÕÀú Ãâ·ÂµÈ´Ù.
+			ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ 
+			- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			- ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÂµÈ´ï¿½.
  */
-package programmers;
 
 public class DFS_TargetNumber_43165 {
 	public static void main(String[] args) {
@@ -39,9 +38,9 @@ public class DFS_TargetNumber_43165 {
 		}
 		return dfs(now+1, end, numbers, num+numbers[now], target) + 
 				dfs(now+1, end, numbers, num-numbers[now], target);
-		// now?? end?? n ¹øÂ° ¿¬»êÀÚ?
-		// ÇöÀç Ã¤¿ì°í ÀÖ´Â ¿¬»êÀÚ ¼ø¼­°¡ now, ¸¶Áö¸· ¿¬»êÀÚ ¼ø¼­°¡ end
-		// now°¡ end±îÁö °¡¸é ÇÔ¼ö¸¦ Á¾·á.
+		// now?? end?? n ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
+		// ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ now, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ end
+		// nowï¿½ï¿½ endï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 		
 	}
 }

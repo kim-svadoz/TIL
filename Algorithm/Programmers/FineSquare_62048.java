@@ -1,5 +1,3 @@
-package programmers;
-
 public class FineSquare_62048 {
 
 	public static void main(String[] args) {

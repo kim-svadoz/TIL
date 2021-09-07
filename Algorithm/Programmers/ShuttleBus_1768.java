@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,41 +10,41 @@ public class ShuttleBus_1768 {
 	public static String solution(int n, int t, int m, String[] timetable) {
 		String answer = "";
         final String firstShuttleTime = "09:00";
-        int shuttleTimeM = timeToNumber(firstShuttleTime); // Ã¹ ¼ÅÆ²¹ö½º ¿îÇà½Ã°£(ºÐ)
+        int shuttleTimeM = timeToNumber(firstShuttleTime); // Ã¹ ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½(ï¿½ï¿½)
         int lastShuttleTimeM = timeToNumber("23:59");
         int lastRideTime = 0;
 
         int[] timetableM = new int[timetable.length];
         boolean[] isRided = new boolean[timetable.length];
 
-        // Å©·ç Å×ÀÌºí ºÐ´ÜÀ§ & ¿À¸§Â÷¼ø Á¤·Ä
+        // Å©ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ð´ï¿½ï¿½ï¿½ & ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for(int i=0; i<timetable.length; i++){
             timetableM[i] = timeToNumber(timetable[i]);
         }
-        Arrays.sort(timetableM); // ¼øÂ÷Àû Å¾½ÂÀ» À§ÇØ Á¤·Ä
+        Arrays.sort(timetableM); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ¼ÅÆ² ¿îÇà ½ÃÀÛ
+        // ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for(int i=0; i<n; i++){
 
-//          System.out.println("\n"+(i+1)+"¹øÂ° ¿îÇà :" + shuttleTimeM );
-            int seat = m; // ³²ÀºÁÂ¼®
+//          System.out.println("\n"+(i+1)+"ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ :" + shuttleTimeM );
+            int seat = m; // ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
             if(i == (n-1))
                 lastShuttleTimeM = shuttleTimeM;
 
-            // timetableM Å©·çµé ¼ÅÆ² Å¾½Â½Ãµµ
+            // timetableM Å©ï¿½ï¿½ï¿½ ï¿½ï¿½Æ² Å¾ï¿½Â½Ãµï¿½
             for(int j=0; j<timetableM.length; j++){
 
-              //¼ÅÆ² Å¾½Â
+              //ï¿½ï¿½Æ² Å¾ï¿½ï¿½
                 if(timetableM[j] <= shuttleTimeM && seat >=1 && !isRided[j]){
                     seat--;
                     isRided[j] = true;
                     lastRideTime = timetableM[j];
-//                  System.out.println(timetableM[j] +" Å¾½Â");
-//                  System.out.println("ÀÜ¿©ÁÂ¼®:"+seat +" ¸¶Áö¸·Å¾½Â½Ã°£:"+lastRideTime);
+//                  System.out.println(timetableM[j] +" Å¾ï¿½ï¿½");
+//                  System.out.println("ï¿½Ü¿ï¿½ï¿½Â¼ï¿½:"+seat +" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¾ï¿½Â½Ã°ï¿½:"+lastRideTime);
                 }
             }
 
-            if(i == (n-1)){// ¸¶Áö¸· ¼ÅÆ²
+            if(i == (n-1)){// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²
 
                 if(seat >0){
                     return answer = timeToString(lastShuttleTimeM);
@@ -55,14 +53,14 @@ public class ShuttleBus_1768 {
                 }
             }
 
-            shuttleTimeM += t; // ´ÙÀ½ ¼ÅÆ²
+            shuttleTimeM += t; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²
 
         }
 
         return answer;
     } 
 
-    public static int timeToNumber(String time){// ºÐ´ÜÀ§·Î
+    public static int timeToNumber(String time){// ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½
         String[] t = time.split(":");
         return Integer.parseInt(t[0]) * 60 + Integer.parseInt(t[1]);
     }

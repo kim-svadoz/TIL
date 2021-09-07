@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -53,9 +51,9 @@ public class BlockMoving_60063 {
 	}
 	
 	private static int bfs(Queue<Robot> q, boolean[][][] visit) {
-		int x, y, dir, time, ox, oy; // Queue¿¡¼­ ²¨³½ ·Îº¿ÀÇ x, y, ¹æÇâ, ½Ã°£, ´Ù¸¥ x, y
-		int nx, ny, nox, noy, ndir;	// ·Îº¿ÀÌ ÀÌµ¿ ÈÄ °¡Áö°Ô µÇ´Â À§Ä¡ ¹× ¹æÇâ
-		int rx, ry;		//È¸Àü ÇÒ ¶§ ÆÇ´ÜÇØ¾ßÇÒ º®ÀÇ À§Ä¡
+		int x, y, dir, time, ox, oy; // Queueï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½ x, y, ï¿½ï¿½ï¿½ï¿½, ï¿½Ã°ï¿½, ï¿½Ù¸ï¿½ x, y
+		int nx, ny, nox, noy, ndir;	// ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		int rx, ry;		//È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ç´ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 		
 		while(!q.isEmpty()) {
 			Robot robot = q.poll();
@@ -69,24 +67,24 @@ public class BlockMoving_60063 {
 			if(isFinish(x, y) || isFinish(ox, oy)) {
 				
 				System.out.println(time);
-				return time; // µµÂøÇÏ¸é ¸®ÅÏ
+				return time; // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 			}
 			
-			for(int i=0; i<4; i++) {	//µ¿¼­³²ºÏ
+			for(int i=0; i<4; i++) {	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				nx = x + dx[i];
 				ny = y + dy[i];
 				nox = ox + dx[i];
 				noy = oy + dy[i];
 				
-				if(!isValid(nx, ny) || !isValid(nox, noy)) continue;	// ¸Ê ¹ÛÀ¸·Î ³ª°¬´ÂÁö Ã¼Å©
-				if(board[nx][ny] == 1 || board[nox][noy] == 1 ) continue;	// º®ÀÎÁö Ã¼Å©
-				if(visit[nx][ny][dir]) continue;	// ÀÌ¹Ì ¹æ¹®ÇÑ °÷ÀÎÁö Ã¼Å©
+				if(!isValid(nx, ny) || !isValid(nox, noy)) continue;	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+				if(board[nx][ny] == 1 || board[nox][noy] == 1 ) continue;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+				if(visit[nx][ny][dir]) continue;	// ï¿½Ì¹ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				
 				visit[nx][ny][dir] = true;
 				q.add(new Robot(nx, ny, dir, time+1 ));
 			}
 			
-			for(int i=1; i<4; i+=2) {	// x, y¸¦ ±âÁØÀ¸·Î 90µµ È¸Àü
+			for(int i=1; i<4; i+=2) {	// x, yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ È¸ï¿½ï¿½
 				ndir = (dir + i) % 4;
 				nox = x + dx[ndir];
 				noy = y + dy[ndir];
@@ -95,16 +93,16 @@ public class BlockMoving_60063 {
 				rx = x + rdx[tempDir];
 				ry = y + rdy[tempDir];
 				
-				if(!isValid(nox, noy) || !isValid(rx, ry)) continue;	// ¸Ê ¹ÛÀ¸·Î ³ª°¬´ÂÁö Ã¼Å©
-				if(board[nox][noy] == 1 || board[rx][ry] == 1 ) continue;	// º®ÀÎÁö Ã¼Å©
-				if(visit[x][y][ndir]) continue;	// ÀÌ¹Ì ¹æ¹®ÇÑ °÷ÀÎÁö Ã¼Å©
+				if(!isValid(nox, noy) || !isValid(rx, ry)) continue;	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+				if(board[nox][noy] == 1 || board[rx][ry] == 1 ) continue;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
+				if(visit[x][y][ndir]) continue;	// ï¿½Ì¹ï¿½ ï¿½æ¹®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
 				
 				visit[x][y][ndir] = true;
 				q.add(new Robot(x, y, ndir, time+1));
 			}
 			
-			dir = (dir + 2) % 4; // ¹æÇâ ¹Ý´ë Ã³¸®
-			for (int i = 1; i < 4; i += 2) { // ox, oy¸¦ ±âÁØÀ¸·Î 90µµ È¸Àü
+			dir = (dir + 2) % 4; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ý´ï¿½ Ã³ï¿½ï¿½
+			for (int i = 1; i < 4; i += 2) { // ox, oyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ È¸ï¿½ï¿½
 				ndir = (dir + i) % 4;
 				nx = ox + dx[ndir];
 				ny = oy + dy[ndir];
@@ -125,7 +123,7 @@ public class BlockMoving_60063 {
 		return -1;
 		
 	}
-	private static boolean isValid(int x, int y) { // ¸Ê ¹ÛÀ¸·Î ³ª°¬´ÂÁö
+	private static boolean isValid(int x, int y) { // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return x>=0 && y>=0 && x<n && y<n;
 	}
 	

@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.HashSet;
 
 public class GymWear_42862 {
@@ -18,7 +16,7 @@ public class GymWear_42862 {
         }
         for(int i =0;i<lost.length;i++) {
             if(ko.contains(lost[i])) {
-                //System.out.println("³»²«³»°¡ÀÔÁö");
+                //System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
                 answer++;
                 ko.remove(lost[i]);
                 lost[i]=-1;
@@ -30,15 +28,15 @@ public class GymWear_42862 {
             //System.out.println(i);
 
             if(ko.contains(lost[i]-1)) {
-                //System.out.println("ÀÖ´Ù");
+                //System.out.println("ï¿½Ö´ï¿½");
                 answer++;
                 ko.remove(lost[i]-1);
             }else if(ko.contains(lost[i]+1)) {
-                //System.out.println("ÀÖ´Ù");
+                //System.out.println("ï¿½Ö´ï¿½");
                 answer++;
                 ko.remove(lost[i]+1);
             }
-            //System.out.println("¾ø´Ù");
+            //System.out.println("ï¿½ï¿½ï¿½ï¿½");
         }
 
         System.out.println(answer);

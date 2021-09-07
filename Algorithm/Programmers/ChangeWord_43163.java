@@ -1,5 +1,3 @@
-package programmers;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,14 +32,14 @@ public class ChangeWord_43163 {
 			}
 		}
 		
-		// ¸ñÇ¥´Ü¾î°¡ ¾ø¾î¼­ º¯È¯ÇÒ ¼ö ¾ø´Â °æ¿ì
+		// ï¿½ï¿½Ç¥ï¿½Ü¾î°¡ ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		if(target_index == -1) return 0;
 		
-		// BFS ½ÃÀÛ
+		// BFS ï¿½ï¿½ï¿½ï¿½
 		Queue<int[]> q = new LinkedList<>();
 		
 		for(int w1 = 0; w1 < words_length; w1++) {
-			// º¯°æÇÒ ¼ö ÀÖ´Â °æ¿ì
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 			if(is_change_able(begin, words[w1])) {
 				q.add(new int[] {w1, 1});
 			}
@@ -50,7 +48,7 @@ public class ChangeWord_43163 {
 		while(!q.isEmpty()) {
 			int[] cur = q.poll();
 			
-			// target¿¡ µµ´ÞÇÑ °æ¿ì
+			// targetï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			if(cur[0] == target_index) {
 				answer = cur[1];
 				break;
