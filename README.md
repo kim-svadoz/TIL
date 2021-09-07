@@ -534,6 +534,8 @@
 | 20164_홀수 홀릭 호석                                | [Link](./Algorithm/Baekjoon/p20164.java)                     | [문제](https://www.acmicpc.net/problem/20164)                | 완전탐색                                   |
 | 20165_인내의 도미노 장인 호석                       | [Link](./Algorithm/Baekjoon/p20165.java)                     | [문제](https://www.acmicpc.net/problem/20165)                | 구현                                       |
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
+| 20167_꿈틀꿈틀 호석 애벌레                          | [Link](./Algorithm/Baekjoon/p20167.java)                     | [문제](https://www.acmicpc.net/problem/20167)                | DP, 투포인터                               |
+| 20168_골목 대장 호석                                | [Link](./Algorithm/Baekjoon/p20168.java)                     | [문제](https://www.acmicpc.net/problem/20168)                | Dijkstra, Binary Search                    |
 | 20291_파일 정리                                     | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                         |
 | 20300_서강근육맨                                    | [Link](./Algorithm/Baekjoon/p20300.java)                     | [문제](https://www.acmicpc.net/problem/20300)                | 그리디                                     |
 | 20437_문자열 게임2                                  | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우                    |
