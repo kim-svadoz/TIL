@@ -613,12 +613,14 @@
 | 42889_실패율                  | [Link](./Algorithm/Programmers/pg42889.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42889) | 구현                         |
 | 42860_조이스틱                | [Link](./Algorithm/Programmers/pg42860.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/42860) | 그리디                       |
 | 60060_가사검색                | [Link](./Algorithm/Programmers/pg60060.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/60060) | TRIE                         |
+| 60062_외벽점검                | [Link](./Algorithm/Programmers/pg60062.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/60062) | 비트마스킹                   |
 | 67259_경주로건설              | [Link](./Algorithm/Programmers/pg67259.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/67259) | bfs + dp                     |
 | 67260_동굴탐험                | [Link](./Algorithm/Programmers/pg67260.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/67260) | bfs, 인접리스트, 그래프      |
 | 72410_신규아이디추천          | [Link](./Algorithm/Programmers/pg72410.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72410) | 문자열, 패턴                 |
 | 72411_메뉴 리뉴얼             | [Link](./Algorithm/Programmers/pg72411.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72411) | hashmap, list                |
 | 72412_순위 검색               | [Link](./Algorithm/Programmers/pg72412.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72412) | hashmap, list, binarysearch  |
 | 72413_합승 택시요금           | [Link](./Algorithm/Programmers/pg72413.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72413) | floyd warshall               |
+| 72414_광고삽입                | [Link](./Algorithm/Programmers/pg72414.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/72414) | 구현, 투포인터               |
 | 84512_모음 사전               | [Link](./Algorithm/Programmers/pg84512.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/84512) | dfs                          |
 | 85002_복서 정렬하기           | [Link](./Algorithm/Programmers/pg85002.java)                 | [문제](https://programmers.co.kr/learn/courses/30/lessons/85002) | 정렬                         |
 
