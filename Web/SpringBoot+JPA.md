@@ -499,6 +499,382 @@ https://juntcom.tistory.com/141
 
 # AOP를 활용한 REST API의 Error Handling
 
+SpringBoot에서 기본적으로 오류처리에 대한 동작 흐름에 대해 알아보자.
+
+
+
+SpringBoot는 모든 오류를 적절한 방식으로 처리하며 `/error`로 매핑하는 전역 오류 페이지 등록을 제공한다.
+
+또, http 상태와 예외에 대한 메시지를 JSON으로 응답하거나 html 형식으로 렌더링 하는 `whitelabel` 페이지 뷰를 제공한다.
+
+
+
+## BasicErrorController
+
+>   SpringBoot의 기본 오류 처리
+
+SpringBoot는 오류가 발생하면 `server.error.path`에 설정된 경로에서 요청을 처리하게 된다.
+
+기본적으로 BasicErrorController가 등록이 되어 있어서 해당 요청을 처리하게 된다.
+
+```java
+@Controller
+@RequestMapping("${server.error.path:${error.path:/error}}") // 1)
+public class BasicErrorController extends AbstractErrorController {
+
+  @Override
+  public String getErrorPath() {
+    return this.errorProperties.getPath();
+  }
+
+  @RequestMapping(produces = MediaType.TEXT_HTML_VALUE) // 2)
+  public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
+            
+    HttpStatus status = getStatus(request);
+    Map<String, Object> model =
+      getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
+		
+    response.setStatus(status.value());
+    ModelAndView modelAndView = resolveErrorView(request, response, status, model);
+    return (modelAndView != null) ? modelAndView : new ModelAndView("error", model);
+  }
+
+  @RequestMapping // 3)
+  public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
+    
+    // 4)
+    Map<String, Object> body =
+      getErrorAttributes(request, isIncludeStackTrace(request, MediaType.ALL));
+    HttpStatus status = getStatus(request);
+    return new ResponseEntity<>(body, status);
+  }    
+}
+```
+
+>   -   `1` : Spring 환경 내에 `server.error.path` 혹은 `error.path`로 등록된 property의 값을 넣거나, 없는 경우 `/error`를 사용
+>   -   `2` : HTML로 응답을 주는경우 `errorHtml`에서 응답을 처리
+>   -   `3` : HTML 외 응답이 필요한 경우 `error`에서 처리
+>   -   `4` : 실직적으로 view에 보낼 모델을 생성
+
+따라서 **`BasicErrorController`에서는 HTML 요청, 그 외의 요청을 나누어서 처리할 핸들러를 등록하고 `getErrorAttributes`를 통해 응답을 위한 모델을 생성한다.**
+
+
+
+## AbstractErrorController
+
+`getErrorAttributes`는 `BasicErrorController`의 상위 클래스인 `AbstractErrorController`에 구현되어 있다.
+
+```java
+public abstract class AbstractErrorController implements ErrorController {
+    private final ErrorAttributes errorAttributes;
+    
+    protected Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
+        WebRequest webRequest = new ServletWebRequest(request);
+        return this.errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
+    }
+}
+```
+
+`ErrorAttributes` 인터페이스의 `getErrorAttributes`를 호출한다. (위임자 패턴)
+
+별도로 `ErrorAttributes`를 등록하지 않았다면 Spring Boot는 `DefaultErrorAttributes`를 사용한다.
+
+```java
+public interface ErrorAttributes {
+    // 요청을 기반으로 모델 생성
+    Map<String, Obejct> getErrorAttributes(WebRequest webRequest, boolean includeStactTrace);
+    // 요청에서 Throwable 획득
+    Throwable getError(WebRequest webRequest);
+}
+
+public DefaultErrorAttributes {
+    // 생성자 및 메서드
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest request, boolean includeStackTrace) {
+        Map<String, Object> errorAttributes = new LinkedHashMap<>();
+        errorAttributes.put("timestamp", new Date()); // timestamp 생성
+        addStatus(errorAttributes, request); // status 생성
+        addErrorDetails(errorAttributes, request, includeStackTrace); // 오류 상세 내용 생성
+        addPath(errorAttributes, request); // path 생성
+        return errorAttributes;
+    }
+}
+```
+
+ `ErrorAttributes`에서 가져온 모델로 Response를 생성한다.
+
+```json
+{
+    "timestamp": "2021-09-25T04:24:11.447+0000",
+    "status": 404,
+    "error": "Not Found",
+    "message": "No message available",
+    "path": "/mypath"
+}
+```
+
+
+
+## ErrorAttributes
+
+여기서 `ErrorAttributes`는 오류가 발생했을 때 응답을 내려줄 모델을 생성하는데 여기서 우리는 이 `ErrorAttributes` 인터페이스를 마음껏 구현할 수 가 있다. (Spring에서 제공하는 확장 포인트이다!)
+
+개발자가 `ErrorAttributes`를 별도로 구현하여 bean으로 등록하면 `BasicErrorController`는 해당 `ErrorAttributes`를 사용한다.
+
+임의로 모델에 `"greeting" : "HelloWorld"`를 추가한 예제이다.
+
+```java
+@Component
+public class CustromErrorAttributes extends DefaultErrorAttributes {
+    
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+        Map<String, Object> result = super.getErrorAttributes(webRequest, includeStackTrace);
+        result.put("greeting", "HelloWorld");
+        return result;
+    }
+}
+```
+
+```json
+{
+    "timestamp": "2021-09-25T04:24:11.447+0000",
+    "status": 404,
+    "error": "Not Found",
+    "message": "No message available",
+    "path": "/mypath",
+    "greeting": "HelloWorld"
+}
+```
+
+
+
+`ErrorAttributes`와 마찬가지로 `ErrorController`의 구현체를 개발자가 직접 bean으로 등록한다면, SpringBoot는 해당 Bean을 먼저 찾아서 `BasicErrorController` 대신 오류 처리를 위해 사용하게 된다.
+
+위임자 패턴을 사용해서 기본적인 처리는 `BasicErrorController`에게 위임하고, 나머지 필요한 처리를 추가할 수 있다.
+
+```java
+@Slf4j
+@Controller
+@RequestMapping("${server.error.path:${error.path:/error}}")
+public class CustomErrorController extends BasicErrorController {
+
+    public CustomErrorController(ErrorAttributes errorAttributes,
+                                 ServerProperties serverProperties,
+                                 List<ErrorViewResolver> errorViewResolvers) {
+        super(errorAttributes, serverProperties.getError(), errorViewResolvers);
+    }
+
+    @RequestMapping(produces = MediaType.TEXT_HTML_VALUE)
+    public ModelAndView errorHtml(HttpServletRequest request,
+                                  HttpServletResponse response) {
+        log(request); // 로그 추가
+        return super.errorHtml(request, response);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
+        log(request);
+        return super.error(request);
+    }
+
+    private void log(HttpServletRequest request) {
+        log.error("error");
+    }
+}
+```
+
+
+
+### > `ErrorController`의 호출 흐름
+
+1.  서블릿 컨테이너(ex. `tomcat`)에서 등록된 서블릿에서 요청을 처리하다가
+2.  오류가 발생해서
+3.  해당 서블릿에서 처리하지 못하고 서블릿 컨테이너까지 오류가 전파 되었을때 (`SevletException`으로 래핑된다)
+4.  서블릿 컨테이너가 오류를 처리하기 위해 특정 경로(`server.error.path`)로 해당 요청처리를 위임 (`ErrorController`를 호출한다)
+
+
+
+## @ExceptionHandler
+
+스프링에서는 발생한 Exception을 기반으로 오류를 처리할 수 있도록 `@ExceptionHandler`를 제공한다.
+
+```java
+@RestController
+@RequestMapping("/products") {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductNotFoundException.class)
+    pubilc Map<String, String> handle(ProductNotFoundException e) {
+        log.error(e.getMessage(), e);
+        Map<String, String> errorAttributes = new HashMap<>();
+        errorAttributes.put("code", "PRODUCT_NOT_FOUND");
+        errorAttributes.put("message", e.getMessage());
+        return errorAttributes;
+    }
+}
+```
+
+특정 컨트롤러에서 예외가 발생한 경우, Spring은 `@ExceptionHandler`를 검색해서 해당 Annotation에 선언된 예외 및 하위 예외에 대해서 특정 메서드가 처리할 수 있도록 한다.
+
+보통의 핸들러와 마찬가지로 `ModelAndView`나 `String`을 반환해 View를 Resolve할 수 있고, `ResponseEntity<T>`를 반환할 수도 있다.
+
+
+
+## @ControllerAdvice
+
+Spring에서는 Bean으로 등록되는 `@Controller`들을 선택적으로, 혹은 전역으로 공통 설정을 적용할 수 있는 `@ControllerAdvice`를 사용할 수 있다.
+
+이 `@ControllerAdvice`에서 사용할 수 있는 것 중 하나가 `@ExceptionHandler`이다.
+
+```java
+@Slf4j
+@ControllerAdvice
+public class GlobalControllerAdvice {
+    
+    @ReponseStatus(HttpSTatus.NOT_FOUND)
+    @ExceptionHandler(ProductNotFoundException.class)
+    public Object handle(ProdcutNotFoundException e, HttpServletRequest request) {
+        if (...) {
+            return makeJson(e);
+        } else {
+            return "/error/404";
+        }
+    }
+}
+```
+
+위의 예제는 하나의 method에서 JSON응답과 HTML 응답을 나누었는데,
+
+HTML view를 사용할 경우와 JSON view를 사용할 경우를 나누어서 `ControllerAdvice`를 등록하고 `@Order`를 사용해 우선순위를 부여하면 분기처리 없이 나누어서 오류를 처리할 수 있다.
+
+```java
+@Slf4j
+@Order(ORDER)
+@RestControllerAdvice(annotations = RestController.class)
+public class GlobalRestControllerAdvice {
+    public static final int ORDER = 0;
+    
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductNotFoundException.class)
+    public Map<String, String> handle(ProductNotFoundException e) {
+        log.error(e.getMessage(), e);
+        Map<String, String> errorAttributes = new HashMap<>();
+        errorAttributes.put("code", "BOARD_NOT_FOUND");
+        errorAttributes.put("message", e.getMessage());
+        return errorAttributes;
+    }
+}
+
+@Slf4j
+@Order(GlobalRestControllerAdvice.ORDER + 1)
+@ControllerAdvice
+public class GlobalHtmlControllerAdvice {
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductNotFoundException.class)
+    public String handle(ProductNotFoundException e, Model model, HttpServletRequest request) {
+        log.error(e.getMessage(), e);
+        model.addAttribute("timestamp", LocalDateTime.now());
+        model.addAttribute("error", "BOARD_NOT_FOUND");
+        model.addAttribute("path", request.getRequestURI());
+        model.addAttribute("message", e.getMessage());
+        return "/error/404";
+    }
+}
+```
+
+
+
+## ResponseEntityExceptionHandler
+
+`ControllerAdvice`를 사용해서 Exception처리를 한 곳으로 모으는 경우에는 `ResponseEntityExceptionHandler`를 상속받아서 Spring MVC에서 기본으로 제공되는 Exception들의 처리를 간단하게 등록할 수 있다.
+
+갹 Exception 처리를 위한 메소드들은 모두 `protected`로 선언되어 있으며 하위 클래스에서 필요에 따라 Override할 수 있다.
+
+```java
+public abstract class ResponseEntityExceptionHandler {
+  @ExceptionHandler({
+    HttpRequestMethodNotSupportedException.class, // 405
+    HttpMediaTypeNotSupportedException.class, // 415
+    HttpMediaTypeNotAcceptableException.class, // 406
+    MissingPathVariableException.class, // 500
+    MissingServletRequestParameterException.class, // 400
+    ServletRequestBindingException.class, // 400
+    ConversionNotSupportedException.class, // 500
+    TypeMismatchException.class, // 400
+    HttpMessageNotReadableException.class, // 400
+    HttpMessageNotWritableException.class, // 500
+    MethodArgumentNotValidException.class, // 400
+    MissingServletRequestPartException.class, // 400
+    BindException.class,
+    NoHandlerFoundException.class, // 404
+    AsyncRequestTimeoutException.class // 503
+  })
+  @Nullable
+  public final ResponseEntity<Object> handleException(Exception ex, WebRequest request) throws Exception {
+    // 각 예외에 대한 분기처리 로직(상속 구현 가능하도록 protected로 메서드가 선언되어 있음)
+  }
+  
+  // 각 예외 처리를 위한 protected 메서드들이 있음
+  protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+      HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    // 예외 처리
+  }
+}
+```
+
+이를 활용해서 실제 적용한 예제를 보자.
+
+```java
+@RestController
+@ControllerAdvice
+public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionResponse.builder()
+                .timestamp(new Date())
+                .message(ex.getMessage())
+                .details(request.getDescription(false)).build());
+
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public final ResponseEntity<Object> handleProductNotFoundExceptions(Exception ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ExceptionResponse.builder()
+                .timestamp(new Date())
+                .message(ex.getMessage())
+                .details(request.getDescription(false)).build());
+
+    }
+}
+```
+
+`@ExceptionHandler`의 인자로 `~~Exception.class`를 정의하여 Exception의 대상을 다양하게 처리할 수 있다.
+
+
+
+SpringBoot가 제공하는 ErrorAttributes는 단일 구현으로 에러를 처리하기 때문에 모듈별로 Exception을 상속해서 별도 정의하는 경우에는 다양한 에러에 대응을 하나의 구현으로 처리하는 것은 무리가 있다.
+
+따라서 다양한 Exception에 대해 별도 정의가 가능한 Global Exception Handler 방식을 선호한다.
+
+그 이외에도 **`HandlerExceptionResolver`** 인터페이스를 사용해서 요청, 응답, 핸들러, 예외를 파라미터로 받아서 `ModelAndView`를 반환값으로 하는 `resolveException` 메소드가 있는데, 이는 추후에 다시 알아보도록 할 예정이다.
+
+
+
+## **Filter와 Interceptor**
+
+Filter와 Intercepter는 실행되는 위치가 다르므로 Exception이 발생했을 때 처리하는 방법도 달라진다.
+
+Interceptor는 DispatcherServlet 내부에서 발생하기 때문에 `ContollerAdvice`를 적용할 수 있지만
+Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController`에서 처리해야 한다.
+
+![image-20210925045804677](https://user-images.githubusercontent.com/58545240/134735841-2399bc60-5c2e-475f-be3c-27c12444742e.png)
+
+
+
+참조 : https://supawer0728.github.io/2019/04/04/spring-error-handling/
+
 # Swagger, Postman
 
 # JPQL?
