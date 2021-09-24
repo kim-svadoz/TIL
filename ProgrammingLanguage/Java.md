@@ -1812,6 +1812,7 @@ fun(SubClass sub) {
 | 런타임 오류 감지         | 런타임 오류 감지는 프로그래머의 책임                         | 런타임 오류 감지는 시스템에 의해 제어                        |
 | 하드웨어                 | 하드웨어에 가깝고 하드웨어 리소스를 조작할 수 있는 많은 라이브러리가 있다. 종종 시스템 프로그래밍, 게임 응용 프로그램, 운영체제 및 컴파일러에 사용된다. | 대부분 응용 프로그램 개발 언어이며 하드웨어에 가깝지 않다.   |
 
+<<<<<<< Updated upstream
 # 싱글턴 패턴
 
 # 빌더패턴
@@ -1822,3 +1823,219 @@ fun(SubClass sub) {
 
 # Optional Class
 
+=======
+# 일급컬렉션
+
+---
+
+> First Class Collection
+>
+> Collection을 Wrapping 하면서, 그 외 다른 멤버 변수가 없는 상태
+
+말 그대로, 컬렉션 객체를 Wrapping하는 것을 얘기합니다.
+
+```java
+public class FirstClassCollection {
+    private Map<String, Integer> map;
+    
+    public FirstClassCollection (Map<String, Integer> map) {
+        this.map = map;
+    }
+}
+```
+
+이렇게 **Collection울 Wrapping**하면서, **그 외 다른 멤버 변수가 없는 상태**를 일급 컬렉션이라 합니다.
+
+
+
+이러한 작업을 통해 얻을 수 있는 이점이 네 가지 있습니다.
+
+1. 비즈니스에 종속적인 자료구조
+
+2. Collection의 불변성을 보장
+
+3. 상태와 행위를 한 곳에서 관리
+
+4. 이름이 있는 컬렉션
+
+   
+
+## 1. 비즈니스에 종속적인 자료구조
+
+상위 클래스에서 컬렉션을 선언하게 되면 해당 컬렉션이 필요한 모든 장소에서 검증로직이 들어가게 됩니다. 하지만 모든 코드와 도메인을 알고 있지 않다면 객체지향관점에서 비효율적이며 유지보수에 어려움이 생기겠죠.
+
+비즈니스에 종속적이라는 말은 생성된 클래스의 컬렉션을 관리하는 클래스(일급 컬렉션)를 따로 만들어서 해당 클래스는 **클래스 내부적으로 비즈니스 로직에서 검증하는 로직을 처리하여 관리**할 수 있다는 말입니다.
+
+일급컬렉션으로 로직을 관리하면 해당 로직이 필요한 부분에서 일급 **컬렉션의 선언만으로 로직을 관리**할 수 있습니다.
+
+
+
+## 2. 불변
+
+일급 컬렉션은 **컬렉션의 불변을 보장**합니다.
+
+Java의 `final`은 정확히 말하자면 불변으로 만드는 것이 아니라, **재할당을 금지**합니다.
+
+단순히 컬렉션의 재할당을 금지하는 것이지, 불변을 보장할 수 없습니다.
+
+```java
+@Test
+public void final도_값변경이_가능합니다() {
+    // given
+    final Map<String, Boolean> map = new HashMap<>();
+    
+    // when
+    map.put("1", true);
+    map.put("2", true);
+    map.put("3", true);
+    map.put("4", true);
+    
+    // then
+    assertThat(map.size()).isEqualTo(4); // SUCCESS
+}
+```
+
+위와 같이 단순 `final`은 값이 추가되는 것을 막을 수 없습니다. 이미 비어 있는 `HashMap`으로 컬렉션이 선언되었음에도 값이 변경될 수 있다는 것이죠.
+
+
+
+소프트웨어의 규모가 커질수록 **불변 객체**는 중요합니다. 각 **객체들의 값이 절대 바뀔일이 없다는 것이 보장**된다면 그만큼 코드를 이해하고 수정하는 데 **사이드 이펙트가 최소화**됩니다.
+
+
+
+따라서 Java에서는 final로 그 문제를 해결할 수 없기 때문에 **일급 컬렉션(First Class Collection)**과 **래퍼 클래스(Wrapper Class)** 등의 방법으로 해결해야 합니다.
+
+
+
+즉, 아래와 같이 **컬렉션의 값을 변경할 수 있는 메소드가 없는 컬렉션**을 만들면 **불변 컬렉션**이 됩니다!
+
+```java
+public class Orders {
+    private final List<Order> orders;
+    
+    public Orders(List<Order> orders) {
+        this.orders = orders;
+    }
+    
+    public long getAmountSum() {
+        return orders.stream().
+            	.mapToLong(Order::getAmount)
+            	.sum();
+    }
+}
+```
+
+이 클래스는 생성자와 getAmountSum() 외에 다른 메소드가 없습니다. 단지 **새로 만들거나 값을 가져오는 것**의 기능만 하게 됩니다.
+
+List라는 컬렉션에 접근할 수 있는 방법이 없기 때문에 **값의 변경/추가**가 불가능한 것이죠
+
+이렇게 일급 컬렉션을 사용하면, **불변 컬렉션**을 만들 수 있습니다.
+
+
+
+## 3. 상태와 행위를 한 곳에서 관리
+
+일급 컬렉션의 세 번째 장점은 **값과 로직이 한 곳에 존재**한다는 것입니다.
+
+해당 컬렉션에 대한 상태와 행위를 클래스 안에 정의함으로써 일급 컬렉션 사용 시 메소드의 중복 생성을 막을 수 있으며, 필요한 로직을 만들어놔 추후 필요할 때 편리하고 알아보기 쉽게 사용할 수 있습니다.
+
+```java
+public class itemGroups {
+    private List<Item> items;
+    
+    public Groups(List<Item> items) {
+        this.items = items;
+    }
+    
+    public Long getSeoulItemSum() {
+        return items.stream()
+            	.filter(item -> ItemType.isSeoulItem(item.getItemType()))
+            	.mapToLong(Item::getAmount)
+            	.sum();
+    }
+}
+```
+
+만약 서울시의 아이템이 아니라 다른 곳의 아이템을 가져와야한다면 손쉽게 추가할 수 있습니다.
+
+```java
+public class itemGroups {
+    private List<Item> items;
+    
+    public Groups(List<Item> items) {
+        this.items = items;
+    }
+    
+    public Long getSeoulItemSum() {
+        return getFilterItems(item -> ItemType.isSeoulItem(item.getItemType()));
+    }
+    
+    public Long getBusanItemSum() {
+        return getFilterItems(item -> ItemType.isBusanItem(item.getItemType()));
+    }
+    
+    public Long getFilterItems(Predicate<Item> predicate) {
+		return items.stream()
+            	.filter(predicate)
+            	.mapToLong(Item::getAmount)
+            	.sum();
+    }
+}
+```
+
+이렇게 `itemGroups`라는 **일급 컬렉션이 생김으로 상태와 로직이 한곳에서 관리할 수 있게 됩니다.**
+
+
+
+## 4. 이름이 있는 컬렉션
+
+컬렉션에 이름을 붙일 수 있습니다.
+
+같은 Item의 모임이지만 Seoul의 list와 Busan의 list는 엄연히 다릅니다.
+
+이 둘을 구분하기 위한 흔한 방법은 변수명을 다르게 하는 것이죠.
+
+```java
+@Test
+public void 컬렉션을_변수명으로() {
+    //given
+    List<Item> seoulItems = createSeoulItems();
+    List<Item> busanItems = createBusanItems();
+    
+    //when
+    
+    //then
+}
+```
+
+이 코드는 오직 변수명만으로 검색해야 하고 또, 개발마자마 그 뜻을 다르게 사용할 수 있습니다. 따라서 명확한 표현이 불가하다는 단점이 있습니다.
+
+
+
+이런 문제를 일급컬렉션으로 쉽게 해결할 수 있습니다.
+
+```java
+@Test
+public void 일급컬렉션의_이름으로() {
+    //given
+    SeoulItems seoulItems = new SeoulItems(createSeoulItems());
+    BusanItems busanItems = new BusanItems(createBusanItems());
+    
+    //when
+    
+    //then
+}
+```
+
+이렇게 서울그룹과 부산그룹 각각의 일급 컬렉션을 만들면 이 **일급컬렉션을 기반으로 용어사용과 검색을 하면됩니다.** 클래스 단위로 관리되기 때문에 검색의 수월함을 느낄 수 있습니다.
+
+이는 협업간에도 많은 도움이 될 것입니다.
+
+
+
+> ***이처럼 좋은 객체지향 코드를 위해서 일급컬렉션을 적극 활용해봅시다!***
+
+
+
+참조 : https://jojoldu.tistory.com/412
+>>>>>>> Stashed changes
