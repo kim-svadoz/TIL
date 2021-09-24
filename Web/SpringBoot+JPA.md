@@ -299,7 +299,7 @@ REST API 개발 시 ResponseEntity의 값(헤더, 상태코드)들을 적절히 
 
 ## > RestTemplate 메서드
 
-![image-20210924155919175](../../tmpImg/image-20210924155919175.png)
+![image-20210924155919175](https://user-images.githubusercontent.com/58545240/134637515-c53b82a0-fb24-4181-97af-2771164e94d5.png)
 
 - `getForObject()`
 
