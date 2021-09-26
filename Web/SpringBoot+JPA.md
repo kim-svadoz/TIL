@@ -76,7 +76,59 @@ org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,\
 
 # Spring Bean LifeCycle
 
+Spring Bean이라고 하는 것은 일반적으로 객체인데, IoC 컨테이너가 관리하는 객체를 **Bean**이라고 한다.
+
+`new`로 만드는 객체는 **Bean**이 아니다.
+
+
+
+그럼 어떻게 Spring Container안에 특정한 인스턴스를 빈으로 만들 수 있는가?
+
+>   1.  Component-Scan
+>   2.  직접 Bean으로 등록
+
+IoC 컨테이너가 사용하는 여러 인터페이스가 있는데, 그런 인터페이스들을 lifecycle callback 이라고 한다.
+
+그 여러 Lifecycle CallBack 중에서는 `@Component`로 선언된 클래스를 빈으로 등록하는 처리기가 등록되어 있다.
+
+
+
+그것이 바로 `@SpringBootApplication` 안에서 @ComponentScan이 알려주는 위치의 모든 하위패키지부터 훑어보면서 `@Component`로 등록된 클래스를 빈으로 등록한다!
+
+
+
+*특정한 Repository를 상속받을 때 인터페이스 안에서 내부적으로 Bean을 만들어서 관리한다.*
+
+
+
+```java
+@Configuration
+public class SampleConfig {
+    
+    @Bean
+    public SampleController sampleController() {
+        return new SampleController();
+    }
+}
+```
+
+`@Configuration`도 Component이기 때문에 Bean으로 등록되고
+
+위와 같이 `@Controller`를 사용하지 않고 직접 Controller를 만들어서 Bean으로 등록할 수 도 있다.
+
+
+
 # Autowired
+
+>   IoC 컨테이너에 등록된 빈을 어떻게 꺼내서 사용할 것인가 ?
+>
+>   스프링에는 다양한 의존성 주입 방법이 있는데,
+>
+>   생성자로 직접 주입을 받아도 되지만 `@Autowired`를 사용하면 IoC 컨테이너에 들어있는 Bean을 주입받아서 사용할 수 있다.
+
+Spring 4.3부터 어떠한 클래스에 생성자가 하나 뿐이고, 그 생성자가 주입받는 레퍼런스 변수들이 Bean으로 등록되어 있다면 그 Bean을 자동으로 주입하는 기능으로, `@Autowired`를 생략할 수 있다.
+
+
 
 # Lombok
 
