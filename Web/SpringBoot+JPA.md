@@ -495,7 +495,313 @@ https://juntcom.tistory.com/141
 
 # Entity에 관하여
 
+>   엔티티 클래스는 테이블과 매핑되어 사용되는 클래스이다.
+>
+>   `@Entity` 어노테이션으로 JPA에게 테이블과 매핑될 클래스이니 관리 할 것임을 알리고
+>
+>   `@Table(name = 'product')`로 DB와 매핑될 테이블 네임을 지정한다. class name과 table name이 같다면 생략해도 된다.
+>
+>   `@Column(name = 'id')`도 마찬가지로 DB의 컬럼과 매핑될 필드로 name이 같다면 생략해도 된다.
+>
+>   
+>
+>   *++ 일반적으로 id를 `Long`타입의 래퍼클래스로 받는 이유?*
+>   : long값의 경우 기본값으로 0이 데이터베이스에 들어갈 수 있는데, 기존 데이터베이스에도 id가 0값으로 들어있다면 이게 기존데이터인지 추가된 데이터인지 구분이 어렵다.
+>   따라서, `Long`타입으로 하면 null로 들어가므로 구분이 쉬워진다.
+
+## > Entity의 상태
+
+엔티티 클래스를 바탕으로 생성된 엔티티는 생성부터 소멸까지 총 4가지의 상태를 가지며, 데이터의 입출력 즉 트랜잭션과 연관이 깊다.
+
+>   -   New / 비영속
+>   -   Managed / 영속
+>   -   Detached / 준영속
+>   -   Removed / 삭제
+
+### - NEW / 비영속
+
+엔티티를 생성한 시점부터 트랜잭션 구간에 진입하기 전까지, 엔티티는 비영속 상태이다.
+
+**이 상태에서 엔티티는 데이터베이스와 전혀 관계가 없고 JPA의 어떤 특징도 보이지 않는 평범한 객체**이다.
+
+```java
+Product prodcut = new Product();
+```
+
+
+
+### - MANAGED / 영속
+
+엔티티가 트랜잭션 영역에 진입해서 엔티티 매니저의 관리 하에 들어가면  해당 트랜잭션 구간동안 엔티티는 영속 상태가 된다.
+
+```java
+em.persist(product)
+```
+
+`persist()` method는 주로 JPARepository에서 save시 일어나게 된다.
+
+
+
+엔티티는 이 영속 상태에서 몇 가지 중요한 특징을 가지게 된다.
+
+-   **1차 캐시 사용**
+-   **같은 키(식별값)를 사용하는 여러 객체의 동일성 보장**
+-   **쓰기 지연과, 변경감지**
+
+이에 대한 자세한 내용은 아래에서 다룬다.
+
+
+
+### - DETACHED / 준영속
+
+엔티티가 커밋되어 트랜잭션 구간에서 빠져나오는 경우, 아 엔티티는 준영속 상태가 된다.
+
+비영속 상태와 거의 같지만, **영속 상태를 한 번 거쳤기 때문에, 준영속 상태의 엔티티는 식별값을 가지고 있다.**
+
+이렇게 한번 DB에 저장된 기존 식별자(`ID`)를 갖는 엔티티는 영속성 컨텍스트가 더 이상 관리되지 않고, 따라서 변경 감지도 적용되지 않는다.
+
+
+
+이러한 준영속 상태의 엔티티를 수정하는 방법은 2가지가 있다.
+
+>   1.  변경 감지(dirty checking)
+>   2.  병합 (merge)
+>
+>   
+>
+>   **변경 감지 사용**
+>
+>   ```java
+>   // 변경감지 기능 사용 예시
+>   // 병합기능(merge)의 단점은 엔티티의 모든 속성이 변경되기 때문에 null이 잘못 들어 갈 수가 있다는 것
+>   // 실무는 복잡하기 때문에 가급적이면 병합기능를 쓰지 않고, 조금 귀찮더라도 변경감지 기능을 이용하는 것이 좋다.
+>   @Transactional
+>   public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+>       // 현재 findItem은 Transaction 영역에 진입했으므로 영속 상태이다. 따라서. @Transactional에 의해서 commit이 되고 JPA에서 flush가 되서, 변경감지가 일어나서 바뀐 값을 업데이트 쿼리를 날려서 업데이트가 된다.
+>       Item findItem = itemRepository.findOne(itemId);
+>   
+>       findItem.setName(name);
+>       findItem.setPrice(price);
+>       findItem.setStockQuantity(stockQuantity);
+>   }
+>   ```
+>
+>   EntityManager로 Entity를 직접 꺼내서 원하는 값을 수정한다.
+>
+>   이렇게 하면 자동으로 dirtyChecking이 일어난다.
+>
+>   
+>
+>   위와 같이 단발성으로 업데이트(`setMethod()`)를 하는 것 보다는 의미 있는 `method`를 만들어서 사용하는 것이 역추적이 좋고 유지보수에 편하다.
+>
+>   *ex. findItem.change(price, name, stockQuantity)*
+>
+>   
+>
+>   **병합 사용**
+>
+>   ```java
+>   // 병합 기능 사용 예시
+>   ...
+>       
+>   private fianl EntityManager em;
+>   
+>   public void save(Item item) {
+>       if (item.getId() == null) {
+>           em.persist(item);
+>       } else {
+>           // 여기서 param으로 넘어온 item은 영속성 컨텍스트가 아니고
+>           // merge후 반환된 아이가 영속성 컨텍스트이므로 나중에 Item을 쓰려면 쓸려면 얘를 활용해야 한다.
+>           Item merge = em.merge(item);
+>       }
+>   }
+>   ```
+>
+>   Item을 저장할 때, `id`를 직접 설정되지 않았다면 새로 생성하는 것이므로 `persist()`를, `id`를 설정된 객체라면 이미 있는 엔티티를 수정하는 것으로 알고 `merge()`를 호출하는 식으로 사용된다.
+>
+>   여기서는 준영속 상태의 item 자체를 영속성 컨텍스트에 넣는 것이 아니라, 준영속 객체의 식별자와 일치하는 엔티티를 DB에서 가져와 값을 대입받고, 그에 해당 하는 엔티티를 반환하는 것이다.
+>
+>   또, **`merge()`는 엔티티의 모든 필드를 그대로 변경하기 때문에 item의 name만 변경하고자 셋팅후 merge()한다면 나머지 필드는 기존 값을 잃어버리고 null값이 대입된다.**
+>
+>   **따라서 실무에서는 가급적 `em.find()`로 엔티티를 가져와서 직접 값을 수정하는 변경감지 기법을 이용하는 것이 권장된다.**
+
+
+
+### - REMOVED / 삭제
+
+엔티티가 트랜잭션 구간 내에서 관련 메서드에 의해 삭제되는 경우, 매핑되는 데이터의 삭제와 함께 엔티티 또한 삭제 상태가 된다.
+
+객체는 사용 가능한 상태이지만, 재활용 하지 않는 편이 좋다.
+
+
+
+## > Entity Manager
+
+>   엔티티의 저장, 수정, 조회, 삭제 와 같이 엔티티를 관리하는 객체이다.
+>
+>   *Thread-Safe한 구조이다.*
+
+매니저의 책임이 전부 영속성 엔티티의 CRUD와 관련이 있다. 
+
+엔티티 매니저는 영속성 상태의 엔티티 관리를 위해서 DB 세션과 밀접한 연관을 가지고 있기 때문에, 하나의 엔티티를 여러 스레드에서 공유하여 사용하면 위험하다.
+
+Thread-Safe한 엔티티 매니저 팩토리를 공유해 각 스레드에서 엔티티 매니저를 생성하는 방식이 권장된다.
+
+-   Entity Manager Factory로부터 Entity Manager를 생성
+-   Entity Manager는 DB의 Connection Pool로부터 커넥션 획득
+-   획득한 Connection을 통해서 엔티티의 CRUD를 관리
+
+
+
+## > Entity Manager와 영속성 컨텍스트
+
+Entity Manager에 의해 관리되는 영속성(`MANAGED`) 상태의 엔티티는 고유한 식별값(`ID`)로 구분되어 관리된다.
+
+즉, 영속성 상태에 있는 모든 엔티티는 식별값을 가지고 있어야 한다.
+
+영속성 상태에 있는 엔티티는 아래의 특징을 가진다.
+
+
+
+### - 1차 캐시 / 엔티티의 동일성 보장
+
+-   영속성 컨텍스트는 내부에 캐시를 갖고 있고, `(id, instatnce)`의 `map` 형태로 Entity가 저장된다.
+-   데이터베이스에 읽은 이력이 있는 데이터는 이 1차 캐시에 저장되어 재사용된다.
+-   트랜잭션 단위의 굉장히 짧은 메모리 공간이다.
+
+![image-20210925174709866](https://user-images.githubusercontent.com/58545240/134795582-c88fc046-aaaf-4f5d-9433-6d4514518557.png)
+
+-   `em.persist(member)`로 member가 영속성 컨텍스트에 영속되면, 1차 캐시는 이를 담는다.
+-   이후에 조회 시에 DB에 접근해서 member1을 찾는 것이 아니라, 1차 캐시를 먼저 훑어서 member1을 바로 찾을 수 있고, 캐시에 없다면 DB에서 검색 후 해당 객체를 1차 캐시에 저장하고 반환한다.
+-   이렇게 1차캐시를 거친 조회로 엔티티의 동일성이 보장되는 것이다.
+
+
+
+### - 쓰기 지연
+
+```java
+transaction.begin();
+
+em.persist(member1);
+em.persist(member2);
+
+// -------1-------
+em.flush();
+// -------2-------
+
+transaction.commit();
+```
+
+-   1의 영역에서 member insert query를 바로 보내는 것이 아니라, 해당 쿼리를 바로 전송할 수도, 원하는 시점으로 지연시킬 수도 있다.
+
+-   이는 **쓰기 지연 SQL 버퍼**에 쿼리를 담아뒀다가, 영속성 컨텍스트의 명령(트랜잭션이 종료되는 시점)에 따라 쿼리들이 DB에 전송되기 때문이다.
+
+    
+
+    1.  그 과정은, member1이 컨텍스트에 영속되면, 우선 1차 캐시로 들어가고 쿼리는 SQL 버퍼에 들어간다.
+
+    2.  member2가 따라서 영속되면 마찬가지로 1차 캐시로 들어가고 쿼리는 SQL 버퍼에 들어간다.
+
+        ![image-20210925183024178](https://user-images.githubusercontent.com/58545240/134795590-2edf3d5d-b397-4bfc-9ff2-f419b1d4570e.png)
+
+    3.  이후에, transaction이 `commit()` 메소드 호출 시 컨텍스트에 버퍼를 비우도록 명령하는 `flush()`메소드를 호출하면서 그 때 버퍼에 있던 쿼리들이 DB에 넘어가서 쿼리를 반영한다.
+
+        ![image-20210925183037506](https://user-images.githubusercontent.com/58545240/134795599-9efefee5-a295-431c-8b62-84e64c051e3e.png)
+
+    
+
+    
+
+### - 지연 로딩
+
+>   JPA에서 테이블 간의 연관관계는 객체간의 참조를 통해 이루어진다.
+>
+>   서비스가 커질수록 참조하는 개체가 많아지고, 객체가 가지는 데이터의 양이 많아지게 된다.
+>
+>   이렇게 객체가 커질수록 DB로부터 참조하는 객체들의 데이터까지 한꺼번에 가져오는 행동은 부담이 되기 때문에, JPA는 참조하는 객체들의 데이터를 가져오는 시점을 정할 수가 있는데 이를 **Fetch Type**이라고 한다.
+>
+>   Fetch Type 에는 두 가지가 있다.
+>
+>   -   **`EAGER`**
+>       -   성실한, 열심인
+>       -   말 그대로 데이터를 가져오는 데 성실하기 때문에 하나의 객체를 DB로부터 참조 객체들의 데이터까지 전부 읽어오는 방식이다.
+>   -   **`LAZY`**
+>       -   게으른
+>       -   말 그대로 참조 객체들의 데이터들은 무시하고 해당 엔티티의 데이터만을 가져온다.
+>
+>   테이블 설계가 복잡해질 수록 하나의 엔티티가 참조하는 테이블들은 점점 증가하고, 그에 따른 쿼리문도 굉장히 길어진다.
+>
+>   이렇게 복잡한 쿼리문을 본 개발자들은 해당 도메인이 어떻게 설계되었는지 확인해봐야 하고, 논리적인 레이어의 분리가 어렵게 된다.
+>
+>   따라서 `EAGER` 타입은 유지보수를 힘들게 할 수 있으며, 예상치 못한 SQL이 발생할 수 있다.
+
+지연로딩은 엔티티 조회 시점이 아닌 엔티티 내 연관관계를 참조할 때 해당 연관관계에 대한 SQL이 질의되는 기능이며 `fetch = FetchType.LAZY` 옵션으로 설정한다.
+
+엔티티 조회 시 연관관계 필드는 프록시 객체로 제공된다.
+
+```java
+Member member = EntityManagter.find(Member.class, 1L);
+
+member.getTeam(); // 프록시 객체 초기화 X
+
+member.getTeam().getclass(); // 프록시 객체
+
+member.getTeam().getName(); // 프록시 객체 초기화 및 SQL 질의
+```
+
+위 코드와 같이 지연로딩 되는 연관관계를 참조하기 전까지는 프록시 객체가 초기화되지 않고, 프록시 객체를 참조할 때 프록시 객체가 초기화 되고 SQL이 질의된다.
+
+`LAZY` 옵션을 사용해 엔티티와 관련 있는 **데이터의 로드를 해당 데이터가 필요한 시점까지 지연시킬 수 있다**는 장점이 있다.
+
+
+
+### - 변경감지
+
+-   트랜잭션 종료 시점에 Entity Manager는 엔티티의 변경사항을 감지해 데이터 베이스에 업데이트 한다.
+-   SQL이 flush 되기 전에 SQL 버퍼에 저장될 당시의 객체값(스냅샷 값)과 엔티티의 현재 값을 비교해서 수정이 있을 경우 SQL을 일괄 변경하여 DB에 업데이트 한다.
+
+
+
+참조
+
+https://awayday.github.io/2017-04-30/jpa-and-entity/
+
+https://ecsimsw.tistory.com/entry/JPA-%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8-1%EC%B0%A8-%EC%BA%90%EC%8B%9C-%EC%93%B0%EA%B8%B0-%EC%A7%80%EC%97%B0
+
 # JpaRepository
+
+Spring-Data-Jpa에서는 반복되는 코드없이 쉽게 JPA Repository를 만들 수 있다. `extends JpaRespository<Product, Long>`으로 인터페이스를 상속하고 커스텀이 필요한 메소드는 오버라이딩하면 된다.
+
+스프링의 변경감지는 `EntityManger`별로 수행한다.
+
+**같은 쓰레드에서 Spring-Data가 제공하는 Repository들은 하나의 EntityManager를 공유한다. 그래서 하나의 컨테이너에서 여러 Repository가 사용하는 EntityManager는 동일하다.**
+
+
+
+## 트랜잭션 커밋은 어디에서 일어날까? 
+
+레파지토리를 만들 때 `Spring-Data-Jpa`의 `JpaRepository` 인터페이스를 상속하였는데, 스프링 데이터에서 기본 구현체를 제공해주기 때문이다.
+
+`Spring-Data-Jpa`에서 제공하는 `JpaRepository`의 기본 구현체는 `SimpleJpaRepository`이다. 
+
+(`CrudRepository<>`는 단순히 인터페이스이다.)
+
+`SimpleJpaRepository`의 `save()`메소드에는 스프링 **`@Transactional`**이 붙어있으므로 해당 클래스에 있는 수많은 메소드에 트랜잭션이 걸리게 되고, 메소드 성공적으로 return하게 되면 commit도 이루어지게 되는것이다.
+
+```java
+@Transactional
+public <S extends T> S save(S entity) {
+    Assert.notNull(entity, "Entity must not be null.");
+    if (this.entityInformation.isNew(entity)) {
+        this.em.persist(entity);
+        return entity;
+    } else {
+        return this.em.merge(entity);
+    }
+}
+```
+
+따라서, `save()` 메소드와 같이 CRUD `method()`를 수행하는 시점이 트랜잭션의 시작 과 종료 커밋 시점임을 알 수 있다.
 
 # AOP를 활용한 REST API의 Error Handling
 
@@ -886,7 +1192,5 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 # Hibernate의 기본키 생성전략
 
 # 트랜잭션과 영속성 컨텍스트
-
-# 영속성 컨텍스트의 이점 : 1차캐시, 쓰기지연, 로딩지연, 변경감지
 
 # DDD: 도메인주도설계
