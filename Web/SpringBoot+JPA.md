@@ -78,7 +78,21 @@ org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,\
 
 Spring Bean이라고 하는 것은 일반적으로 객체인데, IoC 컨테이너가 관리하는 객체를 **Bean**이라고 한다.
 
-`new`로 만드는 객체는 **Bean**이 아니다.
+( *`new`로 만드는 객체는 **Bean**이 아니다* )
+
+
+
+대략적으로 스프링 빈의 life cycle은 아래와 같다.
+
+```bash
+# 객체 생성 > 의존 설정 > 초기화 > 소멸 단계
+```
+
+스프링 컨테이너를 초기화 할 때 스프링 컨테이너는 빈 객체를 생성하게 되고 이 시점에 DI를 통한 의존성이 주입된다.
+
+모든 의존 설정이 완료되면 빈 객체를 초기화 하기 위해서 스프링은 빈 객체의 지정된 메서드를 호출하게 된다.
+
+마지막으로 스프링 컨테이너가 `close()` 메서드로 종료될 시점에 컨테이너는 빈 객체의 소멸을 처리하고 이때도 지정된 메서드를 호출하게 된다.
 
 
 
@@ -117,6 +131,182 @@ public class SampleConfig {
 위와 같이 `@Controller`를 사용하지 않고 직접 Controller를 만들어서 Bean으로 등록할 수 도 있다.
 
 
+
+그러면 이제 스프링 빈의 초기화 및 종료 방법 3가지를 알아보겠다.(Spring Bean Lifecycle Callback)
+
+## 1. 인터페이스 활용
+
+`InitializingBean, DisposableBean` 인터페이스를 활용한다.
+
+```java
+public class CustomClient implements InitailizingBean, DisposableBean {
+    private String url;
+    
+    public CustomClient() {
+        System.out.println("생성자 호출, url: " + url);
+    }
+	public void setUrl(String url) {
+        this.url = url;
+    }
+
+    // 애플리케이션 시작 시 호출
+	public void connect() {
+        System.out.println("연결 url: " + url);
+    }
+    
+    // 서비스 중에 호출
+    public void call(String message) {
+        System.out.println("url: " + url + "/message = " + message);
+    }
+    
+    // 서비스 종료 시 호출
+    public void disconnect() {
+        System.out.println("서비스 종료");
+    }
+    
+	// 빈 생성 후 의존관계 주입이 완료되고 호출된다.
+	@Override
+	public void afterPropertiesSet() throws Exception {
+        connect();
+    }
+    
+    // 스프링 컨테이너 종료 직전에 호출된다.
+    @Override
+    public void destroy() throws Exception {
+        disconnect();
+    }
+}
+```
+
+```java
+public class BeanTest {
+    @Test
+    public void beanTest() {
+        ConfigurableApplicationContext ac = new AnnotationConfigApplicationContext(MyConfig.class);
+        CustomClient client = ac.getBean(CustomClient.class);
+        ac.close();
+    }
+    
+    @Configuration
+    static class MyConfig {
+        @Bean
+        public CustomClient customClient() {
+            CustomClient customClient = new CustomClient();
+            customClient.setUrl("http://...");
+            return customClient;
+        }
+    }
+}
+```
+
+
+
+위와 같이 커스텀 빈을 만들고, 이 객체에 `InitializingBean, DisposableBean` 인터페이스를 장착하면 빈 생명주기를 관리해주는 콜백함수들을 사용할 수 있다.
+
+이렇게 작성하고 실제로 Configuration에서 빈을 등록하고 사용하면 의존관계가 주입 된 후에 `afterPropertiesSet()`으로  connect()와 call() 메소드가 호출됨을 확인할 수 있다.
+
+
+
+하지만 이처럼 인터페이스로 콜백을 사용하는 방법은 스프링 전용 인터페이스이며, 스프링에 의존적이고 외부 라이브러리에 적용할 수 없다는 단점이 있다.
+
+
+
+## 2. 빈 등록 시 초기화/소멸 메서드 등록
+
+Bean을 등록할 때 `@Bean(initMethod = "init", destroyMethod = "close")` 처럼 초기화, 소멸 메서드를 지정할 수 있다.
+
+```java
+public class BeanTest {
+    @Test
+    public void beanTest() {
+        ConfigurableApplicationContext ac = new AnnotationConfigApplicationContext(MyConfig.class);
+        CustomClient client = ac.getBean(CustomClient.class);
+        ac.close();
+    }
+    
+    @Configuration
+    static class MyConfig {
+        // 빈 설정 시 초기화, 소멸 메서드를 지정해준다.
+        @Bean(initMethod = "init", destroyMethod = "close")
+        public CustomClient customClient() {
+            CustomClient customClient = new CustomClient();
+            customClient.setUrl("http://...");
+            return customClient;
+        }
+    }
+}
+```
+
+CustomClient.class 에 지정해줬던 함수명들로 init, close method를 작성한다.
+
+```java
+public class CustomClient implements InitailizingBean, DisposableBean {
+    /*
+    	위는 모두 동일
+    */
+    
+	public void init() throws Exception {
+        connect();
+    }
+    
+    public void close() throws Exception {
+        disconnect();
+    }
+}
+```
+
+첫 번째 방법과 같은 결과를 도출할 수 있따.
+
+
+
+여기서 특이한 점은 Spring이 `@Bean`의 종료메서드에 대해서 임의로 추론해서 자동으로 호출해주는 기능이 있다.
+
+```java
+@Bean(initMethod = "init", destroyMethod = "close")
+->
+@Bean(initMethod = "init")
+```
+
+종료메서드 지정을 없어도 같은 기능을 하는 것을 볼 수 가 있는데, 이는 등록된 Bean 안에 일반적으로 많이 쓰는 종료 메서드 들의 이름 (ex. `close`, `shutdown`, ...)들의 메서드가 있으면 스프링이 종료될 때 자동으로 호출해준다! ~~와 신기~~
+
+추론기능을 사용하지 않으려면 `destroyMethod = ""`로 공백을 쓰면 된다.
+
+
+
+## 3. Annotation Callback
+
+콜백으로 등록하고 싶은 메소드에 어노테이션을 달아서 Bean의 콜백 메서드로 등록하는 방법이다.
+
+```java
+// CustomClient.class
+
+@PostConstruct
+public void init() throws Exception {
+    connect();
+}
+
+@PreDestroy
+public void close() throws Exception {
+    disconnect();
+}
+
+```
+
+CustomClient라는 Bean 안에 init과 close를 콜백으로 등록하고 싶을 때 각각
+
+`@PostConstruct`, `@PreDestroy` 어노테이션을 사용하면 편리하게 초기화와 종료를 실행할 수 있다.
+
+
+
+이 방법은 최신 스프링에서 가장 권장하는 방법으로 매우 편리하게 쓸 수 있다.
+
+또한, 스프링에 종속적인 기술이 아니라 자바 표준이므로 다른 컨테이너에서도 동작가능하다.
+
+하지만 외부 라이브러리에 적용하지 못한다는 점이 있는데 이 때는 `@Bean`의 기능을 사용하면 될 것 같다.
+
+
+
+참조 : https://chung-develop.tistory.com/55
 
 # Autowired
 
