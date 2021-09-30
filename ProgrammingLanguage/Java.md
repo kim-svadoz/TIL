@@ -1823,7 +1823,6 @@ fun(SubClass sub) {
 
 # Optional Class
 
-=======
 # 일급컬렉션
 
 ---
@@ -2038,4 +2037,177 @@ public void 일급컬렉션의_이름으로() {
 
 
 참조 : https://jojoldu.tistory.com/412
->>>>>>> Stashed changes
+
+
+
+# 자바의 예외에 대해서
+
+---
+
+## > Java 에서의 3가지 Exception
+
+-   **`Check Exception`**
+-   **`Error`**
+    -   에러는 자바 프로그램 밖에서 발생한 예외를 말합니다.
+    -   그 예로, 서버의 디스크가 고장났다던지 메인보드가 나가서 자바 프로그램이 동작하지 않는다던지가 이에 속합니다.
+    -   **`Exception.class`는 에러가 아닙니다.**
+    -   자바에서 Error로 끝나면 에러이고, Exception으로 끝나면 예외이다.
+    -   Error와 Exception으로 끝나는 오류의 가장 큰 차이는 프로그램 밖에서 발생했는지(Error), 안에서 발생했는지(Exception)의 여부입니다.
+    -   더 큰 차이는 프로그램이 멈추어 버리느냐(Error : 프로세스에 영향), 계속 실행할 수 있느냐의 차이(Exception : 쓰레드에 영향)입니다.
+-   **`Runtime Exception(Unchecked Exception)`**
+    -   런타임 예외는 예외가 발생할 것을 미리 감지하지 못했을때 발생하는 예외입니다.
+    -   이 런타임 예외에 해당하는 예외들은 컴파일 할 때 발생하지 않고, 실행 시에 발생할 가능성이 있습니다.
+    -   따라서 컴파일 시에 체크를 하지 않기 때문에 Unchecked Exception이라고도 합니다.
+
+![image-20211001000836892](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001000836892.png)
+
+>   -   Error
+>
+>       -   잡히지 말아야 할 것들입니다.
+>
+>       잡히면 안되며, 복구불가능한 오류로 선언될 수 있다.
+>
+>   -   Runtime Exception
+>
+>       -   프로그래머가 잘못한 일을 위한 것
+>
+>       잡아야 하며, 복구 가능한 오류로 선언될 수 있다.
+>
+>   -   Checked Exceptions
+>
+>       -   프로그래머가 제어할 수 없는 것들을 위한 것
+>
+>       반드시 잡아야 하며, 복구 가능한 오류로 선언되어야 한다.
+
+
+
+## > Throwable class
+
+그리고 이 Error와 Exception의 공통 부모 클래스는 `Throwable` 클래스입니다.
+
+그래서 Error나 Exception을 처리할 때 Throwable로 처리해도 무관합니다.
+
+상속관계나 이렇게 되어 있는 이유는 Exception이나 Error의 성격은 다르지만, 모두 동일한 이름의 메소드를 사용해서 처리할 수 있도록 하기 위함입니다.
+
+
+
+그러면 `Throwable`에 어떤 생성자가 선언되어 있는지 봅시다.
+
+-   Throwable()
+-   Throwable(String message)
+-   Throwable(String message, Throwable cause)
+-   Throwable(Throwable cause)
+
+아무런 매개 변수가 없는 생성자가 있고, 예외 메세지를 String으로 넘겨줄 수도 있다. 별도로 예외의 원인을 Throwable 객체로 넘겨줄 수도 있습니다.
+
+`Throwable` 클래스에 선언되어 있고, `Exception` 클래스에서 Overriding한 메소드는 10개가 넘지만 그 중 가장 많이 쓰는 메소드를 보죠.
+
+1.  **`getMessage()`**
+
+    예외 메세지를 String형태로 제공받습니다.
+
+    예외가 출력되었을 때 어떤 예외가 발생되었는지 확인할 때 유용합니다.
+
+2.  **`toString`**
+
+    예외 메세지를 String형태로 제공받지만, `getMessage()`보다 자세하고, 예외 클래스 이름도 같이 제공됩니다.
+
+3.  **`printStackTrace()`**
+
+    가장 첫 줄에는 예외 메세지를 출력하고, 두 번째 줄부터는 예외가 발생하게 된 메소드들의 호출 관계를 출력합니다.
+
+
+
+## > throws와 throw
+
+자바에서는 예외를 직접 발생시킬 수 가 있다.
+
+try 블록 내에서 `throw` 라고 명시 한 후 개발자가 예외 클래스의 객체를 생성하면 된다.
+
+```java
+try {
+    if (foo) {
+        throw new FooException("Foo..");
+    }
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+예외가 발생하고 throw한 문장 이후에 있는 모든 try 블록의 문장들은 수행되지 않고 catch 블록으로 이동한다.
+
+catch 블록중에서 throw한 예외와 동일하거나 상속 관계에 있는 예외가 있다면 그 블록에서 예외를 처리할 수 있다.
+
+
+
+여기서는 e.printStackTrace() 메소드를 호출하기 때문에 예외 스택 정보가 출력되고, 해당하는 예외가 없다면 예외는 메소드 밖으로 던져 버린다. 즉, **예외가 발생한 메소드를 호출한 메소드로 던진다는 의미**이다. 이럴 때 사용하는 것이 `throws` 구문이다.
+
+```java
+public void throwsException(int param) throws Exception {
+    if (foo) {
+        throw new Exception("Foo..");
+    }
+}
+```
+
+이렇게 메소드 선언 시 `throws`를 사용하면 예외가 발생했을 때 `try~catch`로 묶어주지 않아도 그 메소드를 호출한 메소드로 예외처리를 위임하는 것이기 때문에 전혀 문제가 되지 않는다.
+
+이렇게 `try ~ catch` 블록으로 묶지 않고 예외를 `throw` 한다고 해도 `throws`가 선언되어 있기 때문에 전혀 문제 없이 컴파일 및 실행이 가능하다.
+
+
+
+하지만 이렇게 `throws`로 메소드를 선언하면 개발이 어려워 진다.
+
+이 **`throwsException()`이라는 메소드는 Exception을 던진다고 메소드 선언부에 `throws` 선언을 해놓았기 때문에, `throwsException()` 메소드를 호출한 메소드에서는 반든시 `try ~ catch` 블록으로 `throwsException()` 메소드를 감싸주어야 한다.**
+
+`try ~ catch` 블록으로 묶지 않으면 컴파일 에러가 발생한다. 이 때 컴파일 오류가 생겼을 경우에는 두 가지 방법이 있다.
+
+1.  다음과 같이 `try ~ catch`로 묶는다.
+
+    ```java
+    public static void main(String[] args) {
+        ThrowSample sample = new ThrowSample();
+        sample.throwException(13);
+        try {
+            sample.throwsException(13);
+        } catch(Exception e) {
+    
+        }
+    }
+    ```
+
+2.  호출한 메소드에서도 다시 `throws`를 선언한다.
+
+    ```java
+    public static void main(String[] args) throws Exception{
+        ThrowSample sample = new ThrowSample();
+        sample.throwException(13);
+        sample.throwsException(13);
+    }
+    ```
+
+
+
+하지만 이미 `throws`한 것을 다시 `throws`하는 것은 좋은 습관은 아니고, 가장 좋은 방법은 `throws` 하는 메소드를 호출 하는 메소드에서 `try ~ catch`로 처리하는 것이다.
+
+이 클래스를 컴파일하고 실행하면 `throwsException()` 메소드를 호출할 경우 예외 메세지가 나타나는 것을 볼 수 있다.
+
+
+
+## > 실제 예외 처리 전략
+
+나는 Exception를 확장해서 나만의 예외 클래스를 만들었다. 그런데 이 예외가 항상 발생하지 않고, 실행시에 발생할 확률이 높은 경우에는 런ㅌ타임 예외로 만드는 것이 나을 수 도 있다.
+
+즉, 클래스 선언 시 `extends Exception` 대신에 `extends RuntimException`으로 선언하는 것이 낫다.
+
+이렇게 하면 해당 예외를 던지는(throw하는) 메소드를 사용하더라도 `try ~ catch`로 묶지 않아도 컴파일시에 예외가 발생하지 않는다.
+
+하지만 이 경우에는 예외가 발생할 경우 해당 클래스를 호출하는 다른 클래스에서 예외를 처리하도록 주조적인 안정 장치가 있어야만 한다. 여기서 안전장치라고 하는 것은 `try ~ catch`로 묶지 않은 메소드를 호출하는 메소드에서 예외를 처리하는 `try ~ catch`가 되어 있는것이다.
+
+
+
+`Unchecked Exception`인 RunteimException이 발생하는 메소드가 있다면 그 메소드를 호출하는 메소드는 `try ~ catch`로 묶어주지 않아도 컴파일할 때 문제가 발생하지 않는다. 하지만 예외발생 확률이 높으므로 `try ~ catch`로 묶어두는 것이 좋다.
+
+
+
+참조 : https://velog.io/@jsj3282/%EC%9E%90%EB%B0%94%EC%9D%98-%EC%98%88%EC%99%B8%EC%9D%98-%EC%A2%85%EB%A5%98-3%EA%B0%80%EC%A7%80
