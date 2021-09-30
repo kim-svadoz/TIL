@@ -439,6 +439,8 @@ HTTP 요청의 본문을 객체로 변경하건, 객체를 HTTP 응답 본문으
 
 그냥 `@Controller`를 사용할 때는 `@ResponseBody`를 넣어줘야 MessageConverter가 적용되고, 선언하지 않으면 **BeanNameViewResolver**에 의해서 viewName에 해당하는 뷰를 찾으려고 할 것이다.
 
+>   즉, 클라이언트의 요청이 들어오면 디스패처 서블릿에 의해서 선택된 컨트롤러가 api를 실행하고 이 때 `@ResponseBody` 어노테이션이 선언되어있으면 Obejct 값을 Body에 넘겨주기 위해서 HttpMessageConverter가 사용된다. 이 때는 반환값에 따라서 각기 다른 Converter가 사용됩니다.
+
 
 
 # ResponseEntity
