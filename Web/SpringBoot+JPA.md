@@ -1435,6 +1435,47 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 
 # Hibernate의 기본키 생성전략
 
-# 트랜잭션과 영속성 컨텍스트
-
 # DDD: 도메인주도설계
+
+# JPA IN Clause
+
+>   Spring JPA Query에서 사용할 수 있는 IN 절에 대해서 살펴본다.
+>
+>   ref : https://javadeveloperzone.com/spring/spring-jpa-query-in-clause-example/
+
+![image-20211001144219815](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001144219815.png)
+
+id가 1 또는 2 또는 3인 employee에 대해 select 하는 쿼리이다.
+
+우리는 JPA를 사용하기 위해 `List`나 `Collection`으로의 변환이 필요한데, Spring Data JPA는 IN 쿼리를 지원하는 기본 쿼리를 제공하고 있다.
+
+
+
+그러면 실제로 어떻게 사용하는지 예시와 함께 보자.
+
+![image-20211001144843967](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001144843967.png)
+
+1.  첫 번째 방법은 메서드 이름으로 레코드를 가져오는 것이다. 예약된 이름 규칙으로 메서드를 정의하게 되면 `Spring JPA`가 런타임시에 자동으로 쿼리를 생성하고 결과를 반환한다.
+
+2.  두 번째 방법은 매개변수로 `@Query` 를 사용해서 List타입의 `List<String> names`를 Parameter로 넘겨준다.
+
+    이 때 `@Param("names")`로 들어오는 매개변수가 어떤 컬럼과 매칭될 것인지 결정한다.
+
+    이 어노테이션이 생략된다면 자동으로 매개변수 이름인 `names`라는 컬럼을 이름으로 매핑된다.
+
+3.  세 번째 방법은 native 쿼리는 이용하는 방법이고, `nativeQuery = true`가 의미하는 것은 `value` 값에 native query를 포함하고 있다는 뜻.
+
+
+
+**Output**
+
+![image-20211001145611077](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001145611077.png)
+
+
+
+**Query**
+
+![image-20211001145636462](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001145636462.png)
+
+
+
