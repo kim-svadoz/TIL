@@ -1443,7 +1443,7 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 >
 >   ref : https://javadeveloperzone.com/spring/spring-jpa-query-in-clause-example/
 
-![image-20211001144219815](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001144219815.png)
+![image-20211001144219815](https://user-images.githubusercontent.com/58545240/135672000-48e00836-fae8-46a0-8516-7501ceb7ddfb.png)
 
 id가 1 또는 2 또는 3인 employee에 대해 select 하는 쿼리이다.
 
@@ -1453,7 +1453,7 @@ id가 1 또는 2 또는 3인 employee에 대해 select 하는 쿼리이다.
 
 그러면 실제로 어떻게 사용하는지 예시와 함께 보자.
 
-![image-20211001144843967](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001144843967.png)
+![image-20211001144843967](https://user-images.githubusercontent.com/58545240/135672033-761ba5b7-33a2-482c-8890-228e7fd1c33f.png)
 
 1.  첫 번째 방법은 메서드 이름으로 레코드를 가져오는 것이다. 예약된 이름 규칙으로 메서드를 정의하게 되면 `Spring JPA`가 런타임시에 자동으로 쿼리를 생성하고 결과를 반환한다.
 
@@ -1469,13 +1469,13 @@ id가 1 또는 2 또는 3인 employee에 대해 select 하는 쿼리이다.
 
 **Output**
 
-![image-20211001145611077](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001145611077.png)
+![image-20211001145611077](https://user-images.githubusercontent.com/58545240/135672082-406cb7b3-47e4-447b-b25e-ff10d6b1ad06.png)
 
 
 
 **Query**
 
-![image-20211001145636462](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001145636462.png)
+![image-20211001145636462](https://user-images.githubusercontent.com/58545240/135672115-a8f977d2-93a3-449e-b2b3-786d383735ca.png)
 
 
 

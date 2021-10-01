@@ -1823,6 +1823,370 @@ fun(SubClass sub) {
 
 # Optional Class
 
+먼저 Optional Class는 값이 존재하는지 여부를 명시적으로 체크하기 위해서 등장하였다.
+
+`Optional<T>` 클래스는 Integer나 Double 클래스 처럼 `T` 타입의 객체를 포장해주는 래퍼 클래스(Wrapper Class)이다. 따라서 Optional의 인스턴스는 모든 타입의 참조 변수를 저장할 수 있다.
+
+메소드 실행 시 반환하는 값을 알 수 없을 때 혹은 그 값이 존재하지 않는 경우에 Optional Class는 매우 유용하게 사용될 것이다.
+
+자바에서는 이 컨셉을 특정 값(null을 포함할 수 있는)을 담는 컨테이너 객체를 **Optional**로 표현했다.
+
+
+
+*Optional의 인스턴스는 불변 인스턴스이며 hashCode, equals, toString 메서드는 인스턴스 상태(value)에 따라 달라지고 Optional의 인스턴스는 value의 eqauls 메서드에 의해서 동일성이 판단된다.*
+
+>   :ballot_box_with_check: Optional의 의도는 **반환값이 "없음"을 나타내는 것이 주 목적**이다.
+>
+>   :ballot_box_with_check: 또한, 의도하지 않는 NPE를 방지할 수 있고, 개발자로 하여금 값의 의도를 알려줌으로써 더 나은 API를 설계할 수 있도록 사용됩니다.
+>
+>   **API Note:**
+>   *Optional is primarily intended for use as a method return type where there is a clear need to represent “no result,” and where using null is likely to cause errors. A variable whose type is Optional should never itself be null; it should always point to an Optional instance.*
+>
+>   : 메서드가 반환할 결과값이 "없음"을 명백하게 표현할 필요가 있고, `null`을 반환하면 에러를 유발할 가능성이 높은 상황에서 메서드의 반환타입으로 `Optional`을 사용하자는 것이 `Optional`을 만든 주된 목적이다.
+>   이 타입의 변수 값은 절대 `null`이어서는 안되고, 항상 `Optional` 인스턴스를 가리켜야 한다.
+
+
+
+
+
+## Optional Instance 생성
+
+Optional 객체의 인스턴스를 생성하는 방법에는 여러가지가 있는데,
+
+Optional은 불변 객체이므로 모든 방법들은 생성자 대신에 **factroy methods**를 사용한다.
+
+
+
+**`Using Of()`**
+
+가장 흔하게 사용되는 방법으로 `of()` factory method를 사용하는 방법이다. 
+
+이 메서드는 인자로 주어진 값을 가지는 optional instance를 반환한다. 여기에 Null을 넣을 수는 없으며 Null이 들어간다면 `NullPointerException`이 발생한다.
+
+```java
+Optional<Integer> result = Optional.of(10);
+```
+
+
+
+**`From Streams`**
+
+몇몇 Stream API의 종료 메서드로 Optional 인스턴스를 결과로 반환하는데, 이를 통해서 결과값을 다루거나 존재 여부를 확인할 수 있다.
+
+```java
+List<Integer> numbers = new ArrayList<>(1, 2, 3, 4, 5);
+Optional<Integer> result = numbers.stream().filter(n -> n > 2).findFirst();
+```
+
+
+
+**`From Nullable`**
+
+첫 번쨰로 소개한 factory  method인 `of()`는 null이 아닌 값만 다룰 수 있다는 단점이 있다.
+
+만약 값이 null일 수도 있다면 `ofNullable` 메소드를 사용하는것을 권장한다.
+
+이 메서드는 주어진 value를 담는 Optional 인스턴스를 생성하는데 null일 경우 empty optional을 반환한다.
+
+```java
+String name = null;
+Optional<String> result = Optional.ofNullable(name);
+```
+
+
+
+**`Create empty Optional`**
+
+마지막으로, 명시적으로 empty optional을 생성할 수 있다.
+
+```java
+Optional<String> result = Optional.empty();
+```
+
+
+
+## Optioanl 활용
+
+Optional을 사용하면 Null Checking을 로직속에 넣을 수 있다는 장점으로 `NPE` 발생확률을 줄일 수 있다.
+
+명시적으로 Optional Class의 Method를 활용해서 Null checking 하는 방법에 대해서 알아본다.
+
+-   IfPresent()
+
+value가 존재할 대만 수행되는 로직이 있을 때는 다음과 같이 `ifPresent()` 메서드를 사용하면 된다.
+
+이 메서드는 인자로 값이 존재할 때만 실행하는 콜백함수를 넣어줄 수 있다.
+
+```java
+String name = "Sunghyun";
+Optional<String> result = Optional.of(name);
+result.ifPresent(n -> System.out.println(n));
+```
+
+
+
+-   IfPresentOrElse()
+
+`IfPresnet()` 메서드는 값이 존재할 때만 실행 로직을 넣어줄 수 있는데, 값이 존재하지 않을때도 로직을 사용하고 싶다면 `IfPresentOrElse()`를 사용해보자. 
+*(JDK9 이상부터 사용가능)*
+
+이 함수는 두 개의 인자를 받는다.
+
+1.  값이 존재할 때 실행될 콜백함수와
+2.  값이 존재하지 않을 때 실행될 Runnable 인터페이스
+
+```java
+Optional<Integer> result = Optional.empty();
+result.ifPresentOrElse(n -> System.out.println("SUCCESS")
+                      , () -> System.out.println("FAIL"));
+```
+
+
+
+-    get() , orElse()
+
+Optional 객체는 value를 담고 있는 컨테이너 객체이다.
+
+Optional에 담긴 value를 얻기 위한 **unpack** 메서드로 `get()`과 `orElse()` 메소드가 있다.
+
+`get()` 메소드는 value를 반환하고 value가 없다면 `NPE`를 발생시킨다.
+
+`orElse()` 메서드는 value를 반환하고 value가 없다면 인자로 받은 값을 반환한다.
+
+```java
+Optional<Integer> result = Optional.empty();
+Integer value = result.orElse(10);
+Integer value2 = result.get(10);
+```
+
+
+
+-   orElseThrow()
+
+`JDK11`부터 추가된 메서드로, 값이 있다면 반환하고 없으면 `NoSuchElementException`을 반환한다.
+
+```java
+Optional<String> result = Optional.of("hello");
+return result.orElseThrow(() -> new Exception());
+```
+
+
+
+-   map()
+
+Optional은 mapping을 위한 `map()` 메서드를 제공한다. 이 메서드는 값이 존재할 때 실행된 `mapper function`을 인자로 받고, mapper함수를 실행한 뒤 만든 value 값을 optional에 담아서 반환한다.
+
+```java
+Optional<String> name = Optional.of("Sunghyun");
+Optional<String> result = name.map(n -> n.toUpperCase());
+```
+
+
+
+-   Optional to Stream
+
+Optional 객체를 Stream으로 만드는 메서드가 존재한다.
+
+```java
+Optional<Integer> num = Optional.of(10);
+long result = number.stream().count();
+```
+
+
+
+## 1. isPresent()-get() 대신 orElseThrow()
+
+```java
+// 안좋음
+Optional<Member> member = ...;
+if (member.isPresent()) {
+    return member.get();
+} else {
+    return null;
+}
+
+// 좋음
+Optional<Member> member = ...;
+return member.orElseThrow(() -> new Exception());
+```
+
+
+
+## 2. orElse(new ...) 대신 orElseGet(() -> new...)
+
+`orElse(...)`에서 `(...)`는 Optional에 값이 있든 없든 무조건 실행되기 때문에, `(...)`가 새로운 객체를 생성하거나 새로운 연산을 수행하는 경우에는 `orElse()` 대신 `orElseGet()`을 써야한다.
+
+Optional에 값이 없으면  `orElse()`의 인자로서 실행된 값이 반환되므로 의미가 있지만 Optional에 값이 있다면 `orElse()`의 인자로 실행된 값이 버려지게된다. 따라서, `orElse()`는 `(...)`가 새 객체 생성이나 새로운 연산을 유발하지 않고 이미 생성되었거나 이미 계산된 값일 때만 사용하는 것이 좋다.
+
+
+
+`orElseGet(Supplier)`에서 `Supplier`는 Optional에 값이 없을 때만 실행된다. 따라서 Optional에 값이 없을 때만 새 객체를 생성하거나 새 연산을 수행하므로 불필요한 오버헤드가 없는 것이다.
+
+```java
+// 안 좋음
+Optional<Member> member = ...;
+return member.orElse(new Member()); // member값이 있든 없든 new Member()가 무조건 실행된다
+
+// 좋음
+Optional<Member> member = ...;
+return member.orElseGet(Member::new); // member에 값이 없을 때만 new Member()가 실행된다.
+```
+
+
+
+## 3. 단지 값을 얻을 목적이라면 Optional 대신 Null 비교
+
+Optional은 비싸기 때문에 단순히 값을 얻을 목적이라면 Optional 대신 Null 비교를 쓰는 것이 좋다.
+
+```java
+// 안 좋음
+return Optional.ofNullable(status).orElse(READY);
+
+// 좋음
+return status != null ? status : READY;
+```
+
+
+
+## 4. Optional 대신 비어있는 컬렉션 반환.
+
+Optional은 비싸기 때문에 null이 아니라 비어있는 컬렉션을 반환하는 것이 좋다.
+
+따라서 컬렉션은 Optional로 감싸서 반환하지 말고 비어있는 컬렉션을 반환하자.
+
+```java
+// 안 좋음
+List<Member> members = team.getMembers();
+return Optional.ofNullable(members);
+
+// 좋음
+List<Member> members = team.getMembers();
+return members != null ? members : Collections.emptyList();
+```
+
+**이와 같은 이유로 Spring DATA JPA Repository 메서드 선언 시 다음과 같이 컬렉션을 Optional로 감싸서 반환하는 것은 좋지 않다.**
+
+**컬렉션을 반환하는 Spring DATA JPA Repository 메서드는 `null`을 반환하지 않고 비어있는 컬렉션을 반환해주므로 Optional을 감싸서 반환할 필요가 없다.**
+
+```java
+// 안 좋음
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    Optional<List<Member>> findAllByNameContaining(String part);
+}
+
+// 좋음
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    List<Member> findAllByNameContaining(String part); // null이 반환되지 않으므로 Optional은 불필요하다.
+}
+```
+
+
+
+## 5. Optional은 필드 사용 금지
+
+Optional은 필드에 사용할 목적으로 만들어 지지 않았으며, `Serializable`을 구현하지 않았기 때문에 Optional을 필드로 사용하지 말자.
+
+
+
+## 6. Optional을 생성자나 메서드 인자로 사용 금지
+
+Optional을 생성자나 메서드 인자로 사용하면, 호출할 때마다 Optional을 생성해서 인자로 전달해줘야 한다.
+
+하치만 호출되는 쪽에서는 인자가 Optional이든 아니든 null체크를 해줘야하는 것이 안전하므로, 굳이 비싼 Optional을 사용하지 말고 호출되는 쪽에서 null 체크의 책임을 남겨두는 것이 좋다.
+
+```java
+// 안 좋음
+public class HRManager {
+    public void increaseSalary(Optional<Member> member) {
+        member.ifPresent(member -> member.increaseSalary(10));
+    }
+}
+hrManager.increaseSalary(Optional.ofNullabe(member));
+
+// 좋음
+public class HRManager {
+    public void increaseSalary(Member member) {
+        if (member != null) {
+            member.increaseSalary(10);
+        }
+    }
+}
+hrManager.increaseSalary(member);
+```
+
+
+
+## 7. Optional을 컬렉션의 원소로 사용 금지
+
+컬렉션에는 많은 원소가 들어갈 수 있다.
+
+따라서 비싼 Optional을 원소로 사용하지 말고 원소를 꺼낼 때 map의 `getOrDefault()`, `putIfAbsent()`, `computeIfAbsent()`, `computeIfPresent()` 처럼 메서드를 활용하는 것이 좋다.
+
+```java
+// 안 좋음
+Map<String, Optional<String>> sports = new HashMap<>();
+sports.put("100", Optional.of("BasketBall"));
+sports.put("101", Optional.ofNullable(someOtherSports));
+String basketBall = sports.get("100").orElse("BasketBall");
+String unknown = sports.get("101").orElse("");
+
+// 좋음
+Map<String, String> sports = new HashMap<>();
+sports.put("100", "BasketBall");
+sports.put("101", null);
+String basketBall = sports.getOrDefault("100", "BasketBall");
+String unknown = sports.computeIfAbsent("101", k -> "");
+```
+
+
+
+## 8. of(), ofNullable() 혼동 주의
+
+`of(x)`는 x가 null이 아님이 확실할 때만 사용해야 하며, x가 null이면 `NPE`가 발생한다.
+
+`ofNullable(x)`은 x가 null일 수도 있을 때만 사용해야 하며, x가 null이 아님이 확실하다면 `of(x)`를 사용하라.
+
+```java
+// 안 좋음
+return Optional.of(member.getEmail());  // member의 email이 null이면 NPE 발생
+
+// 좋음
+return Optional.ofNullable(member.getEmail());
+
+
+// 안 좋음
+return Optional.ofNullable("READY");
+
+// 좋음
+return Optional.of("READY");
+```
+
+
+
+## 9. Optional<T> 대신 Optional+Int/Long/Double
+
+Optional에 담길 값이 int, long, double이라면 `Boxing/Unboxing`이 발생하는 Optional<Integer>, Optional<Long>, Optional<Double>을 사용하지말고, OptionalInt, OptionalLong, OptionalDouble을 사용하자.
+
+```java
+// 안 좋음
+Optional<Integer> cnt = Optional.of(11); // boxing 발생
+for (int i = 0; i < cnt.get(); i++) {...} // unboxing 발생
+
+// 좋음
+OptionalInt cnt = OptionalInt.of(11); // boxing X
+for (int i = 0; i < cnt.getAsInt(); i++) {...} // unboxing X
+```
+
+
+
+
+
+참조 : 
+
+https://homoefficio.github.io/2019/10/03/Java-Optional-%EB%B0%94%EB%A5%B4%EA%B2%8C-%EC%93%B0%EA%B8%B0/
+
+https://brunch.co.kr/@kd4/153
+
 # 일급컬렉션
 
 ---
@@ -2059,7 +2423,7 @@ public void 일급컬렉션의_이름으로() {
     -   이 런타임 예외에 해당하는 예외들은 컴파일 할 때 발생하지 않고, 실행 시에 발생할 가능성이 있습니다.
     -   따라서 컴파일 시에 체크를 하지 않기 때문에 Unchecked Exception이라고도 합니다.
 
-![image-20211001000836892](C:\Users\USER\AppData\Roaming\Typora\typora-user-images\image-20211001000836892.png)
+![image-20211001000836892](https://user-images.githubusercontent.com/58545240/135672213-1bbce8b3-6081-4ee1-bb37-8c072e733e7c.png)
 
 >   -   Error
 >
