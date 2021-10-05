@@ -1481,3 +1481,137 @@ id가 1 또는 2 또는 3인 employee에 대해 select 하는 쿼리이다.
 
 # ModelMapper
 
+> 엔티티와 DTO간에 변환 시 자동으로 Object를 매핑시켜주는 라이브러리
+>
+> **주의: 매핑해줄 클래스에는 setter가 있어야하고 매핑이 되는 클래스에는 getter가 있어야 사용 가능하다!**
+
+기본적으로 ModelMapper에서 제공하는 `map()` 메서드를 이용하면 변환할 수 있고 **클래스 내부에 있는 변수들의 이름을 분석해서 자동 매핑**시켜주는 방식이다.
+
+이 `map()` 메소드가 호출되면 `source`(from)와 `destination`(to)의 타입이 분석되고 **matching strategy**와 **configuration**에 의해서 어느 프로퍼티가 매칭될지 결정된다.
+
+때에 따라서 매핑을 명시적으로 정의해야 하는데, `ModelMapper`는 다양한 매핑 접근 방식을 지원하므로 메서드와 필드참조를 혼합해서 사용할 수 있다.
+
+```java
+modelMapper.typeMap(Order.class, Order.DTO.class).addMappings(mapper -> {
+    mapper.map(src -> src.getBillingAddress().getStreet(),
+              Destination::setBillingStreet);
+    mapper.map(src -> src.getBillingAddress().getCity(),
+              Destination::setBillingCity);
+});
+```
+
+
+
+`Modelmapper`에는 대상 속성이 일치하지 않는 경우 알려주는 기본 유효성 검사가 있다.
+
+먼저 다음과 같이 ModelMapper에 검증하려는 유형을 알려야 한다.
+
+```java
+modelMapper.createTypeMap(Order.class, OrderDTO.clss);
+```
+
+혹은, 소스 및 대상 타입이 아직 존재하지 않는 경우라면 **`PropertyMap`**의 자동생성으로 매핑을 추가할 수 있다.
+
+```java
+modelMapper.addMappings(new OrderMap());
+```
+
+그런 다음 매핑의 유효성을 검사할 수 있다.
+
+```java
+modelMapper.validate();
+```
+
+만약 소스타입과 대상타입의 어느하나라도 일치하지 않으면 `ValidationException`을 발생하게 된다.
+
+*기본적으로 매칭전략에 맞지 않는 속성들은 `null`값으로 초기화 하게 된다. 개발자는 어떤 객체에 대해 정상적으로 매핑되었는지 검증할 필요가 있는 것이다.*
+
+```java
+// Example
+modelMapper = new ModelMapper();
+Order order = modelMapper.map(test, Order.class);
+try {
+    modelMapper.validate();
+} catch (ValidationException e) {
+    /* do ExceptoinHandling ! */
+}
+```
+
+
+
+
+
+## Property Mapping
+
+프로퍼티와 클래스의 이름이 다른 경우 source와 destination 간에 매핑할 수 있는 `PropertyMap`을 생성할 수 있도록 지원한다.
+
+
+
+source의` getter`와 estination의 `setter` 메서드를 활용해서 프로퍼티를 정의할 수 있다.
+
+```java
+typeMap.addMapping(Source::getFirstName, Destination::setName);
+```
+
+또한, source와 destination의 타입이 일치하지 않아도 된다.
+
+```java
+typeMap.addMapping(Source::getAge, Destination::setAgeString);
+```
+
+
+
+아래 예제는 destination 타입의 `setAge` 메소드를 souce 타입의 `getCustomer().getAge()`메서드 계층으로 매핑한다. 이것은 source와 destination 사이에서 deep mapping이 발생하도록 한다.
+
+```java
+typeMap.addMaping(src -> src.getCustomer().getAge(), PersonDTO::setAge);
+```
+
+아래는 destination 타입의 `getCustomer().setName()` 계층 구조를 source 타입의 `person.getFirstName()`계층 구조로 매핑한다.
+
+```java
+typeMap.addMapping(src -> src.getPerson().getFirstName(), (dest, v) -> dest.getCustomer().setName(v));
+```
+
+
+
+## Matching Strategies
+
+프로퍼티 매칭 전략은 source와 destination간에 매칭 프로세스가 진행되는 동안 매칭 전략이 사용된다.
+
+
+
+### > Standard
+
+`Standard` 매칭전략은 모든 대상 속성이 일치하고 모든 소스의 속성 이름에 일치하는 토큰이 하나 이상 있어야 한다.
+
+- token은 어떤 순서로든 일치될 수 있고.
+- 모든 대상 property name의 token은 반드시 일치해야 하고
+- 모든 소스 property name에은 매칭되는 token이 하나 이상 있어야 한다.
+
+
+
+### > Loose
+
+`Loose` 매칭전략은 계층 구조의 마지막 destination 프로퍼티만 일치하도록 요구하며, source 프로퍼티를 destination 프로퍼티와 느슨하게 매칭할 수 있다.
+
+- token은 어떤 순서로든 일치될 수 있고
+- 마지막 대상 property name에는 모든 token이 일치해야 하고
+- 마지막 소스의 property name에는 매칭되는 token이 하나 이상 있어야 한다.
+
+
+
+### > Strict
+
+`Strict` 매칭전략은 말그대로 엄격하게 전략이 적용된다.
+
+이 전략은 불일치나 모호성이 발생하지 않고 완벽한 일치 정확도를 얻을 수 있다.
+
+하지만 source 및 destination 측의 **property name token이 반드시 서로 정확하게 일치해야 한다.**
+
+- token은 엄격한 순서로 일치된다.
+- 모든 대상 property name token이 일치해야 하고
+- 모든 소스 property name에는 모든 token이 일치해야 한다.
+
+`STRICT`전략은 `TypeMap`을 사용하지 않고도 모호함이나 예기치 않은 매핑이 발생하지 않도록 하는 경우에 사용할 수 있다. 하지만 너무 엄격해서 일부 대상 속성이 일치하지 않는 상태로 남을 수 있다.
+
