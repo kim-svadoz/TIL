@@ -308,7 +308,7 @@ CustomClient라는 Bean 안에 init과 close를 콜백으로 등록하고 싶을
 
 참조 : https://chung-develop.tistory.com/55
 
-# Autowired
+# Autowiring
 
 >   IoC 컨테이너에 등록된 빈을 어떻게 꺼내서 사용할 것인가 ?
 >
@@ -316,9 +316,282 @@ CustomClient라는 Bean 안에 init과 close를 콜백으로 등록하고 싶을
 >
 >   생성자로 직접 주입을 받아도 되지만 `@Autowired`를 사용하면 IoC 컨테이너에 들어있는 Bean을 주입받아서 사용할 수 있다.
 
-Spring 4.3부터 어떠한 클래스에 생성자가 하나 뿐이고, 그 생성자가 주입받는 레퍼런스 변수들이 Bean으로 등록되어 있다면 그 Bean을 자동으로 주입하는 기능으로, `@Autowired`를 생략할 수 있다.
+스프링 컨테이너는 협력관계에 있는 빈들에 대해서 자동으로 관계를 주입한다.
+
+ApplicationContext의 내용을 조사한 뒤에 Spring이 빈에 대해서 자동으로 다른 연관관계 빈에 대해서 의존성을 주입할 수 있도록 할 수 있다.
+
+Autowire을 사용하면 다음과 같은 이점을 가진다.
+
+- 특정 프로퍼티나 생성자의 argument를 지정할 필요성을 크게 줄일 수 있다.
+- 클래스가 발전함에 따라서 구성의 업데이트를 쉽게 할 수 있다. 이 말은, 클래스에 종속성을 추가하는 경우 구성을 수정할 필요없이 해당 종속성이 자동으로 충족된다. 따라서 이 Autowiring은 개발 중에 매우 유용하다.
 
 
+
+XML 기반의 환경설정을 사용한다면 `autowire` 속성으로 빈 정의에 대한 자동 연결 모드를 지정할 수 있다.
+
+4가지 모드가 있고, 개발자는 각 빈에 대해서 autowiring을 지정하고 선택할 수 있다.
+
+- `no`
+  - 기본값으로 Autowiring이 되지 않는다.
+  - Bean references는 반드시 `ref`에 의해 정의되어야 하는 상태.
+  - 명시적으로 공동 작업자를 지정하면 더 나은 제어와 명확성을 제공하므로 대규모 배포에는 기본 설정을 변경하지 않는 것이 좋다.
+- `byName`
+  - 속성의 이름으로 자동 연결된다.
+  - Spring은 자동으로 연결되어야 하는 속성과 이름이 같은 빈을 찾는다.
+  - 예를 들어서 bean definition이 이름에 의해 autowire로 설정되고 `master` 속성을 포함 하는 경우(즉, `setMaster(..)` 메서드가 있는 경우) Spring은 이름이 지정된 bean definition의 `master`를 찾아서 속성을 설정하게된다.
+- `byType`
+  - 속성의 타입의 bean이 컨테이너에 정확히 하나만 존재하는 경우에 속성이 자동으로 연결된다.
+  - 둘 이상이 있다면 치명적인 예외가 발생하여 bean에 대해서 `byType`으로 autowiring할 수 없음을 나타낸다.
+  - 일치 하는 빈이 없다면 아무 일도 일어 나지 않는다.(속성이 설정되지 않는다.)
+- `constructor`
+  - `byType`과 유사하지만 생성자에 인수가 적용된다.
+  - 컨테이너에 해당 생성자 유형의 빈이 정확히 하나 이상 없으면 치명적인 에러가 발생한다.
+
+
+
+## @Autowired
+
+**우리가 `@Autowired`로 의존성을 주입하는 경우 default로 `byType`의 모드로 동작된다. 만약 특정한 이름을 사용하고 싶으면 `@Qualifer` 어노테이션을 사용하면 된다.**
+
+*Spring 4.3부터 어떠한 클래스에 생성자가 하나 뿐이고, 그 생성자가 주입받는 레퍼런스 변수들이 Bean으로 등록되어 있다면 그 Bean을 자동으로 주입하는 기능으로, `@Autowired`를 생략할 수 있다.*
+
+
+
+## @Qualifer, @Primary
+
+의존관계를 주입할 빈의 후보개 여러개라면 해결할 수 있는 세 가지 방법이 있다.
+
+1. `@Autowried`의 필드 매칭
+
+   - Spring 5에서 추가된 바로는 매칭된 타입이 둘 이상일 경우에 Spring framwork는 적절한 후보를 찾기 위해서 필드명을 빈 이름으로 사용한다. (`DefaultListBeanFacotory`)
+   - 의존성 주입을 받을 **필드이름을 구현체의 이름으로 명시**해서 찾는 방법이다.
+
+   ```java
+   @Autowired
+   private final OrderRepository orderRepository;
+   ```
+
+   - 이렇게 필드의 이름을 인터페이스가 아닌 실제 원하는 구현체의 이름을 적용시키는 것.
+   - 하지만 추천하지 않고 **`@Primary`나 `@Qualifer`를 적절히 사용하는 것이 권장된다.**
+
+2. `@Qualifer`
+
+   - `@Qualifer`는 여러개의 타입이 일치하는 bean객체가 있을 경우에 `@Qualifer` 어노테이션의 유무에 따라서 조건에 만족하는 객체를 주입하게 된다.
+   - 선택되는 구현체들이나 사용하는 코드에 `@Qualifer("찾는 이름")`을 작성해서 주입받을 빈을 찾는다.
+
+   ```java
+   @Component
+   @Qualifer("mainDiscountPolicy")
+   @Primary // 우선순위 사용예시 (rate가 아니라 fix를 먼저 찾게된다.)
+   public class FixDiscountPolicy implements DiscountPolicy {
+       private int discountFixAmount = 1000;
+       
+       @Override
+       public int discount(Member meber, int price) {
+           if (member.getGrade() == Grade.VIP) {
+               return discountFixAmount;
+           }
+           return 0;
+       }
+   }
+   ```
+
+   ```java
+   @Component
+   @Qualifer("subDiscountPolicy")
+   public class RateDiscountPolicy implements DiscountPolicy {
+       private int discountPercent = 10;
+       
+       @Override
+       public int discount(Member member, int price) {
+           if (member.getGrade() == Grade.VIP) {
+               return price * discountPercent / 100;
+           }
+           return 0;
+       }
+   }
+   ```
+
+   ```java
+   // 활용 코드
+   public class OrderServiceImpol implements OrderService {
+       private final MemberRepository memberRepository;
+       private final DiscountPolicy discountPolicy;
+       
+       public OrderServiceImpl(MemberRepository memberRepository, @Qualifer("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+           this.memberRepository = memberRepository;
+           this.discountPolicy = discountPolicy;
+       }
+   }
+   ```
+
+3. `@Primary`
+
+   - `@Primary` 어노테이션으로 우선순위를 지정할 수 있다.
+   - 같은 타입의 빈을 찾을 때 `@Priamry`가 붙은 빈을 우선적으로 찾게 된다.
+   - 실무에서 많이 사용하는 방법!
+
+
+
+참조 : https://velog.io/@neity16/Spring-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8-8-Primary-Qualifier
+
+
+
+## Autowiring의 한계와 단점
+
+Autowiring은 프로젝트 전체에서 일관되게 사용되어야 한다.
+
+일관적으로 사용되지 않을 경우, 개발자가 빈 정의들을 연결하는 것에 혼란을 겪게 된다.
+
+
+
+Autowiring에는 아래와 같은 한계와 단점이 존재한다.
+
+- `property` 및 `constructor-arg`으로 명시적 종속하는 것은 항상 Autowiring을 재정의한다. `Primitive`, `String`, `Classes`과 같은 단순 속성은 Autowiring할 수 없다. 의도적으로 설계된 것.
+- Autowiring은 명시적으로 주입하는 것보다 덜 정확하다. Spring이 예상치 못한 결과를 초래할 수 있는 모호한 경우를 대비해서 주의해야 한다.
+- 컨테이너 내의 여러 빈 정의는 자동 연결될 `setter` 메소드 뜨는 `constructor-arg`에 의해 지정된 유형과 일치할 수 있다. 배열, 컬렉션, 또는 `Map` 인스턴스의 경우 반드시 문제가 되는 것은 아니지만 단일 값을 기대하는 종속성의 경우 이 모호성이 임의로 해결되지 않는다. 사용 가능한 고유 빈 정의가 없으면 예외가 발생한다.
+
+이를 위해 개발자에게는 다음과 같은 옵션이 주어진다.
+
+- 명시적 연결을 위해서 Autowiring을 포기하기
+- `autowire-candidate` 속성을 `false`로 설정하여 빈 정의에 대한 Autowiring을 방지하기
+- `<bean/>` 의 `primary` 속성을 true로 설정하여 단일 빈정의를 기본으로 설정
+- annotation-based configuration을 기반으로 보다 세분화된 제어를 구현
+
+# Bean Scope
+
+Bean을 정의할 때 해당 빈에 정의된 클래스의 실제 인스턴스를 생성하기 위한 방법을 생성한다.
+
+단일 레시피로 많은 객체 인스턴스를 만들 수 있기 때문에 `Bean Definition`에 관한 개념은 매우 중요하다.
+
+스프링은 기본적으로 모든 Bean을 **Singleton**으로 생성해 관리한다.
+
+구체적으로는 애플리케이션 구동시 JVM 안에서 스프링이 bean마다 하나의 객체를 생성하는 것을 의미하고, 우리는 스프링을 통해서 bean을 제공받으면 주입 받은 bean은 언제나 동일한 객체임을 가정하고 개발한다.
+
+
+
+특정 Bean Definition에서 생성된 객체에 연결될 다양한 종속성과 구성을 제어할 수 있을 뿐만 아니라, 특정 Bean Definition에서 생성된 객체의 범위도 제어할 수 있다.
+
+
+
+## 1. singleton
+
+`singleton` bean은 스프링 컨테이너에서 단 **한 번** 생성이되고 컨테이너가 종료될 때 bean도 소멸된다.
+
+생성된 하나의 인스턴스는 `single beans cache`에 저장되고, 해당 bean에 대한 요청과 참조가 있으면 캐시된 객체를 반환한다. 즉, 하나만 생성되기 때문에 모두 동일한 것을 참조한다.
+
+기본적으로 모든 bean은 scope를 명시적으로 지정하지 않으면 **singleton**이다.
+
+```xml
+<bean id="accountService" class="com.something.DefaultService" scope="singleton"/>
+```
+
+```java
+@Scope("singleton")
+```
+
+
+
+
+
+추가적으로, 스프링에서 말하는 싱글톤은 디자인패턴의 싱글톤패턴과 다르다.
+
+싱글톤패턴은 하드코딩된 객체(classloader)가 singleton 객체를 관리하므로 사용시 유의해야 할 점이 있다.
+
+singleton 객체가 전역변수와 같은 역할 때문에 coupling이 높아서 테스트에 어령무이 있고 애플리케이션의 의존성 측면에서도 singleton 객체를 사용하는 쪽에서 singleton 객체에 대해 너무 많은 정보를 알아야 한다는 설계상의 문제가 있다.(*참고*)
+
+
+
+## 2. prototype
+
+`prototype` bean은 모든 요청에 대해 **새로운** 객체를 생성한다.
+
+즉, 의존성 관계의 bean에 주입될 때 새로운 객체가 생성되어 주입되고 정상적인 방식으로 gc에 의해 bean이 소멸된다.
+
+
+
+일반적으로 모든 Stateful Bean에는 프로토타입 scope을 사용하고, Stateless Bean에는 싱글톤 scope을 사용해야 한다.
+
+
+
+Spring은 prototype bean의 생명 주기를 관리하지 않는다. 컨테이너는 프토토타입 객체를 인스턴스화 해서 클라이언트에 전달한다.
+
+따라서 초기화에 대한 lifecycle callback method는 scope에 관계없이 모든 객체에 대해 호출되지만 `prototype`의 경우 소멸 lifecycle callback은 호출되지 않는다.
+
+그러므로 클라이언트 코드는 프로토타입 scope 인스턴스를 정리하고 프로토타입 빈이 보유하고 있는 resource를 해제해주어야 한다. 해당 빈에 대한 참조를 보유하고 있는 **Custom Bean Post Processor**를 이용해서 프로토타입의 빈 리소스를 해제할 수 있다.
+
+```xml
+<bean id="accountService" class="com.something.DefaultService" scope="prototype"/>
+```
+
+```java
+@Scope("prototype")
+```
+
+
+
+## 3. singleton with prototype-bean dependencies
+
+프로토타입 빈에 대한 종속성이 있는 싱글톤 빈은, 인스턴스시킬 때 해결된다.
+
+프로토타입의 빈을 -> 싱글톤 빈으로 의존성을 주입하면 새로운 프로토타입 빈이 인스턴스화되고 싱글톤 빈에 종속성이 주입된다. 따라서 이 프로토타입 인스턴스는 싱글톰 빈에 제공되는 유일한 인스턴스이다.
+
+
+
+Spring컨테이너는 싱글톤 빈을 인스턴스화하고 의존성을 해결하고 주입할 때 이 DI가 한번만 발생하기 때문에, 프로토타입 빈을 반복적으로 싱글톤 빈에 종속할 수 없다. 런타임시 프로토타입 빈의 새로운 인스턴스가 두 번이상 필요하다면 **Method Injection**을 사용하자.
+
+
+
+## 4. Request, Session, Application, WebSocket Scopes
+
+`request`, `session`, `application`, `websocket` scope는 스프링의 **ApplicationContext**의 구현체를 사용하는 경우에만 사용가능하다.(`XmlWebApplicatoinContext`) 즉, Spring MVC Web Application에서만 사용되는 용도이다.
+
+이러한 Bean scope를 일반적인 Spring IoC 컨테이너(`ClassPathXmlApplicationContext`)와 함께 사용하면 `IllegalStateException`과 같은 알수없는 예외가 발생한다.
+
+- `request` : HTTP 요청 별로 인스턴스화 되며 요청이 끝나면 소멸된다.
+- `session` : HTTP 세션 별로 인스턴스화 되며 세션이 끝나면 소멸된다.
+
+
+
+
+
+## > singleton vs non-singleton
+
+> *싱글톤과 비싱글톤을 구분해서 빈을 선언하는 기준의 핵심은 수정 가능한 상태에 따른 동기화 비용과 객체 생성 비용간의 트레이드 오프를 따져 보라는 의미*
+>
+> - **싱글톤으로 적합한 객체**
+>
+>   - `상태가 없는 공유 객체`
+>
+>     : 상태를 가지고 있지 않은 객체는 동기화 비용이 없어 매번 객체를 참조하는 곳에서 새로운 객체를 생성할 이유가 없다.
+>
+>   - `읽기용으로만 상태를 가진 공유 객체`
+>
+>     : 1번과 유사하개 상태를 가지고 있으나 읽기전용이므로 여전히 동기화 비용이 들지 않는다. 따라서 매 요청마다 새로운 객체를 생성할 필요가 없다.
+>
+>   - `공유가 필요한 상태를 지닌 공유 객체`
+>
+>     : 객체간에 반드시 공유해야 할 상태를 지닌 객체가 하나 있다면, 이 경우에는 해당 상태의 쓰기를 가능한  동기화할 경우 싱글톤도 적합하다.
+>
+>   - `쓰기가 가능한 상태를 지니면서도 사용빈도가 매우 높은 객체`
+>
+>     : 애플리케이션에서 사용빈도가 높다면 쓰기 접근에 대한 동기화 비용을 감안하고서라도 싱글톤을 고려할만 하다.
+>
+>     : 이 방법은 1.장시간에 걸쳐 매우 많은 객체가 생성되고, 2.해당 객체가 매우 작은 양의 쓰기상태를 가지고 있고, 3.객체 생성비용이 매우 클때 유용한 선택이 된다.
+>
+> - **비싱글톤(ex. 프로토타입)으로 적합한 객체**
+>
+>   - `쓰기가 가능한 상태를 지닌 객체`
+>
+>     : 쓰기가 가능한 상태가 많아서 동기화 비용이 객체 생성 비용보다 크다면 싱글톤으로 적합하지 않다.
+>
+>   - `상태가 노출되지 않는 객체`
+>
+>     : 일부 제한적인 경우, 내부 상태를 외부에 노출하지 않는 빈을 참조하여 다른 의존객체와는 독립적으로 작업을 수행하는 의존객체가 있다면 싱글톤보다 비싱글톤 객체를 사용하는 것이 더 좋을수도 있다.
+
+
+
+참조 : https://gmlwjd9405.github.io/2018/11/10/spring-beans.html
 
 # Lombok
 
