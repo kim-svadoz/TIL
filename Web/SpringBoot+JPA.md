@@ -1712,11 +1712,7 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 
 참조 : https://supawer0728.github.io/2019/04/04/spring-error-handling/
 
-# Swagger, Postman
-
 # JPQL?
-
-# 쿠키, 세션 그리고 인터셉터
 
 # MSA 맛보기
 
