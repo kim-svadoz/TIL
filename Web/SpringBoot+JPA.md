@@ -593,6 +593,119 @@ Spring컨테이너는 싱글톤 빈을 인스턴스화하고 의존성을 해결
 
 참조 : https://gmlwjd9405.github.io/2018/11/10/spring-beans.html
 
+# Method Injection
+
+> 생명주기가 다른 두 빈에 대한 작업을 할 때 사용하는 Injection 방법
+>
+> Singleton Bean이 Prototype Bean의 참조를 가지고 있어서 Prototype이어야 하는 객체가 싱글톤으로 동작하는 문제를 해결하기 위해 생겨난 것
+
+```xml
+<bean id = "someBean" class = "com.SomeBean" scope = "prototype"/>
+
+<bean id = "singleBean" class "com.SingleTone">
+	<property name = "mySomeBean">
+    	<ref bean = "someBean"/>
+    </property>
+</bean>
+```
+
+위와 같은 경우에 Spring은 `singleton` 객체를 리턴할 때 최초 한번 생성된 bean의 인스턴스를 계속해서 리턴하게 되는데 위와 같이 정의된 경우에는 singleBean은 `singleton` 패턴으로 초기 생성 이후 소멸하지 않기 때문에 singleBean 내부에 가지고 있는 someBean 역시 최초에 만들어지고, 다시 만들어지지 않게 되는 현상이 발생한다.
+
+~~나는 someBean을 prototype으로 사용하고 싶다고!!~~
+
+
+
+사실 setter로 인스턴스를 주입받고, getter에서 new 키워드로 someBean에 대한 새로운 인스턴스를 리턴하면 되긴 하지만, 이러한 해결책은 **IoC**에 어긋난다. 이렇게 하면 bean으로 관리할 필요가 없는 것이다.
+
+고로, **IoC를 유지하면서 위와같은 문제를 해결하기 위해서 Method Lookup injection이 필요하다.**
+
+
+
+## @Lookup
+
+이 방법은 런타임에 Spring Bean을 재정의하는 프로세스이다.
+
+
+
+먼저, 사용하려는 프로토타입 클래스를 하나 생성하고
+
+```java
+@Component
+@Scope("prototype")
+public class PlaceOrderNotification {
+    
+    public String getNotification() {
+        return "Order Placed";
+    }
+}
+```
+
+
+
+싱글톤 빈에서 프로토타입 빈에 접근한다.
+
+```java
+@Component
+public class OrderService {
+    
+    public void sendOrderNotificationMsg() {
+        PlaceOrderNotification notification = getPlaceOrderNotification();
+    }
+    
+    @Lookup
+    public PlaceOrderNotification getPlaceOrderNotification() {
+        /*
+        여기서 Spring은 런타임시에 동적으로 메소드를 재정의하게 됩니다.
+        */
+        return null;
+    }
+}
+```
+
+현재 위치에서는 null을 반환하지만 Spring은 런타임시 동적으로 `@Lookup` 어노이션이 붙은 메소드를 오버라이드하게 된다. 이러한 **Method Injection** 방법은 Spring에 의존적이지도 않지만, 단위 테스트를 작성할 때 번거롭다는 점이 있다.
+
+```java
+public PlaceOrderNotification getPlaceOrderNotification() {
+    return applicationContext.getBean(PlaceOrderNotification.class);
+}
+```
+
+
+
+`@Lookup` 어노테이션을 쓸때 주의할 점은
+
+1. Bean class는 final일 수 없고,
+2. `@Lookup`이 달린 Method는 `private`, `static`, `final` 모두 올 수 없다.
+
+
+
+위에서 봤던 테스트에서 발생하는 번거로운 점 때문에, Spring은 이런 경우 빈을 찾아야 하는 경우 다음의 방법을 권장한다고 한다.
+
+
+
+## Provider
+
+만약, 원하는 객체를 찾기 위해서 의존성을 검색해야 한다면 `Provider`를 사용해보자.
+
+Provider는 JSR-330에 추가된 자바 표준으로 `<T>` 타입 파라미터와 `get()`이라는 팩토리메서드를 갖는 인터페이스이다.
+
+```java
+@RestController
+@RequiredArgsConstructor
+public class TestController {
+    
+    private final Provider<TestService> provider;
+    
+    @GetMapping("/test")
+    public ResponseEntity<TestService> test() {
+        final TestService testService = provider.get();
+        return ResponseEntity.ok(testService);
+    }
+}
+```
+
+~~음. Provider는 조금 더 공부해봐야겠다~~
+
 # Lombok
 
 Lombok은 자바의 반복 메서드 작성 코드를 줄여주는 **코드 다이어트 라이브러리**이다.
