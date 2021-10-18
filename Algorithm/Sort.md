@@ -47,49 +47,56 @@ selectionSort(A[], n){
 - 구현
 
 ```java
-public class Selection {
-    private static int[] input = {5, 6, 2, 8, 7, 23, 4, 1};
-    
-    public static void main(String[] args){
+public class SelectionSort {
+    private static int[] input = {5, 6, 2, 1, 8, 24, 5, 3};
+
+    public static void main(String[] args) {
         selectionSortMin(input, input.length);
-        for(int a : input){
-            System.out.print(a + " ");
+        for (int i : input) {
+            System.out.print(i+" ");
         }
     }
-    
-    private static void selectionSortMin(int[] input, int length){
+
+    /* 오름차순 */
+    private static void selectionSortMin(int[] a, int len) {
         int min;
-        int tmp;
-        for (int i=0; i<length; i++){
-            min = 1;
-            for(int j=1+1, j<length; j++){
-                if(input[j] < input[min]) min = j;
+        for  (int i = 0; i < len - 1; i++) {
+            min = i;
+            for (int j = i + 1; j < len; j++) {
+                if (a[j] < a[min]) {
+                    min = j;
+                }
             }
-            tmp = input[i];
-            input[i] = input[min];
-            input[min]; = tmp;
+            swap(a, i, min);
         }
     }
-    
-    private static void selectionSortMax(int[] input, int length){
+
+    /* 내림차순 */
+    private static void selectionSortMax(int[] a, int len) {
         int max;
-        int tmp;
-        for (int i=length-1; i>0; i--){
+        for (int i = 0; i < len - 1; i++) {
             max = i;
-            for(int j=i-1; j>=0; j--){
-                if(input[j] > input[max]) max = j;
+            for (int j = i + 1; j < len; j++) {
+                if (a[j] > a[max]) {
+                    max = j;
+                }
             }
-            tmp = input[i];
-            input[i] = input[max];
-            input[max] = tmp;
+            swap(a, i, max);
         }
+    }
+
+    public static void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
     }
 }
+
 ```
 
 ```bash
 # 실행결과
-1 2 3 4 5 6 7 8 23
+1 2 3 5 5 6 8 24
 ```
 
 ## Bubble Sort
@@ -119,25 +126,30 @@ bubbbleSort(A[], n) {
 - 구현
 
 ```java
-public class Bubble{
-    private static int[] input = {5, 6, 2, 8, 7, 23, 4, 1};
-    
-    public static void main(String[] args){
+public class BubbleSort {
+    public static int[] input = {5, 12, 6, 7, 12, 2, 4, 9, 754};
+
+    public static void main(String[] args) {
         bubbleSort(input, input.length);
-        for(int a : input){
-            System.out.println(a + " ");
+        for (int i : input) {
+            System.out.print(i+" ");
         }
     }
-    
-    private static void bubbleSort(int[] input, int length) {
-        inti tmp;
-        for (int i=length-1; i>0; i--) {
-            for (int j=0; j<i; j++) {
-                tmp = input[j];
-                input[j] = input[j+1];
-                input[j+1] = tmp;
+
+    public static void bubbleSort(int[] a, int len) {
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < len - i; j++) {
+                if (a[j] > a[j + 1]) {
+                    swap(a, j, j + 1);
+                }
             }
         }
+    }
+
+    public static void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
     }
 }
 ```
@@ -191,26 +203,37 @@ insertionSort(A[], n) {
 - 구현
 
 ```java
-public class Insertion {
-	private static int[] input = {5, 6, 2, 8, 7, 23, 4, 1, 44};
-    
-    public static void main(String[] args){
+public class InsertionSort {
+    public static int[] input = {1, 2, 6, 8, 23, 1, 7, 3};
+
+    public static void main(String[] args) {
         insertionSort(input, input.length);
-        for (int a : input) {
-            System.out.print(a + " ");
+        for (int i : input) {
+            System.out.print(i + " ");
         }
     }
-    
-    private static void insertionSort(int[] input, int length) {
-		int tmp;
-        for (int i = 1; i < length; i++){
-            for (int j = i; j > 0; j--) {
-                if (input[j-1] > input[j]) {
-                    tmp = input[j-1];
-                    input[j-1] = input[j];
-                    input[j] = tmp;
-                }
+
+    private static void insertionSort(int[] a, int len) {
+        for (int i = 1; i < len; i++) {
+            /* 두번째 원소부터 타겟 시작 */
+            int target = a[i];
+
+            int j = i - 1;
+
+            /**
+             * 타겟이 이전 원소보다 클때 까지 반복
+             */
+            while (j >= 0 && target < a[j]) {
+                a[j + 1] = a[j]; // 원소를 한칸씩 뒤로 밀어준다.
+                j--;
             }
+
+            /**
+             * while에서 탈출하는 경우는 앞의 원소가 타겟보다 작다는 의미므로
+             * 타겟 원소는 j번째 뒤에 삽입되야 한다.
+             * 그러므로 타겟은 j + 1에 위치한다.
+             */
+            a[j + 1] = target;
         }
     }
 }
@@ -218,7 +241,7 @@ public class Insertion {
 
 ```bash
 # 실행결과
-1 2 4 5 6 7 8 23 44
+1 1 2 3 6 7 8 23
 ```
 
 # **> 분할정복법**
@@ -277,23 +300,100 @@ merge(A[], p, q, r){
 - 실제 mrege() 작성
 
 ```java
-void merge(int[] data, int p, int q, int r) {
-    int i = p;
-    int j = q+1;
-    int k = p;
-    int[] tmp = new int[data.length];
-    while (i <= q && j <= r) {
-		if (data[i] <= data[j])
-            tmp[k++] = data[i++];
-        else
-            tmp[k++] = data[j++0;]
+public class MergeSort {
+    private static int[] input = {5, 6, 2, 1, 8, 24, 5, 3};
+    private static int[] sorted;
+
+    public static void main(String[] args) {
+        sorted = new int[input.length];
+        mergeSort(input, 0, input.length - 1);
+        for (int i : input) {
+            System.out.print(i+" ");
+        }
     }
-    while (i <= q)
-        tmp[k++] = data[i++];
-    while (j <= r)
-        tmp[k++] = data[j++];
-    for (int i=p; i<=r; i++) 
-        data[i] = tmp[i]
+    private static void mergeSort(int[] a, int left, int right) {
+        /**
+         * 1 - 2 - 4 - 8 - ...
+         * 의 형태로 1부터 서브리스트를 나누는 기준은 2배씩 늘어난다.
+         */
+        for (int size = 1; size <= right; size += size) {
+
+            /**
+             * 두개의 sublist를 순서대로 병합한다.
+             * 예를들어 현재 sublist의 크기가 1(size = 1)일 때
+             * left sublist(low ~ mid)와 right sublist(mid + 1 ~ high)를 생각해보면
+             * left sublist는 low = mid = 0이고
+             * right sublist는 mid + 1 부터 low + (2 * size) - 1 = 1 이 된다.
+             * 
+             * 이 떄 hi가 배열의 끝을 넘어갈 수 있으므로 right와 둘중 작은 값이 병합되도록 해야 한다.
+             */
+            for (int l = 0; l <= right - size; l += (size * 2)) {
+                int lo = l;
+                int mid = l + size - 1;
+                int hi = Math.min(right, l + (size * 2) - 1);
+                merge(a, lo, mid, hi); // merge
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param a     정렬할 배열
+     * @param left  배열의 시작점
+     * @param mid   배열의 중간점
+     * @param right 재열의 끝점
+     */
+    private static void merge(int[] a, int left, int mid, int right) {
+        int l = left;
+        int r = mid + 1;
+        int idx = left;
+
+        while (l <= mid && r <= right) {
+
+            /**
+             * 왼쪽 sublist의 l번째 원소가 오른쪽 sublist r번째 원소보다 작거나 같을경우
+             * 왼쪽의 l번째 원소를 새로운 배열에 넣고 l과 idx를 1 증가시킨다.
+             */
+            if (a[l] <= a[r]) {
+                sorted[idx++] = a[l++];
+            }
+            /**
+             * 오른쪽 sublist의 r번째 원소가 왼쪽 sublist l번째 원소보다 작거나 같을경우
+             * 오른쪽의 r번째 원소를 새로운 배열에 넣고 r과 idx를 1 증가시킨다.
+             */
+            else {
+                sorted[idx++] = a[r++];
+            }
+        }
+
+        /**
+         * 왼쪽의 sublist가 먼저 모두 채워졌을 경우에는 (l > mid)
+         * = 오른쪽 sublist의 원소들이 아직 남아있으므로
+         * 오른쪽 sublist의 나머지 원소들을 새 배열에 채워준다.
+         */
+        if (l > mid) {
+            while (r <= right) {
+                sorted[idx++] = a[r++];
+            }
+        }
+        /**
+         * 오른쪽의 sublist가 먼저 모두 채워졌을 경우에는 (r > right)
+         * = 왼쪽 sublist의 원소들이 아직 남아있으므로
+         * 왼쪽 sublist의 나머지 원소들을 새 배열에 채워준다.
+         */
+        else {
+            while (l <= mid) {
+                sorted[idx++] = a[l++];
+            }
+        }
+
+        /**
+         * 정렬된 배열을 기존의 배열에 복사해서 옮긴다.
+         */
+        for (int i = left; i <= right; i++) {
+            a[i] = sorted[i];
+        }
+    }
 }
 ```
 
@@ -491,6 +591,94 @@ partition(A, p, r) {
     - 다른 방법의 경우, 어떤 입력이 최악의 경우이다 라는 것이 정해지지만, 피봇을 랜덤하게 선택하면 어떤 데이터가 들어오더라도 랜덤값에 의해 결정 되므로. 최악의 실행이 존재한다.
   - 평균 시간복잡도 O(NlogN)
 
+### - Code
+
+```java
+public class QuickSort {
+    private static int[] input = {5, 6, 2, 1, 8, 24, 5, 3};
+
+    public static void main(String[] args) {
+        quickSort(input);
+        for (int i : input) {
+            System.out.print(i+" ");
+        }
+    }
+
+    public static void quickSort(int[] a) {
+        leftPivotSort(a, 0, a.length - 1);
+    }
+
+    /**
+     * 가장 왼쪽 피벗 선택 경우
+     * @param a     정렬할 배열
+     * @param lo    현재 부분배열의 가장 왼쪽
+     * @param hi    현재 부분배열의 가장 오른쪽
+     */
+    private static void leftPivotSort(int[] a, int lo, int hi) {
+
+        /**
+         * lo가 hi보다 크거나 같다면 정렬할 원소가 1개 이하이므로 정렬없이 return
+         */
+        if (lo >= hi) {
+            return;
+        }
+
+        int pivot = partition(a, lo, hi);
+
+        leftPivotSort(a, lo, pivot - 1);
+        leftPivotSort(a, pivot + 1, hi);
+    }
+
+    /**
+     * 피벗을 기준으로 파티션을 나누기 위해 약한 정렬을 수행한다.
+     * @param a     정렬 배열
+     * @param left  현재 배열외 가장 왼쪽
+     * @param right 현재 배열의 가장 오른쪽
+     * @return      최종적으로 위치한 피벗의 위치(lo)를 반환
+     */
+    private static int partition(int[] a, int left, int right) {
+        int lo = left;
+        int hi = right;
+        int pivot = a[left];        // 처음엔 sublist의 가장 왼쪽 요소를 피벗으로 선정
+
+        // lo가 hi보다 작을때가지만
+        while (lo < hi) {
+
+            /**
+             * hi가 lo보다 크면서, hi의 요소가 pivot보다 작거나 같은원소를 찾을떄까지
+             * hi를 감소시킨다.
+             */
+            while (a[hi] > pivot && lo < hi) {
+                hi--;
+            }
+    
+            /**
+             * hi가 lo보다 크면서, lo의 요소가 pivot보다 큰 원소를 찾을떄까지
+             * lo++
+             */
+            while (a[lo] <= pivot && lo < hi) {
+                lo++;
+            }
+    
+            swap(a, lo, hi);
+        }
+
+        /**
+         * 마지막으로 맨 처음 pivot으로 설정했던 위치(a[left])의 원소가 lo가 가리키는 원소를 바꾼다.
+         */
+        swap(a, left, lo);
+
+        return lo;
+    }
+
+    private static void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+}
+```
+
 # **> 힙 정렬**
 
 ---
@@ -648,7 +836,107 @@ HEAPSORT(A)
 5.		MAX-HEAPIFY(A, 1)			: O(logn)
 ```
 
+### - Code
 
+```java
+import java.io.*;
+
+public class HeapSort {
+
+    public static void main(String[] args) throws IOException {
+        int[] test = {6, 10, 4, 2, 5, 8, 9, 1, 8, 125, 91};
+        sort(test);
+        for (int i : test) {
+            System.out.print(i+" ");
+        }
+    }
+
+    public static void sort(int[] a) {
+        sort(a, a.length);
+    }
+
+    private static void sort(int[] a, int size) {
+        if (size < 2) {
+            return;
+        }
+
+        int parentIdx = getParent(size - 1);
+
+        /* make max-heap */
+        for (int i = parentIdx; i >= 0; i--) {
+            heapify(a, i, size - 1);
+        }
+
+        
+        for (int i = size - 1; i > 0; i--) {
+            /**
+             * 1. root node가 max인 상태이므로 0번째 index와 i번째 인덱스의 값을 바꾸고
+             * 2. 다시 0 ~ (i - 1)까지의 sub tree에 대해 max heap을 구성하도록 heapify 한다.
+             */
+            swap(a, 0, i);
+            heapify(a, 0, i - 1);
+        }
+    }
+
+    /* parent node = (index - 1) / 2 : 변하지 않는 성질 */
+    private static int getParent(int child) {
+        return (child - 1) / 2;
+    }
+
+    private static void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
+    private static void heapify(int[] a, int parentIdx, int lastIdx) {
+        int leftChildIdx;
+        int rightChildIdx;
+        int largestIdx;
+
+        /**
+         * 현재 부모노드의 자식노드인덱스가 마지막 인덱스를 넘지 않을때까지 반복한다.
+         * 
+         * 만약, 마지막 부모 인덱스가 왼쪽 자식만 가질 수 있으므로
+         * 왼쪽 자식노드 인덱스를 기준으로 범위를 체크한다.
+         */
+        while ((parentIdx * 2) + 1 <= lastIdx) {
+            leftChildIdx = (parentIdx * 2) + 1;
+            rightChildIdx = (parentIdx * 2) + 2;
+            largestIdx = parentIdx;
+
+            /**
+             * left child node가 parent node보다 크다면
+             * left가 root
+             */
+            if (a[leftChildIdx] > a[largestIdx]) {
+                largestIdx = leftChildIdx;
+            }
+
+            /**
+             * right child node가 parent node보다 크다면
+             * right가 root
+             * 
+             * do range check
+             */
+            if (rightChildIdx <= lastIdx && a[rightChildIdx] > a[largestIdx]) {
+                largestIdx = rightChildIdx;
+            }
+
+            /**
+             * 교환이 발생한 경우에는
+             * 교환이 된 자식노드와 부모노드를 교체한다.
+             */
+            if (largestIdx != parentIdx) {
+                swap(a, parentIdx, largestIdx);
+                parentIdx = largestIdx;
+            } else {
+                return;
+            }
+        }
+    }
+}
+```
 
 # **> 우선순위 큐**
 
