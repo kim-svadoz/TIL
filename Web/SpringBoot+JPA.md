@@ -809,7 +809,7 @@ Spring 4.0에서 Spring 프레임워크에서 `RESTful` 웹 서비스를 쉽게 
 
 
 
-**`RestController`는 `@Controller`와 `@ResponseBody`의 조합으로 단순히 객체만을 반환하고 객체 데이터는 XML / JSON 형식으로 HTTP 응담에 담아서 전송된다.**
+**`RestController`는 `@Controller`와 `@ResponseBody`의 조합으로 단순히 객체만을 반환하고 객체 데이터는 XML / JSON 형식으로 HTTP 응답에 담아서 전송된다.**
 
 
 
@@ -821,7 +821,7 @@ HTTP 요청의 본문을 객체로 변경하건, 객체를 HTTP 응답 본문으
 
 뷰가 아니라 객체를 응답할 때는 viewResolver 대신에 **HttpMessageConverter**가 동작하는데, **HttpMessageConverter**에는 여러 Converter가 등록되어 있고 반환하는 데이터에 따라 사용되는 Converter가 달라진다는 특징이 있다. 
 
-리턴 타입이 `application/json`인 경우에는 **MappingJacson2HttpMessageConverter**가 사용되고, 클라이언트의 Http Accept 헤더와 서버의 컨트롤러 return type 정보를 좋바해 적절한 HttpMessageConverter가 채택된다.
+리턴 타입이 `application/json`인 경우에는 **MappingJackson2HttpMessageConverter**가 사용되고, 클라이언트의 Http Accept 헤더와 서버의 컨트롤러 return type 정보를 좋바해 적절한 HttpMessageConverter가 채택된다.
 
 그냥 `@Controller`를 사용할 때는 `@ResponseBody`를 넣어줘야 MessageConverter가 적용되고, 선언하지 않으면 **BeanNameViewResolver**에 의해서 viewName에 해당하는 뷰를 찾으려고 할 것이다.
 
@@ -1198,7 +1198,7 @@ em.persist(product)
 
 ### - DETACHED / 준영속
 
-엔티티가 커밋되어 트랜잭션 구간에서 빠져나오는 경우, 아 엔티티는 준영속 상태가 된다.
+엔티티가 커밋되어 트랜잭션 구간에서 빠져나오는 경우, 이 엔티티는 준영속 상태가 된다.
 
 비영속 상태와 거의 같지만, **영속 상태를 한 번 거쳤기 때문에, 준영속 상태의 엔티티는 식별값을 가지고 있다.**
 
@@ -1867,7 +1867,7 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 
 
 
-`DDD`의 특징은 같은 객체(Object or Class)가 여러 개가 존재할 수 있따는 것이다.
+`DDD`의 특징은 같은 객체(Object or Class)가 여러 개가 존재할 수 있다는 것이다.
 
 
 
@@ -1927,7 +1927,7 @@ DDD는 큰 모델을 서로 다른 `Bounded Context`로 나누고 상호관계�
 
 이렇게 설계한 **도메인들을 모듈(Module)별로 분리하는 것이 마이크로서비스(MicroService)**.
 
-> 핵심을 결국 **도메인을 서비스 별로 분리하는 것!**
+> 핵심은 결국 **도메인을 서비스 별로 분리하는 것!**
 
 
 
