@@ -1210,7 +1210,7 @@ Java Data Type
 
 - `short`
 
-  - short는 C언어와의 호환을 위해 사용되는 타입으로 잘 사용되지 않는 타입입닏.ㅏ
+  - short는 C언어와의 호환을 위해 사용되는 타입으로 잘 사용되지 않는 타입입니다.
 
 - `int`
 
@@ -1660,6 +1660,271 @@ List<String> itmes = item.steram()
 
 이로 인한 장점은 `Collection` 내부에서 들어온 값이 내가 원하는 값인지 별도의 로직 처리를 구현할 필요가 없어진다. 또한, API를 설계하는데 있어서 보다 명확한 의사전달이 가능해진다.
 
+
+
+정리를 해보자.
+
+**Generic의 장점**
+
+1. 제네릭을 사용하면 잘못된 타입이 들어올 수 있는 것을 컴파일 단계에서 방지할 수 있다.
+2. 클래스 외부에서 타입을 정해주기 째문에 따로 타입을 체크하고 변환해줄 필요가 없어서 관리하기가 편하다.
+3. 비슷한 기능을 지원하는 경우에 코드의 재사용성이 높아진다.
+
+
+
+## Generic 사용방법
+
+| 타입 | 설명    |
+| ---- | ------- |
+| <T>  | Type    |
+| <E>  | Element |
+| <K>  | Key     |
+| <V>  | Value   |
+| <N>  | Number  |
+
+제네릭은 암묵적으로 위와 같은 규칙으로 쓰이게 된다.
+
+## 1. 클래스 및 인터페이스 선언
+
+```java
+public class ClassName <T> {...}
+public interface InterfaceName <T> {...}
+```
+
+기본적으로 제네릭 타입의 클래스나 인터페이스의 사용법이다.
+
+이 `<T>` 타입은 해당 블럭에서까지 유효하게 사용가능하다.
+
+
+
+여기서 제네릭 타입을 두개로 둘 수 도 있다.
+(대표적으로 타입 인자를 두 개 받는 컬렉션인 `HashMap`)
+
+```java
+public class ClassName <T, K> {...}
+public interface InterfaceName <T, K> {...}
+
+public class HashMap <K, V> {...}
+```
+
+이렇듯 데이터 타입을 미리 정해놓는 것이 아니라 외부로부터 지정할 수 있도록 하는 것이다.
+
+
+
+그럼 어떻게 사용하는지 보자.
+
+```java
+public class ClassName <T, K> {...}
+
+public class Main {
+    public static void main(String[] args) {
+        ClassName<String, Integer> c = new ClassName<String, Integer>();
+    }
+}
+```
+
+이 때 주의할 점은 타입으로 **참조 타입(Reference Type)**밖에 올 수 없다.
+
+즉, int나 double, char와 같은 기본 타입(primitive type)은 올 수가 없다. 기본형을 사용하려면 Wrapper Class로 사용해야 한다.
+
+
+
+## 2. 제네릭 클래스 사용
+
+```java
+class ClassName<E> {
+    private E element; // 변수타입
+    
+    void set(E element) {	// 파라미터타입
+        this.element = element;
+    }
+    
+    E get() {	// 반환타입
+        return element;
+    }
+}
+class Main {
+    public static void main(String[] args) {
+        
+        ClassName<String> a = new ClassName<String>();
+        ClassName<Integer> b = new ClassName<Integer>();
+        
+        a.set("10");
+        b.set(10);
+    }
+}
+```
+
+여기서 제네릭 타입을 두개쓰고 싶으면 두개를 사용하면 된다.
+
+
+
+## 3. 제네릭 메소드
+
+2번 과정은 클래스 이름 옆에 `<E>` 제네릭 타입을 붙여서 해당 클래스 내에서 사용하는 E 타입으로 일반화를 했다.
+
+그 외에도 별도로 메소드에 한정된 제네릭도 사용할 수 있다.
+
+
+
+일반적으로 다음과 같이 선언한다.
+
+```java
+public <T> T genericMethod(T o) {
+    ...
+}
+```
+
+일반 메소드와는 다르게 반환 타입 이전에 <GenericType>을 선언한다.
+
+
+
+이를 위에서 다른 클래스에서 활용해보자.
+
+```java
+class ClassName<E> {
+    // 동일
+    
+    <T> T genericMethod(T o) { // 제네릭 메소드
+        return o
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        ClassName<String> a = new ClassName<String>();
+        ClassName<Integer> b = new ClassName<Integer>();
+
+        a.set("10");
+        b.set(10);
+    }
+}
+```
+
+ClassName 객체를 생성할 때 `<> ` 안에 타입 파라미터를 지정한다.
+
+그러면 a객체의 ClassName의 E 제네릭 타입은 모두 String으로 변환되고,
+
+b객체의 ClassName의 E 제네릭 타입은 모두 Integer로 변환된다.
+
+따라서, **만들어준 `<T> T genericMethod(T o)`는 이 파라미터 타입에 따라서 T 타입이 결정된다.**
+
+
+
+즉, 클래스에서 지정한 제네릭 유형과 별도로 메소드에서 독립적으로 제네릭 유형을 선언해서 쓸 수가 있다는 말이다.
+
+
+
+왜 이게 필요한지 생각해보면 바로 **정적 메소드로 선언할 때 필요**하기 떄문이다.
+
+제네릭은 유형을 외부에서 지정한다고 했는데, 즉 클래스 객체가 인스턴스화 했을 때, 쉽게 말해서 new 생성자로 클래스 객체를 생성하고 `<>` 괄호 사이에 파라미터로 넘겨준 타입으로 지정이 된다는 뜻이다.
+
+
+
+하지만 static은 ? 정적이라는 뜻이다. **static이 붙은 것들은 기본적으로 프로그램 실행시에 메모리에 이미 올라가 있는 상태이다.**
+
+
+
+**이 말은 객체 생성을 통해 접글할 필요 없이 이미 메모리에 올라가 있기 때문에 클래스 이름을 통해 바로 쓸 수 있다는 말이다.**
+
+
+
+아니 그렇다면, static 메소드는 프로그램 실행시에 미리 메모리에 올라가는데 타입을 어디서 정해주는건가???
+
+```java
+class ClassName<E> {
+    /*
+    클래스와 같은 E 타입이어도
+    static 메소드는 객체가 생성되기 이전 시점에
+    메모리에 먼저 올라가기 때문에
+    E라는 유형을 클래스로부터 얻어올 방법이 없다..
+    */
+    static E genericMethod(E o) { // 에러가 발생한다.
+        return o;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // static으로 인해서 객체가 생성되기 이전에 접근을 할 수는 있으나 유형을 지정할 방법이 없어서 에러발생
+        ClassName.genericMethod(3);
+    }
+}
+```
+
+때문에, **제네릭이 사용되는 메서드를 정적메서드로 사용하고 싶은 경우에는 제네릭 클래스와 별도로 독립적인 제네릭이 사용되어야 한다**는 것이다!!!
+
+```java
+class ClassName<E> {
+    private E element;
+    
+    ...
+        
+    // 이 메소드의 E, T 타입은 제네릭 클래스의 E타입과는 다른 독립적인 타입이다.
+    static <E> E genericMethod1(E o) {
+        return o;
+    }
+    
+    static <T> T genericMethod2(T o) {
+        return o;
+    }
+}
+```
+
+**제네릭 메소드 타입은 제네릭 클래스 타입과 별도로 지정해주는 것, `<>` 괄호 안에 타입을 파라미터로 보내서 제네릭 타입을 지정해주는 것이 바로 제네릭 프로그래밍이다.**
+
+
+
+여기에 특정 범위만 허용하고 나머지 타입은 제한할 수도 있다.
+
+
+
+## 4.제한된 Generic과 와일드 카드
+
+지금까지는 제네릭의 가장 일반적인 예시였고, 만약 특정 범위내로 좁혀서 제한하고 싶다면 어떻게 해야할까?
+
+
+
+이 때 필요한 것이 바로 `extends`와 `super` 그리고 `?`이다. `?`는 와일드라고 해서 쉽게 말해 **알수 없는 타입**이라는 의미이다.
+
+먼저 예시를 보면 크게 세가지 방식이 있다.
+
+```java
+<K extends T> // T와 T의 자손타입만 가능(K는 들어오는 타입으로 지정) : T가 최상위 타입
+<K super T> // T와 T의 부모(조상)타입만 가능(K는 들어오는 타입으로 지정) : T가 최하위 타입
+    
+<? extends T> // T와 T의 자손타입만 가능
+<? super T> // T와 T의 부모(조상)타입만 가능
+<?> // 모든 타입 가능 == <? extends Object>
+```
+
+쉽게 말해서
+
+`extends T` : 상한경계
+`? super T` : 하한경계
+`<?>` : 와일드 카드
+
+라고 부른다.
+
+
+
+이 떄 주의해야 할 것은 `K extends T`와 `? extends T`는 비슷하지만 다른점이 있다.
+
+유형의 경계를 지정하는 것은 같지만 **경계가 지정되고 K는 특정 타입으로 지정되지만 ?는 타입이 지정되지 않는다.**
+
+
+
+제네릭의 단점은 처음 마주했을 때 코드를 이해하고 분석하기가 어렵고, 계층구조가 복잡해지면 어려워진다는 특징이 있다.
+
+때문에, 제네릭에 대한 이해를 정확하게 잡는 것이 좋아보인다.
+
+
+
+참조
+
+https://st-lab.tistory.com/153
+
+
+
 # final
 
 ---
@@ -1687,6 +1952,14 @@ List<String> itmes = item.steram()
   - `GC`에 의해 함수로 절대 호출해서는 안되는 함수이다.
   - `Object` 클래스에 정의되어 있으며 `GC`가 발생하는 시점이 불분명하기 때문에 해당 메소드가 실행된다는 보장이 없다.
   - 또한, `finalize()` 메소드가 오버라이딩 되어 있으면 GC가 이루어질 때 바로 Garbage Collection 되지 않는다. GC가 지연되면서 OOME(Out out Memory Exception)이 발생할 수 있다.
+
+# lambda 와 final
+
+
+
+참조
+
+https://vagabond95.me/posts/lambda-with-final/
 
 # Overriding vs Overloading
 
