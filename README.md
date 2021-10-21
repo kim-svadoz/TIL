@@ -283,6 +283,7 @@
 | 2251_물통                                           | [Link](./Algorithm/Baekjoon/p2251.java)                      | [문제](https://www.acmicpc.net/problem/2251)                 | 완전탐색, 구현, BFS                        |
 | 2252_줄 세우기                                      | [Link](./Algorithm/Baekjoon/p2252.java)                      | [문제](https://www.acmicpc.net/problem/2252)                 | 위상정렬                                   |
 | 2261_가장 가까운 두 점                              | [Link](./Algorithm/Baekjoon/p2261.java)                      | [문제](https://www.acmicpc.net/problem/2261)                 | Sweeping, Set.subSet, 분할정복             |
+| 2292_벌집                                           | [Link](./Algorithm/Baekjoon/p2292.java)                      | [문제](https://www.acmicpc.net/problem/2292)                 | 수학                                       |
 | 2293_동전1                                          | [Link](https://dundung.tistory.com/125)                      | [문제](https://www.acmicpc.net/problem/2293)                 | DP(모든 경우의 수)                         |
 | 2294_동전2                                          | [Link](https://m.blog.naver.com/PostView.nhn?blogId=occidere&logNo=220794872664&proxyReferer=https:%2F%2Fwww.google.com%2F) | [문제](https://www.acmicpc.net/problem/2294)                 | DP(최소 경우의 수)                         |
 | 2331_반복수열                                       | [Link](./Algorithm/Baekjoon/p2331.java)                      | [문제](https://www.acmicpc.net/problem/2331)                 | DP, 구현                                   |
@@ -317,6 +318,7 @@
 | 2753_윤년                                           | [Link](./Algorithm/Baekjoon/p2753.java)                      | [문제](https://www.acmicpc.net/problem/2753)                 | 구현                                       |
 | 2798_블랙잭                                         | [Link](./Algorithm/Baekjoon/p2798.java)                      | [문제](https://www.acmicpc.net/problem/2798)                 | 브루트 포스                                |
 | 2805_나무 자르기                                    | [Link](./Algorithm/Baekjoon/p2805.java)                      | [문제](https://www.acmicpc.net/problem/2805)                 | Binary Search                              |
+| 2847_게임을 만든 동준이                             | [Link](./Algorithm/Baekjoon/p2847.java)                      | [문제](https://www.acmicpc.net/problem/2847)                 | 구현                                       |
 | 2875_대회or인턴                                     | [Link](./Algorithm/Baekjoon/p2875.java)                      | [문제](https://www.acmicpc.net/problem/2875)                 | Greedy                                     |
 | 2941_크로아티아 알파벳                              | [Link](./Algorithm/Baekjoon/p2941.java)                      | [문제](https://www.acmicpc.net/problem/2941)                 | 구현, 문자열                               |
 | 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
@@ -538,6 +540,7 @@
 | 20166_문자열 지옥에 빠진 호석                       | [Link](./Algorithm/Baekjoon/p20166.java)                     | [문제](https://www.acmicpc.net/problem/20166)                | Trie, MakeTrie, HashMap                    |
 | 20167_꿈틀꿈틀 호석 애벌레                          | [Link](./Algorithm/Baekjoon/p20167.java)                     | [문제](https://www.acmicpc.net/problem/20167)                | DP, 투포인터                               |
 | 20168_골목 대장 호석                                | [Link](./Algorithm/Baekjoon/p20168.java)                     | [문제](https://www.acmicpc.net/problem/20168)                | Dijkstra, Binary Search                    |
+| 20208_진우의 민트초코우유                           | [Link](./Algorithm/Baekjoon/p20208.java)                     | [문제](https://www.acmicpc.net/problem/20208)                | 비트마스크, 순열, 구현                     |
 | 20291_파일 정리                                     | [Link](./Algorithm/Baekjoon/p20291.java)                     | [문제](https://www.acmicpc.net/problem/20291)                | 문자열, 구현,  Map                         |
 | 20300_서강근육맨                                    | [Link](./Algorithm/Baekjoon/p20300.java)                     | [문제](https://www.acmicpc.net/problem/20300)                | 그리디                                     |
 | 20437_문자열 게임2                                  | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우                    |
