@@ -165,6 +165,7 @@
 | 1018_체스판                                         | [Link](./Algorithm/Baekjoon/chespan_1018.java)               | [문제](https://www.acmicpc.net/problem/1018)                 | 완전탐색                                   |
 | 1038_감소하는 수                                    | [Link](./Algorithm/Baekjoon/p1038.java)                      | [문제](https://www.acmicpc.net/problem/1038)                 | Brute force                                |
 | 1043_거짓말                                         | [Link](./Algorithm/Baekjoon/p1043.java)                      | [문제](https://www.acmicpc.net/problem/1043)                 | 분리집합, union-find                       |
+| 1058_친구                                           | [Link](./Algorithm/Baekjoon/p1058.java)                      | [문제](https://www.acmicpc.net/problem/1058)                 | 플로이드와샬                               |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
 | 1076_저항                                           | [Link](./Algorithm/Baekjoon/resistance_1076.java)            | [문제](https://www.acmicpc.net/problem/1076)                 | -                                          |
@@ -223,6 +224,7 @@
 | 1744_수 묶기                                        | [Link](./Algorithm/Baekjoon/p1744.java)                      | [문제](https://www.acmicpc.net/problem/1744)                 | Greedy, Sort, 구현                         |
 | 1749_점수따먹기                                     | [Link](./Algorithm/Baekjoon/p1749.java)                      | [문제](https://www.acmicpc.net/problem/1749)                 | 2차원 Prefix Sum, DP                       |
 | 1753_최단거리                                       | [Link](./Algorithm/Baekjoon/p1753.java)                      | [문제](https://www.acmicpc.net/problem/1753)                 | 그래프, 최단거리, 다익스트라               |
+| 1757_달려달려                                       | [Link](./Algorithm/Baekjoon/p1757.java)                      | [문제](https://www.acmicpc.net/problem/1757)                 | DP, 냅색                                   |
 | 1759_암호 만들기                                    | [Link](./Algorithm/Baekjoon/p1759.java)                      | [문제](https://www.acmicpc.net/problem/1759)                 | 백트래킹, 조합, 완전탐색                   |
 | 1764_듣보잡                                         | [Link](./Algorithm/Baekjoon/p1764.java)                      | [문제](https://www.acmicpc.net/problem/1764)                 | 문자열, 구현                               |
 | 1766_문제집                                         | [Link](./Algorithm/Baekjoon/CollectionOfProblem_1766.java)   | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA1766-%EB%AC%B8%EC%A0%9C%EC%A7%91?category=936483) | 위상정렬                                   |
@@ -546,6 +548,7 @@
 | 20437_문자열 게임2                                  | [Link](./Algorithm/Baekjoon/p20437.java)                     | [문제](https://www.acmicpc.net/problem/20437)                | 문자열, 슬라이딩 윈도우                    |
 | 20438_출석체크                                      | [Link](./Algorithm/Baekjoon/p20438.java)                     | [문제](https://www.acmicpc.net/problem/20438)                | Prefix Sum, 구간합, 수학                   |
 | 20440_니가 싫어 싫어 너무 싫어 싫어 오지 마~        | [Link](./Algorithm/Baekjoon/p20440.java)                     | [문제](https://www.acmicpc.net/problem/20440)                | Prefix Sum, 우선순위 큐, 정렬              |
+| 20444_색종이와 가위                                 | [Link](./Algorithm/Baekjoon/p20444.java)                     | [문제](https://www.acmicpc.net/problem/20444)                | 이분탐색                                   |
 | 20495_수열과 헌팅                                   | [Link](./Algorithm/Baekjoon/p20495.java)                     | [문제](https://www.acmicpc.net/problem/20495)                | lower bound, upper bound, 구현             |
 | 20542_받아쓰기                                      | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘                      |
 | 20546_기적의 매매법                                 | [Link](./Algorithm/Baekjoon/p20546.java)                     | [문제](https://www.acmicpc.net/problem/20546)                | 구현                                       |
