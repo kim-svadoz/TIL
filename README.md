@@ -512,6 +512,7 @@
 | 16918_봄버맨                                        | [Link](./Algorithm/Baekjoon/p16918.java)                     | [문제](https://www.acmicpc.net/problem/16918)                | 구현                                       |
 | 16926_배열돌리기1                                   | [Link](./Algorithm/Baekjoon/p16926.java)                     | [문제](https://www.acmicpc.net/problem/16926)                | 시뮬레이션, 배열돌리기 1                   |
 | 16927_배열돌리기2                                   | [Link](./Algorithm/Baekjoon/p16927.java)                     | [문제](https://www.acmicpc.net/problem/16927)                | 시뮬레이션, 배열돌리기 2                   |
+| 16928_뱀과 사다리게임                               | [Link](./Algorithm/Baekjoon/p16928.java)                     | [문제](https://www.acmicpc.net/problem/16928)                | BFS                                        |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
@@ -555,6 +556,7 @@
 | 20495_수열과 헌팅                                   | [Link](./Algorithm/Baekjoon/p20495.java)                     | [문제](https://www.acmicpc.net/problem/20495)                | lower bound, upper bound, 구현             |
 | 20542_받아쓰기                                      | [Link](./Algorithm/Baekjoon/p20542.java)                     | [문제](https://www.acmicpc.net/problem/20542)                | DP, 편집거리 알고리즘                      |
 | 20546_기적의 매매법                                 | [Link](./Algorithm/Baekjoon/p20546.java)                     | [문제](https://www.acmicpc.net/problem/20546)                | 구현                                       |
+| 20665_독서실 거리두기                               | [Link](./Algorithm/Baekjoon/p20665.java)                     | [문제](https://www.acmicpc.net/problem/20665)                | 구현, 시뮬레이션                           |
 | 21275_폰 호석만                                     | [Link](./Algorithm/Baekjoon/p21275.java)                     | [문제](https://www.acmicpc.net/problem/21275)                | 진법변환, 구현, 브루트포스                 |
 | 21276_계보 복원가 호석                              | [Link](./Algorithm/Baekjoon/p21276.java)                     | [문제](https://www.acmicpc.net/problem/21276)                | 위상정렬, 문자열 그래프, TreeMap           |
 | 21277_짠돌이 호석                                   | [Link](./Algorithm/Baekjoon/p21277.java)                     | [문제](https://www.acmicpc.net/problem/21277)                | 2차원배열회전, 구현, 브루트포스            |
