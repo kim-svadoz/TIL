@@ -373,6 +373,7 @@
 | 9252_LCS 2                                          | [Link](./Algorithm/Baekjoon/p9252.java)                      | [문제](https://www.acmicpc.net/problem/9252)                 | DP, LCS                                    |
 | 9328_열쇠                                           | [Link](./Algorithm/Baekjoon/p9328.java)                      | [문제](https://www.acmicpc.net/problem/9328)                 | BFS, 구현                                  |
 | 9342_염색체                                         | [Link](./Algorithm/Baekjoon/p9342.java)                      | [문제](https://www.acmicpc.net/problem/9342)                 | 문자열, 구현, 정규표현식                   |
+| 9461_파도반 수열                                    | [Link](./Algorithm/Baekjoon/p9461.java)                      | [문제](https://www.acmicpc.net/problem/9461)                 | DP                                         |
 | 9465_스티커                                         | [Link](./Algorithm/Baekjoon/p9465.java)                      | [문제](https://www.acmicpc.net/problem/9465)                 | DP                                         |
 | 9466_텀 프로젝트                                    | [Link](./Algorithm/Baekjoon/p9466.java)                      | [문제](https://www.acmicpc.net/problem/9466)                 | 그래프,  DFS                               |
 | 9613_GCD 합                                         | [Link](./Algorithm/Baekjoon/p9613.java)                      | [문제](https://www.acmicpc.net/problem/9613)                 | 유클리드 호제법                            |
@@ -514,6 +515,7 @@
 | 16927_배열돌리기2                                   | [Link](./Algorithm/Baekjoon/p16927.java)                     | [문제](https://www.acmicpc.net/problem/16927)                | 시뮬레이션, 배열돌리기 2                   |
 | 16928_뱀과 사다리게임                               | [Link](./Algorithm/Baekjoon/p16928.java)                     | [문제](https://www.acmicpc.net/problem/16928)                | BFS                                        |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
+| 16943_숫자 재배치                                   | [Link](./Algorithm/Baekjoon/p16943.java)                     | [문제](https://www.acmicpc.net/problem/16943)                | 순열                                       |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
 | 17144_미세먼지안녕!                                 | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                                 |
