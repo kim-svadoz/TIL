@@ -4,7 +4,7 @@
 >
 >   전반적인 흐름은 gyoogle님의 깃허브를 참고하였으며, 추가 레퍼런스는 글을 진행하며 알려드릴 것입니다. 파이팅 !
 
-- [자바 컴파일 과정](#자바-컴파일과정)
+- [자바 컴파일 과정](#자바-컴파일-과정)
 - [Call by value vs Call by reference](#call-by-value-vs-call-by-reference)
 - [String 친구들](#string-stringbuffer-stringbuilder)
 - [JVM](#jvm)
@@ -21,6 +21,8 @@
 - [Final keyword](#final)
 - [Overriding vs Overloading](#overriding-vs-overloading)
 - [Access Modifier](#access-modifier)
+- [Optional Class](#optional-class)
+- [일급컬렉션](#일급컬렉션)
 
 # 자바 컴파일과정
 
@@ -2084,13 +2086,6 @@ fun(SubClass sub) {
 | 범위 해결 연산자         | 범위 확인 연산자는 전역 변수에 액세스 하고 클래스 외부의 메서드를 정의하는데 사용하는데 C++은 이를 지원한다. | 지원하지 않는다.                                             |
 | 런타임 오류 감지         | 런타임 오류 감지는 프로그래머의 책임                         | 런타임 오류 감지는 시스템에 의해 제어                        |
 | 하드웨어                 | 하드웨어에 가깝고 하드웨어 리소스를 조작할 수 있는 많은 라이브러리가 있다. 종종 시스템 프로그래밍, 게임 응용 프로그램, 운영체제 및 컴파일러에 사용된다. | 대부분 응용 프로그램 개발 언어이며 하드웨어에 가깝지 않다.   |
-
-<<<<<<< Updated upstream
-# 싱글턴 패턴
-
-# 빌더패턴
-
-# 팩토리메서드 패턴
 
 # 정적패토리메서드
 
