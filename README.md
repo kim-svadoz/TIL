@@ -352,6 +352,7 @@
 | 5597_과제 안내신 분..?                              | [Link](./Algorithm/Baekjoon/p5597.java)                      | [문제](https://www.acmicpc.net/problem/5597)                 | 구현, counting sort                        |
 | 5622_다이얼                                         | [Link](./Algorithm/Baekjoon/p5622.java)                      | [문제](https://www.acmicpc.net/problem/5622)                 | 구현                                       |
 | 6086_최대유량                                       | [Link](./Algorithm/Baekjoon/MaximumFlow_6086.java)           | [문제](https://coder-in-war.tistory.com/entry/Baekjoon-JAVA6086-%EC%B5%9C%EB%8C%80%EC%9C%A0%EB%9F%89?category=936483) | 최대유량 알고리즘                          |
+| 6159_코스튬 파티                                    | [Link](./Algorithm/Baekjoon/p6159.java)                      | [문제](https://www.acmicpc.net/problem/6159)                 | 이분탐색                                   |
 | 6236_용돈관리                                       | [Link](./Algorithm/Baekjoon/p6236.java)                      | [문제](https://www.acmicpc.net/problem/6236)                 | 이분탐색                                   |
 | 6443_애너그램                                       | [Link](./Algorithm/Baekjoon/p6443.java)                      | [문제](https://www.acmicpc.net/problem/6443)                 | 백트래킹, 수학, 구현                       |
 | 6550_부분 문자열                                    | [Link](./Algorithm/Baekjoon/p6550.java)                      | [문제](https://www.acmicpc.net/problem/6550)                 | 문자열, 구현                               |
