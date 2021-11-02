@@ -201,6 +201,8 @@
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
 | 1480_보석모으기                                     | [Link](./Algorithm/Baekjoon/p1480.java)                      | [문제](https://www.acmicpc.net/problem/1480)                 | 배낭 알고리즘, 비트마스킹                  |
+| 1484_다이어트                                       | [Link](./Algorithm/Baekjoon/p1484.java)                      | [문제](https://www.acmicpc.net/problem/1484)                 | 수학                                       |
+| 1504_특정한 최단경로                                | [Link](./Algorithm/Baekjoon/p1504.java)                      | [문제](https://www.acmicpc.net/problem/1504)                 | 다익스트라                                 |
 | 1516_게임개발                                       | [Link](./Algorithm/Baekjoon/p1516.java)                      | [문제](https://www.acmicpc.net/problem/1516)                 | 그래프, 위상정렬                           |
 | 1517_버블 소트                                      | [Link](./Algorithm/Baekjoon/p1517.java)                      | [문제](https://www.acmicpc.net/problem/1517)                 | 분할 정복, Merge Sort                      |
 | 1520_내리막 길                                      | [Link](./Algorithm/Baekjoon/p1520.java)                      | [문제](https://www.acmicpc.net/problem/1520)                 | DFS, DP, 해당 칸으로 들어오는 가지 수      |
@@ -329,6 +331,7 @@
 | 3055_탈출                                           | [Link](./Algorithm/Baekjoon/p3055.java)                      | [문제](https://www.acmicpc.net/problem/3055)                 | BFS, 멀티 소스 BFS                         |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3184_양                                             | [Link](./Algorithm/Baekjoon/p3184.java)                      | [문제](https://www.acmicpc.net/problem/3184)                 | bfs, 구현                                  |
+| 3190_뱀                                             | [Link](./Algorithm/Baekjoon/p3190.java)                      | [문제](https://www.acmicpc.net/problem/3190)                 | 구현, 시뮬레이션                           |
 | 3273_두 수의 합                                     | [Link](./Algorithm/Baekjoon/p3273.java)                      | [문제](https://www.acmicpc.net/problem/3273)                 | 이분탐색                                   |
 | 3584_가장 가까운 공통 조상                          | [Link](./Algorithm/Baekjoon/p3584.java)                      | [문제](https://www.acmicpc.net/problem/3584)                 | 트리, LCA, dfs                             |
 | 3687_성냥개비                                       | [Link](./Algorithm/Baekjoon/p3687.java)                      | [문제](https://www.acmicpc.net/problem/3687)                 | DP, 구현                                   |
@@ -517,6 +520,7 @@
 | 16928_뱀과 사다리게임                               | [Link](./Algorithm/Baekjoon/p16928.java)                     | [문제](https://www.acmicpc.net/problem/16928)                | BFS                                        |
 | 16937_두 스티커                                     | [Link](./Algorithm/Baekjoon/p16937.java)                     | [문제](https://www.acmicpc.net/problem/16937)                | 브루트포스, 구현                           |
 | 16943_숫자 재배치                                   | [Link](./Algorithm/Baekjoon/p16943.java)                     | [문제](https://www.acmicpc.net/problem/16943)                | 순열                                       |
+| 16953_A->B                                          | [Link](./Algorithm/Baekjoon/p16953.java)                     | [문제](https://www.acmicpc.net/problem/16953)                | bfs                                        |
 | 16987_계란으로 계란치기                             | [Link](./Algorithm/Baekjoon/p16987.java)                     | [문제](https://www.acmicpc.net/problem/16987)                | 백트래킹, 브루트포스, 구현                 |
 | 17136_색종이 붙이기                                 | [Link](./Algorithm/Baekjoon/p17136.java)                     | [문제](https://www.acmicpc.net/problem/17136)                | 백트래킹                                   |
 | 17144_미세먼지안녕!                                 | [Link](./Algorithm/Baekjoon/SAMSUNG_misemunji_17144.java)    | [문제](https://www.acmicpc.net/problem/17144)                | 시뮬레이션                                 |
