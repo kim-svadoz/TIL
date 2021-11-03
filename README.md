@@ -200,6 +200,7 @@
 | 1451_직사각형으로 나누기                            | [Link](./Algorithm/Baekjoon/p1451.java)                      | [문제](https://www.acmicpc.net/problem/1451)                 | 완전탐색, 구현                             |
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
+| 1477_휴게소 세우기                                  | [Link](./Algorithm/Baekjoon/p1477.java)                      | [문제](https://www.acmicpc.net/problem/1477)                 | 이분탐색                                   |
 | 1480_보석모으기                                     | [Link](./Algorithm/Baekjoon/p1480.java)                      | [문제](https://www.acmicpc.net/problem/1480)                 | 배낭 알고리즘, 비트마스킹                  |
 | 1484_다이어트                                       | [Link](./Algorithm/Baekjoon/p1484.java)                      | [문제](https://www.acmicpc.net/problem/1484)                 | 수학                                       |
 | 1504_특정한 최단경로                                | [Link](./Algorithm/Baekjoon/p1504.java)                      | [문제](https://www.acmicpc.net/problem/1504)                 | 다익스트라                                 |
@@ -329,6 +330,7 @@
 | 2961_도영이가 만든 맛있는 음식                      | [Link](./Algorithm/Baekjoon/p2961.java)                      | [문제](https://www.acmicpc.net/problem/2961)                 | 브루트포스                                 |
 | 3029_경고                                           | [Link](./Algorithm/Baekjoon/p3029.java)                      | [문제](https://www.acmicpc.net/problem/3029)                 | 문자열, 구현                               |
 | 3055_탈출                                           | [Link](./Algorithm/Baekjoon/p3055.java)                      | [문제](https://www.acmicpc.net/problem/3055)                 | BFS, 멀티 소스 BFS                         |
+| 3107_IPv6                                           | [Link](./Algorithm/Baekjoon/p3107.java)                      | [문제](https://www.acmicpc.net/problem/3107)                 | 문자열, 구현                               |
 | 3108_로고                                           | [Link](./Algorithm/Baekjoon/p3108.java)                      | [문제](https://www.acmicpc.net/problem/3108)                 | 완전탐색, bfs                              |
 | 3184_양                                             | [Link](./Algorithm/Baekjoon/p3184.java)                      | [문제](https://www.acmicpc.net/problem/3184)                 | bfs, 구현                                  |
 | 3190_뱀                                             | [Link](./Algorithm/Baekjoon/p3190.java)                      | [문제](https://www.acmicpc.net/problem/3190)                 | 구현, 시뮬레이션                           |
