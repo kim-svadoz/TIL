@@ -166,6 +166,7 @@
 | 1028_다이아몬드 광산                                | [Link](./Algorithm/Baekjoon/p1028.java)                      | [문제](https://www.acmicpc.net/problem/1028)                 | DP 4개                                     |
 | 1038_감소하는 수                                    | [Link](./Algorithm/Baekjoon/p1038.java)                      | [문제](https://www.acmicpc.net/problem/1038)                 | Brute force                                |
 | 1043_거짓말                                         | [Link](./Algorithm/Baekjoon/p1043.java)                      | [문제](https://www.acmicpc.net/problem/1043)                 | 분리집합, union-find                       |
+| 1053_팰린드롬 공장                                  | [Link](./Algorithm/Baekjoon/p1053.java)                      | [문제](https://www.acmicpc.net/problem/1053)                 | DP, 팰린드롬                               |
 | 1058_친구                                           | [Link](./Algorithm/Baekjoon/p1058.java)                      | [문제](https://www.acmicpc.net/problem/1058)                 | 플로이드와샬                               |
 | 1062_가르침                                         | [Link](./Algorithm/Baekjoon/p1062.java)                      | [문제](https://www.acmicpc.net/problem/1062)                 | 문자열, 백트래킹, 비트마스킹, 브루트포스   |
 | 1072_게임                                           | [Link](./Algorithm/Baekjoon/p1072.java)                      | [문제](https://www.acmicpc.net/problem/1072)                 | binary search                              |
