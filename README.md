@@ -509,6 +509,7 @@
 | 15721_번데기                                        | [Link](./Algorithm/Baekjoon/p15721.java)                     | [문제](https://www.acmicpc.net/problem/15721)                | 브루트 포스, 구현                          |
 | 15724_주지수                                        | [Link](./Algorithm/Baekjoon/p15724.java)                     | [문제](https://www.acmicpc.net/problem/15724)                | DP, 2차원 배열 구간합                      |
 | 15787_기차가 어둠을 헤치고 은하수를                 | [Link](./Algorithm/Baekjoon/p15787.java)                     | [문제](https://www.acmicpc.net/problem/15787)                | 구현, 비트마스킹                           |
+| 16162_가희와 3단고음                                | [Link](./Algorithm/Baekjoon/p16162.java)                     | [문제](https://www.acmicpc.net/problem/16162)                | 그리디                                     |
 | 16171_나는 친구가 적다                              | [Link](./Algorithm/Baekjoon/p16171.java)                     | [문제](https://www.acmicpc.net/problem/16171)                | 문자열, 구현, contains, indexof            |
 | 16235_나무 재테크                                   | [Link](./Algorithm/Baekjoon/p16235.java)                     | [문제](https://www.acmicpc.net/problem/16235)                | 구현, 시뮬레이션                           |
 | 16236_아기상어                                      | [Link](./Algorithm/Baekjoon/SAMSUNG_babyShark_16236.java)    | [문제](https://www.acmicpc.net/problem/16236)                | BFS, 그리디, 브루트포스, 구현              |
