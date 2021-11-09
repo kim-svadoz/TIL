@@ -674,6 +674,13 @@
 | LC103    | [Link](./Algorithm/LeetCode/LC103_BinaryTreeZigZagTraversal.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA103-Binary-Tree-Zigzag-Level-Order-Traversal) | Tree, Stack          |
 | LC155    | [Link](./Algorithm/LeetCode/LC155_MinStack.java)             | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA155-MinStack) | Stack                |
 
+### [Codility](./Algorithm/Codility)
+
+| 문제번호       | 솔루션                                           | 문제 링크                                                    | 비고     |
+| -------------- | ------------------------------------------------ | ------------------------------------------------------------ | -------- |
+| Easy_BinaryGap | [Link](./Algorithm/Codility/Easy_BinaryGap.java) | [문제](https://app.codility.com/programmers/lessons/1-iterations/binary_gap/) | 구현     |
+| Medium_Flags   | [Link](./Algorithm/Codility/L10_M_Flags.java)    | [문제](https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/flags/) | 이분탐색 |
+
 [위로](#til)
 
 ---
