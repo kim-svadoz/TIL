@@ -676,10 +676,18 @@
 
 ### [Codility](./Algorithm/Codility)
 
-| 문제번호       | 솔루션                                           | 문제 링크                                                    | 비고     |
-| -------------- | ------------------------------------------------ | ------------------------------------------------------------ | -------- |
-| Easy_BinaryGap | [Link](./Algorithm/Codility/Easy_BinaryGap.java) | [문제](https://app.codility.com/programmers/lessons/1-iterations/binary_gap/) | 구현     |
-| Medium_Flags   | [Link](./Algorithm/Codility/L10_M_Flags.java)    | [문제](https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/flags/) | 이분탐색 |
+| 문제번호                      | 솔루션                                                       | 문제 링크                                                    | 비고           |
+| ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------- |
+| L1_Easy_BinaryGap             | [Link](./Algorithm/Codility/L1_Easy_BinaryGap.java)          | [문제](https://app.codility.com/programmers/lessons/1-iterations/binary_gap/) | 구현           |
+| L2_Easy_CyclicRotation        | [Link](./Algorithm/Codility/L2_Easy_CyclicRotation.java)     | [문제](https://app.codility.com/programmers/lessons/2-arrays/cyclic_rotation/) | 구현           |
+| L2_Easy_OddOccurrencesInArray | [Link](./Algorithm/Codility/L2_Easy_OddOccurrencesInArray.java) | [문제](https://app.codility.com/programmers/lessons/2-arrays/odd_occurrences_in_array/) | 구현           |
+| L3_Easy_FrogJump              | [Link](./Algorithm/Codility/L3_Easy_FrogJump.java)           | [문제](https://app.codility.com/programmers/lessons/3-time_complexity/frog_jmp/) | 구현           |
+| L3_Easy_PermMissingElem       | [Link](./Algorithm/Codility/L3_Easy_PermMissingElem.java)    | [문제](https://app.codility.com/programmers/lessons/3-time_complexity/perm_missing_elem/) | 구현           |
+| L3_Easy_TapeEquilibrium       | [Link](./Algorithm/Codility/L3_Easy_TapeEquilibrium.java)    | [문제](https://app.codility.com/programmers/lessons/3-time_complexity/tape_equilibrium/) | 누적합, 구현   |
+| L4_Easy_FrogRiverOne          | [Link](./Algorithm/Codility/L4_Easy_FrogRiverOne.java)       | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/frog_river_one/) | 자료구조, 구현 |
+| L4_Easy_PermCheck             | [Link](./Algorithm/Codility/L4_Easy_PermCheck.java)          | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/perm_check/) | 구현           |
+| L4_Medium_MaxCounters         | [Link](./Algorithm/Codility/L4_Medium_MaxCounters.java)      | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/max_counters/) | 시복, 카운팅   |
+| L10_Medium_Flags              | [Link](./Algorithm/Codility/L10_Medium_Flags.java)           | [문제](https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/flags/) | 이분탐색       |
 
 [위로](#til)
 

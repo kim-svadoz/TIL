@@ -3,7 +3,7 @@
  * 이분탐색
  */
 import java.util.*;
-public class L10_M_Flags {
+public class L10_Medium_Flags {
     class Solution {
         int len;
         List<Integer> list;
