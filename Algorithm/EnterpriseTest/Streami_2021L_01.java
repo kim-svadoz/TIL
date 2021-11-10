@@ -1,3 +1,6 @@
+/**
+ * 정확도 37 (이유를 찾아보자.)
+ */
 import java.util.*;
 
 public class Streami_2021L_01 {

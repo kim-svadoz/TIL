@@ -1,3 +1,6 @@
+/**
+ * 정확도 0
+ */
 import java.util.*;
 
 public class Streami_2021L_03 {

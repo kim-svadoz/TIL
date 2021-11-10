@@ -1,3 +1,6 @@
+/**
+ * 정확도 71 (Big BinaryString에 대한 처리 못함)
+ */
 import java.math.BigInteger;
 import java.util.*;
 
