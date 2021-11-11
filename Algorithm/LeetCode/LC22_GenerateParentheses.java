@@ -1,4 +1,5 @@
-public class GenerateParenthesis {
+import java.util.*;
+public class LC22_GenerateParentheses {
     public class Solution {
         List<String> list;
         public List<String> generateParenthesis(int n) {

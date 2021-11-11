@@ -1,4 +1,5 @@
-class LRUCache {
+import java.util.*;
+public class LC146_LRUCache {
     // 시간복잡도 : O(1);
     // doubly linked list + HashMap !!
     public class CacheItem {
@@ -16,7 +17,7 @@ class LRUCache {
     int capacity;
     Map<Integer, CacheItem> map;
     
-    public LRUCache(int capacity) {
+    public LC146_LRUCache(int capacity) {
         // 생성자
         head = null;
         tail = null;

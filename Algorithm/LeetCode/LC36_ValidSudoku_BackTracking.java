@@ -1,30 +1,28 @@
-package LeetCode;
-
 import java.util.Arrays;
 
 public class LC36_ValidSudoku_BackTracking {
 
 	public static void main(String[] args) {
-		//ÁÖ¾îÁø ½ºµµÄí°¡ À¯È¿ÇÑ ½ºµµÄíÀÎÁö È®ÀÎÇÏ´Â ¸Þ¼Òµå.
+		//ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼Òµï¿½.
 	}
 	
 	public static boolean isValidSudoku(char[][] board) {
 		boolean[] b = new boolean[9];
-		//·êÀÇ Á¾·ù, °¡·Î/¼¼·Î/¼·±×¸®µå
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½
 		for(int i=0; i<3; i++) {
-			//ÇÑÁÙÀÇ ±ÔÄ¢
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¢
 			for(int j=0; j<9; j++) {
 				Arrays.fill(b, false);
 				for(int k=0; k<9; k++) {
 					char cur= '.';
 					if(i == 0) {
-						//°¡·Î
+						//ï¿½ï¿½ï¿½ï¿½
 						cur=board[j][k];
 					}else if(i == 1) {
-						//¼¼·Î
+						//ï¿½ï¿½ï¿½ï¿½
 						cur=board[k][j];
 					}else {
-						//¼·±×¸®µå
+						//ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½
 						cur = board[j/3*3 + k/3][j%3*3 + k%3];
 					}
 					if(cur=='.') continue;

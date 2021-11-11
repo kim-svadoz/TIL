@@ -1,5 +1,3 @@
-package LeetCode;
-
 public class LC72_EditDistance {
 
 	public static void main(String[] args) {
@@ -10,11 +8,11 @@ public class LC72_EditDistance {
 		int len1 = word1.length();
 		int len2 = word2.length();
 		//d[i][j]
-		//wrod1ÀÇ i±îÁöÀÇ ºÎºÐ¹®ÀÚ¿­À» word2ÀÇ j±îÁöÀÇ ºÎºÐ¹®ÀÚ¿­·Î °íÃ¼ÇÏ±â À§ÇÑ ÃÖ¼Ò ÀÛ¾÷ ¼ö 
+		//wrod1ï¿½ï¿½ iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÎºÐ¹ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ word2ï¿½ï¿½ jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÎºÐ¹ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ 
 		//abc, def d[1][1] : a->d 1
 		int[][] d = new int[len1+1][len2+1];
-		//************* ÃÊ±âÈ­
-		//i : word1ÀÇ ºÎºÐ¹®ÀÚ¿­
+		//************* ï¿½Ê±ï¿½È­
+		//i : word1ï¿½ï¿½ ï¿½ÎºÐ¹ï¿½ï¿½Ú¿ï¿½
 		//j : ""
 		for(int i=0; i<=len1; i++) {
 			d[i][0] = i;
@@ -28,7 +26,7 @@ public class LC72_EditDistance {
 		 * b	1	2
 		 *
 		*/		
-		//************ ·çÇÁ
+		//************ ï¿½ï¿½ï¿½ï¿½
 		for(int i=1; i<=len1; i++) {
 			for(int j=1; j<=len2; j++) {
 				if(word1.charAt(i-1)==word2.charAt(j-1)) {

@@ -1,11 +1,9 @@
-package LeetCode;
-
 public class LC938_RangeSumOfBST {
 	// 1 2 [ 3 4 5 6 7 8 9 10 ] 11 12
 	/* 0. root = null return 0;
-	 * 1. root.val<L -> ¿À¸¥ÂÊ ¼·Æ®¸®¸¸ Å½»ö
-	 * 2. root.val>R -> ¿ÞÂÊ ¼·Æ®¸®¸¸ Å½»ö
-	 * 3. L<=root.val<=R -> ¿ÞÂÊ¼·Æ®¸®+³»°ª+¿À¸¥ÂÊ ¼·Æ®¸®
+	 * 1. root.val<L -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+	 * 2. root.val>R -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½
+	 * 3. L<=root.val<=R -> ï¿½ï¿½ï¿½Ê¼ï¿½Æ®ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½
 	*/
 	public int rangeSumBST(TreeNode root, int L, int R) {
 		if(root==null) return 0;

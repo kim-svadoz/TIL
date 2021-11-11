@@ -1,5 +1,3 @@
-package LeetCode;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -9,8 +7,8 @@ public class LC103_BinaryTreeZigZagTraversal {
 	public static void main(String[] args) {
 
 	}
-	// ·¹º§ º° ½ºÅÃ »ç¿ë
-	// ÇÃ·¡±× º¯¼ö »ç¿ë -> Å½»ö¹æÇâÀ» °áÁ¤
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ -> Å½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public static List<List<Integer>> solution(TreeNode root) {
 		List<List<Integer>> ret = new ArrayList<>();
 		if(root==null) return ret;
@@ -24,7 +22,7 @@ public class LC103_BinaryTreeZigZagTraversal {
 			Stack<TreeNode> newStack = new Stack<>();
 			List<Integer> level = new ArrayList<>();
 			for(int i=0; i<size; i++) {
-				// ÇöÀç ·¹º§ ³ëµåµé, ±× ÀÚ¼Õµé Ã³¸®
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½Ú¼Õµï¿½ Ã³ï¿½ï¿½
 				TreeNode node = s.pop();
 				level.add(node.val);
 				if(flag) {

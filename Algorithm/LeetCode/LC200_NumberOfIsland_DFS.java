@@ -1,5 +1,3 @@
-package LeetCode;
-
 //dfs, 
 class LC200_NumberOfIsland_DFS {
 	public int numIslands(char[][] grid) {

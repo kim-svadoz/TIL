@@ -1,15 +1,13 @@
-package LeetCode;
-
 public class LC300_LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
 		int[] input = {10, 9, 2, 5, 3, 7, 10, 18};
 		solution(input);
 	}
-	// Áõ°¡ÇÏ´Â ¼ø¿­ÀÌ °¡Àå ¸¹Àº °³¼ö
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public static int solution(int[] nums) {
 		if(nums==null || nums.length==0) return 0;
-		//Á¡È­½Ä
+		//ï¿½ï¿½È­ï¿½ï¿½
 		int[] d = new int[nums.length];
 		d[0] = 1;
 		

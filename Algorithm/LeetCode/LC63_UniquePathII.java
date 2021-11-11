@@ -1,40 +1,29 @@
-package LeetCode;
-
-public class LC63_UniquePathII {
-
-	public static void main(String[] args) {
-		int[][] obstacleGird = {
-				{0, 0, 0},
-				{0, 1, 0},
-				{0, 0, 0}
-		};
-		solution(obstacleGird);
-	}
-	
-	public static int solution(int[][] obstacleGird) {
-		
-		/*
-		 d[i][j] = 0,0 -> i,j °æ·ÎÀÇ °¹¼ö
-		 return d[x][y];
-		 */
-		int[][] o = obstacleGird;
-		int[][] d = new int[o.length][o.length];
-		d[0][0] = 1;
-		
-		for(int i=0; i<o.length; i++) {
-			for(int j=0; j<o[0].length; j++) {
-				int cur = o[i][j];
-				if(cur == 1) {
-					d[i][j] = 0;
-				}else {
-					if(i>0) d[i][j]+=d[i-1][j];
-					if(j>0) d[i][j]+=d[i][j-1];
-				}
-			}
-		}
-		
-		System.out.println(d[o.length-1][o.length-1]);
-		return d[o.length-1][o.length-1];
-	}
-
+public class LC62_UniquePath {
+    class Solution {
+        public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+            int m = obstacleGrid.length;
+            int n = obstacleGrid[0].length;
+            int[][] d = new int[m][n];
+            if (obstacleGrid[0][0] == 1) return 0;
+            
+            for (int i = 0; i < m; i++) {
+                if (obstacleGrid[i][0] == 1) break;
+                d[i][0] = 1;
+            }
+            for (int i = 0; i < n; i++) {
+                if (obstacleGrid[0][i] == 1) break;
+                d[0][i] = 1;
+            }
+            for (int i = 1; i < m; i++) {
+                for (int j = 1; j < n; j++) {
+                    if (obstacleGrid[i][j] == 1) {
+                        d[i][j] = 0;
+                        continue;
+                    }
+                    d[i][j] = d[i-1][j] + d[i][j-1];
+                }
+            }
+            return d[m-1][n-1];
+        }
+    }
 }

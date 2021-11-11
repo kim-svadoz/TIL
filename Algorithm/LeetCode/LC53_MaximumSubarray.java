@@ -1,5 +1,3 @@
-package LeetCode;
-
 public class LC53_MaximumSubarray {
 
 	public static void main(String[] args) {
@@ -7,7 +5,7 @@ public class LC53_MaximumSubarray {
 	}
 	
 	public int maxSubArray(int[] nums) {
-		// d[i] : i¹øÂ° ¿ø¼Ò°¡ ¸¶Áö¸· ¿ø¼ÒÀÎ ºÎºÐ¹è¿­ÀÇ ÇÕ Áß ÃÖ´ë°ª
+		// d[i] : iï¿½ï¿½Â° ï¿½ï¿½ï¿½Ò°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÎºÐ¹è¿­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ë°ª
 		// d[2] : max(nums[2], nums[1]+nums[2], nums[0]+nums[1]+nums[2])
 		int[] d = new int[nums.length];
 		d[0] = nums[0];

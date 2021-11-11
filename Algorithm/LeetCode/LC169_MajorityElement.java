@@ -1,5 +1,3 @@
-package LeetCode;
-
 public class LC169_MajorityElement {
 
 	public static void main(String[] args) {

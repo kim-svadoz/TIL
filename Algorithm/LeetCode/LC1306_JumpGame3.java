@@ -1,3 +1,4 @@
+import java.util.*;
 public class LC1306_JumpGame3 {
     class Solution {
         private int len, start;

@@ -1,23 +1,21 @@
-package LeetCode;
-
 import java.util.PriorityQueue;
 
 public class LC215_KthLargestElementinanArray {
 
-	//k¹øÂ°·Î Å« ¼ýÀÚ¸¦ Ã£¾Æ¶ó!
-	//¿ì¼±¼øÀ§ Å¥ : offer poll peek
-	//ÀÚ¹Ù°°Àº °æ¿ì : natural ordering, integer°°Àº °æ¿ì ¿À¸§Â÷¼ø Á¤·ÄÀÌ ±âº»
+	//kï¿½ï¿½Â°ï¿½ï¿½ Å« ï¿½ï¿½ï¿½Ú¸ï¿½ Ã£ï¿½Æ¶ï¿½!
+	//ï¿½ì¼±ï¿½ï¿½ï¿½ï¿½ Å¥ : offer poll peek
+	//ï¿½Ú¹Ù°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ : natural ordering, integerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº»
 	//offer : 3 2 1 5 4 -> poll : 1 2 3 4 5
-	//½Ã°£º¹Àâµµ offer/poll O(logn)
+	//ï¿½Ã°ï¿½ï¿½ï¿½ï¿½âµµ offer/poll O(logn)
 	public static void main(String[] args) {
 		int[] input = {3, 2, 1, 5, 6, 4};
 		int k = 2;
 		solution(input, k);
 	}
-	//¹®Á¦Ç®ÀÌÀü·«
-	//Å¥¿¡´Â k°³ÀÇ ¿ø¼Ò¸¦ º¸°ü
-	//ÀÌÁ¦²¯ º» ¿ø¼ÒÁß °¡Àå Å« k°³
-	//Å¥ÀÇ ¸Ç ¾Õ¿¡´Â k°³Áß °¡Àå ÀÛÀº °ÍÀÌ ÀÖ´Ù.
+	//ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//Å¥ï¿½ï¿½ï¿½ï¿½ kï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å« kï¿½ï¿½
+	//Å¥ï¿½ï¿½ ï¿½ï¿½ ï¿½Õ¿ï¿½ï¿½ï¿½ kï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
 	public static int solution(int[] nums, int k) {
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		

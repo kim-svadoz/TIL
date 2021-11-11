@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class LC45_JumpGame2 {
     class Solution {
         public int jump(int[] nums) {

@@ -1,5 +1,3 @@
-package LeetCode;
-
 public class LC152_MaximumProductSubarray {
 
 	public static void main(String[] args) {

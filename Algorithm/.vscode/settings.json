@@ -1,9 +1,5 @@
 {
     "java.project.sourcePaths": [
-        "test",
-        "Programmers",
-        "EnterpriseTest",
-        ".vscode",
-        "TestCode"
+        "LeetCode"
     ]
 }

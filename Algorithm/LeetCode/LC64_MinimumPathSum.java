@@ -1,5 +1,3 @@
-package LeetCode;
-
 public class LC64_MinimumPathSum {
 
 	public static void main(String[] args) {
