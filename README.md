@@ -653,26 +653,34 @@
 
 ### [LeetCode](./Algorithm/LeetCode)
 
-| 문제번호 | 솔루션                                                       | 문제 링크                                                    | 비고                 |
-| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------- |
-| LC36     | [Link](./Algorithm/LeetCode/LC36_ValidSudoku_BackTracking.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA36-Valid-Sudoku%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠 |
-| LC37     | [Link](./Algorithm/LeetCode/LC37_SudokuSolver.java)          | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA37-Sudoku-Solver-%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠 |
-| LC173    | [Link](./Algorithm/LeetCode/LC173_BinarySearchTreeIterator.java) | [문제](https://leetcode.com/problems/binary-search-tree-iterator/) | BST                  |
-| LC200    | [Link](./Algorithm/LeetCode/LC200_NumberOfIsland_DFS.java)   | [문제](https://leetcode.com/problems/number-of-islands/)     | DFS                  |
-| LC260    | [Link](./Algorithm/LeetCode/LC260_SingleNumber_XOR.java)     | [문제](https://leetcode.com/problems/single-number-iii/)     | 비트연산             |
-| LC380    | [Link](./Algorithm/LeetCode/LC380_HashMapandArrayLIst.java)  | [문제](https://leetcode.com/problems/insert-delete-getrandom-o1/) | HashMap , ArrayList  |
-| LC938    | [Link](./Algorithm/LeetCode/LC938_RangeSumOfBST.java)        | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                  |
-| LC64     | [Link](./Algorithm/LeetCode/LC64_MinimumPathSum.java)        | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                   |
-| LC53     | [Link](./Algorithm/LeetCode/LC53_MaximumSubarray.java)       | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                   |
-| LC72     | [Link](./Algorithm/LeetCode/LC72_EditDistance.java)          | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리         |
-| LC152    | [Link](./Algorithm/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                   |
-| LC63     | [Link](./Algorithm/LeetCode/LC63_UniquePathII.java)          | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                   |
-| LC300    | [Link](./Algorithm/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS              |
-| LC215    | [Link](./Algorithm/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐          |
-| LC31     | [Link](./Algorithm/LeetCode/LC31_NextPermutation.java)       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트 |
-| LC169    | [Link](./Algorithm/LeetCode/LC169_MajorityElement.java)      | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA169-Majority-Element-%EA%B3%BC%EB%B0%98%EC%88%98%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98) | 과반수알고리즘       |
-| LC103    | [Link](./Algorithm/LeetCode/LC103_BinaryTreeZigZagTraversal.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA103-Binary-Tree-Zigzag-Level-Order-Traversal) | Tree, Stack          |
-| LC155    | [Link](./Algorithm/LeetCode/LC155_MinStack.java)             | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA155-MinStack) | Stack                |
+| 문제번호 | 솔루션                                                       | 문제 링크                                                    | 비고                   |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- |
+| LC5      | [Link](./Algorithm/LeetCode/LC5_LongestPalindromicSubstring.java) | [문제](https://leetcode.com/problems/longest-palindromic-substring/) | DP                     |
+| LC22     | [Link](./Algorithm/LeetCode/LC22_GenerateParentheses.java)   | [문제](https://leetcode.com/problems/generate-parentheses/)  | BackTracking           |
+| LC31     | [Link](./Algorithm/LeetCode/LC31_NextPermutation.java)       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트   |
+| LC36     | [Link](./Algorithm/LeetCode/LC36_ValidSudoku_BackTracking.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA36-Valid-Sudoku%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠   |
+| LC37     | [Link](./Algorithm/LeetCode/LC37_SudokuSolver.java)          | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA37-Sudoku-Solver-%EC%8A%A4%EB%8F%84%EC%BF%A0-%ED%8C%90%EB%B3%84) | BackTracking, 스도쿠   |
+| LC45     | [Link](./Algorithm/LeetCode/LC45_JumpGame2.java)             | [문제](https://leetcode.com/problems/jump-game-ii/)          | DP                     |
+| LC53     | [Link](./Algorithm/LeetCode/LC53_MaximumSubarray.java)       | [문제](https://leetcode.com/problems/maximum-subarray/submissions/) | DP                     |
+| LC55     | [Link](./Algorithm/LeetCode/LC55_JumpGame1.java)             | [문제](https://leetcode.com/problems/jump-game/)             | DP                     |
+| LC62     | [Link](./Algorithm/LeetCode/LC62_UniquePath.java)            | [문제](https://leetcode.com/problems/unique-paths/)          | DP                     |
+| LC63     | [Link](./Algorithm/LeetCode/LC63_UniquePathII.java)          | [문제](https://leetcode.com/problems/unique-paths-ii/)       | DP                     |
+| LC64     | [Link](./Algorithm/LeetCode/LC64_MinimumPathSum.java)        | [문제](https://leetcode.com/problems/minimum-path-sum/)      | DP                     |
+| LC72     | [Link](./Algorithm/LeetCode/LC72_EditDistance.java)          | [문제](https://leetcode.com/problems/edit-distance/submissions/) | DP, 수정거리           |
+| LC91     | [Link](./Algorithm/LeetCode/LC91_DecodeWays.java)            | [문제](https://leetcode.com/problems/decode-ways/)           | DP                     |
+| LC103    | [Link](./Algorithm/LeetCode/LC103_BinaryTreeZigZagTraversal.java) | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA103-Binary-Tree-Zigzag-Level-Order-Traversal) | Tree, Stack            |
+| LC146    | [Link](./Algorithm/LeetCode/LC146_LRUCache.java)             | [문제](https://leetcode.com/problems/lru-cache/)             | LRU Cache, Linked List |
+| LC152    | [Link](./Algorithm/LeetCode/LC152_MaximumProductSubarray.java) | [문제](https://leetcode.com/problems/maximum-product-subarray/) | DP                     |
+| LC155    | [Link](./Algorithm/LeetCode/LC155_MinStack.java)             | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA155-MinStack) | Stack                  |
+| LC169    | [Link](./Algorithm/LeetCode/LC169_MajorityElement.java)      | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA169-Majority-Element-%EA%B3%BC%EB%B0%98%EC%88%98%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98) | 과반수알고리즘         |
+| LC200    | [Link](./Algorithm/LeetCode/LC200_NumberOfIsland_DFS.java)   | [문제](https://leetcode.com/problems/number-of-islands/)     | DFS                    |
+| LC215    | [Link](./Algorithm/LeetCode/LC215_KthLargestElementinanArray.java) | [문제](https://leetcode.com/problems/kth-largest-element-in-an-array/) | 우선순위 큐            |
+| LC260    | [Link](./Algorithm/LeetCode/LC260_SingleNumber_XOR.java)     | [문제](https://leetcode.com/problems/single-number-iii/)     | 비트연산               |
+| LC300    | [Link](./Algorithm/LeetCode/LC300_LongestIncreasingSubsequence.java) | [문제](https://leetcode.com/problems/longest-increasing-subsequence/) | DP, LIS                |
+| LC380    | [Link](./Algorithm/LeetCode/LC380_HashMapandArrayLIst.java)  | [문제](https://leetcode.com/problems/insert-delete-getrandom-o1/) | HashMap , ArrayList    |
+| LC938    | [Link](./Algorithm/LeetCode/LC938_RangeSumOfBST.java)        | [문제](https://leetcode.com/problems/range-sum-of-bst/)      | BST                    |
+| LC1306   | [Link](./Algorithm/LeetCode/LC1306_JumpGame3.java)           | [문제](https://leetcode.com/problems/jump-game-iii/)         | BFS                    |
+| LC1871   | [Link](./Algorithm/LeetCode/LC1871_JumpGame4.java)           | [문제](https://leetcode.com/problems/jump-game-vii/)         | DP                     |
 
 ### [Codility](./Algorithm/Codility)
 
