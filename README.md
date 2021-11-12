@@ -655,6 +655,7 @@
 
 | 문제번호 | 솔루션                                                       | 문제 링크                                                    | 비고                   |
 | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------------- |
+| LC3      | [Link](./Algorithm/LeetCode/LC3_LongestSubstringWithoutRepeatingCharacters.java) | [문제](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | 문자열                 |
 | LC5      | [Link](./Algorithm/LeetCode/LC5_LongestPalindromicSubstring.java) | [문제](https://leetcode.com/problems/longest-palindromic-substring/) | DP                     |
 | LC22     | [Link](./Algorithm/LeetCode/LC22_GenerateParentheses.java)   | [문제](https://leetcode.com/problems/generate-parentheses/)  | BackTracking           |
 | LC31     | [Link](./Algorithm/LeetCode/LC31_NextPermutation.java)       | [문제](https://coder-in-war.tistory.com/entry/LeetCode-JAVA31-Next-Permutation-%EB%8B%A4%EC%9D%8C-%EC%88%9C%EC%97%B4) | 다음순열, 렉시컬소트   |
@@ -695,6 +696,7 @@
 | L4_Easy_FrogRiverOne          | [Link](./Algorithm/Codility/L4_Easy_FrogRiverOne.java)       | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/frog_river_one/) | 자료구조, 구현 |
 | L4_Easy_PermCheck             | [Link](./Algorithm/Codility/L4_Easy_PermCheck.java)          | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/perm_check/) | 구현           |
 | L4_Medium_MaxCounters         | [Link](./Algorithm/Codility/L4_Medium_MaxCounters.java)      | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/max_counters/) | 시복, 카운팅   |
+| L4_Medium_MissingInteger      | [Link](./Algorithm/Codility/L4_Medium_MissingInteger.java)   | [문제](https://app.codility.com/programmers/lessons/4-counting_elements/missing_integer/) | 자료구조, 구현 |
 | L10_Medium_Flags              | [Link](./Algorithm/Codility/L10_Medium_Flags.java)           | [문제](https://app.codility.com/programmers/lessons/10-prime_and_composite_numbers/flags/) | 이분탐색       |
 
 [위로](#til)
