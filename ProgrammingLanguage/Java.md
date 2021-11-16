@@ -19,10 +19,14 @@
 - [Annotaion](#annotation)
 - [Generic](#generic)
 - [Final keyword](#final)
+- [함수형 프로그래밍](#함수형-프로그래밍)
+- [익명 클래스보다는 람다](#익명-클래스보다는-람다)
+- [lambda 와 effectively final](#lambda-와-effectively-final)
 - [Overriding vs Overloading](#overriding-vs-overloading)
 - [Access Modifier](#access-modifier)
 - [Optional Class](#optional-class)
 - [일급컬렉션](#일급컬렉션)
+- [자바의 예외](#자바의-예외에-대해서)
 
 # 자바 컴파일과정
 
@@ -316,13 +320,20 @@ JVM은 코드를 실행하고, 해당 코드에 대해 런타임 환경을 제�
             -   스레드가 어떤 명령어로 실행되어야 할지 기록하는 부분(JVM 명령의 주소를 가진다)
         -   JVM 스택
             -   지역변수, 매개변수, 메서드 정보, 임시 데이터 등을 저장
+            -   **primitive type이 스택에 저장되고, reference type은 참조값(인스턴스의 주소값)만 저장.**
         -   네이티브 메서드 스택
             -   실제 실행할 수 있는 기계어로 작성된 프로그램을 실행시키는 영역
         -   힙
             -   런타임에 동적으로 할당되는 데이터가 저장되는 영역
             -   객체나 배열 생성이 여기에 해당
+            -   **stack 영역에서 참조값을 이용해 참조형 변수가 heap영역에 있는 인스턴스를 가리켜 제어한다.**
+            -   **어떠한 참조 변수도 힙 영역의 인스턴스를 참조하지 않는다면 GC에 의해서 소멸된다.**
         -   메서드 영역
             -   JVM이 시작될 때 생성되고, JVM이 읽은 각각의 클래스와 인터페이스에 대한 런타임 상수 풀, 필드 및 메서드 코드, 정적 변수, 메서드의 바이트 코드 등을 보관
+            -   패키지나 클래스는 프로그램 시작과 동시에 모두 올라가는 게 아니라, 실제로 호출될 때 올라간다.
+            -   class 영역 혹은 method영역, static 영역으로 불리운다.
+            -   static 영역에 자리잡게 되면 JVM이 종료될 때까지 사라지지 않고, 고정된(static) 상태로 유지.
+            -   static 영역에 있는것은 어떤 곳에서나 접근이 가능해지기 때문에 "전역"이라는 키워드를 사용한다.
 -   **`Garbage Collection`**
     -   자바 이전에는 프로그래머가 모든 프로그램 메모리를 관리했지만 자바에서는 `JVM`이 프로그램 메모리를 관리한다.
     -   JVM은 가비지 컬렉션이라는 프로세스를 통해 메모리를 관리한다.
@@ -1955,7 +1966,742 @@ https://st-lab.tistory.com/153
   - `Object` 클래스에 정의되어 있으며 `GC`가 발생하는 시점이 불분명하기 때문에 해당 메소드가 실행된다는 보장이 없다.
   - 또한, `finalize()` 메소드가 오버라이딩 되어 있으면 GC가 이루어질 때 바로 Garbage Collection 되지 않는다. GC가 지연되면서 OOME(Out out Memory Exception)이 발생할 수 있다.
 
-# lambda 와 final
+# 함수형 프로그래밍
+
+---
+
+프로그래밍의 패러다임은 프로그래머에게 프로그래밍의 관점을 갖게 하고 어떻게 코드를 작성할지 결정하게 하기 때문에 큰 역할을 한다고 볼 수 있다.
+
+> - **명령형 프로그래밍** : 무엇(What)을 할 것인지 보다는, 어떻게(How)할 건지 설명
+>   - 절차적 프로그래밍 (Tow-Down)
+>     - 단순히 순차적으로 프로그래밍 하는 것이 아니라, 프로시저 콜이라는 함수 호출을 통해 명령을 수행하는 것. (C, C++)
+>   - 객체지향 프로그래밍
+>     - 실제 세계를 모델링하여 객체 간의 상호작용을 나타내는 개발 방법(C++, Java, C#)
+>
+> - **선언형 프로그래밍** : 어떻게(How)를 나타내기 보다 무엇(What)을 할 건지 설명
+>   - 함수형 프로그래밍
+>     - 순수 함수를 조합하고 소프트웨어를 만드는 방식(클로저, 하스켈, 리스프)
+
+## > 함수형 프로그래밍의 등장
+
+명령형 프로그래밍을 기반으로 개발했던 개발자들은, 소프트웨어의 크기가 커짐에 따라서 복잡하게 엉켜있는 스파게티 코드를 유지보수하는 것이 매우 힘들다는 것을 깨닫게 되었다.
+
+이를 해결하기 위해서 `함수형 프로그래밍`이라는 새로운 패러다임에 관심을 갖게 된다.
+
+함수형 프로그래밍은 거의 모든 것을 **순수 함수**로 나누어서 문제를 해결하는 기법으로, 작은 문제를 해결하기 위한 함수를 작성해 **가독성을 높이고 유지보수를 용이**하게 해주는 것이 장점이다.
+
+> 클린 코드(Clean Code)의 저자 Robert C.Martin은 함수형 프로그래밍을 대입문이 없는 프로그래밍으로 정의하였다.
+>
+> *Functionl Programming is programming without assignment statements.*
+
+
+
+위와 같이 함수형 프로그래밍은 **대입문을 사용하지 않는 프로그래밍이며, 작은 문제를 해결하기 위한 함수를 작성**한다고 하였다.
+
+명령형 프로그래밍에서는 메소드를 호출하면 상황에 따라 내부의 값이 바뀔 수 있다. 즉, 우리가 개발한 함수 내에서 선언된 변수의 메모리에 할당된 값이 바뀌는 등의 변화가 생길 수 있다.
+
+하지만, 함수형 프로그래밍에서는 대입문이 없기 때문에 한 번 할당된 값은 새로운 값으로 변할 수 없다는 특징이 있다.
+
+함수형 프로그래밍의 기본 원리는 함수를 1급 시민(First-Class Citizen) 또는 1급 객체(First-Class Object)로 관리한다.
+
+
+
+함수형 프로그래밍의 특징을 한줄로 요약하면 이와 같다.
+
+> **부수 효과가 없는 순수 함수 1급 객체로 간주하여 파라미터로 넘기거나 반환값으로 사용할 수 있으며, 참조 투명성을 지킬 수 있다.**
+
+여기서 부수 효과(Side Effect)란 다음과 같은 변화 또는 변화가 발생하는 작업을 의미한다.
+
+- 변수의 값이 변경됨
+- 자리에서 자료 구조를 수정함
+- 객체의 필드값을 섲렁함
+- 예외나 오류가 발생하여 실행이 중단됨
+- 콘솔 또는 파일 I/O가 발생함
+
+
+
+이러한 **부수 효과(Side Effect)를 제거한 함수들을 순수 함수(Pure Function)이라고 하며, 함수형 프로그래밍에서 사용하는 함수는 이러한 순수 함수들이다.**
+
+- Memory나 I/O 관점에서 Side Effect가 없는 함수.
+- 함수의 실행이 외부에 영향을 끼치지 않는 함수.
+
+
+
+이러한 순수 함수(Pure Function)을 이용해서 얻을 수 있는 효과는 다음과 같다.
+
+- 함수 자체가 독립적이며 Side Effect가 없기 때문에 안정적인 쓰레드를 보장할 수 있다.
+- Thread가 안정하기 때문에 병렬 처리를 동기화 없이 진행할 수 있다.
+
+
+
+또한, 1급 객체란 다음과 같은 것들이 가능한 객체를 의미한다.
+
+- 변수나 데이터 구조 안에 담을 수 있고
+- 파라미터로 전달할 수 있어야 하고
+- 반환값으로 사용할 수 있어야 하며
+- 할당에 사용된 이름과 문관하게 고유한 구별이 가능해야 한다.
+
+
+
+함수형 프로그래밍에서 기본적으로 함수는 1급 객체로 취급받기 때문에 함수를 파라미터로 넘기는 작업이 가능하다.
+
+
+*우리가 일반적으로 알고 개발했던 함수들은 함수형 프로그래밍에서 정의하는 순수 함수들과는 다르다는 것을 인지해야 한다.*
+
+> **참조 투명성(Referential Transparency)**
+>
+> - 동일한 인자에 대해 항상 동일한 결과를 반환해야 한다.
+> - 참조 투명성을 통히 기존의 값은 변경되지 않고 유지된다.(Immutable Data)
+
+
+
+명령형 프로그래밍과 함수형 프로그래밍에서 사용하는 함수는 사이드이펙트의 유/무에 따라 차이가 있다. 그에 따라서 함수가 참조에 투명한지 안한지 나뉘어 지게 되는데, **참조에 투명하다는 것은 말 그대로 함수를 실행해도 어떠한 상태변화 없이 항상 동일한 결과를 반환하여 동일하게(투명하게) 실행 결과를 참조(예측)할 수 있다는 것을 의미**한다.
+
+
+
+즉, 어떤 함수 `f`에 어떠한 인자 `x`를 넣고 `f`를 실행하게 되면, `f`는 입력된 인자에만 의존하므로 항상 `f(x)`라는 동일한 결과를 얻는다.
+
+이처럼 **부작용을 제거해서 프로그램의 동작을 이해하고 예측을 용이하게 하는것**이 함수형 프로그래밍으로 개발하려는 핵심 동기 중 하나이다. 또한, 값의 대입 없이 항상 동일한 실행에 대해 동일한 결과를 반환하기 때문에, 병렬 처리 환경에서 개발할 때 `Race Condition`에 대한 비용을 줄여준다.
+
+
+
+## > Java에서의 함수형 프로그래밍
+
+자바에서 어떤 List에 저장된 단어들의 접두사가 각각 몇개씩 있는지 Map으로 저장하는 코드를 작성해보자.
+
+
+
+### - 함수형 적용 X
+
+```java
+import java.util.*;
+
+public class Main {
+	private static List<String> Words = Arrays.asList("APPLE", "BANANA", "orange", "PINEAPPLE", "korea");
+    
+    private static Map<String, Integer> setPrefixFreq() {
+        Map<String, Integer> map = new HashMap<>();
+        String prefex;
+        Integer cnt;
+        for (String word : Words) {
+            prefix = word.substring(0, 1);
+            cnt = map.get(prefix);
+            if (cnt == null) {
+                map.put(prefix, 1);
+            } else {
+                map.put(prefix, cnt + 1);
+            }
+        }
+        
+        return map;
+    }
+    
+    public static void main(String[] args) {
+        final Map<String, Integer> map = setPrefixFreq();
+        map.keySet.forEach(k -> System.out.println(k + ":" + map.get(k)));
+    }
+}
+```
+
+함수형 프로그래밍을 적용하지 않은 코드는 List에서 루프를 돌면서 접두사 하나 잘라내고 그 갯수를 Map에 저장한다.
+
+이 코드에 함수형 프로그래밍을 적용하면 더욱 간결하고 가독성있는 코드로 변경할 수 있다.
+
+
+
+### - 함수형 적용 O
+
+Java는 대표적으로 객체지향 프로그래밍 언어이기 때문에 함수형으로 개발하기 위해서 별도의 도구가 필요하다.
+
+JDK8에서부터 Stream API와 함수형 인터페이스(Functional Inteface)의 람다 등을 제공하기 때문에 Java 8 이상의 버전을 사용해야 함수형 프로그래밍을 사용할 수 있다.
+
+```java
+import java.util.*;
+
+public class Main {
+    private static List<String> Words = Arrays.asList("APPLE", "BANANA", "orange", "PINEAPPLE", "korea");
+    
+    private static Map<String, Integer> setPrefixFreq() {
+        Map<String, Integer> map = new HashMap<>();
+        Words.stream().map(w -> w.substring(0, 1)).forEach(prefix -> map.merge(prefix, 1, (v1, v2) -> (v2 += v1)));
+        return map;
+    }
+    
+    public static void main(String[] args) {
+        final Map<String, Integer> map = setPrefixFreq();
+        map.keySet.forEach(k -> System.out.println(k + ":" + map.get(k)));
+    }
+}
+```
+
+`stream()`을 통해 함수형 프로그래밍을 위한 Stream 객체를 생헝하고, `map()`을 통해 Stream 객체의 단어들을 prefix로 변형시키고 있다.
+
+그리고 `forEach`로 prefix를 map에 추가하고 있다.
+
+
+
+다음과 같은 추가 요구 사항이 생겼다고 가정해 보자.
+
+- 단어의 크기가 2 이상인 경우에만 처리할 것.
+- 모든 단어를 대문자로 변환하여 처리할 것.
+- 스페이스로 구분한 하나의 문자열로 변환 할 것
+
+이러한 요구사항을 기존의 코드에 반영한다면 상당이 코드가 길어지고 복잡해질테지만, 함수형 프로그래밍을 적용하면 비교적 간단하게 처리할 수 있다.
+
+```java
+import java.util.*;
+
+public class Main {
+    private static List<String> Words = Arrays.asList("APPLE", "BANANA", "orange", "PINEAPPLE", "korea");
+    
+    private static Map<String, Integer> setPrefixFreq() {
+        return Words.stream().filter(w -> w.length() > 1).map(String::toUpperCase).map(w -> w.substring(0, 1)).collect(Collectors.joining(" "));
+    }
+    
+    public static void main(String[] args) {
+        final Map<String, Integer> map = setPrefixFreq();
+        map.keySet.forEach(k -> System.out.println(k + ":" + map.get(k)));
+    }
+}
+```
+
+
+
+참조
+
+https://mangkyu.tistory.com/111
+
+# 익명 클래스보다는 람다
+
+---
+
+자바에서 함수 타입을 표현할 때는 **추상 메서드를 하나만 담은 인터페이스(또는 추상 클래스)**를 사용했다. 이러한 인터페이스의 인스턴스를 **함수 객체**라고 해서 특정 함수나 동작을 나타내는데 썼다.
+
+
+
+## 익명 클래스
+
+`JDK 1.1` 버전부터 함수 객체를 만들 때 **익명 클래스(Anonymous Class)**를 주로 사용했다. 하지만 익명 클래스 방식은 코드가 너무 길기 때문에 이 떄까지의 자바는 함수형 프로그래밍에 적합하지 않았다.
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> Words = Arrays.asList("APPLE", "Banana", "orange", "korea");
+        
+        Collections.sort(Words, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return Integer.compare(s1.length(), s2.length());
+            }
+        });
+    }
+}
+```
+
+
+
+## 람다
+
+`JDK 1.8` 버전부터 추상 메서드 하나 짜리 인터페이스, 즉 함수형 인터페이스를 말하는데 그 인터페이스의 인스턴스를 람다식(`lambda expression`)으로 사용해서 만들 수 있게 되었다.
+
+> - 기본적인 람다식 구조
+>
+> ```java
+> // ( 매개변수 ) -> { 표현식 };
+> (int a, int b) -> { return a + b; }
+> (String str) -> System.out.println(str);
+> ```
+>
+> - 메소드 참조 표현식 -> **`::`**
+>
+> ```java
+> // 람다식에서 파라미터를 중복해서 사용하기 싫을 경우 사용한다.
+> // 람다표현식에서만 사용 가능 하며 이름만으로 특정 메소드를 호출할 수 있는 기능이다.
+> 
+> // 기존
+> stream.forEach(e -> System.out.println(e));
+> // ::
+> stream.forEach(System.out::pri\ntln);
+> ```
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> Words = Arrays.asList("APPLE", "Banana", "orange", "korea");
+        
+        Collections.sort(Words, (s1, s2) -> Integer.compare(s1.length(), s2.length()));
+    }
+}
+```
+
+여기서 람다의 타입은`Comparator<String>` 이고 매개변수 (s1, s2)의 타입은 `String`이며 반환 값의 타입은 `int`이다.
+
+하지만 컴파일러가 코드의 문맥을 살펴서 타입추론을 했기 때문에 코드 상에는 이 타입들이 명시되어 있지 않다. 타입을 명시해야 코드가 명확할 때를 제외하고는 **람다의 모든 매개변수 타입은 생략하고 상황에 따라서 컴파일러가 타입을 결정하지 못해서 오류가 발생할 때는 타입을 명시하면 된다.**
+
+컴파일러가 타입을 추론할 떄 필요한 정보들은 대부분 **제네릭**을 통해서 얻게 된다.
+
+위 코드는 아래처럼 더 간단하게 표현할 수 있다.
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> Words = Arrays.asList("APPLE", "Banana", "orange", "korea");
+        
+        Collections.sort(Words, Comparator.comparingInt(String::length));
+    }
+}
+```
+
+
+
+더 나아가서 `JDK 1.8` 이상을 사용하면 `List` 인터페이스에 추가된 `sort` 메서드를 사용할 수 있다.
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> Words = Arrays.asList("APPLE", "Banana", "orange", "korea");
+        Words.sort(Comparator.comparingInt(String::length));
+    }
+}
+```
+
+
+
+### - 열거타입에서의 람다
+
+```java
+enum Operation {
+    PLUS("+") {
+        public double apply(double x, double y) { return x + y; }
+    },
+    MINUS("-") {
+        public double apply(double x, double y) { return x - y; }
+    },
+    TIMES("*") {
+        public double apply(double x, double y) { return x * y; }
+    },
+    DIVIDE("/") {
+        public double apply(double x, double y) { return x / y; }
+    };
+    
+    private final String symbol;
+    
+    Operation(String symbol) { this.symbol = symbol; }
+    
+    @Override
+    public String toString() { return symbol; }
+    public abstract double apply(double x, double y);
+}
+```
+
+열거 타입에서 람다를 이용하면 열거 타입의 인스턴스 필드를 이용하는 방식으로 상수별로 다르게 동작하는 코드를 쉽게 구현할 수 있다.
+
+```java
+import java.util.function.DoubleBinaryOperator;
+
+enum Operation {
+    PLUS("+", (x, y) -> x + y),
+    MINUS("-", (x, y) -> x - y),
+    TIMES("*", (x, y) -> x * y),
+    DIVIDE("/", (x, y) -> x / y);
+    
+    private final String symbol;
+    private final DoubleBinaryOperator op;
+    
+    Operation (String symbol, DoubleBinaryOperator op) {
+        this.symbol = symbol;
+        this.op = op;
+    }
+    
+    @Override
+    public String toString() { return symbol; }
+    
+    public double apply(double x, double y) {
+        return op.applyAsDouble(x, y);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Operation.PLUS.apply(2, 3);
+    }
+}
+```
+
+`DoubleBinaryOperator`는 `java.util.function` 패키지에 있는 `Double` 타입 인수를 2개 받아서 `Double` 타입 결과를 반환해주는 인터페이스이다.
+
+
+
+## 람다의 한계
+
+> 1. 추사클래스의 인스턴스를 만들 때는 람다사용 불가능
+> 2. 추상메서드가 여러개인 인터페이스의 인스턴스로 람다 표현 불가능
+> 3. 람다의 this는 바깥의 인스턴스를 가리킨다.
+
+람다를 무조건적으로 사용하는 것은 좋지 않은 경우도 있다.
+
+람다는 이름도 없고, 메서드나 클래스와 다르게 문서화도 할 수 없기 때문에 코드 자체로 동작이 명확하게 설명되지 않거나 코드 라인 수가 많아지면 사용하는 것을 고렿배봐야 한다.
+
+**람다가 너무 길거나 읽기 어렵다면 오히려 쓰지 않는 방향으로 리팩토링 하는 것을 권장한다.**
+
+
+
+그리고 **추상 클래스의 인스턴스**를 만들 때 람다를 사용할 수 없다. 이 때는 **익명클래스를 사용**해야 한다.
+
+```java
+abstract class Hello {
+    public void sayHello() {
+        System.out.println("Hello!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 이건 원래 안된다
+        // Hello hello = new Hello();
+        
+        Hello instance1 = new Hello() {
+            private String msg = "Hi";
+            @Override
+            public void sayHello() {
+                System.out.println(msg);
+            }
+        }
+        
+        Hello instance2 = new Hello() {
+            private String msg = "HolaHola";
+            @Override
+            public void sayHello() {
+                System.out.println(msg);
+            }
+        }
+        
+        instance1.sayHello(); // Hi
+        instance2.sayHello(); // HolaHola
+        
+        System.out.println(instance1 == instance2); // false
+    }
+}
+```
+
+
+
+또한, 람다는 자기 자신 참조가 안된다. `this` 키워드는 바깥의 인스턴스를 가리키게 된다.
+
+반면에 익명클래스에서의 `this`는 익명 클래스의 인스턴스 자신을 가리킨다.
+
+```java
+import java.util.*;
+
+class Anonymous {
+    public void say() {}
+}
+
+public class Main {
+    public void testMethod() {
+        List<Anonymous> list = Arrays.asList(new Anonymous());
+        
+        Anonymous anonymous = new Anonymous() {
+            @Override
+            public void say() {
+                System.out.println("this instanceof Anonymous : " + (this instanceof Anonymous));
+            }
+        };
+        
+        anonymous.say(); // this instanceof Anonymous : true
+        
+        // this instanceof Main : true
+        list.forEach(o -> System.out.println("this instanceof Main: " + (this instanceof Main)));
+    }
+    
+    public static void main(String[] args) {
+        new Main().someMethod();
+    }
+}
+```
+
+람다도 익명 클래스와 동일하게 `직렬화(Serialization)`의 형태가 구현별(ex. 가상머신)로 다를 수 있으므로 주의해야 한다.
+
+`Comparator`처럼 직렬화해야만 하는 함수 객체가 있으면 `private static 중첩 클래스`의 인스턴스를 사용하면 된다.
+
+
+
+참조
+
+https://madplay.github.io/post/prefer-lambdas-to-anonymous-classes
+
+
+
+# lambda 와 effectively final
+
+> `JDK 1.8`에서 추가된 람다식에는 규칙이 있다.
+>
+> 1. 람다식은 외부 block에 있는 변수에 접근할 수 있다.
+> 2. 외부에 있는 변수가 지역 변수 일 경우 **final** 혹은 **effectively final**인 경우에만 접근할 수 있다.
+
+
+
+## effectively final이란?
+
+> *A non-final local variable or method parameter whose value is never changed after initialization is known as effectively fianl.*
+
+Java8에 추가된 syntatic sugar의 일종으로, **초기화 된 이후 값이 한번도 변경되지 않았다면 `effectively final`**이라고 할 수 있다.
+
+effectively final 변수는 final 키워드가 붙지 않았지만 final 키워드를 붙힌것과 동일하게 컴파일러에서 처리하므로 **'의미상 final'하다**고 이해해도 좋다.
+
+
+
+effectively final은 anonymous class나 람다식에서 코드를 더 간결하게 해준다.
+
+java  7에서는 anonymous class가 외부지역변수 가 final인 경우에만 접근이 가능했기 때문에 항상 final 키워드를 추가해줘야 했다. 
+
+java 8에서는 effectively final인 경우에도 접근이 가능하도록 바뀌어서 조건을 만족한다면 final 키워드를 생략할 수 있다.
+
+```java
+// Java 7
+public void add() {
+    final int number = 1;
+    
+    Addable addableImple = new Addable() {
+        @Override
+        public int addOne() {
+            return number + 1;
+        }
+    };
+}
+
+// Java 8
+public void add() {
+    int number = 1; // Effectively final하다.
+    
+    Addable addableImple = new Addable() {
+        @Override
+        public int addOne() {
+            return number + 1;
+        }
+    }
+}
+```
+
+이는 `lambda`에서도 동일하다.
+
+```java
+// Java 8
+public void add() {
+    int number = 1; // Effectively final하다.
+    
+    Addable addableImple = () -> number + 1;
+}
+```
+
+
+
+## 람다가 사용하는 지역변수는 왜 final(effectively final) 이어야 할까?
+
+> 람다식에서 참조하는 **외부 지역 변수**는 final 혹은  effectively fianl이어야 한다.
+
+외부 변수라는 단어에는 지역변수, 인스턴스 변수, 클래스 변수가 모두 포함될 수 있는데, 인스턴스 변수나 클래스 변수는 final 혹은 effectively final하지 않아도 람다식에서 사용할 수 있다.
+
+```java
+private int instanceNumber = 1;
+private static int staticNumber = 1;
+
+// Error : 외부 지역변수는 final 혹은 effectively final 이어야 람다에서 사용가능하다.
+public void addByLocalVariable() {
+    int localNumber = 1;
+    
+    localNumber = 2;
+    Addable addalbeImple = () -> localNumber + 1;
+}
+
+// OK : 클래스 변수(static)는 값을 변경하더라도 문제없다.
+public void addByInstanceVariable() {
+    instanceNumber = 2;
+    Addable addableImple = () -> instanceNumber + 1;
+}
+
+// OK : 인스턴스 변수(non-static)는 값을 변경하더라도 문제 없다.
+public void addByStaticVariable() {
+    staticNumber = 2;
+    Addable addableImple = () -> staticNumber + 1;
+}
+```
+
+
+
+람다식에서 사용되는 지역변수가 final 혹은 effectively final 이어야 하는 이유를 알기 위해서는 **Capturing lambda**라는 키워드를 알아야 한다.
+
+
+
+## Capturing lambda vs Non-Capturing lambda
+
+람다에는 2가지 타입이 존재한다.
+
+- Capturing lambda
+
+  - 외부 변수를 이용하는 람다식이다.
+  - 외부 변수는 지역변수, 인스턴스 변수, 클래스 변수를 모두 포함한다.
+
+  ```java
+  String msg = "CapturingLambda";
+  Runnable runnable = () -> System.out.println(msg);
+  ```
+
+- Non-Captuing lambda
+
+  - 외부 변수를 사용하지 않는 람다식이다.
+
+  ```java
+  Runnable runnable = () -> System.out.println("NonCapturingLambda");
+  
+  Runnable runnable = () -> {
+      String msg = "NonCapturingLambda";
+      System.out.println(msg);
+  }
+  ```
+
+
+
+Capturing lambda는 다시 local Capturing lambda와 non-local Capturing lambda로 구분된다.
+
+local <-> non-local 로 다시 구분하는 이유는 지역 변수가 가지는 특징으로 내부 동작 방식이 다르기 대문이다.
+
+
+
+### - Local Capturing Lambda
+
+```java
+public void addByLocalVariable() {
+    int localNumber = 1;
+    Addable addableImple = () -> localNumber + 1;
+}
+```
+
+외부변수로 지역변수를 이용하는 람다식을 의미하며 다음과 같은 특징을 갖는다.
+
+- 람다식에서 사용되는 **외부 지역 변수는 복사본이다.**
+- fianl 혹은 effectively fianl인 지역 변수만 람다식에서 사용할 수 있다.
+- 복사된 지역 변수 값은 람다식 내부에서도 변경할 수 없다. 즉, final 변수로 다뤄야 한다.
+
+
+
+각 특징에 대해 조금 더 자세히 알아보자.
+
+
+
+**1. 람다식에서 사용되는 외부 지역변수는 복사본이다.**
+
+람다식에서 외부 지역변수를 그대로 사용하지 못하고 복사본을 사용하는 이유는 다음과 같다.
+
+- 지역 변수는 스택영역에 생성된다. 따라서 지역 변수가 선언된 block이 끝나면 스택에서 제거된다.
+  - 메소드 내 지역변수를 참조하는 람다식을 리턴하는 메소드가 있을 경우, 메소드 block이 끝나면 지역 변수가 스택에서 제거되므로 추후에 람다식이 수행될 때 참조할 수 없다.
+- 지역 변수를 관리하는 쓰레드와 람다식이 실행되는 쓰레드가 다를 수 있다.
+  - 스택은 각 쓰레드의 고유 공간이고, 쓰레드끼리 공유되지 않기 때문에 마찬가지로 람다식이 수행될 때 값을 참조할 수 없다.
+
+이러한 이유로, 람다식에서는 외부 지역 변수를 직접 참조하지 않고 복사본을 전달받아서 사용하게 된다.
+
+
+
+**2. final 혹은 effectively final인 지역 변수만 람다식에서 사용할 수 있다.**
+
+만약 참조하고자 하는 지역변수가 final이나 effectively final이 아닐 경우 즉, 변경이 가능할 경우 어떤 문제가 일어날까?
+
+```java
+public void executelocalVariableInMultiThread() {
+    boolean flag = true;
+    executor.execute(() -> {
+        while(flag) {
+            // do
+        }
+    });       
+    flag = false;
+}
+```
+
+람다식이 정확히 어떤 쓰레드에서 수행되는지 미리 알 수 없다. 즉, 외부 지역변수를 다루는 쓰레드와 람다식이 수행되는 쓰레드가 다를 수 있다.
+
+
+
+지역 변수 값(`flag`) 을 제어하는 쓰레드를 **A**, 람다식이 수행되는 쓰레드를 **B**라고 가정하면 문제는 다음과 같다.
+
+
+
+쓰레드 B의 flag 값이 가장 최신 값으로 복사되어 전달됐는지 확신할 수 없다.
+
+왜냐하면 **flag는 변경 가능한 지역 변수이고, 지역변수를 쓰레드 간에 동기화해주는 것은 불가능하기 때문**이다.
+
+*지역 변수는 쓰레드 A의 스택영역에 존재하기 때문에 다른 쓰레드에서 접근이 불가능하다. volatile과 같은 키워드가 로컬 변수에서 사용될 수 없는 이유도 이와 같다.*
+
+
+
+값이 보장되지 않는 다면 매번 다른 결과가 도출될 수 있고 예측할 수 없는 코드는 사용할 수 없다.
+
+이러한 이유로 외부 지역 변수는 전달되는 복사본이 변경되지 않은 최신 값임을 보장하기 위해 **final** 혹은 **effectively final**이어야 한다.
+
+
+
+**3. 복사된 지역 변수 값은 람다식 내부에서 변경할 수 없다. 즉, final처럼 다뤄야 한다.**
+
+이미 복사가 된 값이므로 변경해도 문제가 없는게 아닌가 생각할 수 있지만 아니다.
+
+복사될 값의 변조를 막아 항상 최신의 값임을 보장하기 위해서 fianl 제약을 걸었는데, 내부에서 변경가능하다면 말짱 도루묵이 된다.
+
+또한, 컴파일 된 람다식은 `static` 메소드 형태로 변경되는데, 이 때 복사된 값이 파라미터로 전달되므로 마찬가지로 스택영역에 존재하기 때문에 동기화 해주는 게 불가능하다.
+
+
+
+따라서 람다식 내부에서도 값이 변경 되어서는 안되며 컴파일러 레벨에서 앞, 뒤로 final 제약을 걸어줌으로써 멀티 쓰레드 환경에서 대응하기 어려운 이슈를 미연에 방지하는 것이다.
+
+
+
+### - Non-Local Capturing Lambda
+
+```java
+private int instanceNumber = 1;
+private static int staticNumber = 1;
+
+public void addByInstanceVariable() {
+    instanceNumber = 2;
+    Addable addableImple = () -> instanceNumber + 1;
+}
+public void addByStaticVariable() {
+    staticNumber = 2;
+    Addable addableImple = () -> staticNumber + 1;
+}
+```
+
+외부 변수로 지역 변수가 아닌, 인스턴스 변수나 클래스 변수를 이용하는 람다식이다.
+
+final 제약 조건이 없고, 외부 변수 값도 복사해서 사용하지 않는다.
+
+
+
+> **인스턴스 변수(non-static)** : 인스턴스가 생성될 때마다 **heap 영역**에 매번 새로 생성되고 GC에 의해 소멸
+>
+> **클래스 변수(static)** :  클래스가 메모리에 올라갈 때 **method 영역**에 한 개만 생성되고 프로그램 종료 시 소멸
+>
+> **지역 변수** : 메서드 수행시 **stack 영역**에 생성 후 메소드 종료 시 소멸
+>
+> *하나의 쓰레드는 다른 쓰레드로 접근할 수 없지만, static(method) 영역과 heap 영역은 공유해서 사용할 수 있다.*
+
+그 이유는 인스턴스 변수나 클래스 변수가 저장하고 있는 메모리 영역은 공통 영역이고 값이 메모리에서 바로 회수되지 않기 때문에 여러 스레드나 람다식에서 바로 참조가 가능한 것이다.
+
+따라서, 복사 과정이 불필요하고 참조 시 최신 값 임을 보장할 수 있다. 다만 멀티 쓰레드 환경일 경우에는 `volatile`이나 `synchronized` 등을 이용해서 동기화를 맞춰주는 작업을 해야한다.
+
+
+
+## 결론
+
+람다식에서 외부 지역 변수를 사용하는 경우 final 혹은 effectively fianl이어야 하는 이유는 지역변수가 스택에 저장되기 때문에 람다식에서 값을 바로 참조하는 것에 제약이 있어 복사된 값을 사용하는데, 이 때 멀티 쓰레드 환경에서 복사된(될) 값이 변경 가능할 경우 동시성 이슈를 대응할 수 없기 때문이다.
+
+
 
 
 
