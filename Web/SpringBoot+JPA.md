@@ -56,7 +56,7 @@ public @interface SpringBootApplication {
 
 ## @EnableAutoConfiguration
 
-컴포넌트 스캔 이후 EnableAUtoConfiguration으로 추가적인 Bean들을 읽어서 등록한다. 
+컴포넌트 스캔 이후 EnableAutoConfiguration으로 추가적인 Bean들을 읽어서 등록한다. 
 
 spring.factories 내부에 여러 Configuration들이 있고, 조건에 따라서 Bean을 등록한다.
 
@@ -498,7 +498,7 @@ Bean을 정의할 때 해당 빈에 정의된 클래스의 실제 인스턴스�
 
 싱글톤패턴은 하드코딩된 객체(classloader)가 singleton 객체를 관리하므로 사용시 유의해야 할 점이 있다.
 
-singleton 객체가 전역변수와 같은 역할 때문에 coupling이 높아서 테스트에 어령무이 있고 애플리케이션의 의존성 측면에서도 singleton 객체를 사용하는 쪽에서 singleton 객체에 대해 너무 많은 정보를 알아야 한다는 설계상의 문제가 있다.(*참고*)
+singleton 객체가 전역변수와 같은 역할 때문에 coupling이 높아서 테스트에 어려움이 있고 애플리케이션의 의존성 측면에서도 singleton 객체를 사용하는 쪽에서 singleton 객체에 대해 너무 많은 정보를 알아야 한다는 설계상의 문제가 있다.(*참고*)
 
 
 
@@ -534,7 +534,7 @@ Spring은 prototype bean의 생명 주기를 관리하지 않는다. 컨테이�
 
 프로토타입 빈에 대한 종속성이 있는 싱글톤 빈은, 인스턴스시킬 때 해결된다.
 
-프로토타입의 빈을 -> 싱글톤 빈으로 의존성을 주입하면 새로운 프로토타입 빈이 인스턴스화되고 싱글톤 빈에 종속성이 주입된다. 따라서 이 프로토타입 인스턴스는 싱글톰 빈에 제공되는 유일한 인스턴스이다.
+프로토타입의 빈을 -> 싱글톤 빈으로 의존성을 주입하면 새로운 프로토타입 빈이 인스턴스화되고 싱글톤 빈에 종속성이 주입된다. 따라서 이 프로토타입 인스턴스는 싱글톤 빈에 제공되는 유일한 인스턴스이다.
 
 
 
@@ -740,7 +740,7 @@ Lombok은 자바의 반복 메서드 작성 코드를 줄여주는 **코드 다�
 - **@RequiredArgsConstructor**
 
   - 특정 변수만을 활용하는 생성자를 만들어준다.
-  - 초기화 되지 않은 `final 필드나, `@NonNull` 어노테이션이 붙여진 필드에 대해 생성자를 만들어준다.
+  - 초기화 되지 않은 `final` 필드나, `@NonNull` 어노테이션이 붙여진 필드에 대해 생성자를 만들어준다.
 
 - **@EqaulsAndHashCode**
 
@@ -821,7 +821,7 @@ HTTP 요청의 본문을 객체로 변경하건, 객체를 HTTP 응답 본문으
 
 뷰가 아니라 객체를 응답할 때는 viewResolver 대신에 **HttpMessageConverter**가 동작하는데, **HttpMessageConverter**에는 여러 Converter가 등록되어 있고 반환하는 데이터에 따라 사용되는 Converter가 달라진다는 특징이 있다. 
 
-리턴 타입이 `application/json`인 경우에는 **MappingJackson2HttpMessageConverter**가 사용되고, 클라이언트의 Http Accept 헤더와 서버의 컨트롤러 return type 정보를 좋바해 적절한 HttpMessageConverter가 채택된다.
+리턴 타입이 `application/json`인 경우에는 **MappingJackson2HttpMessageConverter**가 사용되고, 클라이언트의 Http Accept 헤더와 서버의 컨트롤러 return type 정보를 종합해 적절한 HttpMessageConverter가 채택된다.
 
 그냥 `@Controller`를 사용할 때는 `@ResponseBody`를 넣어줘야 MessageConverter가 적용되고, 선언하지 않으면 **BeanNameViewResolver**에 의해서 viewName에 해당하는 뷰를 찾으려고 할 것이다.
 
@@ -1428,7 +1428,7 @@ Spring-Data-Jpa에서는 반복되는 코드없이 쉽게 JPA Repository를 만�
 
 `Spring-Data-Jpa`에서 제공하는 `JpaRepository`의 기본 구현체는 `SimpleJpaRepository`이다. 
 
-(`CrudRepository<>`는 단순히 인터페이스이다.)
+*(`CrudRepository<>`는 단순히 인터페이스이다.)*
 
 `SimpleJpaRepository`의 `save()`메소드에는 스프링 **`@Transactional`**이 붙어있으므로 해당 클래스에 있는 수많은 메소드에 트랜잭션이 걸리게 되고, 메소드 성공적으로 return하게 되면 commit도 이루어지게 되는것이다.
 
