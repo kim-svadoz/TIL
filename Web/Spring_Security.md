@@ -672,3 +672,62 @@ protected void configure(HttpSecurity http) throws Exception {
     -   서버의 자원에 접근할 때는 HTTP 메소드(`PATCH, POST, PUT, DELETE`)로 요청하고 반드시 서버에서 발급한 CSRF 토큰값으로 요청을 해야한다.
 
 Spring Security에서는 기본적으로 `http.csrf()` 기능이 기본적으로 활성되 되어있고, `http.csrf().disabled()`로 비활성화 할 수도 있다.
+
+# Spring Security 주요 아키텍쳐
+
+# 1. DelegatingFilterProxy, FilterChainProxy
+
+## DelegatingFilterProxy
+
+ Filter는 Servlet 2.3부터 제공되는 기술이다.
+
+필터의 역할은 어떤 요청이 있을 때 이 요청이 실제로 서블릿으로 들어오는데, 서블릿 자원에 들어오기 전에 처리를 하는 곳이 필터.
+
+요청에 대한 최종적인 접근 전, 후로 어떤 처리를 할 수 있도록 하는 기술이 필터이다.
+
+
+
+![image-20211123202705525](https://user-images.githubusercontent.com/58545240/143019224-ebabc4f8-a1f0-4864-8def-82f3b3a4095d.png)
+
+이 필터는 서블릿 스펙에 있는 기술이기 때문에 Servlet 컨테이너에서 생성되고 실행이 되기 때문에, 필터는 Spring에서 만든 Bean을 Injection 해서 사용할 수 없다.
+
+스프링은 모든 요청에 대한 인증/인가 처리를 Filter를 통해서 한다. 근데 이 필터는 Spring Bean으로 주입하거나 Spring이 사용하는 기술을 사용할 수 없다. 하지만, Filter에서도 스프링 기술이 필요하게 되는데.
+
+
+
+이러한 요구사항을 만족하기 위해서 존재하는 클래스가 바로 **DelegatingFilterProxy**이다. 
+
+이는 스프링에서 관리하는 필터가 아니고 서블릿에서 관리하는 필터이다.
+
+즉, 요청을 받아서 이 요청을 스프링에서 관리하는 필터에게 요청을 위임하는 역할을 하게 된다.
+
+
+
+**특징**
+
+1.  서블릿 필터는 스프링에서 정의된 빈을 주입해서 사용할 수 없음.
+2.  특정한 이름을 가진 스프링 빈을 찾아서 그 빈에게 요청을 위임한다.
+    -   **springSecurityFilterChain** 이름으로 생성된 빈을 ApplicationContext에서 찾아서 요청을 위임한다.
+    -   실제로 보안처리를 하지는 않는다.
+
+
+
+## FilterChainProxy
+
+![image-20211123203344038](https://user-images.githubusercontent.com/58545240/143019248-e1216331-9e81-456e-8be1-502914e9bc69.png)
+
+
+
+![image-20211123203939439](https://user-images.githubusercontent.com/58545240/143019270-6277541b-4acd-470e-90e6-964676523cb1.png)
+
+왼쪽은 서블릿 컨테이너, 오른쪽은 스프링 컨테이너의 영역이다.
+
+
+
+사용자가 처음 요청하면 서블릿 컨테이너에서 요청을 받게 된다. (필터가 그 역할을 하게 된다.)
+
+요청에 대해서 각각의 필터들이 처리를 하게 되고, 그 중에서 `DelegatingFilterProxy` 클래스가 요청을 받게 되면 이 클래스는, 자기가 전달받은 요청 객체를 특정 이름을 가진 빈(**springSecurityFilterChain**)을 찾아서 요청을 위임한다.
+
+실제로는 DelegatinFilterProxy가 필터로 등록될 때, **springSecurityFilterChain**의 이름으로 등록한다. 내부적으로는 이 이름으로 등록한 이름을 찾는다. 그 이름을 가진 Bean이 바로 **FilterChainProxy**이다. 
+
+FilterChainProxy는 요청에 대해서 각각의 필터별로 호출하고 자기가 관리하는 모든 필터들에 대해 보안처리를 하고, 모두 끝났으면 Spring MVC의 **DispatcherServlet**으로 전달해서 실제 요청에 대한 서블릿 처리를 하게 된다.
