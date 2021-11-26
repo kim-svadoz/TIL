@@ -528,6 +528,8 @@ protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 # 인증/인가 API
 
+---
+
 ## ExceptionTranslationFilter
 
 >    *FilterSecurityInterceptor(맨 마지막에 위치)가 이를 호출한다*
@@ -650,6 +652,8 @@ protected void configure(HttpSecurity http) throws Exception {
 
 # CSRF
 
+---
+
 >   사이트 간 요청 위조 공격
 
 ![image-20211122115952078](https://user-images.githubusercontent.com/58545240/142850129-fc0a148a-fcf5-4cac-a299-91652135b711.png)
@@ -675,7 +679,7 @@ Spring Security에서는 기본적으로 `http.csrf()` 기능이 기본적으로
 
 # Spring Security 주요 아키텍쳐
 
-# 1. DelegatingFilterProxy, FilterChainProxy
+---
 
 ## DelegatingFilterProxy
 
@@ -731,3 +735,52 @@ Spring Security에서는 기본적으로 `http.csrf()` 기능이 기본적으로
 실제로는 DelegatinFilterProxy가 필터로 등록될 때, **springSecurityFilterChain**의 이름으로 등록한다. 내부적으로는 이 이름으로 등록한 이름을 찾는다. 그 이름을 가진 Bean이 바로 **FilterChainProxy**이다. 
 
 FilterChainProxy는 요청에 대해서 각각의 필터별로 호출하고 자기가 관리하는 모든 필터들에 대해 보안처리를 하고, 모두 끝났으면 Spring MVC의 **DispatcherServlet**으로 전달해서 실제 요청에 대한 서블릿 처리를 하게 된다.
+
+
+
+
+
+# WebIgnore 설정
+
+---
+
+>   js / css / image 파일 등 보안 필터를 적용할 필요가 없는 리소스를 설정하는 기술
+>
+>   **엄밀히 따지면 해당 정적 자원은 보안 필터를 적용할 필요가 없다.**
+>
+>   *하지만 기본적으로 Spring Security는 정적 자원들도 보안 절차를 거치게 된다.*
+
+```java
+@Override
+public void configure(WebSecurity web) throws Exception {
+    web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+}
+```
+
+
+
+생각해보면 `permitAll()`과 유사한 점이 있다.
+
+`permitAll()`도 해당 자원에 대해서 권한을 인증하지 않아도 접근하게 해주는 것인데 차이점은 **`permitAll()`은 보안 필터안으로 들어와서, 특정 경로에 대해서 해당 요청에 대해서 익명사용자 여도 통과하게끔**하는 것이다. 결국, 보안 필터를 거치게 되는 것이다.
+
+하지만 `webIgnore` 설정은 보안필터를 거치지 않기 때문에 비용적인 측면에서는 조금 더 우수하다고 할 수 있다.
+
+# PasswordEncoder
+
+---
+
+>   비밀번호를 안전하게 암호화하도록 제공하는 클래스
+>
+>   Spring Security 5.0 이전에는 기본 PasswordEncoder가 평문을 지원하는 NoOpPasswordEncoder.(*현재는 보안에 취약해서 Deprecated*)
+
+-   생성
+    -   `PasswrodEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncdoer()`
+    -   여러개의 PasswordEncdoer 유형을 선언한 뒤에  상황에 맞게 선택해서 사용할 수 있도록 지원하는 Encoder이다.
+-   암호화 포맷 : **`{id}encodedPassword`**
+    -   기본 default 포맷은 **Bcrypt** 이다.
+    -   알고리즘의 종류 로는 : bcrypt, noop, pbkdf2, scrypt, sha256 등등..
+-   인터페이스
+    -   **encode(password)**
+        -   패스워드 암호화
+    -   **matches(rawPassword, encodedPassword)**
+        -   패스워드를 비교
