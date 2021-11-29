@@ -242,6 +242,13 @@ b -> Object에 접근 -> prop 접근 -> ZZZZ
 -   문자열 연산이 많이 일어나는 경우 더 이상 참조되지 않는 기존 객체는 **Garabage Collector**에 의해 제거되어야 하기 때문에 성능이 좋지 않습니다.
 -   객체가 불변하므로, 멀티쓰레드에서 동기화를 신경 쓸 필요가 없습니다.(조회 연산에 매우 큰 장점!)
 -   객체가 가지는 값마다 새로운 객체가 필요하기 때문에, 메모리 누수와 새로운 객체를 계속 생성해야하기 때문에 성능저하를 발생시킬 수 있습니다.
+-   String은 reference 타입입니다.
+
+
+
+
+
+
 
 ***String 클래스 : 문자열 연산이 적고, 조회가 많은 멀티쓰레드 환경에서 좋다***
 
@@ -1308,6 +1315,71 @@ String str2 = "abc";
 boolean check = str1.equals(str2); // true // String class에서 equals가 오버라이딩 되었기 때문에 true
 boolean check = str1 == str2;	// true //
 ```
+
+
+
+*++ 2021-11-29 추가내용*
+
+### > String Constant Pool
+
+**동일하다(`==`)**는 두 개의 오브젝트가 완전히 같을 경우(메모리 주소값이 같음)이고
+**동등하다(`eqauls`)**는 두 개의 값이 같다라는 의미이다. 이 때 String은 eqauls 메소드가 오버라이딩 되어 있다.
+
+```java
+String s1 = new String("aaa");
+String s2 = new String("aaa");
+
+System.out.println(s1 == s2); // false
+System.out.println(s1.equlas(s2)); // true
+```
+
+위의 예에서 s1과 s2는 각각 `new` 연산자로 새로운 오브젝트 메모리에 생성되었기 때문에 두 주소는 당연히 동일하지 않다.
+
+하지만 String 클래스는 eqauls 메소드가 오버라이딩 되어있으므로 같은 문자열이기 때문에 true가 출력된다.
+
+
+
+하지만?
+
+
+
+```java
+String s1 = "aaa";
+String s2 = "aaa";
+
+System.out.println(s1 == s2); // true
+System.out.println(s1.equals(s2)); // true
+```
+
+자바에서는 String에게 `new` 연산자가 아니라 primitive 타입 변수를 선언하듯이 문법적으로 허락하고 있다.
+
+그리고 실제로 값을 비교해보면 primitive 타입 변수와 같이 비교가 가능하다.
+
+
+
+**자바에서는 이처럼 문자열 상수에 대해서 문자열이 동일한 경우 하나의 인스턴스만 생성하고 이를 공유하도록 한다.**
+
+이 때 문자열이 저장되는 곳이 바로 **`String Constant Pool`**이다. 이렇게 생성된 String 값은 Heap 영역 내에 있는 `String Constant Pool`에 저장되어서 재사용된다.
+
+하지만, new 연산자로 생성하면 같은 내영이라도 여러 개의 객체가 각각 Heap 영역을 차지하기 때문에 `new` 연산자로 생성하지 않는 것이 효율적이다.
+
+
+
+primitive type 처럼 생성하는 것을 **String literal로 생성한다**고 하는데, 이렇게 생성한 객체의 값(ex. "aaa")이 이미 String pool에 존재한다면 해당 객체는 String pool의 reference를 참조하기 때문에 s1과 s2는 같은 곳을 가리키고 있는 것이다.
+
+
+
+이 **String Constant Pool**의 위치는 Java6까지는 `Perm` 영역 이었지만 Java7에서 `Heap`영역으로 변경되었다. 그 덕분에 바로 String Constant Pool의 모든 문자열도 GC의 대상이 될 수 있게 되어 성능이 높아졌다고 할 수 있다.
+
+`Perm`영역에 있었던 시절에는 String Pool에 문자열 객체가 많이 생성된다거나 이 영역이 가득 차게 되면 런타임 환경에서는 메모리를 동적으로 늘리지 못해 `OutofMemory`에러가 발생했다. 하지만 Java7 이후 부터는 `OOM`가 발생 위험을 줄였다고 한다.
+
+(*`new`로 생성해도 일반 객체들과 마찬가지로 String Pool이 아닌 `Heap`의 영역에 생성된다.*)
+
+
+
+> 결론은 String 객체를 `new` 연산자로 생성하면 같은 값이라 할지라도 Heap영역에 매번 새로운 객체가 생성된다. 따라서 String이 갖는 불변성이라는 장점을 누리지 못한다!
+>
+> 따라서 메모리를 효율적으로 사용하기 위해서는 **String literal(큰 따옴표)로 생성하는 것이** 좋다!.
 
 
 
