@@ -2903,6 +2903,8 @@ fun(SubClass sub) {
 
 # Optional Class
 
+---
+
 먼저 Optional Class는 값이 존재하는지 여부를 명시적으로 체크하기 위해서 등장하였다.
 
 `Optional<T>` 클래스는 Integer나 Double 클래스 처럼 `T` 타입의 객체를 포장해주는 래퍼 클래스(Wrapper Class)이다. 따라서 Optional의 인스턴스는 모든 타입의 참조 변수를 저장할 수 있다.
@@ -3655,3 +3657,20 @@ public void throwsException(int param) throws Exception {
 
 
 참조 : https://velog.io/@jsj3282/%EC%9E%90%EB%B0%94%EC%9D%98-%EC%98%88%EC%99%B8%EC%9D%98-%EC%A2%85%EB%A5%98-3%EA%B0%80%EC%A7%80
+
+# ShallowCopy vs DeepCopy
+
+---
+
+https://jackjeong.tistory.com/100
+
+
+
+# Iterable vs Iterator
+
+---
+
+https://dundung.tistory.com/170
+
+https://devlog-wjdrbs96.tistory.com/84
+
