@@ -3658,11 +3658,145 @@ public void throwsException(int param) throws Exception {
 
 참조 : https://velog.io/@jsj3282/%EC%9E%90%EB%B0%94%EC%9D%98-%EC%98%88%EC%99%B8%EC%9D%98-%EC%A2%85%EB%A5%98-3%EA%B0%80%EC%A7%80
 
-# ShallowCopy vs DeepCopy
+# 얕은복사와 깊은복사
 
 ---
 
-https://jackjeong.tistory.com/100
+>  Java에서 변수를 복사하고자 할 때 일어날 수 있는 두 가지 경우인 Shallow Copy(얕은 복사)와 Deep Copy(깊은 복사)에 대해서 알아보겠다.
+>
+> 
+>
+> **Shallow Copy**는 "주소값"을 복사한다. 이 말은 기존에 참조하고 있던 실제 값은 바뀌지 않고 동일하다는 뜻이다. 즉, 한 쪽 배열에서 수정이 일어나면 나머지 다른쪽 배열에서도 수정이 반영된다.
+>
+> 이에 반해 **Deep Copy**는 "실제값"을 복사해서 이 값을 새로운 메모리 공간에 복사하게 된다. 즉, 한쪽 배열에서 수정이 일어나더라도 다른쪽 배열에는 아무런 영향을 끼치지 못한다.
+
+
+
+코드를 통해서 알아보자.
+
+```java
+public class Copy {
+    String name;
+    long cnt;
+    public Copy(String name, long cnt) {
+        this.name = name;
+        this.cnt = cnt;
+    }
+    
+    public void changeName(String name) {
+        this.name = name;
+    }
+    
+    public void minusCnt(long cnt) {
+        this.cnt -= cnt;
+    }
+}
+```
+
+
+
+## - Shallow Copy
+
+```java
+void shallowCopy() {
+    Copy origin = new Copy("spring", 10);
+    Copy copy = copy;
+    
+    origin.changeName("django");
+    origin.minusCnt(5);
+}
+```
+
+이런 과정을 거치고 난 후 origin의 이름은 "django"이고 개수가 5개라는 것은 자명하다.
+
+하지만 copy 객체는 어떨까?
+
+
+
+결과는 copy의 객체도 origin과 동일한 값(`Copy(name="django", cnt=5)`)을 가지게 된다.
+
+그 이유는 얕은복사는 주소값을 복사하기 때문에 주소로 값을 참조해서 값이 변경되면 해당 값을 참조하고 있는 배열들의 값이 변경된다.
+
+**copy 인스턴스가 참조하고 있는 실제값이 수정되었기 때문에 바뀐 값을 참조하는 것이다!**
+
+
+
+즉, 복사된 배열이나 원본 배열이 변경될 때 함께 변경된다.
+
+
+
+## - Deep Copy
+
+깊은 복사는 주소값을 참조하는 것이 아니라, 새로운 메모리 공간에 값을 복사하기 때문에 원본 배열이 변경되어도 복사된 배열에 전혀 상관을 끼치지 않는다!
+
+따라서 실제 값을 복사하려면 Deep Copy를 이용해야 한다.
+
+
+
+깊은복사에 대한 세 가지 방법이 있다.
+
+### 1. 복사 팩터리
+
+```java
+public class Copy {
+    String name;
+    long cnt;
+    
+    public Copy(Copy copy) {
+        this.name = copy.name;
+        this.cnt = copy.cnt;
+    }
+    
+    public static Copy newInstance(Copy copy) {
+        Copy c = new Copy();
+        c.name = copy.name;
+        c.cnt = copy.cnt;
+        return c;
+    }
+}
+```
+
+### 2. 직접 객체를 생성한 후 복사
+
+```java
+void deeCopy() {
+    Copy origin = new Copy("spring", 10);
+    Copy copy = new Copy();
+    copy.setName(origin.getName());
+    copy.setCnt(origin.getCnt());
+    
+    origin.changeName("django");
+    origin.minusCnt(5);
+}
+```
+
+### 3. clone() 재정의
+
+```java
+public class Copy implements Cloneable {
+    String name;
+    long cnt;
+    
+    @Override
+    protected Copy clone() throws CloneNotSupportedException {
+        return (Copy) super.clone();
+    }
+}
+
+void deepCopy() throws CloneNotSupportedException {
+    Copy origin = new Copy("spring", 10);
+    Copy copy = origin.clone();
+    
+    origin.changeName("django");
+    origin.minusCnt(5);
+}
+```
+
+이 떄 2차원 배열에서 `System.arraycopy()`를 수행하고자 하는 경우에는, 기본 자료형이 아닌 2차원 배열은 `arraycopy()` 메소드를 사용할 수 없다. 이 때는 각 객체의 값을 참조해서 new 연산자로 생성을 한 뒤 대입해줘야 한다.
+
+
+
+참조 : https://jackjeong.tistory.com/100
 
 
 
