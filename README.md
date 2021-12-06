@@ -579,6 +579,7 @@
 | 21313_문어                                          | [Link](./Algorithm/Baekjoon/p21313.java)                     | [문제](https://www.acmicpc.net/problem/21313)                | 구현                                       |
 | 21317_징검다리 건너기                               | [Link](./Algorithm/Baekjoon/p21317.java)                     | [문제](https://www.acmicpc.net/problem/21317)                | DP, 브루트포스, 백트래킹                   |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
+| 21938_영상처리                                      | [Link](./Algorithm/Baekjoon/p21938.java)                     | [문제](https://www.acmicpc.net/problem/21938)                | DFS, BFS                                   |
 | 21944_문제 추천 시스템 ver2                         | [Link](./Algorithm/Baekjoon/p21944.java)                     | [문제](https://www.acmicpc.net/problem/21944)                | 구현, TreeMap, 시간초과 fail               |
 
 ### [Programmers](./Algorithm/Programmers)
