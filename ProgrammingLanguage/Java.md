@@ -2899,7 +2899,289 @@ fun(SubClass sub) {
 | 런타임 오류 감지         | 런타임 오류 감지는 프로그래머의 책임                         | 런타임 오류 감지는 시스템에 의해 제어                        |
 | 하드웨어                 | 하드웨어에 가깝고 하드웨어 리소스를 조작할 수 있는 많은 라이브러리가 있다. 종종 시스템 프로그래밍, 게임 응용 프로그램, 운영체제 및 컴파일러에 사용된다. | 대부분 응용 프로그램 개발 언어이며 하드웨어에 가깝지 않다.   |
 
-# 정적패토리메서드
+# 정적 팩토리 메서드
+
+---
+
+우리가 어떤 인스턴스를 새로 생성할 때는 보통 생성자를 이용한다. 보통 실제 개발에 가면 public 생성자(혹은 빌더패턴)를 주로 이용해서 사용하는데, 이보다 좀 더 나은 방법이 있어서 포스팅한다.
+
+```java
+public class Product {
+    private String name;
+    
+    public Product(String name) {
+        this.name = name;
+    }
+    
+    public static void main(String[] args) {
+        Product product = new Product("book");
+    }
+}
+```
+
+위의 예는 생성자를 이용한 매개변수로 객체를 생성하는 모습이다.
+
+매개변수 하나일 때는 쉽게 예상이 가겠지만 매개변수가 점점 늘어나고 복잡해지면 하지만 개발자가 생성자의 매개변수만 보고 어떤 객체를 반환할지 예측하는 것은 쉽지 않을 것이다.
+
+
+
+정적 팩토리 메서드를 한마디로 정의하자면 **객체 생성의 역할을 하는 클래스 메서드이다.**
+
+```java
+public class Product {
+    private String name;
+    
+    public Product (String name) {
+        this.name = name;
+    }
+    
+    public static Product nameOf(String name) {
+        return new Product(name);
+    }
+    
+    public static void main(String[] args) {
+        Product product = nameOf("book");
+    }
+}
+```
+
+ 이와 같이 생성자와 별도로 객체를 생성하는 메소드를 정적으로 만들어서 객체 생성을 캡슐화 해 제공할 수 있다.
+
+
+
+예를 들어
+
+- Boolean Class의 `valueOf()`
+- LocalTime Class의 `of()`
+- enum Class의 `valueOf()`
+
+와 같은 것들이 바로 정적 팩토리 메서드의 일종이다.
+
+이는 미리 생성된 객체를 "조회"하는 메서드이기 때문에 객체를 생성하는 팩토리 역할을 한다고 볼 순 없지만, 외부에서 원하는 객체를 반환하고 있으므로 결과적으로는 정적팩토리 라고 간주한다고 한다.
+
+
+
+이펙티브 자바의 첫 아티클이 바로 **"생성자 대신 정적 패토리 메서드를 고려하라"**인 점을 고려하면 이 개념은 굉장히 중요한 것이라고 느낌이 올 것이다.
+
+그럼 본격적으로 그 장점을 알아보자.
+
+
+
+## 1. 이름을 가질 수 있다.
+
+생성자로 넘기는 매개변수 만으로는 반환될 객체의 특성을 정확하게 표현하기가 어렵다.
+
+하지만, 정적 팩토리 메서드를 사용하면, 이름만 잘 짓는다면 반환될 객체의 특성을 한번에 유추할 수 있다.
+
+```java
+public class Product {
+    private String name;
+    
+    public Product (String name) {
+        this.name = name;
+    }
+    
+    static Product nameOf(String name) {
+        return new Product(name);
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Product p1 = new Product("book");
+        Product p2 = Product.nameOf("pencil");
+    }
+}
+```
+
+그냥 생성자로 만드는 것보다 의미를 가진 메소드를 이용하면 훨씬 객체 생성의 의미를 파악하기 쉽다는 것을 알 수 있을 것이다.
+
+
+
+## 2. 호출할 때마다 새로운 객체를 생성할 필요가 없다.
+
+**불변 클래스(immutable class)**는 인스턴스를 미리 만들어두거나, 새로 생성한 인스턴스를 캐싱해서 재활용하기 때문에 불필요한 객체 생성을 줄일 수 있다.
+
+정적 팩터리 메서드와 캐싱구조를 함께 사용하면 매번 새로운 객체를 만들 필요가 없다.
+
+```java
+class Singleton {
+    private static Singleton singleton = null;
+    
+    private Singleton() {}
+    
+    static Singlenton getInstance() {
+        if (singleton == null) {
+            singleton = new Singleton();
+        }
+        return singleton;
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Singleton s1 = Singleton.getInstance();
+        Singleton s2 = Singleton.getInstance();
+        System.out.println(s1 == s2); // true
+    }
+}
+```
+
+생성자를 private으로 제한해서 새로운 객체 생성을 제한하고 `getInstance()` 메서드를 static으로 선언해서 인스턴스를 생성하도록 한다.
+
+위의 예에서 싱글톤 객체 s1과 s2는 같은 인스턴스이다.
+
+
+
+대표적으로 **Boolean Class**도  `TRUE`, `FALSE`를 상수로 정의해서 `valueOf(boolean)` 메서드 사용 시 객체를 새로 생성하는 것이 아니라 상수를 반환하는 것이다.
+
+따라서, 객체 생성 비용이 큰 객체가 자주 요청이 된다면 성능상에서 이점을 볼 수 있게 되는 것이다.
+
+
+
+이렇게 **인스턴스를 통제**하는 것은 인스턴스가 단 하나뿐임을 보장하는 것이고, **플라이웨이트 패턴**의 근간이 되는 것이다.
+
+> ***플라이웨이트 패턴(Flyweight Pattern)?***
+>
+> 데이터를 공유해서 메모리를 절약하는 패턴으로 공통으로 사용되는 객체는 한 번만 사용되고, Pool에 의해서 관리/사용 되는 디자인패턴이다.
+>
+> JVM의 String Constant Pool이 바로 그 예이다
+
+
+
+## 3. 하위 자료형 객체를 반환할 수 있다.
+
+이는 상속을 활용할 때 나타나는 특징이다.
+
+이렇게 바의 다형성 특징을 이용하면 인터페이스 자체를 반환하도록 할 수 있어, 하위 클래스(구현체)를 노출하지 않고도 반환할 수 있다.
+
+```java
+class Order {
+    public static Discount createDiscountProduct(String code) throws Exception {
+        if (!isValidCode(code)) {
+            throw new Exception("잘못된 할인 코드");
+        }
+        if (isUsableCoupon(code)) {
+            return new Coupon(1000);
+        } else if (isUsablePoint(code)) {
+            return new Point(500);
+        }
+        throw new Exception("이미 사용한 코드");
+    }
+}
+class Coupon extends Discount {}
+class Point extends Discount {}
+```
+
+이는 GoF 에서 소개하는 팩토리 패턴과 유사하게 객체 생성을 조건에 따라 분기한다는 개념이다.
+
+
+
+또한 이는 인터페이스를 정적 팩토리 메서드의 반환 타입으로 사용하는 **인터페이스 기반 프레임워크**를 만드는 핵심 기술이다.
+
+그 예로 자바의 **Collection** 프레임워크는 핵심 인터페이스들에 수정 불가나 동기화 등의 기능을 덧붙인 45개의 util 구현체를 제공한다.
+
+이 구현체는 `java.util.Collections` 클래스를 굳이 만들지 않고도 인터페이스 자체에서 정적 팩토리 메서드를 통해 얻도록 구현해놓은 것이다.
+
+```java
+public interface List<E> extends Collection<E> {
+    static <E> List<E> of() {
+        return (List<E>) ImmutableCollections.ListN.EMPTY_LIST;
+    }
+}
+```
+
+자바 9의 List 인터페이스의 `of()` 메서드는 인터페이스를 반환하는 정적 팩토리 메서드이다.
+
+**클라이언트의 입장에서는 반환되는 클래스가 어떤 건지 알 필요 없이 그냥 `of()` 메서드의 기능이 무엇인지만 알고, `List.of()`의 형태로 사용**하면 되는 것이다.
+
+
+
+자바 8에서부터 인터페이스에 정적 메소드를 사용할 수 있게 되는 데 그래서 자바 8 이전에는 인터페이스의 유사 클래스를 만들어서 그 안에 정적 메소드를 정의하는 방식으로 우회해서 사용했다.
+
+```java
+public class Collections {
+    private Collections() {}
+    ...
+	public static final List EMPTY_LIST = new EmptyList<>();
+    
+	public static final <T> List<T> emptyList() {
+        return (List<T>) EMPTY_LIST;
+    }
+}
+```
+
+
+
+## 4. 객체 생성을 캡슐화할 수 있다.
+
+생성자를 사용하는 경우에 외부에 내부 구현을 드러내야 하는데, 정적 팩토리 메서드 패턴을 사용 하면 **내부 구현을 캡슐화** 하여 사용할 수 있다.
+
+자주 사용하는 DTO와 Entity간의 형변환이 그 예시이다.
+
+```java
+@Builder
+public class ProductDto {
+    private String name;
+    private String date;
+    
+    public static ProductDto from(Product product) {
+        return new ProductDto(product.getName(), product.getDate());
+    }
+}
+```
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Product product = repository.getById(id);
+        
+        ProductDto productDto = new ProductDto(product.getName(), product.getDate()); // 생성자
+        ProductDto productDto = ProductDto.from(product); // 정적 팩토리 메서드
+    }
+}
+```
+
+
+
+이렇 게 정적 팩토리 메서드를 사용하면 **단순히 생성자의 역할을 대신하는 것 뿐만 아니라, 좀 더 가독성 좋은 코드를 작성하고 객체지향적으로 프로그래밍**할 수 있도록 도와준다.
+
+> *>> 추가적으로 롬복을 활용하면 좀 더 쉽게 정적 팩터리 메서드 패턴을 만들 수 있다.*
+>
+> ```java
+> @RequiredArgsConstructor(staticName = "of")
+> public class Product {
+>     private final Long id;
+>     private final String name;
+> }
+> ```
+
+
+
+## 단점 ?
+
+하지만 상속을 하려면 `public` 이나 `protected` 생성자가 필요한 데, 정적 팩토리 메소드만 제공하면 하위 클래스를 만들 수 없다는 단점이 존재한다.
+
+위에서 Collections 클래스를 보면 생성자의 접근제어자가 `private`이다. 그렇기 때문에 이 클래스는 누군가의 부모 클래스가 될 수 없다.
+
+
+
+정적 팩토리 메서드가 다른 정적 메서드와 잘 구분되지 않는다는 특징 때문에 구분을 쉽게 하기 위한 네이밍 컨벤션이 존재한다.
+
+- `from` : 하나의 매개 변수를 받아서 객체를 생성
+- `of` : 여러개의 매개 변수를 받아서 객체를 생성
+- `getInstance | instance` : 인스턴스를 생성. 이전에 반환했던 것과 같을 수 있다.
+- `newInstance | create` : 새로운 인스턴스를 생성
+- `get[OrderType]` : 다른 타입의 인스턴스를 생성. 이전에 반환했던 것과 같을 수 있다.
+- `new[OrderType]` : 다른 타입의 새로운 인스턴스를 생성
+
+
+
+*정적 팩터리 메서드와, public 생성자는 각각 장단점을 이해하고 사용하는 것이 좋으나 대부분 정적 팩토리를 사용하는 게 유리한 경우가 더 많다. **따라서 무작정 public 생성자를 만드는 것보다는 정적 팩토리 메서드를 우선 고려해보자!***
 
 # Optional Class
 
