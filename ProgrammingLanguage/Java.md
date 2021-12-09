@@ -4098,7 +4098,7 @@ void deepCopy() throws CloneNotSupportedException {
 
 ## Iterable
 
-![image-20211209170602415](../../tmpImg/image-20211209170602415.png)
+![image-20211209170602415](https://user-images.githubusercontent.com/58545240/145362441-14291560-5579-4e86-9191-4d6c3497fcca.png)
 
 다시 돌아와서
 
