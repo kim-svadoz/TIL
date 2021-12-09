@@ -4086,6 +4086,121 @@ void deepCopy() throws CloneNotSupportedException {
 
 ---
 
+이 주제를 공부하게 된 이유는 Java로 알고리즘을 구현하면서 Iterator를 자주 사용했었는데 문득, Iterable과의 차이에 대해서 알지 못해 이번 기회에 학습하기 위해 기록을 시작한다.
+
+
+
+먼저 **Collection Framework**에 대해서 알아야 하는데 이 컬렉션 프레임워크는 여러 데이터를 효과적으로 처리하기 위한 방법을 제공하는 클래스의 집합이다. 즉, 데이터를 저장하는 자료구조와 그를 처리하는 알고리즘을 구조화해서 클래스로 구현한 것이다.
+
+이 컬렉션 프레임워크는 자바에서 **인터페이스(Interface)**를 사용해서 구현되고, 컬렉션 프레임워크에서는 다음에 더 자세하게 알아볼 예정이다.
+
+
+
+## Iterable
+
+![image-20211209170602415](../../tmpImg/image-20211209170602415.png)
+
+다시 돌아와서
+
+```java
+public interface Collection<E> extends Iterable<E> {
+    // ...
+}
+```
+
+위 그림처럼 **Iterable**은 **Collection의 상위 인터페이스**이다. Iterable 인터페이스를 좀 더 자세히 보자
+
+```java
+public interface Iterable<T> {
+    Iterator<T> iterator();
+    
+    default void forEach(Consumer<? super T> action) {
+        Obejcts.requireNonNull(action);
+        for (T t : this) {
+            action.accept(t);
+        }
+    }
+    // ...
+}
+```
+
+
+
+이 Iterable 인터페이스 안에는 자바8부터 디폴트 메소드로 `forEach()`가 추가 되었다. 그 덕분에
+
+```java
+List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+list.stream().forEach(System.out::println);
+```
+
+처럼 stream으로 **forEach** 하는 것이 아니라
+
+```java
+List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+list.forEach(System.out::println);
+```
+
+stream을 생성하는 비용 없이 List에서 곧바로 **forEach**를 사용할 수 있게 되었다.
+
+
+
+또한, **`iterator`** 메소드가 추상메소드로 선언이 되어 있다. 그래서, Iterable을 구현한 클래스는 `iterator()`를 사용해서 Iterable 인터페이스를 반환할 수 있고, `iterator()` 메소드를 통해 `for-each loop`을 사용할 수 있게 되는 것이다.
+
+그 이유는 **`for-each loop`가 내부적으로 `iterator()` 메소드를 객체에 호출하는 로직이기 때문이다.**
+
+
+
+결론적으로는, Iterable을 구현한 객체에서만 for-each loop을 사용할 수 있다.
+
+
+
+이 때문에 Collection 인터페이스를 상속받는 구현체(ex. List, Set, Queue 등)들은 `iterator()` 메소드를 가지고 있는 것이다.
+
+따라서, **Iterable 인터페이스의 역할은 `iterator()` 메소드를 하위 클래스에서 무조건 구현을 하게 만들기 위함인 것이라고 볼 수 있다.**
+
+
+
+> 추가적으로, Iterable 인터페이스를 구현한 객체는 for-each loop를 사용할 수 있다는 것은 자명하다.
+>
+> 하지만, Iterable 인터페이스를 구현하지 않은 객체가 for-each loop를 사용하려고 하면 어떻게 될까?
+>
+> -> **자바 컴파일러가 for-each loop를 for loop으로 적절히 번역을 한다고 한다.**
+
+
+
+## Iterator
+
+그러면 이제 **Iterator** 인터페이스 내부를 보자
+
+```java
+public interface Iterator<E> {
+    boolean hasNext();
+    E next();
+    default void remove() {
+        throw ...
+    }
+    default void forEachRemaining(Consumer<? super E> action) {
+        Objects.requireNonNull(action);
+        while (hasNext())
+            action.accept(next());
+    }
+}
+```
+
+디폴트 메소드로 `remove`와 `forEachRemaining`가 정의되어 있고 **Iterator 인터페이스를 구현하고자 하는 클래스는 `hasNext()` 메소드와 `next()` 메소드를 오버라이딩**하면 된다.
+
+
+
+이 Iterator 인터페이스를 사용하는 이유는 컬렉션 구현 방법을 외부로 노출시키지 않고, 해당 메소드를 사용하기 위해서 이 Iterator 인터페이스가 존재한다.
+
+*참고: Iterator 패턴*
+
+
+
+
+
+***# Reference***
+
 https://dundung.tistory.com/170
 
 https://devlog-wjdrbs96.tistory.com/84
