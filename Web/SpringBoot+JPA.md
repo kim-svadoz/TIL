@@ -951,7 +951,7 @@ RestTemplate은 HttpClient를 추상화해서 제공이 되어 있어 내부 통
   Product product = restTemplate.getForObject(BASE_URL + "/{id}", Prodcut.class);
   ```
 
-  Prodcut로의 매핑은 기본적으로 **jackson-databind**가 담당한다.
+  Product로의 매핑은 기본적으로 **jackson-databind**가 담당한다.
 
 - `getForEntity()`
 
