@@ -1825,10 +1825,6 @@ Filter는 DispatcherServlet 외부에서 발생하기 때문에 `ErrorController
 
 참조 : https://supawer0728.github.io/2019/04/04/spring-error-handling/
 
-# JPQL?
-
-# MSA 맛보기
-
 # Hibernate의 기본키 생성전략
 
 # DDD: 도메인주도설계
