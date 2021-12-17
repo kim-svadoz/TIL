@@ -202,6 +202,7 @@
 | 1389_케빈 베이컨의 6단계법칙                        | [Link](./Algorithm/Baekjoon/p1389.java)                      | [문제](https://www.acmicpc.net/problem/1389)                 | 그래프, 플로이드와샬                       |
 | 1446_지름길                                         | [Link](./Algorithm/Baekjoon/p1446.java)                      | [문제](https://www.acmicpc.net/problem/1446)                 | DP, 다익스트라, 자료구조                   |
 | 1451_직사각형으로 나누기                            | [Link](./Algorithm/Baekjoon/p1451.java)                      | [문제](https://www.acmicpc.net/problem/1451)                 | 완전탐색, 구현                             |
+| 1455_뒤집기2                                        | [Link](./Algorithm/Baekjoon/p1455.java)                      | [문제](https://www.acmicpc.net/problem/1455)                 | Greedy                                     |
 | 1463_1로 만들기                                     | [Link](./Algorithm/Baekjoon/p1463.java)                      | [문제](https://www.acmicpc.net/problem/1463)                 | DP                                         |
 | 1476_날짜계산                                       | [Link](./Algorithm/Baekjoon/p1476.java)                      | [문제](https://www.acmicpc.net/problem/1476)                 | 완전탐색                                   |
 | 1477_휴게소 세우기                                  | [Link](./Algorithm/Baekjoon/p1477.java)                      | [문제](https://www.acmicpc.net/problem/1477)                 | 이분탐색                                   |
@@ -581,6 +582,7 @@
 | 21313_문어                                          | [Link](./Algorithm/Baekjoon/p21313.java)                     | [문제](https://www.acmicpc.net/problem/21313)                | 구현                                       |
 | 21317_징검다리 건너기                               | [Link](./Algorithm/Baekjoon/p21317.java)                     | [문제](https://www.acmicpc.net/problem/21317)                | DP, 브루트포스, 백트래킹                   |
 | 21318_피아노 체조                                   | [Link](./Algorithm/Baekjoon/p21318.java)                     | [문제](https://www.acmicpc.net/problem/21318)                | Prefix Sum                                 |
+| 21918_전구                                          | [Link](./Algorithm/Baekjoon/p21918.java)                     | [문제](https://www.acmicpc.net/problem/21918)                | 구현                                       |
 | 21938_영상처리                                      | [Link](./Algorithm/Baekjoon/p21938.java)                     | [문제](https://www.acmicpc.net/problem/21938)                | DFS, BFS                                   |
 | 21944_문제 추천 시스템 ver2                         | [Link](./Algorithm/Baekjoon/p21944.java)                     | [문제](https://www.acmicpc.net/problem/21944)                | 구현, TreeMap, 시간초과 fail               |
 
