@@ -784,3 +784,42 @@ public void configure(WebSecurity web) throws Exception {
         -   패스워드 암호화
     -   **matches(rawPassword, encodedPassword)**
         -   패스워드를 비교
+
+
+
+# 로그아웃 및 화면 보안 처리
+
+---
+
+로그아웃 방법 에는 두 가지가 있다.
+
+1.  `<form>`  태그를 사용해 **POST**로 요청하기.
+
+2.  `<a>` 태그를 사용해 **GET**으로 요청하기 : **SecurityContextLogoutHandler** 활용
+
+    -   이 핸들러는 Spring Security에서 제공해준다.
+
+    ```java
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/login";
+    }
+    ```
+
+
+
+또한, 인증 여부에 따라서 클라이언트에게 다른 `로그인 / 로그아웃` 레이아웃을 보여주어야 한다.
+
+여기선 thymeleaf를 활용해서 구현한다.
+
+```html
+<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/login}">로그인</a></li>
+<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/accounts}">회원가입</a></li>
+<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-light" th:href="@{/logout}">로그아웃</a></li>
+```
