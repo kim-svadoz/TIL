@@ -92,3 +92,185 @@ public class RandomManager {
 
 세미나 영상을 보고 나서 다시 한번 동기부여를 얻을 수 있었고 내일부터 진행할 리팩토링 시간이 설렌다. 아주 작은 부분이라도 의식적인 연습을 하다보면 테스트코드도 잘 짜겠지!
 
+---
+
+# 01/21
+
+## 전략패턴을 한번 써볼게요.
+
+오늘은 어제 있었던 단위테스트에 대해 공부하고 위의 난수 테스트를 프로그래머가 적절히 제어하기 위해 어떤 방법이 있는지 알아보고 적용했다.
+
+그 중, 내가 구현한 것은 전략패턴을 활용하는 것이었다.
+
+
+
+먼저 전략에 대한 인터페이스를 하나 만들고,
+
+```java
+public interface RandomStrategy {
+
+    int get();
+}
+```
+
+
+
+구현체를 사용하는 팩토리 클래스를 하나 생성한다.
+
+```java
+public class RandomFactory {
+
+    public RandomFactory() {}
+
+    public int getRandom(RandomStrategy randomStrategy) {
+        return randomStrategy.get();
+    }
+}
+```
+
+
+
+그리고 이제 나에겐 세 개의 전략 구현체가 존재한다.
+
+아래는 10 미만의 랜덤 값을 추출하는 클래스,
+
+```java
+import java.util.Random;
+
+public class RandomGenerator implements RandomStrategy {
+
+    private static final int LIMIT = 10;
+
+    public int get() {
+        return new Random().nextInt(LIMIT);
+    }
+}
+```
+
+
+
+단위테스트 시 항상 이동가능한 값을 반환하도록 제어하는 클래스,
+
+```java
+public class MoveGen implements RandomStrategy {
+
+    public static final int MOVE = 5;
+
+    @Override
+    public int get() {
+        return MOVE;
+    }
+}
+```
+
+
+
+항상 이동불가능한 값을 반환하도록 제어하는 클래스이다.
+
+```java
+public class NoMoveGen implements RandomStrategy {
+
+    public static final int NOMOVE = 3;
+
+    @Override
+    public int get() {
+        return NOMOVE;
+    }
+}
+```
+
+
+
+그리고 이를 실제로 활용하는 Move클래스이다.
+
+```java
+public class Move {
+
+    private static final int BOUND = 4;
+    private RandomFactory randomFactory;
+
+    private Move() {
+        randomFactory = new RandomFactory();
+    }
+
+    public boolean isSatisfiedMoveCondition(RandomStrategy randomStrategy) {
+        return randomFactory.getRandom(randomStrategy) >= BOUND;
+    }
+}
+```
+
+실제 사용하는 곳이다. 여기서 중요한 것이, move 객체에서 **어떤 전략을 선택할지 주입하는 행위이다.**
+
+이를 위해서, **사용하고자 하는 메서드에서 인자로 전략 구현체를 받아서 사용하면 된다.**
+
+실제 production 코드에서는 `RandomGenerator()` 라는 클래스를 주입해서 사용하고 있다.
+
+```java
+public RacingResult race(Participants participants) {
+    for (int i = 0; i < participantCount; i++) {
+        participants.moveCarIfPositionChanged(i, move.isSatisfiedMoveCondition(new RandomGenerator()));
+    }
+
+    return RacingResult.toRacingResult(participants);
+}
+```
+
+
+
+
+
+마찬가지로 단위테스트에서는 `MoveGen()` 과 `NoMoveGen()`을 주입해서 사용하면 훨씬 효과적으로 제어할 수 있게 되고 코드의 중복제거 등 다양한 효과를 얻게 된다.
+
+이를 조교님께 다시 한 번 보여드렸는데 또 한번 칭찬해주셔서 기분이 좋았다.
+
+
+
+## 그 외 개발 꿀팁 및 지식을 전수받았어요
+
+이 외에도 단위테스트에 대해서 이것 저것 물어봤고, 여러가지 꿀팁을 전수 받을 수 있었다 !
+
+1. 단위테스트 시 gradle보다 intelliJ로 설정해놓는 것이 빌드 속도도 더 빠르고 클래스에도 `displayName()`을 적용할 수 있어 더 좋다.
+2. 테스트를 작성할 때 각 테스트 간 의존하고 있으면 안된다. 반드시 독립적으로 어느 때나 테스트를 돌려도 커버할 수 있는 테스트를 작성하자.
+3. 시간 날 때마다 [AssertJ Docs](https://assertj.github.io/doc/) 를 참고하면 테스트 코드 짜는데 많이 도움이 될 거다 ^^!
+4. 테스트 재활용은 필수다! 테스트 할 때 기본으로 해줘야 하는 셋팅이 필요한데 이를 재활용하기 위해 테스트코드에 클래스를 만들고 이를 상속받고.. 등등.. 그렇다고 한다. 이에 대해서는 나중에 좀 더 자세하게 공부해봐야겠다.
+5. 변수명이나 함수명, 클래스명 어디에 두고 `shift + F6` 을 입력하면 **rename**이 된다. 이건 혁신이다...
+
+
+
+그리고 이 날은 다함께 회고를 진행했는데 사람마다 느끼는건 대부분 비슷한 것 같다.
+
+회고 시간 덕분에 동기들이랑 한번이라도 더 대화할 수도 있고 다양한 생각을 들을 수 있어서 좋았던 시간이었다!
+
+---
+
+# 01/22
+
+## 첫 PR, 그리고 혹독한 리뷰
+
+오늘은 드디어 기다리고 기다리던 리뷰어님께서 나의 첫 PR에 리뷰를 달아주셨다.
+
+마침 리팩토링 작업중이었기에 한걸음에 달려가 리뷰를 확인하고 코드를 수정했다 !
+
+
+
+리뷰 총평은 바로.. 안중요한 한줄 한줄이 없다는 것이다!!!!
+
+직관적이지 않은 변수명/함수명을 사용했고, 접근제한자에 습관적으로 public을 달고, 반복문에 의미없는 인자를 사용하고 했던 것이 눈에 띄게 드러났다. :cry:
+
+클래스의 인스턴스 변수는 재할당 될 필요가 있는가? 그렇지 않다면 final로 재할당을 방지하라!
+
+변수명, 함수명을 축약해서 썼는가? 그러지 말고 풀네임을 사용하라!
+
+필요없는 생성자, import 문, print문, 주석은 확실하게 제거하라!
+
+내가 생각했던 관습은 남들에게는 관습이 아니다. 좀 더 의도를 명확하게 드러내도록 메서드를 분리하라! 그러면 자연스레 코드도 깔끔해질것이다!
+
+하나의 메서드 혹은 클래스가 너무 많은 역할을 하면 안되다! 이것 또한 잘 분리하라!
+
+
+
+오늘의 리뷰는 대체적으로 리팩토링에 관한 것이었다. 그만큼 돌아가는 코드가 아니라 잘 읽히는 코드가 중요하다는 것을 다시 한번 느낄 수 있었다.
+
+이제 테스트코드 만들러 가야지~
+
+---
