@@ -1,6 +1,7 @@
 # racing-car
 
-> 11st에서 주최하고 next-step에서 진행하는 **TDD/클린코드/리팩터링 with JAVA** 과정을 진행하고 미션을 수행하며 있었던 일을 회고한다.
+> 11st에서 주최하고 next-step에서 진행하는 **TDD/클린코드/리팩터링 with JAVA** 과정을 진행하고 미션을 수행하며 있었던 일을 회고한다.  
+  <br>
 
 # 01/20
 
@@ -8,7 +9,7 @@
 
 오늘은 java-racing-car 미션에 대한 1차 제출 날이고, 요구사항 중 단위테스트를 만들지 못한 채 PR을 날렸다. 단위테스트를 만드는 법에 대해서 익숙치 않았고 조교님께 문의를 구했다.
 
-
+<br>
 
 조교님 왈
 
@@ -16,6 +17,7 @@
 
 이 부분은 앞으로 개발하면서 계속 고민해봐야 할 문제인 것 같다.
 
+<br>
 
 
 아래와 같은 랜덤 함수를 가져오는 작고 소중한 클래스가 있다.
@@ -37,6 +39,8 @@ public class RandomManager {
 
 먼저, 이는 실제로 랜덤으로 동작하는 것이기 때문에 테스트 작성 과정에서는 이 값을 제어할 수 있어야 한다.
 
+<br>
+
 두 가지 방법이 있다.
 
 1. `get()` 함수를 **Overriding** 하여 구현하는것.
@@ -44,7 +48,7 @@ public class RandomManager {
 
 1번의 방법은 테스트 코드 내에서 메소드의 시그니처를 변경하는 방법이다. 하지만 이미 나의 난수를 구하는 코드는 클래스로 따로 빼두었기 때문에 인터페이스를 활용한 방법을 추천해주셨다.
 
-
+<br>
 
 하지만 나는 한번에 이해가 가지 않았고 조교님은 두 개의 링크를 주시며 이해에 도움을 더해 주셨다.
 
@@ -52,31 +56,34 @@ public class RandomManager {
 >
 > https://tecoble.techcourse.co.kr/post/2020-04-28-test-without-method-change/
 
-
+<br>
 
 일단 이를 참고해서 단위테스트 케이스를 만들 생각이다.
 
 그리고 RandomManager라는 이름보다는 RandomGenerator라는 이름이 더 직관적이라는 생각이 들었다^^.
 
-
+<br>
 
 ## 싱글톤이에요? 정적팩토리메서드에요?
 
-당시 모든 클래스의 생성자를 정적 팩토리 메소드로 구현하였는데, 이런 경우는 생성자를 private으로 두는 것이 좋을 것 같다는 말씀을 해주셨다.
+당시 모든 클래스의 생성자를 정적 팩토리 메소드로 구현하였는데, 이런 경우는 생성자를 private으로 두는 것이 좋을 것 같다는 말씀을 해주셨다.  
+<br>
+
 
 그렇지 않으면 다른 사람들이 봤을 때 어느 것을 사용할 지 혼란을 주기 때문일 것이다.
 
-그렇기 때문에 현장에서는 **생성자**와 **정적팩토리메서드**를 고민한다고 되는데, 그 기준을 잡기 어렵기 때문이라고 한다. 만약 정적팩토리메서드를 사용한다면 싸그리 모두 정적팩토리를 사용하는 것이 좋을 것이라고 한다.
+그렇기 때문에 현장에서는 **생성자**와 **정적팩토리메서드**를 고민한다고 되는데, 그 기준을 잡기 어렵기 때문이라고 한다. 만약 정적팩토리메서드를 사용한다면 싸그리 모두 정적팩토리를 사용하는 것이 좋을 것이라고 한다.  
+<br>
 
 
-
-그리고 `getInstance()` 라는 이름의 정적팩토리메서드를 만들었는데 이름 때문에 싱글톤으로 헷갈리셨다. 이 부분에 대해서도 좀 더 가독성있는 이름을 채택해야겠다고 생각했다.
-
-
+그리고 `getInstance()` 라는 이름의 정적팩토리메서드를 만들었는데 이름 때문에 싱글톤으로 헷갈리셨다. 이 부분에 대해서도 좀 더 가독성있는 이름을 채택해야겠다고 생각했다.  
+<br>
 
 ## 페어와 함께하는 클린코드
 
-단위테스트에서 호되게 깨지고 난 후 더 큰 깨달음을 얻기 위해 우아한테크세미나에서 박재성(포비)님이 강연하신 영상을 봤다.
+단위테스트에서 호되게 깨지고 난 후 더 큰 깨달음을 얻기 위해 우아한테크세미나에서 박재성(포비)님이 강연하신 영상을 봤다.  
+<br>
+
 
 기존에도 객체지향설계원칙에 대해 알고 있었지만 미션 중 
 
@@ -84,25 +91,23 @@ public class RandomManager {
 - class의 인스턴스 변수는 최대 2개
 - 함수와 클래스는 최대한 작게
 
-등 과 같은 원칙을 지키기가 무척이나 어려웠던 것 같다.
+등 과 같은 원칙을 지키기가 무척이나 어려웠던 것 같다.  
+<br>
 
-특히, 시간이 촉박하기도 했지만 페어와 함께 프로그래밍하는 게 처음이고 어색하다보니 쉽게 지나쳤던 것을 반성한다.
-
-
-
+특히, 시간이 촉박하기도 했지만 페어와 함께 프로그래밍하는 게 처음이고 어색하다보니 쉽게 지나쳤던 것을 반성한다.  
+<br>
 세미나 영상을 보고 나서 다시 한번 동기부여를 얻을 수 있었고 내일부터 진행할 리팩토링 시간이 설렌다. 아주 작은 부분이라도 의식적인 연습을 하다보면 테스트코드도 잘 짜겠지!
 
 ---
 
 # 01/21
-
 ## 전략패턴을 한번 써볼게요.
 
-오늘은 어제 있었던 단위테스트에 대해 공부하고 위의 난수 테스트를 프로그래머가 적절히 제어하기 위해 어떤 방법이 있는지 알아보고 적용했다.
+오늘은 어제 있었던 단위테스트에 대해 공부하고 위의 난수 테스트를 프로그래머가 적절히 제어하기 위해 어떤 방법이 있는지 알아보고 적용했다.  
+<br>
 
-그 중, 내가 구현한 것은 전략패턴을 활용하는 것이었다.
-
-
+그 중, 내가 구현한 것은 전략패턴을 활용하는 것이었다.  
+<br>
 
 먼저 전략에 대한 인터페이스를 하나 만들고,
 
@@ -112,7 +117,6 @@ public interface RandomStrategy {
     int get();
 }
 ```
-
 
 
 구현체를 사용하는 팩토리 클래스를 하나 생성한다.
@@ -130,7 +134,9 @@ public class RandomFactory {
 
 
 
-그리고 이제 나에겐 세 개의 전략 구현체가 존재한다.
+그리고 이제 나에겐 세 개의 전략 구현체가 존재한다.  
+<br>
+
 
 아래는 10 미만의 랜덤 값을 추출하는 클래스,
 
@@ -162,7 +168,6 @@ public class MoveGen implements RandomStrategy {
     }
 }
 ```
-
 
 
 항상 이동불가능한 값을 반환하도록 제어하는 클래스이다.
@@ -199,7 +204,8 @@ public class Move {
 }
 ```
 
-실제 사용하는 곳이다. 여기서 중요한 것이, move 객체에서 **어떤 전략을 선택할지 주입하는 행위이다.**
+실제 사용하는 곳이다. 여기서 중요한 것이, move 객체에서 **어떤 전략을 선택할지 주입하는 행위이다.**  
+<br>
 
 이를 위해서, **사용하고자 하는 메서드에서 인자로 전략 구현체를 받아서 사용하면 된다.**
 
@@ -223,7 +229,8 @@ public RacingResult race(Participants participants) {
 
 이를 조교님께 다시 한 번 보여드렸는데 또 한번 칭찬해주셔서 기분이 좋았다.
 
-
+  
+  <br>
 
 ## 그 외 개발 꿀팁 및 지식을 전수받았어요
 
@@ -235,7 +242,8 @@ public RacingResult race(Participants participants) {
 4. 테스트 재활용은 필수다! 테스트 할 때 기본으로 해줘야 하는 셋팅이 필요한데 이를 재활용하기 위해 테스트코드에 클래스를 만들고 이를 상속받고.. 등등.. 그렇다고 한다. 이에 대해서는 나중에 좀 더 자세하게 공부해봐야겠다.
 5. 변수명이나 함수명, 클래스명 어디에 두고 `shift + F6` 을 입력하면 **rename**이 된다. 이건 혁신이다...
 
-
+  
+  <br>
 
 그리고 이 날은 다함께 회고를 진행했는데 사람마다 느끼는건 대부분 비슷한 것 같다.
 
@@ -249,9 +257,8 @@ public RacingResult race(Participants participants) {
 
 오늘은 드디어 기다리고 기다리던 리뷰어님께서 나의 첫 PR에 리뷰를 달아주셨다.
 
-마침 리팩토링 작업중이었기에 한걸음에 달려가 리뷰를 확인하고 코드를 수정했다 !
-
-
+마침 리팩토링 작업중이었기에 한걸음에 달려가 리뷰를 확인하고 코드를 수정했다 !  
+<br>
 
 리뷰 총평은 바로.. 안중요한 한줄 한줄이 없다는 것이다!!!!
 
@@ -267,10 +274,143 @@ public RacingResult race(Participants participants) {
 
 하나의 메서드 혹은 클래스가 너무 많은 역할을 하면 안되다! 이것 또한 잘 분리하라!
 
-
+  
+  <br>
 
 오늘의 리뷰는 대체적으로 리팩토링에 관한 것이었다. 그만큼 돌아가는 코드가 아니라 잘 읽히는 코드가 중요하다는 것을 다시 한번 느낄 수 있었다.
 
 이제 테스트코드 만들러 가야지~
 
 ---
+
+# 01/24
+
+## 자동차 경주 미션 총 피드백
+
+오늘은 자동차 경주 미션에 대해서 jason님의 총 피드백이 있었다.
+
+그 중 인상깊었던 것만 체크해본다.
+
+  
+  <br>
+
+### > 테스트 픽스처를 생성하자 !
+
+**테스트 픽스처(test fixture)란 테스트를 반복적으로 수행할 수 있게 도와주고 매번 동일한 결과를 얻을 수 있게 도와주는 '기반이 되는 상태나 환경'을 의미한다.**
+
+그래서, 여러 테스트에서 공용으로 사용할 수 있도록 테스트의 인스턴스 변수나 혹은 별도의 클래스에 모아두는 작업이 유용하다.  
+<br>
+
+```java
+public class RacingGameTest {
+    private final String[] testNames = {"a", "b", "c"};
+    private final int testPosition = 5;
+    private final String resultSamePositionString = ", b";
+    private final String resultWinnersString = "a, b";
+    RacingGame racingGame;
+    private final Car firstWinner = new Car(testPosition, "a");
+    private Car secondWinner;
+    private final List<Car> cars = new ArrayList<Car>();
+
+    ...
+
+}
+
+```
+
+​	그리고 이런 테스트 픽스처를 위해서 필요하다면 프로덕션 코드에 필요한 생성자를 추가하는 것도 좋다.  
+<br>
+
+### > 문자열끼리 비교할 때는 `NPE` 방지를 위해서 상수를 앞에다 비교하자.
+
+```java
+String text = "동해물과백두산이";
+if (text.equals("동해물과백두산이")) {} // text가 null이라면 NPE !
+if ("동해물과백두산이".equals(text)) {} // text가 null이어도 NPE를 방지할 수 있다 !
+```
+  
+  <br>
+
+### > class file 까보는게 자바 공부에 도움된다
+
+제곧내.  
+<br>
+
+### > Arrays.asList()는 기본적으로 add, remove가 안된다.
+
+```java
+final List<String> list = Arrays.asList("first", "second");
+list.add("third"); // UnSupportedOperatedException 발생
+list.remove("second"); // UnSupportedOperatedException 발생
+```
+  
+  <br>
+
+그렇다면 이를 수정할 수 있는 방법은 ????
+
+바로 Arrays.asList<>() 의 인자로 넣어주는 것이다!
+
+```java
+final List<String> list = new ArrayList<>(Arrays.asList("first", "second"));
+```
+  
+<br>
+
+### > generic은 컴파일 타임에만 의미가 있다.
+
+```java
+List<String> list = new ArrayList<>();
+
+List list = new ArrayList<>();
+list.add(1);
+list.add("1");
+
+// 이렇게 추가하는 것도 전혀 문제가 없다.
+```
+
+
+메서드의 시그니처란? : 메서드의 이름과 타입이다.
+
+generic의 특성 때문에 List를 메서드의 타입으로 받으면 어떤 타입이든지 같은 시그니처로 판단되어 중복이 나온다.  
+<br>
+
+```java
+void of(List<String> list) {}
+
+void of(List<Integer> list) {}
+```
+
+이거는 컴파일 될 때만 타입이 의미가 있지 같은 List로 들어가기 때문에 중복이 발생한다. 
+
+
+따라서, 제네릭은 컴파일타임에 내가 안전한 용도로 사용하기 위함이다.  <br>
+
+
+ ### enum 응용편
+
+```java
+Operator.PLUS.operate(3, 5);
+
+enum Operator {
+  PLUS("+") {
+    @Override
+    public int operate(final int number1, final int number2) {
+      return number1 + number2;
+    }
+  },
+  MINUS("-", (number1, number2) -> number1 - number2);
+  MULTIPLY("*", (number1, number2) -> number1 * number2);
+  
+  private final String symbol;
+  
+  Operator(final String symbol) {
+    this.symbol = symbol;
+  }
+  
+  public abstract int operate(final int number1, final int number2);
+}
+```
+
+`Bifunction<>` 을 사용하는 것 같다?
+
+어렵다! 이 부분은 나중에 더 자세히 알려준다고 한다.
