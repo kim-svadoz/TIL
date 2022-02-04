@@ -496,3 +496,148 @@ primary Constructor와 secondary Constructor
 String name을 예로 들어서, name을로 validate를 하려한다면 중복 코드가 늘어난다.
 
 하지만, Name이라는 클래스를 만들어서 해당 클래스에서 validate() 메서드를 실행시키면 되기 때문에 더 이상 중복이 일어나지 않는다.
+
+  
+<br>
+
+
+# 02/03
+
+자동차 경주 미션에서 MVC 패턴으로 구현하는게 참 쉽지 않았다.
+
+리뷰어님께서 도메인은 View(경주 결과)를 들고 있지도 알고 있을 필요도 없다고 하셔서 RacingRecord 객체를 View단으로 옮겼다.
+  
+<br>
+
+그 과정에서는 경주 기록(List<Cars>)을 한 데 모아다가 컨트롤러에서 한꺼번에 출력을 하기로 했지만... 이상하게 컨트롤러에서는 맨 마지막 기록만을 가지고 있었다.
+  
+<br>
+
+아래와 같다.
+  
+<br>
+## 방어적 복사
+
+**방어적 복사를 사용하지 않은 코드...**
+ 
+  
+<br>
+
+```java
+public class Participants {
+
+  private final List<Car> cars;
+
+  public Participants(List<Car> cars) {
+      this.cars = cars
+  }
+
+  ...
+
+  public Participants race() {
+    cars.stream()
+      .forEach(car -> car.go(RANDOM));
+
+    return new Participants(cars);
+  }
+}
+
+```
+
+이렇게 방어적 복사를 사용하지 않다면?
+List<Car>에서 Car 객체를 계속해서 공유하고 `return new Participatns(cars)` 를 수행할 때 List<Car>의 원소가 전혀 갱신되지 않고 같은 메모리 주소를 공유하게 된다.
+
+
+**방어적 복사를 사용한 코드**
+  
+<br>
+
+이를 해결하기 위해서 car가 변경될 때마다 새로운 객체와 주소를 생성해서 넘겨주어야 메모리 주소를 공유하지 않게 되고 원하는 결과들을 가질 수 있게 된다.
+  
+<br>
+
+
+```java
+public class Participatns {
+  private final List<Car> cars;
+
+  public Participants(List<Car> cars) {
+      this.cars = new ArrayList<>(cars);
+  }
+
+  public Participants race() {
+      List<Car> newCars = new ArrayList<>();
+      for (Car car : cars) {
+          newCars.add(car.go(RANDOM));
+      }
+
+      return new Participants(newCars);
+  }
+}
+```
+
+<br>
+
+또한, 생성자에서 `new ArrayList<>()`를 복사본으로 만들고 새롭게 초기화 해주게 되어 원본과의 주소를 공유하지 않게 되는 것이다.
+  
+<br>
+
+결론적으로, 외부에서 값을 변경할 수 없도록 하는 것이 **방어적 복사** 이다. 
+
+
+
+## FunctionalInterface 와 Lambda
+  
+<br>
+
+java8 부터는 하나의 추상메서드가 들어간 인터페이스를 FunctionalInterface라고 한다.
+
+함수형 프로그래밍(`lambda`)을 사용하기 위해선 fake를 줘야 하는데 그 방법이 바로 인터페이스에 `@FunctionalInterface`를 부여하는 것이다.
+
+  
+<br>
+
+이렇게 되면 바로 **람다** 를 사용할 수 있다.
+
+  
+<br>
+
+
+```java
+void move() {
+  final Car car = new Car("jason");
+  car.move(new MoveCiondition() {
+    @Override
+    public boolean movable() {
+      return true;
+    }
+  });
+}
+```
+
+```java
+@FunctionalInterface
+interface MovingCondition {
+  boolean movable();
+}
+```
+
+이상태에서 람다를 사용하면?  
+
+<br>
+
+```java
+void move() {
+  final Car car = new Car("jason");
+  car.move(() -> true);
+}
+
+```
+
+메서드 시그니처가 인자를 아무것도 안받기 때문에 한줄로 작성이 가능한 것 !
+
+  
+<br>
+
+
+> *람다를 사용하는 목적은 코드 가독성과 코드를 쉽게 작성하기 위함이다.*
