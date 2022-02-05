@@ -546,7 +546,7 @@ public class Participants {
 ```
 
 이렇게 방어적 복사를 사용하지 않다면?
-List<Car>에서 Car 객체를 계속해서 공유하고 `return new Participatns(cars)` 를 수행할 때 List<Car>의 원소가 전혀 갱신되지 않고 같은 메모리 주소를 공유하게 된다.
+List<Car>에서 Car 객체를 계속해서 공유하고 `return new Participatns(cars)` 에서 List<Car>의 원소가 전혀 갱신되지 않고 같은 메모리 주소를 공유하게 된다.
 
   
 <br>
@@ -570,13 +570,13 @@ public class Participatns {
   }
 
   public Participants race() {
-      List<Car> newCars = new ArrayList<>();
-      for (Car car : cars) {
-          newCars.add(car.go(RANDOM));
-      }
+        List<Car> newCars = new ArrayList<>();
+        for (Car car : cars) {
+            newCars.add(car.go(RANDOM));
+        }
 
-      return new Participants(newCars);
-  }
+        return new Participants(newCars);
+    }
 }
 ```
 
