@@ -516,10 +516,11 @@ String name을 예로 들어서, name을로 validate를 하려한다면 중복 �
 아래와 같다.
   
 <br>
+
 ## 방어적 복사
 
-**방어적 복사를 사용하지 않은 코드...**
- 
+### 방어적 복사를 사용하지 않은 코드
+
   
 <br>
 
@@ -547,8 +548,11 @@ public class Participants {
 이렇게 방어적 복사를 사용하지 않다면?
 List<Car>에서 Car 객체를 계속해서 공유하고 `return new Participatns(cars)` 를 수행할 때 List<Car>의 원소가 전혀 갱신되지 않고 같은 메모리 주소를 공유하게 된다.
 
+  
+<br>
 
-**방어적 복사를 사용한 코드**
+
+### 방어적 복사를 사용한 코드
   
 <br>
 
@@ -584,6 +588,8 @@ public class Participatns {
 
 결론적으로, 외부에서 값을 변경할 수 없도록 하는 것이 **방어적 복사** 이다. 
 
+  
+<br>
 
 
 ## FunctionalInterface 와 Lambda
@@ -594,10 +600,16 @@ java8 부터는 하나의 추상메서드가 들어간 인터페이스를 Functi
 
 함수형 프로그래밍(`lambda`)을 사용하기 위해선 fake를 줘야 하는데 그 방법이 바로 인터페이스에 `@FunctionalInterface`를 부여하는 것이다.
 
+<br>
+
+해당 어노테이션이 없어도 인터페이스가 단 하나의 메서드만 가지고 있다면 함수형 프로그래밍을 적용할 수 있지만, 보는 사람으로 하여금 인터페이스의 검증과 유지보수를 위해 어노테이션을 붙여주는 것이 좋다고 한다.
+
+인터페이스에 여러개의 메서드가 있는 경우에는 함수형 인터페이스가 맞는지 컴파일 시점에 검사할 수 있게 된다.
+
   
 <br>
 
-이렇게 되면 바로 **람다** 를 사용할 수 있다.
+만약 함수형 인터페이스가 맞다면 바로 **람다** 를 사용할 수 있게 된다.
 
   
 <br>
@@ -641,3 +653,139 @@ void move() {
 
 
 > *람다를 사용하는 목적은 코드 가독성과 코드를 쉽게 작성하기 위함이다.*
+
+---
+
+# 02/05
+
+  
+<br>
+
+## 자바에서의 불변객체
+
+<br>
+
+불변 객체란, 한 번  할당하면 내부의 값을 변경할 수 없는 객체이다.
+
+  
+<br>
+
+불변 객체를 사용하는 이유는 객체에 대한 신뢰도가 높아지게 되고 트랜잭션 내에서 변할 일이 없다는 것을 믿을 수 있다는 점이다.
+
+또한, 멀티스레드 환경에서 동기화 처리 없이 객체를 공유할 수 있다는 장점도 있다.
+
+하지만 객체가 가지는 값마다 새로운 객체를 필요로 하기 때문에 메모리 누수 등 성능 저하의 요인이 되기도 한다.
+
+  
+<br>
+
+### 1. 원시타입
+
+```java
+public class Car {
+
+    public final int position;
+
+    public Car(final int position) {
+        this.name = new Name(name);
+        this.position = position;
+    }
+}
+
+```
+
+이렇게 원시타입으로만 있는 객체는 `final` 키워드를 통해 불변객체로 만들 수 있다.
+
+그렇지 않으면 외부에서 setter를 통해 필드를 변경할 수 있는 가능성이 남아있게 된다.
+
+<br>
+
+### 2. 참조타입
+
+참조타입은 불변객체의 **참조 변수** 도 불변이어야 한다.
+
+<br>
+
+#### - 일반 객체인 경우
+
+```java
+public class Car {
+
+    private final Name name;
+    public final int position;
+
+    private Car(final String name) {
+        this(name, INITIAL_POSITION);
+    }
+
+    public Car(final String name, final int position) {
+        this.name = new Name(name);
+        this.position = position;
+    }
+}
+
+```
+
+여기서는 Name 이라는 객체가 있는데 Name의 내부 필드도 모두 불변으로 만들어 줘야 한다.
+
+
+<br>
+
+#### - Array 타입인 경우
+
+```java
+public class Array {
+    private final int[] array;
+
+    public Array(final int[] array) {
+        this.array = Array.copyOf(array, array.length);
+    }
+
+    public int[] getArray() {
+        return (array == null) ? null : array.clone();
+    }
+}
+
+```
+
+배열은 생성자에서 copy해서 저장하고 get메서드에는 `clone()`을 통해 반환하도록 해야 한다.
+
+만약 그대로 참조하거나 반환한다면 외부에서 메모리 주소를 공유하기 때문에 내부 값을 변경시킬 수 있는 위험이 존재한다.
+
+<br>
+
+#### - List 타입인 경우
+
+```java
+public class Participants {
+
+    private final List<Car> cars;
+
+    public Participants(final List<Car> cars) {
+        this.cars = new ArrayList<>(cars);
+    }
+
+    public List<Car> getParticipants() {
+        return Collections.unmodifiableList(cars);
+    }
+}
+
+```
+
+List인 경우에도 배열과 마찬가지로 생성자 인자를 그대로 참조하는게 아니라 새로운 List를 만들어 값을 복사하도록 해야 한다.
+
+또한, get 메서드를 만들 때도 값의 추가와 삭제가 불가능 하도록 Collections의 `unmodifiableList()` 메서드를 사용한다.
+
+<br>
+
+## 단위테스트를 수행할 때도 익명클래스와 람다를 적절히 활용하자
+
+꿀팁 ! 함수형 인터페이스의 기능을 테스트할 경우 곧바로 람다를 사용하는 것 보다는 익명클래스를 먼저 만들고 나면 람다식의 구조를 쉽게 파악할 수 있어 테스트 작성에 용이하다.
+
+<br>
+
+이제 슬슬 자동차 경주 미션도 끝나가는 것 같다. 
+
+이 과정이 너무 재밌기도 하고 리뷰어님과 함께 MVC 패턴을 구현해보니 설계와 구현에 어느 정도 감이 오는 것 같다. 
+
+다음 미션에서는 도메인을 이해하고 MVC 패턴에 알맞게 설계했는지 충분히 검토하고 리뷰를 요청하도록 신경써보자 !
