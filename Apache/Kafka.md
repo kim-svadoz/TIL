@@ -462,3 +462,95 @@ Consumer Group 내의 다른 Consumer가 실패한 Consumer를 대신해 Partiti
 -   동일한 Key를 가진 메시지는 동일한 Partition에만 전달되어서 Key 레벨의 순서를 보장할 수 있다.
 -   Key 선택이 잘못되면 작업 부하가 고르지 않을 수 있다.
 -   Consumer Group 내의 다른 Consumer가 실패한 Consumer를 대신해 Partition에서 데이터를 가져와서 처리한다.
+
+
+
+## Replication
+
+만약 Broker에 장애가 발생한다면 Broker에 있는 Partition들을 모두 사용할 수 없게 되는 문제가 발생한다.
+
+![image-20220303144400869](https://user-images.githubusercontent.com/58545240/156507874-7f04d216-db47-4b60-ad04-3944f997cb1b.png)
+
+
+
+또한, Producer가 Write하는 `LOG-END-OFFSET`과 Consumer Group의 Counser가 Read하고 처리한 후에 Commit한 `CURRENT-OFFSET`과의 차이(**Consumer Lag**)가 발생할 수 있다.
+
+![image-20220303144537078](https://user-images.githubusercontent.com/58545240/156507885-5de9b112-052b-4c9c-93bb-b197ddd589da.png)
+
+이 때 다른 Broker에서 Partition을 새로 만들 수 있으면 장애 해결이 될까?
+
+물론 서비스는 될 수 있을 것이다. 하지만  **메시지** 및 **Offset의 유실**에 대한 문제도 발생한다.
+
+
+
+그래서 이러한 장애를 대비하기 위해 나온 기술이 **Replication(복제)**이다.
+
+
+
+이 기술은 Partition을 복제해서 다른 Broker상에서 복제물(Replicas)를 만들어 장애를 대비하는 것이다.
+
+Replicas에는 `Leader Partition`과 `Follower Partition`으로 나뉜다.
+
+![image-20220303144748083](https://user-images.githubusercontent.com/58545240/156507889-08b180b7-966e-444f-a38e-32290c428540.png)
+
+
+
+Producer와 Consumer는 `Leader Partition`과만 통신하고 `Follower Patition`은 복제만 담당한다.
+
+다시말해, Producer는 Leader에만 Write하고 Consumer는 Leader로부터만 Read한다.
+
+Follower는 Broker 장애시 안정성을 제공하기 위해서만 존재한다. 서비스를 위한 용도는 오직 Leader이다.
+
+
+
+그럼 어떻게 복제해서 가져오나?
+
+Follower는 Leader의 Commit Log에서 데이터를 가져오기 요청(**Fetch Request**)으로 복제한다. (Follower가 Leader에게 요청을 보내는 것)
+
+![image-20220303144946532](https://user-images.githubusercontent.com/58545240/156507890-e2e5f44f-9228-46fa-a04c-bda101ee8a76.png)
+
+
+
+만약 Leader에 장애가 발생한다면?
+
+Kafka 클러스터는 Follower 중에서 새로운 Leader를 선출하고 Clients(Producer/Consumer)는 자동으로 새 Leader로 전환한다.
+
+![image-20220303145822011](https://user-images.githubusercontent.com/58545240/156507892-cbc355e5-9387-42e8-a70f-8ad9a55eedd5.png)
+
+리더를 선출하는 방법은 현재 단계에서는 카프카 클러스터가 리더를 선출하게 된다고만 알고 있자.
+
+
+
+### Hot Spot 방지
+
+하나의 Broker에만 Partition의 Leader들이 몰려있다면 특정 Broker에 부하가 집중될 것이다.
+
+이를 방지하기 위해서 일련의 옵션 설정이 필요하다.
+
+![image-20220303150010092](https://user-images.githubusercontent.com/58545240/156507893-140159d2-bce8-4264-964e-84a4c972783d.png)
+
+
+
+### Rack Awareness
+
+Rack 을 분산하여 Rack 장애를 대비할 수 도 있다.
+
+동일한 Rack 혹은 Avaiable Zone 상의 Broker들에 동일한 "rack name"을 지정해준다.
+
+복제본 (Replica- Leader/Follower)은 최대한 Rack 간에 균형을 유지해서 Rack 장애를 대비할 수 있도록 한다.
+
+
+
+Topic 생성시 혹은 **Auto Data Balancer/Self Balancing Cluster** 동작 때만 실행하도록 한다.
+
+![image-20220303150340126](https://user-images.githubusercontent.com/58545240/156507896-4fb2f24e-487e-45de-80b3-d20a0bc9e0ee.png)
+
+
+
+### 요약
+
+-   Partition을 복제(Replication)하여 다른 Broker상에서 복제물(Replicas)을 만들어 장애를 미리 대비한다.
+-   Replicas는 Leader Partition과 Follower Partition으로 나뉜다.
+-   Producer는 Leader에만 Writegkrh Consumer는 Leader로부터만 Read한다.
+-   Follower는 Leader의 Commit Log에서 데이터를 가져오기 요청(**Fetch Request**)로 복제한다.
+-   복제본은 최대한 Rack 간 균형을 유지해 Rack 장애를 대비하는 Rack Awareness 기능이 있다.
