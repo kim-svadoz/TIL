@@ -315,7 +315,7 @@ Record를 만들고 Send해주는 것. 그 때 Serilaizer를 이용해 셋팅해
 
 이 때 전제조건은 Key를 반드시 셋팅해주어야 한다.
 
-![image-20220303113206918](/Users/a1101716/Desktop/TIL_IMG/156486793-605c9bf1-32dd-42a9-8bbf-30127a383d6d.png)
+![image-20220303113206918](https://user-images.githubusercontent.com/58545240/156486793-605c9bf1-32dd-42a9-8bbf-30127a383d6d.png)
 
 배치형태로 하다보니까 메시지가 덜 담겼는데도 날라가는 경우가 발생해서 배치가 닫힐 때까지 채운다음에 한번에 묶어서 보내는 방식으로 버전이 업데이트 되었다.
 
