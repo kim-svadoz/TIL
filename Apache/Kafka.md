@@ -1,4 +1,6 @@
-# Kafka 기본 개념
+# Kafka 학습
+
+>   **패스트캠퍼스**에서 진행하는 [Kafka 완전 정복](https://fastcampus.app/course-detail/207099) 강의를 듣고 정리한 내용을 개인 학습을 위해 기록한 문서입니다.
 
 
 
@@ -254,3 +256,76 @@ Ensembel이 5대로 구성되어 있다면 Quorum은 3, 즉 Zookeeper 2대가 �
     - 최소 3대 이상의 Broker를 하나의 Cluster로 구성해야 한다. (*4대 이상을 권장함*)
 - Zookeeper는 Broker를 관리한다. (Broker들의 목록/설정을 관리)
     - Zookeeper는 홀수의 서버로 작동하도록 설계되어 있다. (최소 3, 권장 5)
+
+
+
+## Producer란?
+
+<img width="1103" alt="156479976-b3412276-216e-4a43-9b17-c1ff4279ffcb" src="https://user-images.githubusercontent.com/58545240/156486771-284f936a-e448-4dd1-bd48-8fdeaa90f47e.png">
+
+
+
+Producer는 기본적으로 메시지를 생산(`Produce`)해서 Kafka 의 Topic으로 메시지를 보내는 애플리케이션이다.
+
+메시지(== 레코드 == 이벤트 == 데이터)의 구조는 아래와 같다.
+
+주로 바디타입(키-밸류, 주로 비즈니스 로직)을 만지게 될 것이다.
+
+![image-20220303112454543](https://user-images.githubusercontent.com/58545240/156486782-d0bc2650-7569-4517-858d-33c16c34d811.png)
+
+
+
+또한 Kafa는 이 메시지를 저장할 때 Byte Array로 저장한다.
+
+어떤 데이터를 만들어 `Send`를 하게 되면 **Publish & Subscribe** 라이브러리에서 직렬화 되어 Byte Array로 변환되고 이를 Kafka로 전송되어진다. 이후 Consumer는 이를 사용하기 위해서 다시 역직렬화를 진행한다.
+
+![image-20220303112537619](https://user-images.githubusercontent.com/58545240/156486783-bcd6711a-30f6-40a6-be28-4a88a7a54c76.png)
+
+
+
+### Serailizer
+
+>   Key와 Value 용 Serilaizer를 각각 설정할 수 있다.
+
+![image-20220303112922390](https://user-images.githubusercontent.com/58545240/156486787-33405318-5919-4b57-91cd-b9863b6dacbf.png)
+
+CONFIG 파라미터를 사용해서 카프카의 Producer 설정을 진행하게 된다. 각각의 KEY/VALUE Serializer를 이용해서 직렬화를 진행할 수 있다.
+
+
+
+카프카의 아키텍처는 다음과 같다.
+
+![image-20220303113043457](https://user-images.githubusercontent.com/58545240/156486788-291d722c-b310-4a72-adc9-cdda25d1241a.png)
+
+`send`를 진행하고 나면 먼저 직렬화를 하게 된다.
+
+ **Partitioner**의 역할은 메시지를 **Topic**의 어떤 **Partition**으로 보낼지 결정한다.
+
+
+
+우리가 코딩으로 하는 것은 한가지 뿐이다.
+
+Record를 만들고 Send해주는 것. 그 때 Serilaizer를 이용해 셋팅해주는 것.
+
+
+
+![image-20220303113124153](https://user-images.githubusercontent.com/58545240/156486791-dd3c37fb-15c0-4a83-b374-9dac252b397b.png)
+
+이 **Partitioner**의 종류에는 성능과 작동방식이 모두 다양한데 보통은 default Partitioner를 많이 쓴다.
+
+이 때 전제조건은 Key를 반드시 셋팅해주어야 한다.
+
+![image-20220303113206918](/Users/a1101716/Desktop/TIL_IMG/156486793-605c9bf1-32dd-42a9-8bbf-30127a383d6d.png)
+
+배치형태로 하다보니까 메시지가 덜 담겼는데도 날라가는 경우가 발생해서 배치가 닫힐 때까지 채운다음에 한번에 묶어서 보내는 방식으로 버전이 업데이트 되었다.
+
+
+
+### 요약
+
+-   Message == Recored == Event == Data
+-   Message는 Header와 Key 그리고 Value로 구성
+-   Kafka는 Record(데이터)를 Byte Array로 저장한다.
+-   Producer는  Serializer, Consumer는 Deserializer를 사용한다.
+-   Producer는 Message의 Key 존재 여부에 따라 Partitioner를 통한 메시지 처리 방식이 다르다.
+
