@@ -329,3 +329,136 @@ Record를 만들고 Send해주는 것. 그 때 Serilaizer를 이용해 셋팅해
 -   Producer는  Serializer, Consumer는 Deserializer를 사용한다.
 -   Producer는 Message의 Key 존재 여부에 따라 Partitioner를 통한 메시지 처리 방식이 다르다.
 
+
+
+## Consumer란?
+
+>   Partition으로부터 Record를 가져온다.(`Poll`)
+
+Counsumer는 각각 고유의 속도로 **Commit Log**로부터 순서대로 Read(`Poll`)을 수행한다.
+
+다른 Consumer Group에 속한 Consumer들은 서로 관련이 없으며, Commit Log에 있는 Event(Message)를 동시에 다른 위치에서 Read할 수 있다.
+
+![image-20220303131717635](https://user-images.githubusercontent.com/58545240/156500887-1a2cd864-d922-4753-ac11-e1b5de34eac2.png)
+
+
+
+Consumer Group이 읽은 위치를 표시하기 위해 **Consumer Offset**이 사용된다.
+
+Counsumer가 자동이나 수동으로 데이터를 읽은 **위치**를 `commit`하여 다시 읽는 것을 방지한다.
+
+**`__consumer_offsets`**라는 Internal Topic에서 Consumer Offset을 저장해 관리한다.
+
+![image-20220303131827694](https://user-images.githubusercontent.com/58545240/156500890-02652e07-4616-4ec7-8956-c67c1e72cfe3.png)
+
+
+
+### Single Consumer
+
+모든 Partition에서 Consume하는 것을 **Multi-Partitions with Single Consumer**라고 한다.
+
+![image-20220303131930161](https://user-images.githubusercontent.com/58545240/156500894-fc8d1651-e1fe-42dc-b1cf-75b48faae762.png)
+
+
+
+또한, 동일한 `group.id`로 구성된 모든 Consumer들은 하나의 Consumer Group으로 형성된다.
+
+4개의 파티션이 있는 Topic을 consume하는 4개의 Consumer가 하나의 Consumer Group에 있다면 각 Consumer는 정확히 하나의 Parition에서 Record를 consume한다.
+
+Partition은 항상 Consumer Group내의 하나의 Consumer에 의해서만 사용된다.
+
+Consumer는 주어진 Topic에서 0개 이상의 많은 Partition을 사용할 수 있다.
+
+![image-20220303132117590](https://user-images.githubusercontent.com/58545240/156500896-f62a4fd8-9f97-4fd9-8577-d53a3d68ad75.png)
+
+
+
+### Multi Consumer Group
+
+Partition을 분배하여 Consume한다.
+
+동일한 `group.id`로 구성된 모든 Consumer들은 하나의 Consumer Group을 형성한다.
+
+Consumer Group의 Consumer들은 작업량을 어느 정도 균등하게 분할한다.
+
+동일한 Topic에서 consume하는 여러 Consumer Group이 있을 수 있다.
+
+![image-20220303132311555](https://user-images.githubusercontent.com/58545240/156500899-247d2699-199e-4f6b-b7a1-639cddc6365a.png)
+
+
+
+### Key의 사용
+
+Key를 사용하게 되면 Partition 별로 동일한 Key를 가지는 메시지를 저장할 수 있다.
+
+![image-20220303132359025](https://user-images.githubusercontent.com/58545240/156500902-0fdee1c1-193a-47f1-9f7f-3676738bd344.png)
+
+![image-20220303132417655](https://user-images.githubusercontent.com/58545240/156500905-312d6373-72a5-47ec-9b15-34d8346eafc2.png)
+
+
+
+### Message Ordering(순서)
+
+Partition이 2개 이상인 경우 모든 메시지에 대한 **전체 순서는 보장이 불가능**하다.
+
+Partition을 1개로 구성하면 모든 메시지에서 전체 순서를 보장 가능하다. 하지만 **처리량이 저하**된다.
+
+![image-20220303132642734](https://user-images.githubusercontent.com/58545240/156500908-b8afd370-4108-4592-98b9-a5e2a77a21d3.png)
+
+
+
+>    *Partition을 1개로 구성해서 모든 메시지에 전체 순서를 보장해야 하는 경우가 얼마나 많을까??* 
+>
+>   사용자 전체에 대한 순서보장? 데이터 전체에 대한 순서보장? 이런 경우는 흔치 않다.
+>
+>   **대부분의 경우, 특정 Key(특정 Row)로 구분할 수 있는 메시지들의 순서 보장이 필요한 경우가 많다 !**
+
+![image-20220303132725200](https://user-images.githubusercontent.com/58545240/156500912-37d9414a-3619-4433-88c4-0f4041d18d39.png)
+
+
+
+Key를 사용해서 Partition별 메시지 순서를 보장할 수 있다.
+
+동일한 Key를 가진 메시지는 동일한 Partition에만 전달되기 때문에 Key 레벨의 순서를 보장할 수 있다. 따라서 멀티 Partition을 사용할 수 있어 처리량도 증가하게 된다.
+
+**하지만 운영중에 Partition의 개수를 변경하게 된다면 순서는 보장할 수 없다.**
+
+![image-20220303132848536](https://user-images.githubusercontent.com/58545240/156500914-ce14b0aa-3a14-4691-ab85-405b78954189.png)
+
+
+
+### Cardinality
+
+>   특정 데이터 집합에서 유니크(Unique)한 값의 개수
+
+![image-20220303133108022](https://user-images.githubusercontent.com/58545240/156500917-406e19a4-2cfd-48af-bb32-ce382c411b73.png)
+
+
+
+### Consumer Failure
+
+4개의 파티션이 있는 Topic을 consume하는 4개의 Consumer가 하나의 Consumer Group에 있다면, 각 Consumer는 정확히 하나의 Partition에서 Record를 consume한다.
+
+Partition은 항상 Consumer Group 내의 하나의 Consumer에 의해서만 사용되고
+
+Consumer는 주어진 Topic에서 0개 이상의 많은 Partition을 사용할 수 있다.
+
+![image-20220303133304162](https://user-images.githubusercontent.com/58545240/156500919-aa3fc24a-7839-448f-9396-cd9b4c7249b5.png)
+
+
+
+Consumer Group 내의 다른 Consumer가 실패한 Consumer를 대신해 Partition에서 데이터를 가져와 처리한다.
+
+![image-20220303133419569](https://user-images.githubusercontent.com/58545240/156500920-21cc7292-7096-4b81-a0aa-442b116b91bd.png)
+
+
+
+### 요약
+
+-   Consumer가 자동이나 수동으로 데이터를 읽은 위치를 commit해서 다시 읽는걸 방지한다.
+-   `__consumer_offsets`라는 Internal Topic에서 Consumer Offset을 저장하여 관리한다.
+-   동일한 `group.id`로 구성된 모든 Consumer들은 하나의 Consumer Group을 형성한다.
+-   다른 Consumer Group의 Consumer들은 분리되어 독립적으로 작동한다.
+-   동일한 Key를 가진 메시지는 동일한 Partition에만 전달되어서 Key 레벨의 순서를 보장할 수 있다.
+-   Key 선택이 잘못되면 작업 부하가 고르지 않을 수 있다.
+-   Consumer Group 내의 다른 Consumer가 실패한 Consumer를 대신해 Partition에서 데이터를 가져와서 처리한다.
