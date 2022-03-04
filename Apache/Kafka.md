@@ -554,3 +554,135 @@ Topic 생성시 혹은 **Auto Data Balancer/Self Balancing Cluster** 동작 때�
 -   Producer는 Leader에만 Writegkrh Consumer는 Leader로부터만 Read한다.
 -   Follower는 Leader의 Commit Log에서 데이터를 가져오기 요청(**Fetch Request**)로 복제한다.
 -   복제본은 최대한 Rack 간 균형을 유지해 Rack 장애를 대비하는 Rack Awareness 기능이 있다.
+
+
+
+## In-Sync Replicas
+
+>   ISR -> 정말 잘 복제해가고 있는가 확인하는 지표!
+>
+>   **In-Sync Replicas(`ISR`)**는 High Water Mark라고 하는 지점까지 동일한 Replicas(Leader, Follower 모두)의 목록이다.
+>
+>   이는 Leader 장애시 새로운 Leader를 선출하는데 사용된다.
+
+![image-20220303153453039](https://user-images.githubusercontent.com/58545240/156717741-6472c3e4-e57d-47f2-92c3-a48ebac74761.png)
+
+
+
+### ISR 판단 방법
+
+**replica.lag.max.messages**로 `ISR`을 판단할 때 나타날 수 있는 몇 가지 문제점이 있다.
+
+-   메시지가 항상 일정 비율(초당 유입되는 메시지, 3msg/sec 이하)로 Kafka로 들어올 때 `replica.lag.max.messages = 5`로 하면 5개 이상으로 지연되는 경우가 없으므로 `ISR`들이 정상적으로 동작한다.
+-   하지만 메시지 유입량이 갑자기 늘어날 경우(ex. 10msg/sec), 지연으로 판단하고 `OSR(Out-of-Sync Replica)`로 상태를 변경시킨다.
+-   실제 Follower는 정상적으로 동작하고 단지 잠깐 지연만 발생했을 뿐인데, replica.lag.max.messages 옵션을 이용하면 `OSR`로 판단하게 되는 문제가 발생한다.
+    -   이는 운영중에 불필요한 error를 발생시키고 그로 인한 불필요한 retry를 유발한다
+
+
+
+따라서 **replica.lag.time.max.ms**로 판단해야 한다!
+
+-   Follower가 Leader로 Fetch 요청을 보내는 Interval을 체크한다.
+-   Ex) `replica.lag.time.max.ms = 10000`이라면 Follower가 Leader로 Fetch 요청을 10000ms 내에만 요청을 하면 정상으로 판단한다.
+-   Confluent에서는 복잡성을 제거하기 위해 replica.lag.time.max.ms 옵션만 제공한다.
+
+
+
+### ISR의 관리
+
+ISR은 Leader가 관리한다.
+
+Zookeeper에 ISR을 업데이트하면 Controller가 Zookeeper로부터 수신한다.
+
+1.   Follower가 너무 느리면 Leader는 `ISR`에서 Follower를 제거하고 Zookeeper에 `ISR`을 유지한다.
+2.   Controller는 Partition Metadata에 대한 변경 사항에 대해 Zookeeper로부터 수신받는다.
+
+![image-20220303154957575](https://user-images.githubusercontent.com/58545240/156717749-7d28b175-2fbc-4232-a536-1a28618d5fc7.png)
+
+
+
+### Controller
+
+-   Kafka의 Cluster 내의 Broker 중 하나가 Controller가 된다.
+-   Controller는 Zookeeper를 통해 Broker Liveness를 모니터링한다.
+-   Controller는 Leader와 Replica 정보를 Cluster 내의 다른 Broker들에게 전달한다.
+-   **Controller는 Zookeeper에 Replicas 정보의 복사본을 유지한 다음 더 빠른 액세스를 위해 클러스터의 모든 Broker들에게 동일한 정보를 캐싱한다.**
+-   **Controller가 Leader 장애시 Leader Election을 수행한다.**
+-   Controller가 장애가 나면 다른 Active Broker들 중에서 재 선출된다.
+
+
+
+### Consumer 관련 Position(Offset)
+
+-   `Last Committed Offset (Current Offset)`
+    -   Consumer가 최종 Commit한 Offset
+-   `Current Position`
+    -   Consumer가 읽어간 위치 (Commit 전, 처리 중 상태)
+-   `High Water Mark (Committed)`
+    -   ISR(Leader-Follower)간에 복제된 Offset
+-   `Log End Offset`
+    -   Producer가 메시지를 보내서 저장된, 로그의 맨 끝 Offset
+
+![image-20220303155527575](https://user-images.githubusercontent.com/58545240/156717755-496c415e-f86f-4e77-992f-c8eca77e4b39.png)
+
+
+
+***여기서 Committed의 의미는?***
+
+>   ISR 목록의 Replicas가 메시지를 받으면 `Committed` 상태이다.
+
+-   `ISR` 목록의 모든 Replicas가 메시지를 성공적으로 가져오면 `Committed`
+-   Consumer는 `Committed` 메시지만 읽을 수 있다.
+-   `Committed` 메시지는 모든 Follower에서 동일한 Offset을 갖도록 보장해준다.
+-   **즉, 어떤 Replica가 Leader인지에 관계없이(장애가 발생해도) 모든 Consumer는 해당 Offset에서 같은 데이터를 바라본다.**
+-   Broker가 다시 시작할 때 `Committed` 메시지 목록을 유지하도록 하기 위해 Broker의 모든 Partition에 대한 마지막 Committed Offset은 `replication-offset-checkpoint`라는 파일에 기록된다.
+
+![image-20220303155820610](https://user-images.githubusercontent.com/58545240/156717758-2702c258-19fa-4420-bdaf-1c004bbf11d4.png)
+
+
+
+
+
+### Replicas 동기화
+
+-   **Hight Water Mark**
+    -   가장 최근에 Committed 메시지의 Offset 추적
+    -   `replication-offset-checkpoint` 파일에 checkpoint 기록
+-   **Leader Epoch**
+    -   새 Leader가 선출된 시점을 Offset으로 표시한다.
+    -   Broker 복구 중에 메시지를 체크포인트로 자른 다음 현재 Leader를 따르기 위해 사용된다.
+    -   Controller가 새 Leader를 선택하면 Leader Epoch를 업데이트하고 해당 정보를 `ISR` 목록의 모든 구성원에게 보낸다.
+    -   `leader-epoch-checkpoint` 파일에 checkpoint 기록
+
+
+
+### Message Commit 과정
+
+>   Follower에서 Leader로 Fetch만 수행한다.
+
+1.   Offset 5까지 복제가 완료되어 있는 상황에서,  Producer가 메시지를 보내면 Leader가 offset 6에 새 메시지를 추가
+
+     ![image-20220303160522616](https://user-images.githubusercontent.com/58545240/156717763-50a82b52-2180-43ed-9a51-39e0864fe3ab.png)
+
+2.   각 Follower들의 Fetcher Thread가 독립적으로 fetch를 수행하고, 가져온 메시지를 offset 6에 메시지를 Write
+
+     ![image-20220303160644385](https://user-images.githubusercontent.com/58545240/156717764-430fa767-acf4-4b95-9a4e-ea34a6a0a3f1.png)
+
+3.   각 Follower들의 Fetcher Thread가 독립적으로 다시 fetch를 수행하고 null을 받은 Leader는 High Water Mark로 이동
+
+     ![image-20220303160704020](https://user-images.githubusercontent.com/58545240/156717769-7ee422e9-c499-498a-8e9f-eb78107b5884.png)
+
+4.   각 Follower들의 Fetcher Thread가 독립적으로 다시 fetch를 수행하고 High Water Mark를 받는다.
+
+     ![image-20220303160715871](https://user-images.githubusercontent.com/58545240/156717771-64783aba-df41-41ed-a4c4-37fbb0015bf9.png)
+
+
+
+### 요약
+
+-   In-Sync Replicas(`ISR`)는 High Water Mark라고 하는 지점까지 동일한 Replicas(Leader와 Follower 모두)의 목록
+-   High Water Mark(Committed)
+    -   `ISR`간에 복제된 Offset
+-   Consumer는 Committed 메시지만 읽을 수 있다.
+-   Kafka Cluster 내의 Broker중 하나가 Controller가 된다.
+-   Controller는 Zookeeper를 통해 Broker Liveness를 모니터링한다.
