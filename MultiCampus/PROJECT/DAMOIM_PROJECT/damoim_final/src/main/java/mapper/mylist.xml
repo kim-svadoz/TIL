@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="damoim.myhome.mylist">
+  	<select id="mylist" resultType="mylist" parameterType="String">
+  		select DISTINCT  g.gath_name, b.board_title, b.board_date,  b.board_gno, b.board_mno, g.gath_no
+			from gathering g, board b
+			where  b.board_mno=#{mem_id} and g.gath_no=b.board_gno
+			order by b.board_date DESC
+	</select>
+  
+	<select id="myschedulelist" resultType="mylist" parameterType="String">
+		select DISTINCT g.gath_name, s.sche_name, s.sche_date, g.gath_no
+		from gathering g, schedule s, gathering_member gm
+		where gm.gath_mem_mno=#{mem_id} and g.gath_no=s.sche_gno
+        order by s.sche_date DESC
+	</select>  
+	
+	<select id="recommend" resultType="mylist" parameterType="String">
+	select DISTINCT g.gath_name, g.gath_info, g.gath_intro, im.major_name, im.major_mjno, g.gath_no
+		from gathering g, interest_major im, member_interest mi
+		where mi.mem_mno=#{mem_id} and  im.major_mjno=g.gath_major and im.major_mjno=mi.mem_mjno
+	</select>
+  </mapper>

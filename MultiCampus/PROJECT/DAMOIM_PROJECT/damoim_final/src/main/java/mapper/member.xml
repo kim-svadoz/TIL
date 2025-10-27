@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 레코드 하나가 member에 매핑됨 -->
+	<!-- parameterType 두 개 따로 받기 귀찮으므로 member로 받음 -->
+	<select id="login" resultType="member" parameterType="member">
+		select m.*
+		from member m
+		where mem_id=#{mem_id} and mem_pass=#{mem_pass}
+	</select>
+	
+	<select id="passcheck" resultType="member" parameterType="String" >
+		select * 
+		from member 
+		where mem_pass=#{mem_pass}
+	</select>
+	
+	<select id="idcheck" resultType="member" parameterType="String" >
+		select * 
+		from member 
+		where mem_id=#{id}
+	</select>
+	
+	<select id="nickcheck" resultType="member" parameterType="String" >
+		select * 
+		from member 
+		where mem_nickname=#{nickname}
+	</select>
+	
+	<select id="read" resultType="member" parameterType="String">
+		select * 
+		from member 
+		where mem_id=#{id}
+	</select>
+	
+	<insert id="insert" parameterType="member">
+		insert into member values(#{mem_id},
+	#{mem_pass},
+	#{mem_name},
+	#{mem_nickname},
+	#{mem_age},
+	#{mem_birth},
+	#{mem_gender},
+	#{mem_home},
+	#{mem_office},
+	#{mem_neighbor},
+	'',
+	#{mem_business},
+	#{mem_job},
+	'',
+	'null',
+	'',
+	'',
+	#{mem_phone},
+	'',
+	0)
+	</insert>
+	<update id="profileupdate" parameterType="Map">
+	update member
+	set mem_profile = #{mem_profile}
+	where mem_id = #{mem_id}
+	</update>
+</mapper>

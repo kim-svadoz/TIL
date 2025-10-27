@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="home">
+	<!-- topList, loginRecommendList, recommendList -->
+	<!-- 회원수순  -->
+	<select id="topList" resultType="gathering">
+		 select *
+ from gathering
+ where gath_no in (
+ select g.gath_no
+ from gathering g, gathering_member gm
+ where g.gath_no = gm.gath_mem_gno
+ group by g.gath_no)
+		<!-- <![CDATA[
+				and rownum <= 5
+				]]> -->
+	</select>
+	
+	
+	<!-- 
+	<select id="topList" resultType="gathering">
+		select g.*
+		from (
+			select *
+			from gathering
+			order by gath_no desc) g
+		<![CDATA[
+				where rownum <= 5
+				]]>
+	</select> -->
+	
+	<select id="myList" resultType="gathering">
+		select g.*
+		from (
+			select *
+			from gathering
+			order by gath_minor desc) g
+		<![CDATA[
+				where rownum <= 5
+				]]>
+	</select>
+
+	
+	<!-- 추천(카테고리별)  -->
+	<select id="recommendList" resultType="gathering" parameterType="String">
+		select g.*
+		from (
+			select *
+			from gathering
+			where gath_major=#{major}) g
+		<![CDATA[
+				where rownum <= 5
+				]]>
+	</select>
+	
+	
+	<!-- <select id="recommendList" resultType="gathering">
+	
+	</select>
+	
+	
+	<select id="loginRecommendList" resultType="gathering" parameterType="String">
+		select b.*
+		from board b, gathering g
+		where b.board_gno=g.gath_no
+			and g.gath_no=#{gath_no}
+			and b.board_bno=#{board_bno}
+	</select> -->
+</mapper>

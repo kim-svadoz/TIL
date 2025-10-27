@@ -1,0 +1,79 @@
+drop sequence board_seq;
+drop table board;
+
+create sequence board_seq start with 1 increment by 1 maxvalue 10000;
+create table board(
+	board_seq number primary key,
+	title varchar2(1000) not null,
+	text varchar2(3000) not null,
+	write_date varchar2(500),
+	user_ID varchar2(1000)
+);
+
+drop table reply;
+drop sequence comment_seq;
+
+create sequence comment_seq start with 1 increment by 1 maxvalue 10000;
+create table reply(
+	comment_seq number primary key,
+	mcomment varchar2(3000) not null,
+	writedate varchar2(500),
+	user_ID varchar2(1000),
+	board_num number
+);
+
+drop table child;
+drop sequence seq;
+
+create sequence seq start with 1 increment by 1 maxvalue 10000;
+create table child(
+	parents_user_id varchar2(500),
+	seq number,
+	name varchar2(500),
+	phone_number varchar2(500),
+	img number);
+
+drop table member;
+drop sequence member_seq;
+create sequence member_seq;
+create table member(
+    idx number primary key,
+    userID varchar2(1000), 
+    name varchar2(20),
+    password varchar2(20),
+    phone varchar2(15),
+    birth varchar2(10),
+    gender varchar2(10),
+    token varchar2(300)
+);
+
+
+
+insert into child values('andoridID', seq.nextval, 'kim', '01088889999', 1111);
+
+
+drop table fcm_table;
+drop sequence fcm_val;
+
+create sequence fcm_val start with 1 increment by 1 maxvalue 10000;
+creat table fcm_table{
+	fcm_val number,
+	mem_id varchar2(300),
+	fcm_token varchar2(1000),
+	
+}
+
+
+
+글은 아무나 쓸 수 있음.
+댓글도 아무나 쓸 수 있음.
+
+근데 수정, 삭제는 id가 동일한 경우만. => 이미 로그인 페이지에서 id값은 만들어져 있으니 테이블에 추가해주기만 하면 된다.
+
+댓글은 클릭하는 seq와 board의 seq와 일치하는 댓글만 보여지도록.(단순 selectAll이 아닌 조건이 추가된 select)
+
+노티 + DB연동
+게시글, 댓글 DB연동
+영상통화
+
+일단 제일 먼저 DB연동 필수(인텐트 넘기고 넘기고)

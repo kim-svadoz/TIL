@@ -1,0 +1,3 @@
+"<tr><td class='mem_profile' style='width:20%''><img alt='' style='width:15%' src='/damoim/member/memimg/'"+data[i].mem_profile+"></td>"+
+
+<td class="mem_profile" style="width:20%"><img alt="" style="width:15" src="/damoim/member/memimg/"></td>

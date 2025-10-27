@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="location">
+	<select id="search" resultType="location" parameterType="String">
+		select *
+		from location
+		where loc_code = #{loc_code}
+	</select>
+	
+	<select id="listall" resultType="location">
+		select * 
+		from location
+	</select>
+
+</mapper>

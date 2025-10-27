@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- main관련 작업을 하기 위해 필요한 뷰만 설정 -->
+	<!-- 메인화면 -->
+	<definition name="main/home" extends="mainTemplate">
+
+	</definition>
+
+	<definition name="guide" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/guide.jsp" />
+	</definition>
+	<!-- 로그인 눌렀을 때 보여질 페이지 -->
+	<definition name="login" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/login.jsp" />
+	</definition>
+
+	<definition name="mypage" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/mypage1.jsp" />
+	</definition>
+
+	<!-- 회원가입 -->
+	<definition name="reg" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg1.jsp" />
+	</definition>
+	
+	<definition name="reg2" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg2.jsp" />
+	</definition>
+	
+	<definition name="emailCheck" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/emailCeck.jsp"/>
+	</definition>
+	
+	<definition name="reg3" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg3.jsp" />
+	</definition>
+	
+	<definition name="reg-inter" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg-inter.jsp" />
+	</definition>
+	
+	<definition name="reg4" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg5.jsp" />
+	</definition>
+	
+	<definition name="reg5" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/reg5.jsp" />
+	</definition>
+	
+	<definition name="mypage2" extends="mainTemplate">
+		<put-attribute name="content"
+			value="/WEB-INF/member/mypage2.jsp" />
+	</definition>
+	
+	<!-- 사원등록을 눌렀을 때 보여질 페이지 -->
+	<definition name="emp/insert" extends="mainTemplate">
+		<put-attribute name="menu"
+			value="/WEB-INF/menu/insa_menu.jsp"></put-attribute>
+		<put-attribute name="content"
+			value="/WEB-INF/emp/register.jsp"></put-attribute>
+	</definition>
+
+</tiles-definitions>

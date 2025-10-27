@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="board.list.BoardListVO" alias="boardList"/>
+		<typeAlias type="gathering.info.GatheringInfoVO" alias="gathering"/>
+		<typeAlias type="gathering.schedule.ScheduleRegisterVO" alias="scheduleRegister"/>
+		<typeAlias type="gathering.join.ScheduleJoinVO" alias="scheduleJoin"/>
+		<typeAlias type="member.MemberVO" alias="member"/>
+		<typeAlias type="board.comment.BoardCommentVO" alias="comment"/>
+		<typeAlias type="gathering.info.GatheringMemberVO" alias="gatheringmember"/>
+		<typeAlias type="board.comment.BoardCommentLikeVO" alias="commentlike"/>
+		<typeAlias type="image.ImageVO" alias="image"/>
+		<typeAlias type="moim.list.MoimListVO" alias="moimList"/>
+		<typeAlias type="damoim.myhome.mylist.MyListVO" alias="mylist"/>
+		<typeAlias type="location.locationVO" alias="location"/>
+		<typeAlias type="business.businessVO" alias="business"/>
+		<typeAlias type="job.jobVO" alias="job"/>
+		<typeAlias type="interest.interest_minorVO" alias="interest_minor"/>
+		<typeAlias type="interest.interest_majorVO" alias="interest_major"/>
+		<typeAlias type="interest.member_interestVO" alias="member_interest"/>
+		<typeAlias type="damoim.search.SearchVO" alias="search"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/board.xml"/>
+		<mapper resource="mapper/gathering.xml"/>
+		<mapper resource="mapper/scheduleRegister.xml"/>
+		<mapper resource="mapper/scheduleJoin.xml"/>
+		<mapper resource="mapper/member.xml" />
+		<mapper resource="mapper/comment.xml"/>
+		<mapper resource="mapper/home.xml"/>
+		<mapper resource="mapper/search.xml"/>
+		<mapper resource="mapper/image.xml"/>
+		<mapper resource="mapper/moim.xml"/>
+		<mapper resource="mapper/mylist.xml"/>
+		<mapper resource="mapper/location.xml"/>
+		<mapper resource="mapper/business.xml"/>
+		<mapper resource="mapper/job.xml"/>
+		<mapper resource="mapper/interest_major.xml"/>
+		<mapper resource="mapper/interest_minor.xml"/>
+		<mapper resource="mapper/member_interest.xml"/>
+	</mappers>
+</configuration>

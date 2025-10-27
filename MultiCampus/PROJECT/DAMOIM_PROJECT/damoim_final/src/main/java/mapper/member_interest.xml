@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member_interest">
+<insert parameterType="member_interest" id="insert">
+	insert into member_interest 
+	values(#{mem_mno}, #{mem_mjno}) 
+</insert>
+<!-- <insert id="insert" parameterType="Map">
+	insert all
+	<foreach collection="list" item="member_interest" separator=" ">
+		into member_interest values(#{mem_mno}, #{mem_mjno})
+	</foreach>
+	select * from dual
+</insert> -->
+
+
+</mapper>
+
+
+
+

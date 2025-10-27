@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="moim.list">
+  <select id="listall" resultType="moimlist" parameterType="String">
+	select *
+	from schedule s
+	where s.sche_no = #{sche_no}
+  </select>
+   <select id="listmem" resultType="member" parameterType="String">
+	select *
+	from member m, schedule_mem sm 
+	where sm.sche_mem_sno= #{sche_no} and sm.sche_mem_mno =m.mem_id 
+  </select>
+</mapper>

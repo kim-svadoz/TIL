@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="damoim.search">
+  	<!-- <select id="search" resultType="gathering" parameterType="map">
+  		select * from gathering 
+  		  where gath_major=#{ major_mjno} 
+   	</select> -->
+   	<select id="major_mjno" resultType="search"  parameterType="Map">
+ 		select * from gathering
+ 		where gath_major in(
+ 		<foreach collection="major_mjno" item="myval" separator=",">
+ 			#{myval}
+ 		</foreach>
+ 		)
+ 	</select>
+  </mapper>

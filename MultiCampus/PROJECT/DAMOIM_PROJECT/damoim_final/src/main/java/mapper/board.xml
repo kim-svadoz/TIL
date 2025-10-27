@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.list">
+	<select id="listAll" resultType="boardlist">
+		select b.*, m.mem_nickname as board_nickname, (select count(b_comm_no) from board_comment where b.board_no=b_comm_bno)as comm_count
+		from board b, gathering g ,member m
+		where b.board_gno=g.gath_no
+		and b.board_mno=m.mem_id
+		and g.gath_no=#{gath_no}
+		order by board_date desc
+	</select>
+	<select id="categorySearch" resultType="boardlist"
+		parameterType="Map">
+		select b.*, m.mem_nickname as board_nickname, (select count(b_comm_no) from board_comment where b.board_no=b_comm_bno)as comm_count
+		from board b, gathering g, member m
+		where b.board_gno=g.gath_no
+		and b.board_mno=m.mem_id
+		and g.gath_no=#{gath_no}
+		and b.board_category = #{board_category}
+		order by board_date desc
+	</select>
+
+	<insert id="insert" parameterType="boardlist">
+		insert into board
+		values(board_seq.nextval,#{board_title},#{board_content},#{board_gno},#{board_mno},
+		sysdate,'0','0',#{board_category})
+	</insert>
+
+	<select id="detailView" parameterType="String"
+		resultType="boardList">
+		select b.*, m.mem_name as board_name, m.mem_nickname as board_nickname
+		from board b, member m
+		where b.board_mno =m.mem_id
+		and board_no = #{board_no}
+	</select>
+
+	<delete id="delete" parameterType="String">
+		delete from board where board_no = #{board_no}
+	</delete>
+	<update id="update" parameterType="boardlist">
+		UPDATE board set
+		board_title =#{board_title},
+		board_content=#{board_content},
+		board_category=#{board_category}
+		where board_no=#{board_no}
+	</update>
+	<update id="searchcount" parameterType="String">
+		update board
+		set board_hit = board_hit+1
+		where board_no = #{board_no}
+	</update>
+	<select id="searchlist" parameterType="Map" resultType="boardlist">
+		select b.*, m.mem_nickname as board_nickname, (select count(b_comm_no) from board_comment where b.board_no=b_comm_bno)as comm_count
+		from board b, gathering g ,member m
+		where b.board_gno=g.gath_no
+		and b.board_mno=m.mem_id
+		and g.gath_no=#{gath_no}
+		<if test="tag=='title' and search!=''">
+			and b.board_title like '%'|| #{search} ||'%'
+		</if>
+		<if test="tag=='content' and search!=''">
+			and b.board_content like '%'|| #{search} ||'%'
+		</if>
+		<if test="date=='day'">
+			and board_DATE >= TO_CHAR(SYSDATE-1,'YYYYMMDD')
+		</if>
+		<if test="date=='week'">
+			and board_DATE >= TO_CHAR(SYSDATE-7,'YYYYMMDD')
+		</if>
+		<if test="date=='month'">
+			and board_DATE >= TO_CHAR(SYSDATE-31,'YYYYMMDD')
+		</if>
+		<if test="date=='halfyear'">
+			and board_DATE >= TO_CHAR(SYSDATE-180,'YYYYMMDD')
+		</if>
+		<if test="date=='year'">
+			and board_DATE >= TO_CHAR(SYSDATE-365,'YYYYMMDD')
+		</if>
+		order by board_date desc 
+	</select>
+</mapper>

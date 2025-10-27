@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.comment">
+  <select id="listAll" resultType="comment">
+	select c.*, m.mem_nickname as b_comm_nickname
+	from board b, board_comment c, member m
+	where b.board_no=c.b_comm_bno
+		and c.b_comm_mno=m.mem_id
+		and c.b_comm_bno=#{board_no}
+  </select>
+
+  <insert id="insert" parameterType="comment">
+  	insert into BOARD_COMMENT values(comment_seq.nextval,#{b_comm_content},#{b_comm_mno}, sysdate,#{b_comm_bno},'0','0')
+  </insert>
+  <delete id="delete" parameterType="String">
+  	delete
+  	from board_comment
+  	where b_comm_bno=#{board_no}
+  </delete>
+  <delete id="deleteone" parameterType="String">
+  	delete
+  	from board_comment
+  	where b_comm_no=#{b_comm_no}
+  </delete>
+  <select id="likesearch" parameterType="Map" resultType="commentlike">
+  	select *
+  	from board_comment_like
+  	where comment_like_cno=#{comment_like_cno}
+  		and comment_like_mno=#{comment_like_mno}
+  </select>
+  <insert id="likeinsert" parameterType="Map">
+  	insert into BOARD_COMMNET_LIKE values(#{comment_like_cno}, #{comment_like_mno})
+  </insert>
+  <delete id="likedelete">
+  	delete
+  	from board_comment_like
+  	where comment_like_cno=#{comment_like_cno}
+  		and comment_like_mno=#{comment_like_mno}
+  </delete>
+</mapper>

@@ -1,0 +1,16 @@
+drop table admin;
+drop table family;
+drop table member;
+
+create table member(
+	member_id varchar2(50) primary key,
+	member_pass varchar2(50),
+	member_ceim_state varchar2(2000),
+	member_car_state varchar2(2000),
+	member_family varchar2(100));
+
+create table family(
+	family_name varchar2(2000)
+	);
+
+insert into family values('DHKD1GH3EHF5DL7');
